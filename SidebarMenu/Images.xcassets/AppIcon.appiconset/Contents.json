@@ -33,8 +33,9 @@
       "scale" : "3x"
     },
     {
-      "idiom" : "iphone",
       "size" : "60x60",
+      "idiom" : "iphone",
+      "filename" : "702_120 black-1.png",
       "scale" : "2x"
     },
     {
