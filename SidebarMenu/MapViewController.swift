@@ -2,24 +2,42 @@
 //  MapViewController.swift
 //  SidebarMenu
 //
-//  Created by Simon Ng on 2/2/15.
-//  Copyright (c) 2015 AppCoda. All rights reserved.
-//
 
 import UIKit
-
-class MapViewController: UIViewController {
+import MapKit
+import CoreLocation
+class MapViewController: UIViewController, CLLocationManagerDelegate {
+    
     @IBOutlet weak var menuButton:UIBarButtonItem!
     @IBOutlet weak var extraButton: UIBarButtonItem!
     
+    @IBOutlet weak var mapView: MKMapView!
+    
+    let manager = CLLocationManager()
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let location = locations[0]
+        
+        let mySpan:MKCoordinateSpan = MKCoordinateSpanMake(0.01, 0.01)
+        
+        let myLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
+        
+        let region:MKCoordinateRegion = MKCoordinateRegionMake(myLocation, mySpan)
+        
+        mapView.setRegion(region, animated: true)
+        
+        self.mapView.showsUserLocation = true
+    }
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        manager.delegate = self
+        manager.desiredAccuracy = kCLLocationAccuracyBest
+        manager.requestWhenInUseAuthorization()
+        manager.startUpdatingLocation()
 
-        //if revealViewController() != nil {
-        //    menuButton.target = revealViewController()
-        //    menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
-        //    view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-        //}
         
         if revealViewController() != nil {
             //            revealViewController().rearViewRevealWidth = 62
@@ -31,10 +49,7 @@ class MapViewController: UIViewController {
             extraButton.action = #selector(SWRevealViewController.rightRevealToggle(_:))
             
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-            
-            
         }
-        
         
     }
 
@@ -44,14 +59,7 @@ class MapViewController: UIViewController {
     }
     
 
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+
 
 }

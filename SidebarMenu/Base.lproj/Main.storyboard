@@ -49,7 +49,18 @@
                     <view key="view" contentMode="scaleToFill" id="HE4-02-mb0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="eGr-3E-Ljh">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                            </mapView>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="eGr-3E-Ljh" firstAttribute="leading" secondItem="HE4-02-mb0" secondAttribute="leading" id="0Gw-xO-huy"/>
+                            <constraint firstAttribute="trailing" secondItem="eGr-3E-Ljh" secondAttribute="trailing" id="FVG-yg-R40"/>
+                            <constraint firstAttribute="bottom" secondItem="eGr-3E-Ljh" secondAttribute="bottom" id="NP9-93-4Xl"/>
+                            <constraint firstItem="eGr-3E-Ljh" firstAttribute="top" secondItem="1V6-Hn-ruu" secondAttribute="bottom" id="OKR-2t-590"/>
+                        </constraints>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Map" id="YdA-HD-78b">
@@ -58,13 +69,14 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="extraButton" destination="cqu-bw-cCl" id="Hmh-3e-qel"/>
-                        <outlet property="menuButton" destination="rhH-Mc-GbH" id="QVi-fG-i4C"/>
+                        <outlet property="extraButton" destination="cqu-bw-cCl" id="IZu-0K-bfd"/>
+                        <outlet property="mapView" destination="eGr-3E-Ljh" id="Hk4-Zd-ljS"/>
+                        <outlet property="menuButton" destination="rhH-Mc-GbH" id="3WY-V6-aTS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7TD-bi-rsw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2577" y="51"/>
+            <point key="canvasLocation" x="2576.8000000000002" y="50.824587706146929"/>
         </scene>
         <!--Menu Controller-->
         <scene sceneID="WvI-gM-KFV">
@@ -1344,7 +1356,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c91-0o-dn7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4553" y="112"/>
+            <point key="canvasLocation" x="4300" y="481"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="bo0-6l-wU0">
@@ -1360,7 +1372,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Okb-O3-tqo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3599" y="112"/>
+            <point key="canvasLocation" x="3486" y="481"/>
         </scene>
         <!--Main Controller-->
         <scene sceneID="BPG-Qj-RI4">
