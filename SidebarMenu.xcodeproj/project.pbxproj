@@ -20,6 +20,11 @@
 		7E61510B1EF8B6930077B4E5 /* TouchIDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6151061EF8B6930077B4E5 /* TouchIDManager.m */; };
 		7E61510C1EF8B6930077B4E5 /* json_service.php in Resources */ = {isa = PBXBuildFile; fileRef = 7E6151081EF8B6930077B4E5 /* json_service.php */; };
 		7EEB3A001EF8E241001A281D /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEB39FF1EF8E241001A281D /* SettingsViewController.swift */; };
+		7EEB3A021EF97E45001A281D /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEB3A011EF97E45001A281D /* TimelineViewController.swift */; };
+		7EEB3A091EF97FBC001A281D /* Timeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEB3A051EF97FBC001A281D /* Timeline.swift */; };
+		7EEB3A0A1EF97FBC001A281D /* TimelinePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEB3A061EF97FBC001A281D /* TimelinePoint.swift */; };
+		7EEB3A0B1EF97FBC001A281D /* TimelineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEB3A071EF97FBC001A281D /* TimelineTableViewCell.swift */; };
+		7EEB3A0F1EF98066001A281D /* TimelineTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7EEB3A0E1EF98066001A281D /* TimelineTableViewCell.xib */; };
 		F47029F61A7F27DB00E30A3C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47029F51A7F27DB00E30A3C /* AppDelegate.swift */; };
 		F47029FB1A7F27DB00E30A3C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F47029F91A7F27DB00E30A3C /* Main.storyboard */; };
 		F47029FD1A7F27DB00E30A3C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F47029FC1A7F27DB00E30A3C /* Images.xcassets */; };
@@ -60,6 +65,12 @@
 		7E6151071EF8B6930077B4E5 /* 702Shifters-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "702Shifters-Bridging-Header.h"; sourceTree = "<group>"; };
 		7E6151081EF8B6930077B4E5 /* json_service.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = json_service.php; sourceTree = "<group>"; };
 		7EEB39FF1EF8E241001A281D /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		7EEB3A011EF97E45001A281D /* TimelineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
+		7EEB3A051EF97FBC001A281D /* Timeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timeline.swift; sourceTree = "<group>"; };
+		7EEB3A061EF97FBC001A281D /* TimelinePoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelinePoint.swift; sourceTree = "<group>"; };
+		7EEB3A071EF97FBC001A281D /* TimelineTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineTableViewCell.swift; sourceTree = "<group>"; };
+		7EEB3A0D1EF98054001A281D /* TimelineTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimelineTableViewCell.h; sourceTree = "<group>"; };
+		7EEB3A0E1EF98066001A281D /* TimelineTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimelineTableViewCell.xib; sourceTree = "<group>"; };
 		F47029F01A7F27DB00E30A3C /* SidebarMenu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SidebarMenu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F47029F41A7F27DB00E30A3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F47029F51A7F27DB00E30A3C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -125,6 +136,7 @@
 				F491E7541A7F7E010026528E /* PhotoViewController.swift */,
 				7E6150FF1EF8B62C0077B4E5 /* MainController.swift */,
 				7E6150FD1EF87C3F0077B4E5 /* ShifterDetailVC.swift */,
+				7EEB3A011EF97E45001A281D /* TimelineViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -141,14 +153,33 @@
 			isa = PBXGroup;
 			children = (
 				7E6151021EF8B6930077B4E5 /* ios_auth.php */,
+				7E6151081EF8B6930077B4E5 /* json_service.php */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		7EEB3A031EF97F41001A281D /* TimelineTableCell */ = {
+			isa = PBXGroup;
+			children = (
+				7EEB3A0E1EF98066001A281D /* TimelineTableViewCell.xib */,
+				7EEB3A0D1EF98054001A281D /* TimelineTableViewCell.h */,
+				7EEB3A051EF97FBC001A281D /* Timeline.swift */,
+				7EEB3A061EF97FBC001A281D /* TimelinePoint.swift */,
+				7EEB3A071EF97FBC001A281D /* TimelineTableViewCell.swift */,
+			);
+			name = TimelineTableCell;
+			sourceTree = "<group>";
+		};
+		7EEB3A041EF97F5B001A281D /* TouchID */ = {
+			isa = PBXGroup;
+			children = (
 				7E6151031EF8B6930077B4E5 /* TouchIDBridging-Header.h */,
 				7E6151041EF8B6930077B4E5 /* TouchIDManager.h */,
 				7E6151051EF8B6930077B4E5 /* TouchIDManager.swift */,
 				7E6151061EF8B6930077B4E5 /* TouchIDManager.m */,
 				7E6151071EF8B6930077B4E5 /* 702Shifters-Bridging-Header.h */,
-				7E6151081EF8B6930077B4E5 /* json_service.php */,
 			);
-			name = Resources;
+			name = TouchID;
 			sourceTree = "<group>";
 		};
 		F47029E71A7F27DB00E30A3C = {
@@ -173,6 +204,8 @@
 		F47029F21A7F27DB00E30A3C /* SidebarMenu */ = {
 			isa = PBXGroup;
 			children = (
+				7EEB3A041EF97F5B001A281D /* TouchID */,
+				7EEB3A031EF97F41001A281D /* TimelineTableCell */,
 				7E6151011EF8B67A0077B4E5 /* Resources */,
 				7E55C18A1EF8640D00528AC3 /* Util */,
 				7E55C1891EF8640700528AC3 /* Controller */,
@@ -318,6 +351,7 @@
 				F4702A001A7F27DC00E30A3C /* LaunchScreen.xib in Resources */,
 				7E6151091EF8B6930077B4E5 /* ios_auth.php in Resources */,
 				7E61510C1EF8B6930077B4E5 /* json_service.php in Resources */,
+				7EEB3A0F1EF98066001A281D /* TimelineTableViewCell.xib in Resources */,
 				F47029FD1A7F27DB00E30A3C /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -341,18 +375,22 @@
 				7E6150FB1EF875710077B4E5 /* NewsTableViewCell.swift in Sources */,
 				7E55C18C1EF8642100528AC3 /* Shifter.swift in Sources */,
 				F4D750181BD38F0C009E1003 /* SWRevealViewController.m in Sources */,
+				7EEB3A021EF97E45001A281D /* TimelineViewController.swift in Sources */,
 				F4702A181A7F351C00E30A3C /* MenuController.swift in Sources */,
+				7EEB3A0B1EF97FBC001A281D /* TimelineTableViewCell.swift in Sources */,
 				7E61510B1EF8B6930077B4E5 /* TouchIDManager.m in Sources */,
 				7E61510A1EF8B6930077B4E5 /* TouchIDManager.swift in Sources */,
 				F47029F61A7F27DB00E30A3C /* AppDelegate.swift in Sources */,
 				7E55C18F1EF8642B00528AC3 /* CustomTextField.swift in Sources */,
 				7E6151001EF8B62C0077B4E5 /* MainController.swift in Sources */,
+				7EEB3A091EF97FBC001A281D /* Timeline.swift in Sources */,
 				7E55C1901EF8642B00528AC3 /* ShifterCell.swift in Sources */,
 				7EEB3A001EF8E241001A281D /* SettingsViewController.swift in Sources */,
 				7E6150FC1EF875710077B4E5 /* NewsTableViewController.swift in Sources */,
 				F491E7531A7F7DF20026528E /* MapViewController.swift in Sources */,
 				F491E74A1A7F4B300026528E /* DirectoryViewController.swift in Sources */,
 				F491E7551A7F7E010026528E /* PhotoViewController.swift in Sources */,
+				7EEB3A0A1EF97FBC001A281D /* TimelinePoint.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

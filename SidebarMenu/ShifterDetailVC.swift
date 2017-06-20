@@ -179,9 +179,12 @@ class PokemonDetailVC: UIViewController {
         // localize to your grouping and decimal separator
         currencyFormatter.locale = NSLocale.current
         let priceString = currencyFormatter.string(from: price! as NSNumber)
-               
+        
+        // show image
         mainImg.isHidden = false
- //       webView.isHidden = true
+ 
+        // hide waiver form
+        webView.isHidden = true
             
         userIdText.isHidden     = false
         phoneText.isHidden      = false
