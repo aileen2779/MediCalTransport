@@ -21,9 +21,16 @@ class SettingsViewController: UITableViewController {
             
             revealViewController().rightViewRevealWidth = 150
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-            
-            
         }
+        
+        var activityIndicator = UIActivityIndicatorView()
+        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+        activityIndicator.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+        let transform: CGAffineTransform = CGAffineTransform(scaleX: 2, y: 1.5)
+        activityIndicator.transform = transform
+        activityIndicator.center = self.view.center
+        activityIndicator.startAnimating()
+        self.view.addSubview(activityIndicator)
     }
 
     override func didReceiveMemoryWarning() {
@@ -32,14 +39,5 @@ class SettingsViewController: UITableViewController {
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

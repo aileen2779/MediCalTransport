@@ -14,6 +14,7 @@ class DirectoryViewController: UIViewController, UICollectionViewDelegate, UICol
     @IBOutlet weak var menuButton:UIBarButtonItem!
     @IBOutlet weak var extraButton: UIBarButtonItem!
 
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     @IBOutlet weak var collection: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -31,6 +32,12 @@ class DirectoryViewController: UIViewController, UICollectionViewDelegate, UICol
         super.viewDidLoad()
         revealView()
         
+        // turn on activity indicator
+        activityIndicatorStart()
+        
+        
+
+        
         collection.dataSource = self
         collection.delegate = self
         searchBar.delegate = self
@@ -40,7 +47,7 @@ class DirectoryViewController: UIViewController, UICollectionViewDelegate, UICol
         callJSONURL(jsonUrl: searchURL!)
         
         pullToRefresh()
-        
+  
     }
     
     func pullToRefresh() {
@@ -126,6 +133,9 @@ class DirectoryViewController: UIViewController, UICollectionViewDelegate, UICol
                         } while ( x < myJson.count)
                         self.shifter.sort(by: {$0.name < $1.name})
                         
+                       // cell.activityIndicator.stopAnimating()
+//                        self.activityIndicator.color = UIColor.white
+
                     } catch {
                         print("done")
                     }
@@ -135,6 +145,7 @@ class DirectoryViewController: UIViewController, UICollectionViewDelegate, UICol
                 self.do_refresh();
             }
         }
+        
         task.resume()
     }
     
@@ -248,5 +259,23 @@ class DirectoryViewController: UIViewController, UICollectionViewDelegate, UICol
         }
         
     }
+    
+    func activityIndicatorStart() {
+        var activityIndicator = UIActivityIndicatorView()
+        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+        activityIndicator.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+        let transform: CGAffineTransform = CGAffineTransform(scaleX: 2, y: 2)
+        activityIndicator.transform = transform
+        activityIndicator.center = self.view.center
+        activityIndicator.startAnimating()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            activityIndicator.stopAnimating()
+        }
+        
+        self.view.addSubview(activityIndicator)
+    }
+    
+
+    
 }
 

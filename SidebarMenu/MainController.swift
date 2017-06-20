@@ -22,8 +22,6 @@ class MainController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var thumbIdImage: UIImageView!
     @IBOutlet weak var thumbIdButton: UIButton!
     
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
     let url  = URL_AUTH
     
     var login_session:String = ""
@@ -57,7 +55,7 @@ class MainController: UIViewController, UITextFieldDelegate {
         thumbIdButton.isHidden = true
         
         // show activity activityIndicator
-        activityIndicator.startAnimating()
+        activityIndicatorStartNoAsync()
         
         // disable login button to prevent performing segue twice
         //login_button.isEnabled = false
@@ -87,7 +85,6 @@ class MainController: UIViewController, UITextFieldDelegate {
         
         // hide the login stack view initially
         loginStackView.isHidden = true
-        activityIndicator.startAnimating()
         
 
         //Init routine to hide keyboard
@@ -97,6 +94,9 @@ class MainController: UIViewController, UITextFieldDelegate {
         // redirect if logged in or not
         let preferences = UserDefaults.standard
         if preferences.object(forKey: "session") != nil {
+            // turn on activity monitor for 1 second in async mode
+            activityIndicatorStartAsync()
+            
             login_session  = preferences.object(forKey: "session") as! String
             check_session()
         } else {
@@ -218,7 +218,7 @@ class MainController: UIViewController, UITextFieldDelegate {
     }
     
     func loginToDo() {
-        activityIndicator.stopAnimating()
+        //activityIndicatorStartNoAsync()
         
         let preferences = UserDefaults.standard
         if preferences.object(forKey: "touchIdEnrolled") != nil {
@@ -357,7 +357,31 @@ class MainController: UIViewController, UITextFieldDelegate {
         thumbIdButton.isHidden = thumbIdButton.isHidden
     }
     
+    func activityIndicatorStartAsync() {
+        var activityIndicator = UIActivityIndicatorView()
+        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+        activityIndicator.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+        let transform: CGAffineTransform = CGAffineTransform(scaleX: 2, y: 2)
+        activityIndicator.transform = transform
+        activityIndicator.center = self.view.center
+        activityIndicator.startAnimating()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            activityIndicator.stopAnimating()
+        }
+        
+        self.view.addSubview(activityIndicator)
+    }
     
+    func activityIndicatorStartNoAsync() {
+        var activityIndicator = UIActivityIndicatorView()
+        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+        activityIndicator.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+        let transform: CGAffineTransform = CGAffineTransform(scaleX: 2, y: 2)
+        activityIndicator.transform = transform
+        activityIndicator.center = self.view.center
+        activityIndicator.startAnimating()
+        self.view.addSubview(activityIndicator)
+    }
     
 
 
