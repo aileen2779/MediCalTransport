@@ -6,7 +6,9 @@
 import UIKit
 
 class ScrollableGraphViewController: UIViewController {
-
+    @IBOutlet weak var menuButton:UIBarButtonItem!
+    @IBOutlet weak var extraButton: UIBarButtonItem!
+    
     var graphView = ScrollableGraphView()
     var currentGraphType = GraphType.dark
     var graphConstraints = [NSLayoutConstraint]()
@@ -33,6 +35,20 @@ class ScrollableGraphViewController: UIViewController {
         setupConstraints()
         
         addLabel(withText: "DARK (TAP HERE)")
+        
+        if revealViewController() != nil {
+            //            revealViewController().rearViewRevealWidth = 62
+            menuButton.target = revealViewController()
+            menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
+            
+            revealViewController().rightViewRevealWidth = 150
+            extraButton.target = revealViewController()
+            extraButton.action = #selector(SWRevealViewController.rightRevealToggle(_:))
+            
+            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+            
+        }
+        
     }
     
     func didTap(_ gesture: UITapGestureRecognizer) {
@@ -191,7 +207,7 @@ class ScrollableGraphViewController: UIViewController {
         self.graphView.translatesAutoresizingMaskIntoConstraints = false
         graphConstraints.removeAll()
         
-        let topConstraint = NSLayoutConstraint(item: self.graphView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 0)
+        let topConstraint = NSLayoutConstraint(item: self.graphView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 20)
         let rightConstraint = NSLayoutConstraint(item: self.graphView, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.right, multiplier: 1, constant: 0)
         let bottomConstraint = NSLayoutConstraint(item: self.graphView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 0)
         let leftConstraint = NSLayoutConstraint(item: self.graphView, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.left, multiplier: 1, constant: 0)
@@ -217,7 +233,7 @@ class ScrollableGraphViewController: UIViewController {
         
         let rightConstraint = NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.right, multiplier: 1, constant: -20)
         
-        let topConstraint = NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 20)
+        let topConstraint = NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 60)
         
         let heightConstraint = NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 40)
         let widthConstraint = NSLayoutConstraint(item: label, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: label.frame.width * 1.5)

@@ -618,7 +618,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="WDT-tC-7EJ"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="WDT-tC-7EJ">
+                        <barButtonItem key="leftBarButtonItem" image="menu" id="tPj-ds-XWo">
+                            <connections>
+                                <action selector="menuButton:" destination="2eV-iW-Uu0" id="4qu-74-OE9"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="organize" id="Yzx-gz-nAT"/>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="extraButton" destination="Yzx-gz-nAT" id="l3n-3Y-Z9g"/>
+                        <outlet property="menuButton" destination="tPj-ds-XWo" id="sgX-nc-Z6x"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iil-KJ-Xsz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
