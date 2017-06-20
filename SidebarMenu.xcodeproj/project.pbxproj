@@ -116,6 +116,10 @@
 		7E55C1891EF8640700528AC3 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				F4702A171A7F351C00E30A3C /* MenuController.swift */,
+				F491E7491A7F4B300026528E /* DirectoryViewController.swift */,
+				F491E7521A7F7DF20026528E /* MapViewController.swift */,
+				F491E7541A7F7E010026528E /* PhotoViewController.swift */,
 				7E6150FF1EF8B62C0077B4E5 /* MainController.swift */,
 				7E6150FD1EF87C3F0077B4E5 /* ShifterDetailVC.swift */,
 			);
@@ -179,10 +183,6 @@
 				F47029FC1A7F27DB00E30A3C /* Images.xcassets */,
 				F47029FE1A7F27DB00E30A3C /* LaunchScreen.xib */,
 				F47029F31A7F27DB00E30A3C /* Supporting Files */,
-				F4702A171A7F351C00E30A3C /* MenuController.swift */,
-				F491E7491A7F4B300026528E /* DirectoryViewController.swift */,
-				F491E7521A7F7DF20026528E /* MapViewController.swift */,
-				F491E7541A7F7E010026528E /* PhotoViewController.swift */,
 			);
 			path = SidebarMenu;
 			sourceTree = "<group>";
