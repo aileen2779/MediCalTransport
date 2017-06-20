@@ -19,6 +19,9 @@
 		7E61510A1EF8B6930077B4E5 /* TouchIDManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6151051EF8B6930077B4E5 /* TouchIDManager.swift */; };
 		7E61510B1EF8B6930077B4E5 /* TouchIDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6151061EF8B6930077B4E5 /* TouchIDManager.m */; };
 		7E61510C1EF8B6930077B4E5 /* json_service.php in Resources */ = {isa = PBXBuildFile; fileRef = 7E6151081EF8B6930077B4E5 /* json_service.php */; };
+		7E9538301EF9D1D9008204AA /* UIColor+colorFromHex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E95382D1EF9D1D9008204AA /* UIColor+colorFromHex.swift */; };
+		7E9538311EF9D1D9008204AA /* ScrollableGraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E95382E1EF9D1D9008204AA /* ScrollableGraphViewController.swift */; };
+		7E9538321EF9D1D9008204AA /* ScrollableGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E95382F1EF9D1D9008204AA /* ScrollableGraphView.swift */; };
 		7EEB3A001EF8E241001A281D /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEB39FF1EF8E241001A281D /* SettingsViewController.swift */; };
 		7EEB3A021EF97E45001A281D /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEB3A011EF97E45001A281D /* TimelineViewController.swift */; };
 		7EEB3A091EF97FBC001A281D /* Timeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEB3A051EF97FBC001A281D /* Timeline.swift */; };
@@ -64,6 +67,9 @@
 		7E6151061EF8B6930077B4E5 /* TouchIDManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchIDManager.m; sourceTree = "<group>"; };
 		7E6151071EF8B6930077B4E5 /* 702Shifters-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "702Shifters-Bridging-Header.h"; sourceTree = "<group>"; };
 		7E6151081EF8B6930077B4E5 /* json_service.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = json_service.php; sourceTree = "<group>"; };
+		7E95382D1EF9D1D9008204AA /* UIColor+colorFromHex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+colorFromHex.swift"; sourceTree = "<group>"; };
+		7E95382E1EF9D1D9008204AA /* ScrollableGraphViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollableGraphViewController.swift; sourceTree = "<group>"; };
+		7E95382F1EF9D1D9008204AA /* ScrollableGraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollableGraphView.swift; sourceTree = "<group>"; };
 		7EEB39FF1EF8E241001A281D /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		7EEB3A011EF97E45001A281D /* TimelineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
 		7EEB3A051EF97FBC001A281D /* Timeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timeline.swift; sourceTree = "<group>"; };
@@ -158,6 +164,16 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		7E95382C1EF9D0D7008204AA /* ScrollableGraph */ = {
+			isa = PBXGroup;
+			children = (
+				7E95382D1EF9D1D9008204AA /* UIColor+colorFromHex.swift */,
+				7E95382E1EF9D1D9008204AA /* ScrollableGraphViewController.swift */,
+				7E95382F1EF9D1D9008204AA /* ScrollableGraphView.swift */,
+			);
+			name = ScrollableGraph;
+			sourceTree = "<group>";
+		};
 		7EEB3A031EF97F41001A281D /* TimelineTableCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -204,6 +220,7 @@
 		F47029F21A7F27DB00E30A3C /* SidebarMenu */ = {
 			isa = PBXGroup;
 			children = (
+				7E95382C1EF9D0D7008204AA /* ScrollableGraph */,
 				7EEB3A041EF97F5B001A281D /* TouchID */,
 				7EEB3A031EF97F41001A281D /* TimelineTableCell */,
 				7E6151011EF8B67A0077B4E5 /* Resources */,
@@ -374,6 +391,7 @@
 				7E6150FE1EF87C3F0077B4E5 /* ShifterDetailVC.swift in Sources */,
 				7E6150FB1EF875710077B4E5 /* NewsTableViewCell.swift in Sources */,
 				7E55C18C1EF8642100528AC3 /* Shifter.swift in Sources */,
+				7E9538321EF9D1D9008204AA /* ScrollableGraphView.swift in Sources */,
 				F4D750181BD38F0C009E1003 /* SWRevealViewController.m in Sources */,
 				7EEB3A021EF97E45001A281D /* TimelineViewController.swift in Sources */,
 				F4702A181A7F351C00E30A3C /* MenuController.swift in Sources */,
@@ -381,11 +399,13 @@
 				7E61510B1EF8B6930077B4E5 /* TouchIDManager.m in Sources */,
 				7E61510A1EF8B6930077B4E5 /* TouchIDManager.swift in Sources */,
 				F47029F61A7F27DB00E30A3C /* AppDelegate.swift in Sources */,
+				7E9538301EF9D1D9008204AA /* UIColor+colorFromHex.swift in Sources */,
 				7E55C18F1EF8642B00528AC3 /* CustomTextField.swift in Sources */,
 				7E6151001EF8B62C0077B4E5 /* MainController.swift in Sources */,
 				7EEB3A091EF97FBC001A281D /* Timeline.swift in Sources */,
 				7E55C1901EF8642B00528AC3 /* ShifterCell.swift in Sources */,
 				7EEB3A001EF8E241001A281D /* SettingsViewController.swift in Sources */,
+				7E9538311EF9D1D9008204AA /* ScrollableGraphViewController.swift in Sources */,
 				7E6150FC1EF875710077B4E5 /* NewsTableViewController.swift in Sources */,
 				F491E7531A7F7DF20026528E /* MapViewController.swift in Sources */,
 				F491E74A1A7F4B300026528E /* DirectoryViewController.swift in Sources */,
