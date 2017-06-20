@@ -1091,7 +1091,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="touch-id-icon" translatesAutoresizingMaskIntoConstraints="NO" id="aIM-WC-zRC">
-                                <rect key="frame" x="152" y="449" width="70" height="70"/>
+                                <rect key="frame" x="152" y="443" width="70" height="70"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="RSk-qa-QTc"/>
                                     <constraint firstAttribute="width" constant="70" id="tBh-Yo-84y"/>
@@ -1217,7 +1217,6 @@
                             <constraint firstItem="RTK-6o-JVQ" firstAttribute="centerY" secondItem="xTq-F4-g71" secondAttribute="centerY" id="fkV-aY-RX0"/>
                             <constraint firstItem="IaB-ie-RJD" firstAttribute="top" secondItem="B4U-bm-keU" secondAttribute="bottom" constant="16" id="i1m-bk-mCk"/>
                             <constraint firstItem="IaB-ie-RJD" firstAttribute="top" secondItem="YAM-ps-fVe" secondAttribute="bottom" constant="16" id="iaR-YN-S5V"/>
-                            <constraint firstItem="aIM-WC-zRC" firstAttribute="top" secondItem="nRR-wp-d3Y" secondAttribute="bottom" constant="26" id="oaF-QJ-U3G"/>
                             <constraint firstItem="IaB-ie-RJD" firstAttribute="top" secondItem="B4U-bm-keU" secondAttribute="bottom" constant="16" id="pVI-Hf-Vmt"/>
                             <constraint firstItem="nRR-wp-d3Y" firstAttribute="centerX" secondItem="xTq-F4-g71" secondAttribute="centerX" id="r6U-xg-XZ1"/>
                             <constraint firstItem="RTK-6o-JVQ" firstAttribute="centerX" secondItem="xTq-F4-g71" secondAttribute="centerX" id="rzM-8n-bDt"/>
