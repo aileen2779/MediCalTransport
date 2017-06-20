@@ -357,10 +357,6 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="6R9-J8-13M">
-                                <rect key="frame" x="177" y="323" width="20" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -379,7 +375,6 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="organize" id="iU3-CI-Yl5"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="activityIndicator" destination="6R9-J8-13M" id="3ml-wJ-XN4"/>
                         <outlet property="collection" destination="vBM-Ed-nKG" id="zws-8c-A4E"/>
                         <outlet property="extraButton" destination="iU3-CI-Yl5" id="1BB-Za-PGk"/>
                         <outlet property="menuButton" destination="n0e-T3-Trg" id="Zie-bm-cWQ"/>

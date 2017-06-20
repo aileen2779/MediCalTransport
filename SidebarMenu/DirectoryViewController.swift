@@ -13,8 +13,6 @@ class DirectoryViewController: UIViewController, UICollectionViewDelegate, UICol
     
     @IBOutlet weak var menuButton:UIBarButtonItem!
     @IBOutlet weak var extraButton: UIBarButtonItem!
-
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     @IBOutlet weak var collection: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
