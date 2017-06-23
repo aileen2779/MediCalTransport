@@ -7,17 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7E55C18C1EF8642100528AC3 /* Shifter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E55C18B1EF8642100528AC3 /* Shifter.swift */; };
 		7E55C18F1EF8642B00528AC3 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E55C18D1EF8642B00528AC3 /* CustomTextField.swift */; };
-		7E55C1901EF8642B00528AC3 /* ShifterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E55C18E1EF8642B00528AC3 /* ShifterCell.swift */; };
 		7E55C1941EF8645200528AC3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E55C1931EF8645200528AC3 /* Constants.swift */; };
 		7E6150FB1EF875710077B4E5 /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6150F91EF875710077B4E5 /* NewsTableViewCell.swift */; };
 		7E6150FC1EF875710077B4E5 /* NewsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6150FA1EF875710077B4E5 /* NewsTableViewController.swift */; };
 		7E6151001EF8B62C0077B4E5 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6150FF1EF8B62C0077B4E5 /* MainController.swift */; };
-		7E6151091EF8B6930077B4E5 /* ios_auth.php in Resources */ = {isa = PBXBuildFile; fileRef = 7E6151021EF8B6930077B4E5 /* ios_auth.php */; };
 		7E61510A1EF8B6930077B4E5 /* TouchIDManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6151051EF8B6930077B4E5 /* TouchIDManager.swift */; };
 		7E61510B1EF8B6930077B4E5 /* TouchIDManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6151061EF8B6930077B4E5 /* TouchIDManager.m */; };
-		7E61510C1EF8B6930077B4E5 /* json_service.php in Resources */ = {isa = PBXBuildFile; fileRef = 7E6151081EF8B6930077B4E5 /* json_service.php */; };
 		7E9538301EF9D1D9008204AA /* UIColor+colorFromHex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E95382D1EF9D1D9008204AA /* UIColor+colorFromHex.swift */; };
 		7E9538311EF9D1D9008204AA /* ScrollableGraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E95382E1EF9D1D9008204AA /* ScrollableGraphViewController.swift */; };
 		7E9538321EF9D1D9008204AA /* ScrollableGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E95382F1EF9D1D9008204AA /* ScrollableGraphView.swift */; };
@@ -53,20 +49,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7E55C18B1EF8642100528AC3 /* Shifter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shifter.swift; sourceTree = "<group>"; };
 		7E55C18D1EF8642B00528AC3 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
-		7E55C18E1EF8642B00528AC3 /* ShifterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShifterCell.swift; sourceTree = "<group>"; };
 		7E55C1931EF8645200528AC3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7E6150F91EF875710077B4E5 /* NewsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
 		7E6150FA1EF875710077B4E5 /* NewsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsTableViewController.swift; sourceTree = "<group>"; };
 		7E6150FF1EF8B62C0077B4E5 /* MainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
-		7E6151021EF8B6930077B4E5 /* ios_auth.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = ios_auth.php; sourceTree = "<group>"; };
 		7E6151031EF8B6930077B4E5 /* TouchIDBridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TouchIDBridging-Header.h"; sourceTree = "<group>"; };
 		7E6151041EF8B6930077B4E5 /* TouchIDManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchIDManager.h; sourceTree = "<group>"; };
 		7E6151051EF8B6930077B4E5 /* TouchIDManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchIDManager.swift; sourceTree = "<group>"; };
 		7E6151061EF8B6930077B4E5 /* TouchIDManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchIDManager.m; sourceTree = "<group>"; };
 		7E6151071EF8B6930077B4E5 /* 702Shifters-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "702Shifters-Bridging-Header.h"; sourceTree = "<group>"; };
-		7E6151081EF8B6930077B4E5 /* json_service.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = json_service.php; sourceTree = "<group>"; };
 		7E95382D1EF9D1D9008204AA /* UIColor+colorFromHex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+colorFromHex.swift"; sourceTree = "<group>"; };
 		7E95382E1EF9D1D9008204AA /* ScrollableGraphViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollableGraphViewController.swift; sourceTree = "<group>"; };
 		7E95382F1EF9D1D9008204AA /* ScrollableGraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollableGraphView.swift; sourceTree = "<group>"; };
@@ -121,7 +113,6 @@
 		7E55C1871EF863FA00528AC3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				7E55C18B1EF8642100528AC3 /* Shifter.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -130,7 +121,6 @@
 			isa = PBXGroup;
 			children = (
 				7E55C18D1EF8642B00528AC3 /* CustomTextField.swift */,
-				7E55C18E1EF8642B00528AC3 /* ShifterCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -161,8 +151,6 @@
 		7E6151011EF8B67A0077B4E5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				7E6151021EF8B6930077B4E5 /* ios_auth.php */,
-				7E6151081EF8B6930077B4E5 /* json_service.php */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -386,8 +374,6 @@
 			files = (
 				F47029FB1A7F27DB00E30A3C /* Main.storyboard in Resources */,
 				F4702A001A7F27DC00E30A3C /* LaunchScreen.xib in Resources */,
-				7E6151091EF8B6930077B4E5 /* ios_auth.php in Resources */,
-				7E61510C1EF8B6930077B4E5 /* json_service.php in Resources */,
 				7EEB3A0F1EF98066001A281D /* TimelineTableViewCell.xib in Resources */,
 				F47029FD1A7F27DB00E30A3C /* Images.xcassets in Resources */,
 			);
@@ -409,7 +395,6 @@
 			files = (
 				7E55C1941EF8645200528AC3 /* Constants.swift in Sources */,
 				7E6150FB1EF875710077B4E5 /* NewsTableViewCell.swift in Sources */,
-				7E55C18C1EF8642100528AC3 /* Shifter.swift in Sources */,
 				7E9538321EF9D1D9008204AA /* ScrollableGraphView.swift in Sources */,
 				F4D750181BD38F0C009E1003 /* SWRevealViewController.m in Sources */,
 				7EEB3A021EF97E45001A281D /* TimelineViewController.swift in Sources */,
@@ -423,7 +408,6 @@
 				7E55C18F1EF8642B00528AC3 /* CustomTextField.swift in Sources */,
 				7E6151001EF8B62C0077B4E5 /* MainController.swift in Sources */,
 				7EEB3A091EF97FBC001A281D /* Timeline.swift in Sources */,
-				7E55C1901EF8642B00528AC3 /* ShifterCell.swift in Sources */,
 				7EEB3A001EF8E241001A281D /* SettingsViewController.swift in Sources */,
 				7E9538311EF9D1D9008204AA /* ScrollableGraphViewController.swift in Sources */,
 				7E6150FC1EF875710077B4E5 /* NewsTableViewController.swift in Sources */,

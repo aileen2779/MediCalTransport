@@ -201,17 +201,12 @@ class MainController: UIViewController, UITextFieldDelegate {
     
     func loginDone() {
         self.performSegue(withIdentifier: "ShifterPokedexVC", sender: self)
-        
-        // Enable login button before segue
-        //login_button.isEnabled = true
   
     }
     
     
     func animateMe(textField: UITextField) {
-        
         let _thisTextField = textField
-
         UIView.animate(withDuration: 0.1, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseIn, animations: {_thisTextField.center.x += 10 }, completion: nil)
         UIView.animate(withDuration: 0.1, delay: 0.1, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseIn, animations: {_thisTextField.center.x -= 20 }, completion: nil)
         UIView.animate(withDuration: 0.1, delay: 0.2, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseIn, animations: {_thisTextField.center.x += 10 }, completion: nil)
