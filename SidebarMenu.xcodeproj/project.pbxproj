@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E1465231EFDD25900F1102A /* RiderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1465221EFDD25900F1102A /* RiderViewController.swift */; };
+		7E1465281EFDD2EF00F1102A /* DateTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1465251EFDD2EF00F1102A /* DateTimePicker.swift */; };
+		7E1465291EFDD2EF00F1102A /* DateCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1465261EFDD2EF00F1102A /* DateCollectionViewCell.swift */; };
+		7E14652A1EFDD2EF00F1102A /* StepCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1465271EFDD2EF00F1102A /* StepCollectionViewFlowLayout.swift */; };
 		7E55C18F1EF8642B00528AC3 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E55C18D1EF8642B00528AC3 /* CustomTextField.swift */; };
 		7E55C1941EF8645200528AC3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E55C1931EF8645200528AC3 /* Constants.swift */; };
 		7E6150FB1EF875710077B4E5 /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6150F91EF875710077B4E5 /* NewsTableViewCell.swift */; };
@@ -49,6 +53,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7E1465221EFDD25900F1102A /* RiderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RiderViewController.swift; path = SidebarMenu/RiderViewController.swift; sourceTree = "<group>"; };
+		7E1465251EFDD2EF00F1102A /* DateTimePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateTimePicker.swift; sourceTree = "<group>"; };
+		7E1465261EFDD2EF00F1102A /* DateCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateCollectionViewCell.swift; sourceTree = "<group>"; };
+		7E1465271EFDD2EF00F1102A /* StepCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		7E55C18D1EF8642B00528AC3 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		7E55C1931EF8645200528AC3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7E6150F91EF875710077B4E5 /* NewsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
@@ -110,6 +118,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7E1465241EFDD2DA00F1102A /* DateTimePicker */ = {
+			isa = PBXGroup;
+			children = (
+				7E1465251EFDD2EF00F1102A /* DateTimePicker.swift */,
+				7E1465261EFDD2EF00F1102A /* DateCollectionViewCell.swift */,
+				7E1465271EFDD2EF00F1102A /* StepCollectionViewFlowLayout.swift */,
+			);
+			name = DateTimePicker;
+			sourceTree = "<group>";
+		};
 		7E55C1871EF863FA00528AC3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -208,6 +226,7 @@
 		F47029E71A7F27DB00E30A3C = {
 			isa = PBXGroup;
 			children = (
+				7E1465221EFDD25900F1102A /* RiderViewController.swift */,
 				F47029F21A7F27DB00E30A3C /* SidebarMenu */,
 				F4702A081A7F27DC00E30A3C /* SidebarMenuTests */,
 				F47029F11A7F27DB00E30A3C /* Products */,
@@ -227,6 +246,7 @@
 		F47029F21A7F27DB00E30A3C /* SidebarMenu */ = {
 			isa = PBXGroup;
 			children = (
+				7E1465241EFDD2DA00F1102A /* DateTimePicker */,
 				7E9538361EF9DBC5008204AA /* BSUMaps */,
 				7E95382C1EF9D0D7008204AA /* ScrollableGraph */,
 				7EEB3A041EF97F5B001A281D /* TouchID */,
@@ -402,14 +422,18 @@
 				7EEB3A0B1EF97FBC001A281D /* TimelineTableViewCell.swift in Sources */,
 				7E61510B1EF8B6930077B4E5 /* TouchIDManager.m in Sources */,
 				7E61510A1EF8B6930077B4E5 /* TouchIDManager.swift in Sources */,
+				7E1465291EFDD2EF00F1102A /* DateCollectionViewCell.swift in Sources */,
 				7E9538381EF9DBD1008204AA /* BSUAnnotation.swift in Sources */,
 				F47029F61A7F27DB00E30A3C /* AppDelegate.swift in Sources */,
+				7E14652A1EFDD2EF00F1102A /* StepCollectionViewFlowLayout.swift in Sources */,
 				7E9538301EF9D1D9008204AA /* UIColor+colorFromHex.swift in Sources */,
 				7E55C18F1EF8642B00528AC3 /* CustomTextField.swift in Sources */,
 				7E6151001EF8B62C0077B4E5 /* MainController.swift in Sources */,
+				7E1465231EFDD25900F1102A /* RiderViewController.swift in Sources */,
 				7EEB3A091EF97FBC001A281D /* Timeline.swift in Sources */,
 				7EEB3A001EF8E241001A281D /* SettingsViewController.swift in Sources */,
 				7E9538311EF9D1D9008204AA /* ScrollableGraphViewController.swift in Sources */,
+				7E1465281EFDD2EF00F1102A /* DateTimePicker.swift in Sources */,
 				7E6150FC1EF875710077B4E5 /* NewsTableViewController.swift in Sources */,
 				F491E7531A7F7DF20026528E /* MapViewController.swift in Sources */,
 				F491E74A1A7F4B300026528E /* DirectoryViewController.swift in Sources */,
