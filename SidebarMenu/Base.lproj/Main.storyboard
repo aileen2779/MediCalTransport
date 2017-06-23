@@ -33,7 +33,7 @@
             </objects>
             <point key="canvasLocation" x="-431" y="-13"/>
         </scene>
-        <!--Map-->
+        <!--Map View Controller-->
         <scene sceneID="MMi-W1-KaJ">
             <objects>
                 <viewController id="IXz-HG-hIe" customClass="MapViewController" customModule="SidebarMenu" customModuleProvider="target" sceneMemberID="viewController">
@@ -46,19 +46,21 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="eGr-3E-Ljh">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="eGr-3E-Ljh" firstAttribute="leading" secondItem="HE4-02-mb0" secondAttribute="leading" id="0Gw-xO-huy"/>
-                            <constraint firstAttribute="trailing" secondItem="eGr-3E-Ljh" secondAttribute="trailing" id="FVG-yg-R40"/>
-                            <constraint firstAttribute="bottom" secondItem="eGr-3E-Ljh" secondAttribute="bottom" id="NP9-93-4Xl"/>
-                            <constraint firstItem="eGr-3E-Ljh" firstAttribute="top" secondItem="1V6-Hn-ruu" secondAttribute="bottom" id="OKR-2t-590"/>
+                            <constraint firstItem="eGr-3E-Ljh" firstAttribute="top" secondItem="HE4-02-mb0" secondAttribute="top" id="6en-Wz-bhK"/>
+                            <constraint firstItem="eGr-3E-Ljh" firstAttribute="centerY" secondItem="HE4-02-mb0" secondAttribute="centerY" id="AuU-7Z-xsr"/>
+                            <constraint firstAttribute="trailing" secondItem="eGr-3E-Ljh" secondAttribute="trailing" id="GKu-cg-R28"/>
+                            <constraint firstItem="eGr-3E-Ljh" firstAttribute="centerX" secondItem="HE4-02-mb0" secondAttribute="centerX" id="J2m-ef-PyN"/>
+                            <constraint firstItem="eGr-3E-Ljh" firstAttribute="leading" secondItem="HE4-02-mb0" secondAttribute="leading" id="OSC-9X-TjN"/>
+                            <constraint firstAttribute="bottom" secondItem="eGr-3E-Ljh" secondAttribute="bottom" id="XBl-G7-AYh"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Map" id="YdA-HD-78b">
+                    <navigationItem key="navigationItem" id="YdA-HD-78b">
                         <barButtonItem key="leftBarButtonItem" image="menu" id="rhH-Mc-GbH"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="organize" id="cqu-bw-cCl"/>
                     </navigationItem>
@@ -139,7 +141,7 @@
                                                     <rect key="frame" x="18" y="4" width="35" height="35"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Directory" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="efz-Bb-kny">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Book a trip" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="efz-Bb-kny">
                                                     <rect key="frame" x="61" y="6" width="232" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -164,8 +166,8 @@
                                                     <rect key="frame" x="18" y="4" width="35" height="35"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Maps" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="it0-69-JpN">
-                                                    <rect key="frame" x="61" y="6" width="55" height="31"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="My Scheduled trips" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="it0-69-JpN">
+                                                    <rect key="frame" x="61" y="6" width="147" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -239,7 +241,7 @@
                                                     <rect key="frame" x="18" y="4" width="35" height="35"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Timeline" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QiC-WV-UKZ">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="My Trips" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QiC-WV-UKZ">
                                                     <rect key="frame" x="61" y="6" width="115" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -264,7 +266,7 @@
                                                     <rect key="frame" x="18" y="4" width="35" height="35"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Scrollable Graph" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rKP-lf-LdL">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="About Us" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rKP-lf-LdL">
                                                     <rect key="frame" x="61" y="6" width="209" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
