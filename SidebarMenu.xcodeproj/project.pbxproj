@@ -13,7 +13,6 @@
 		7E55C1941EF8645200528AC3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E55C1931EF8645200528AC3 /* Constants.swift */; };
 		7E6150FB1EF875710077B4E5 /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6150F91EF875710077B4E5 /* NewsTableViewCell.swift */; };
 		7E6150FC1EF875710077B4E5 /* NewsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6150FA1EF875710077B4E5 /* NewsTableViewController.swift */; };
-		7E6150FE1EF87C3F0077B4E5 /* ShifterDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6150FD1EF87C3F0077B4E5 /* ShifterDetailVC.swift */; };
 		7E6151001EF8B62C0077B4E5 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6150FF1EF8B62C0077B4E5 /* MainController.swift */; };
 		7E6151091EF8B6930077B4E5 /* ios_auth.php in Resources */ = {isa = PBXBuildFile; fileRef = 7E6151021EF8B6930077B4E5 /* ios_auth.php */; };
 		7E61510A1EF8B6930077B4E5 /* TouchIDManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6151051EF8B6930077B4E5 /* TouchIDManager.swift */; };
@@ -60,7 +59,6 @@
 		7E55C1931EF8645200528AC3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7E6150F91EF875710077B4E5 /* NewsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
 		7E6150FA1EF875710077B4E5 /* NewsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsTableViewController.swift; sourceTree = "<group>"; };
-		7E6150FD1EF87C3F0077B4E5 /* ShifterDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShifterDetailVC.swift; sourceTree = "<group>"; };
 		7E6150FF1EF8B62C0077B4E5 /* MainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
 		7E6151021EF8B6930077B4E5 /* ios_auth.php */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.php; path = ios_auth.php; sourceTree = "<group>"; };
 		7E6151031EF8B6930077B4E5 /* TouchIDBridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TouchIDBridging-Header.h"; sourceTree = "<group>"; };
@@ -147,7 +145,6 @@
 				F491E7521A7F7DF20026528E /* MapViewController.swift */,
 				F491E7541A7F7E010026528E /* PhotoViewController.swift */,
 				7E6150FF1EF8B62C0077B4E5 /* MainController.swift */,
-				7E6150FD1EF87C3F0077B4E5 /* ShifterDetailVC.swift */,
 				7EEB3A011EF97E45001A281D /* TimelineViewController.swift */,
 			);
 			name = Controller;
@@ -411,7 +408,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E55C1941EF8645200528AC3 /* Constants.swift in Sources */,
-				7E6150FE1EF87C3F0077B4E5 /* ShifterDetailVC.swift in Sources */,
 				7E6150FB1EF875710077B4E5 /* NewsTableViewCell.swift in Sources */,
 				7E55C18C1EF8642100528AC3 /* Shifter.swift in Sources */,
 				7E9538321EF9D1D9008204AA /* ScrollableGraphView.swift in Sources */,
