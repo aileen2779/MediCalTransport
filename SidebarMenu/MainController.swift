@@ -22,14 +22,11 @@ class MainController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var thumbIdImage: UIImageView!
     @IBOutlet weak var thumbIdButton: UIButton!
     
-    let url  = URL_AUTH
-    
     var login_session:String = ""
     
     @IBAction func loginButtonTapped(_ sender: Any) {
         
- 
-        // dismiss the keyboard
+         // dismiss the keyboard
         self.view.endEditing(true)
         
         // evaluate login and password
@@ -56,9 +53,6 @@ class MainController: UIViewController, UITextFieldDelegate {
         
         // show activity activityIndicator
         activityIndicatorStartNoAsync()
-        
-        // disable login button to prevent performing segue twice
-        //login_button.isEnabled = false
 
         login_now(username:loginTextField.text!, password: passwordTextField.text!)
         
@@ -135,73 +129,22 @@ class MainController: UIViewController, UITextFieldDelegate {
         
         post_data.setValue(username, forKey: "username")
         post_data.setValue(password, forKey: "password")
-        
-        let url:URL = URL(string: self.url)!
-        let session = URLSession.shared
-        
-        let request = NSMutableURLRequest(url: url)
-        request.httpMethod = "POST"
-        request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
-        
-        var paramString = ""
-        
-        for (key, value) in post_data {
-            paramString = paramString + (key as! String) + "=" + (value as! String) + "&"
-        }
-        
-        request.httpBody = paramString.data(using: String.Encoding.utf8)
-        
-        let task = session.dataTask(with: request as URLRequest, completionHandler: {
-            (
-            data, response, error) in
             
-            guard let _:Data = data, let _:URLResponse = response  , error == nil else {
-                return
-            }
-            
-            let json: Any?
-            
-            do {
-                json = try JSONSerialization.jsonObject(with: data!, options: [])
-            } catch {
-                return
-            }
-            
-            guard let server_response = json as? NSDictionary else {
-                return
-            }
-            
-           //print(server_response)
-            
-            // If data_block is empty, session id would be missing
-            if let data_block = server_response["data"] as? NSDictionary {
-                if let session_data = data_block["session"] as? String {
-                    self.login_session = session_data
+        let session_data = "1234567890"
+        self.login_session = session_data
+    
+        let preferences = UserDefaults.standard
+        preferences.set(session_data, forKey: "session")
+        preferences.set(true, forKey: "touchIdEnrolled")
                     
-                    let preferences = UserDefaults.standard
-                    preferences.set(session_data, forKey: "session")
-                    preferences.set(true, forKey: "touchIdEnrolled")
-                    
-                    DispatchQueue.main.async(execute: self.loginDone)
-                }
-            } else {
-                
-                // Display alert message and enable login button
-                DispatchQueue.main.async(execute: self.displayMyAlertMessage)
-                DispatchQueue.main.async(execute: self.loginToDo)
-            }
-            
-        })
-        
-        task.resume()
-        
+        DispatchQueue.main.async(execute: self.loginDone)
+
         
     }
 
     
     func loginDone() {
         self.performSegue(withIdentifier: "ShifterPokedexVC", sender: self)
-  
     }
     
     
@@ -228,10 +171,11 @@ class MainController: UIViewController, UITextFieldDelegate {
         loginStackView.isHidden = false
         //login_button.isEnabled = true
         
+        loginTextField.text = "gamy316"
         loginTextField.leftViewMode = UITextFieldViewMode.always
         loginTextField.leftView = UIImageView(image: UIImage(named: "username"))
         
-        
+        passwordTextField.text = "gamy666"
         passwordTextField.leftViewMode = UITextFieldViewMode.always
         passwordTextField.leftView = UIImageView(image: UIImage(named: "password"))
 
@@ -244,56 +188,9 @@ class MainController: UIViewController, UITextFieldDelegate {
         
         post_data.setValue(login_session, forKey: "session")
         
-        let url:URL = URL(string: self.url)!
-        let session = URLSession.shared
-        
-        let request = NSMutableURLRequest(url: url)
-        request.httpMethod = "POST"
-        request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
-        
-        var paramString = ""
-        
-        for (key, value) in post_data {
-            paramString = paramString + (key as! String) + "=" + (value as! String) + "&"
-        }
-        
-        request.httpBody = paramString.data(using: String.Encoding.utf8)
-        
-        let task = session.dataTask(with: request as URLRequest, completionHandler: {
-            (
-            data, response, error) in
-            
-            guard let _:Data = data, let _:URLResponse = response  , error == nil else {
-                return
-            }
-            
-            let json: Any?
-            
-            do {
-                json = try JSONSerialization.jsonObject(with: data!, options: [])
-            } catch {
-                return
-            }
-            
-            guard let server_response = json as? NSDictionary else {
-                return
-            }
-            
-            print("check \(server_response)");
-            
-            if let response_code = server_response["response_code"] as? Int  {
-                if(response_code == 200) {
-                    let preferences = UserDefaults.standard
-                    preferences.set(true, forKey: "touchIdEnrolled")
-                    DispatchQueue.main.async(execute: self.loginDone)
-                } else {
-                    DispatchQueue.main.async(execute: self.loginToDo)
-                }
-            }
-        })
-        
-        task.resume()
-        
+        let preferences = UserDefaults.standard
+        preferences.set(true, forKey: "touchIdEnrolled")
+        DispatchQueue.main.async(execute: loginDone)
     }
     
     func touchAuthenticateUser() {
