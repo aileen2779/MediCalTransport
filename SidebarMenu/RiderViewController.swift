@@ -12,13 +12,8 @@ class RiderViewController: UIViewController,
                         UITableViewDelegate,
                         UITextFieldDelegate  {
     
-    func displayAlert(title: String, message: String) {
-
-        let alertcontroller = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertcontroller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(alertcontroller, animated: true, completion: nil)
-        
-    }
+    @IBOutlet weak var menuButton:UIBarButtonItem!
+    @IBOutlet weak var extraButton: UIBarButtonItem!
     
     var driverOnTheWay = false
     var locationManager = CLLocationManager()
@@ -373,5 +368,11 @@ class RiderViewController: UIViewController,
         textField.layer.shadowOpacity = 0.5
         textField.layer.shadowRadius = 5.0
     }
-    
+    func displayAlert(title: String, message: String) {
+        
+        let alertcontroller = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertcontroller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alertcontroller, animated: true, completion: nil)
+        
+    }
 }

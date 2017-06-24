@@ -53,7 +53,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7E1465221EFDD25900F1102A /* RiderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RiderViewController.swift; path = SidebarMenu/RiderViewController.swift; sourceTree = "<group>"; };
+		7E1465221EFDD25900F1102A /* RiderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RiderViewController.swift; sourceTree = "<group>"; };
 		7E1465251EFDD2EF00F1102A /* DateTimePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateTimePicker.swift; sourceTree = "<group>"; };
 		7E1465261EFDD2EF00F1102A /* DateCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateCollectionViewCell.swift; sourceTree = "<group>"; };
 		7E1465271EFDD2EF00F1102A /* StepCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
@@ -146,6 +146,7 @@
 		7E55C1891EF8640700528AC3 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				7E1465221EFDD25900F1102A /* RiderViewController.swift */,
 				7E95382E1EF9D1D9008204AA /* ScrollableGraphViewController.swift */,
 				7EEB39FF1EF8E241001A281D /* SettingsViewController.swift */,
 				F4702A171A7F351C00E30A3C /* MenuController.swift */,
@@ -226,7 +227,6 @@
 		F47029E71A7F27DB00E30A3C = {
 			isa = PBXGroup;
 			children = (
-				7E1465221EFDD25900F1102A /* RiderViewController.swift */,
 				F47029F21A7F27DB00E30A3C /* SidebarMenu */,
 				F4702A081A7F27DC00E30A3C /* SidebarMenuTests */,
 				F47029F11A7F27DB00E30A3C /* Products */,
