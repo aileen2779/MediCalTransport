@@ -1,6 +1,0 @@
-framework module MMTabBarAnimation {
-  umbrella header "MMTabBarAnimation-umbrella.h"
-
-  export *
-  module * { export * }
-}

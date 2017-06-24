@@ -2,7 +2,7 @@
 
 import UIKit
 
-class NewsTableViewCell: UITableViewCell {
+class ScheduledTripsTableViewCell: UITableViewCell {
     
     @IBOutlet weak var postImageView:UIImageView!
     @IBOutlet weak var authorImageView:UIImageView!
