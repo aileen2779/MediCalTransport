@@ -56,11 +56,11 @@ class ScheduledTripsTableViewController: UITableViewController {
 
         } else if indexPath.row == 1 {
             cell.fromLabel.text = "909 Adobe Flat Dr. Henderson, NV 89011"
-            cell.toLabel.text = "7266 Summer Grove Ave Las Vegas, NV 89000"
+            cell.toLabel.text = "7266 Summer Grove Ave. Las Vegas, NV 89000"
             cell.whenLabel.text = "July 23, 2017 12:00pm"
             
         } else {
-            cell.fromLabel.text = "238 Highgate St., Henderson NV 89012"
+            cell.fromLabel.text = "238 Highgate St. Henderson NV 89012"
             cell.toLabel.text = "7266 Summer Grove Ave Las Vegas, NV 89000"
             cell.whenLabel.text = "August 23, 2017 12:00pm"
             
