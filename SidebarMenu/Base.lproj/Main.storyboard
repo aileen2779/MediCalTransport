@@ -33,48 +33,6 @@
             </objects>
             <point key="canvasLocation" x="-431" y="-13"/>
         </scene>
-        <!--Map View Controller-->
-        <scene sceneID="MMi-W1-KaJ">
-            <objects>
-                <viewController id="IXz-HG-hIe" customClass="MapViewController" customModule="SidebarMenu" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="1V6-Hn-ruu"/>
-                        <viewControllerLayoutGuide type="bottom" id="GLp-rp-ryS"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="HE4-02-mb0">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="eGr-3E-Ljh">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                            </mapView>
-                        </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="eGr-3E-Ljh" firstAttribute="top" secondItem="HE4-02-mb0" secondAttribute="top" id="6en-Wz-bhK"/>
-                            <constraint firstItem="eGr-3E-Ljh" firstAttribute="centerY" secondItem="HE4-02-mb0" secondAttribute="centerY" id="AuU-7Z-xsr"/>
-                            <constraint firstAttribute="trailing" secondItem="eGr-3E-Ljh" secondAttribute="trailing" id="GKu-cg-R28"/>
-                            <constraint firstItem="eGr-3E-Ljh" firstAttribute="centerX" secondItem="HE4-02-mb0" secondAttribute="centerX" id="J2m-ef-PyN"/>
-                            <constraint firstItem="eGr-3E-Ljh" firstAttribute="leading" secondItem="HE4-02-mb0" secondAttribute="leading" id="OSC-9X-TjN"/>
-                            <constraint firstAttribute="bottom" secondItem="eGr-3E-Ljh" secondAttribute="bottom" id="XBl-G7-AYh"/>
-                        </constraints>
-                    </view>
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" id="YdA-HD-78b">
-                        <barButtonItem key="leftBarButtonItem" image="menu" id="rhH-Mc-GbH"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="organize" id="cqu-bw-cCl"/>
-                    </navigationItem>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <outlet property="extraButton" destination="cqu-bw-cCl" id="IZu-0K-bfd"/>
-                        <outlet property="mapView" destination="eGr-3E-Ljh" id="Hk4-Zd-ljS"/>
-                        <outlet property="menuButton" destination="rhH-Mc-GbH" id="3WY-V6-aTS"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7TD-bi-rsw" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2576.8000000000002" y="50.824587706146929"/>
-        </scene>
         <!--Menu Controller-->
         <scene sceneID="WvI-gM-KFV">
             <objects>
@@ -359,7 +317,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="IXz-HG-hIe" kind="relationship" relationship="rootViewController" id="emK-gG-wXw"/>
+                        <segue destination="o2W-mE-s1z" kind="relationship" relationship="rootViewController" id="APh-AX-07n"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Zi-DC-yja" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1153,6 +1111,46 @@
             </objects>
             <point key="canvasLocation" x="2577" y="-630"/>
         </scene>
+        <!--Scheduled Trips-->
+        <scene sceneID="ZH5-Q4-SLK">
+            <objects>
+                <tableViewController id="o2W-mE-s1z" customClass="SettingsViewController" customModule="SidebarMenu" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Awt-Te-NoB">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="84D-w9-eDJ">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="84D-w9-eDJ" id="ler-sJ-o5y">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="o2W-mE-s1z" id="Ta8-BM-wLd"/>
+                            <outlet property="delegate" destination="o2W-mE-s1z" id="ZU2-Ss-gm2"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Scheduled Trips" id="yLd-bQ-oeD">
+                        <barButtonItem key="leftBarButtonItem" image="menu" id="QAw-2n-JSb">
+                            <connections>
+                                <action selector="menuButton:" destination="o2W-mE-s1z" id="vqh-ic-Dph"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="menuButton" destination="QAw-2n-JSb" id="8fq-RG-uAj"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mVk-7a-3Ug" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2577" y="51"/>
+        </scene>
     </scenes>
     <resources>
         <image name="calendar" width="1024" height="1024"/>
@@ -1170,6 +1168,6 @@
         <image name="username" width="20" height="19"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="zes-9v-hhD"/>
+        <segue reference="4MM-WT-KCi"/>
     </inferredMetricsTieBreakers>
 </document>
