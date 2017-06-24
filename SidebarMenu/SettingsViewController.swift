@@ -19,7 +19,7 @@ class SettingsViewController: UITableViewController {
             menuButton.target = revealViewController()
             menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
             
-            revealViewController().rightViewRevealWidth = 150
+            revealViewController().rightViewRevealWidth = 200
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
         

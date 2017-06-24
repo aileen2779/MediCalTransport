@@ -44,7 +44,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
             menuButton.target = revealViewController()
             menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
             
-            revealViewController().rightViewRevealWidth = 150
+            revealViewController().rightViewRevealWidth = 200
             extraButton.target = revealViewController()
             extraButton.action = #selector(SWRevealViewController.rightRevealToggle(_:))
             
