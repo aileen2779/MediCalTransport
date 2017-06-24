@@ -11,6 +11,7 @@
 		7E1465281EFDD2EF00F1102A /* DateTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1465251EFDD2EF00F1102A /* DateTimePicker.swift */; };
 		7E1465291EFDD2EF00F1102A /* DateCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1465261EFDD2EF00F1102A /* DateCollectionViewCell.swift */; };
 		7E14652A1EFDD2EF00F1102A /* StepCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1465271EFDD2EF00F1102A /* StepCollectionViewFlowLayout.swift */; };
+		7E1465301EFDE92100F1102A /* icon_180.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E14652F1EFDE92100F1102A /* icon_180.png */; };
 		7E55C18F1EF8642B00528AC3 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E55C18D1EF8642B00528AC3 /* CustomTextField.swift */; };
 		7E55C1941EF8645200528AC3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E55C1931EF8645200528AC3 /* Constants.swift */; };
 		7E6150FB1EF875710077B4E5 /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6150F91EF875710077B4E5 /* NewsTableViewCell.swift */; };
@@ -57,6 +58,7 @@
 		7E1465251EFDD2EF00F1102A /* DateTimePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateTimePicker.swift; sourceTree = "<group>"; };
 		7E1465261EFDD2EF00F1102A /* DateCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateCollectionViewCell.swift; sourceTree = "<group>"; };
 		7E1465271EFDD2EF00F1102A /* StepCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StepCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		7E14652F1EFDE92100F1102A /* icon_180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_180.png; sourceTree = "<group>"; };
 		7E55C18D1EF8642B00528AC3 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		7E55C1931EF8645200528AC3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7E6150F91EF875710077B4E5 /* NewsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 		7E55C18A1EF8640D00528AC3 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				7E14652F1EFDE92100F1102A /* icon_180.png */,
 				7E55C1931EF8645200528AC3 /* Constants.swift */,
 			);
 			name = Util;
@@ -393,6 +396,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F47029FB1A7F27DB00E30A3C /* Main.storyboard in Resources */,
+				7E1465301EFDE92100F1102A /* icon_180.png in Resources */,
 				F4702A001A7F27DC00E30A3C /* LaunchScreen.xib in Resources */,
 				7EEB3A0F1EF98066001A281D /* TimelineTableViewCell.xib in Resources */,
 				F47029FD1A7F27DB00E30A3C /* Images.xcassets in Resources */,

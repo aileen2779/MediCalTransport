@@ -13,6 +13,7 @@ class RiderViewController: UIViewController,
                         UITextFieldDelegate  {
     
     @IBOutlet weak var menuButton:UIBarButtonItem!
+   
     @IBOutlet weak var extraButton: UIBarButtonItem!
     
     var driverOnTheWay = false
@@ -83,9 +84,6 @@ class RiderViewController: UIViewController,
         optionMenu.addAction(scheduleAction)
         optionMenu.addAction(cancelAction)
         self.present(optionMenu, animated: true, completion: nil)
-        
-        
-
     }
     
 
@@ -105,9 +103,22 @@ class RiderViewController: UIViewController,
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         
-        
         callAnUberButton.isHidden = true
 
+        
+        // reveal controller
+        if revealViewController() != nil {
+            revealViewController().rearViewRevealWidth = 150
+            menuButton.target = revealViewController()
+            menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
+            
+            revealViewController().rightViewRevealWidth = 150
+            extraButton.target = revealViewController()
+            extraButton.action = #selector(SWRevealViewController.rightRevealToggle(_:))
+            
+            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
+        
         /*
         let query = PFQuery(className: "RiderRequest")
         query.whereKey("username", equalTo: (PFUser.current()?.username)!)
