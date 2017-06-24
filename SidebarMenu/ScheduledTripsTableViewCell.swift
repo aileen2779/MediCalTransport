@@ -1,14 +1,12 @@
 
-
 import UIKit
 
 class ScheduledTripsTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var postImageView:UIImageView!
-    @IBOutlet weak var authorImageView:UIImageView!
-    @IBOutlet weak var postTitleLabel:UILabel!
-    @IBOutlet weak var authorLabel:UILabel!
-
+    @IBOutlet weak var fromLabel: UILabel!
+    @IBOutlet weak var toLabel: UILabel!
+    @IBOutlet weak var whenLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

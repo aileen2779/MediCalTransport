@@ -1,17 +1,15 @@
 //
-//  NewsTableViewController.swift
+//  ScheduledTripsTableViewController.swift
 //  SidebarMenu
-//
-//  Created by Simon Ng on 2/2/15.
-//  Copyright (c) 2015 AppCoda. All rights reserved.
 //
 
 import UIKit
 
 class ScheduledTripsTableViewController: UITableViewController {
+
     @IBOutlet var menuButton:UIBarButtonItem!
     @IBOutlet var extraButton:UIBarButtonItem!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -48,20 +46,23 @@ class ScheduledTripsTableViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! NewsTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ScheduledTripsTableViewCell
 
         // Configure the cell...
         if indexPath.row == 0 {
-            cell.postTitleLabel.text = "WatchKit Introduction: Building a Simple Guess Game"
-            cell.authorLabel.text = "June 23, 2017 12:00pm"
+            cell.fromLabel.text = "668 Holland Heights Ave. Las Vegas, NV 89123"
+            cell.toLabel.text = "7266 Summer Grove Ave Las Vegas, NV 89000"
+            cell.whenLabel.text = "June 23, 2017 12:00pm"
 
         } else if indexPath.row == 1 {
-            cell.postTitleLabel.text = "Building a Chat App in Swift Using Multipeer Connectivity Framework"
-            cell.authorLabel.text = "July 23, 2017 12:00pm"
+            cell.fromLabel.text = "909 Adobe Flat Dr. Henderson, NV 89011"
+            cell.toLabel.text = "7266 Summer Grove Ave Las Vegas, NV 89000"
+            cell.whenLabel.text = "July 23, 2017 12:00pm"
             
         } else {
-            cell.postTitleLabel.text = "A Beginner’s Guide to Animated Custom Segues in iOS 8"
-            cell.authorLabel.text = "August 23, 2017 12:00pm"
+            cell.fromLabel.text = "238 Highgate St., Henderson NV 89012"
+            cell.toLabel.text = "7266 Summer Grove Ave Las Vegas, NV 89000"
+            cell.whenLabel.text = "August 23, 2017 12:00pm"
             
         }
 
