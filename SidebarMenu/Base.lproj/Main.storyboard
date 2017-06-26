@@ -26,7 +26,7 @@
                     <connections>
                         <segue destination="c8U-hf-vWv" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegueSetController" id="jNl-dZ-ht5"/>
                         <segue destination="1iL-ll-I54" kind="custom" identifier="sw_right" customClass="SWRevealViewControllerSegueSetController" id="s02-HC-R1e"/>
-                        <segue destination="Iv3-05-gzX" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="4MM-WT-KCi"/>
+                        <segue destination="dXH-rC-dKS" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="0jY-V3-zoc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -53,7 +53,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="My Profile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="F4U-2a-tgt">
-                                                    <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
+                                                    <rect key="frame" x="16" y="0.0" width="344" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                                     <nil key="textColor"/>
@@ -1124,7 +1124,7 @@
                                 <rect key="frame" x="0.0" y="22" width="375" height="130"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="a7O-ok-3Xb" id="VI5-4O-Ljr">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="129.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="130"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Zn2-27-De9">
@@ -1248,6 +1248,6 @@
         <image name="username" width="20" height="19"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="zes-9v-hhD"/>
+        <segue reference="0jY-V3-zoc"/>
     </inferredMetricsTieBreakers>
 </document>
