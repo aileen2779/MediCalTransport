@@ -1028,8 +1028,8 @@
                                 <rect key="frame" x="23" y="134" width="330" height="60"/>
                                 <color key="backgroundColor" red="0.91477886730000002" green="0.94991112759999996" blue="0.93750542299999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" constant="330" id="79V-a2-kBz"/>
                                     <constraint firstAttribute="height" constant="60" id="s2v-Lu-83R"/>
-                                    <constraint firstAttribute="width" constant="330" id="zLl-TU-2Cv"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" keyboardAppearance="alert"/>
@@ -1074,7 +1074,6 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="hZM-oD-XxB" firstAttribute="centerX" secondItem="bge-hM-9M8" secondAttribute="centerX" id="1Z5-cA-iAn"/>
                             <constraint firstItem="WTo-zC-G5b" firstAttribute="centerX" secondItem="bge-hM-9M8" secondAttribute="centerX" id="BE6-Gg-zOG" userLabel="Request a ride Button.centerX = centerX"/>
                             <constraint firstItem="vs1-2c-cIf" firstAttribute="centerX" secondItem="bge-hM-9M8" secondAttribute="centerX" id="EeJ-vL-vj8"/>
                             <constraint firstItem="cUK-AO-Avd" firstAttribute="top" secondItem="OZS-Xm-fSG" secondAttribute="bottom" id="KGt-Sz-KEH"/>
@@ -1087,6 +1086,7 @@
                             <constraint firstItem="hZM-oD-XxB" firstAttribute="top" secondItem="A3n-LA-T69" secondAttribute="bottom" constant="5" id="jgU-33-Mla"/>
                             <constraint firstItem="egS-cl-b14" firstAttribute="centerX" secondItem="bge-hM-9M8" secondAttribute="centerX" id="oZJ-9a-W4H"/>
                             <constraint firstItem="JdU-Rb-9ap" firstAttribute="top" secondItem="vs1-2c-cIf" secondAttribute="bottom" constant="5" id="rAr-as-BhF"/>
+                            <constraint firstItem="hZM-oD-XxB" firstAttribute="centerX" secondItem="bge-hM-9M8" secondAttribute="centerX" id="rFL-jc-s5q"/>
                             <constraint firstItem="OZS-Xm-fSG" firstAttribute="top" secondItem="bge-hM-9M8" secondAttribute="top" id="tZv-qP-J6D"/>
                             <constraint firstAttribute="trailingMargin" secondItem="vs1-2c-cIf" secondAttribute="trailing" constant="6" id="yqx-81-Gjz"/>
                         </constraints>
