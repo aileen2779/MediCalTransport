@@ -43,7 +43,7 @@
 		F4702A181A7F351C00E30A3C /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4702A171A7F351C00E30A3C /* MenuController.swift */; };
 		F491E74A1A7F4B300026528E /* DirectoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E7491A7F4B300026528E /* DirectoryViewController.swift */; };
 		F491E7531A7F7DF20026528E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E7521A7F7DF20026528E /* MapViewController.swift */; };
-		F491E7551A7F7E010026528E /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E7541A7F7E010026528E /* PhotoViewController.swift */; };
+		F491E7551A7F7E010026528E /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E7541A7F7E010026528E /* RegisterViewController.swift */; };
 		F4D750181BD38F0C009E1003 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D750171BD38F0C009E1003 /* SWRevealViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -106,7 +106,7 @@
 		F4702A171A7F351C00E30A3C /* MenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
 		F491E7491A7F4B300026528E /* DirectoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectoryViewController.swift; sourceTree = "<group>"; };
 		F491E7521A7F7DF20026528E /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		F491E7541A7F7E010026528E /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
+		F491E7541A7F7E010026528E /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		F4D750151BD38F0C009E1003 /* SidebarMenu-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SidebarMenu-Bridging-Header.h"; sourceTree = "<group>"; };
 		F4D750161BD38F0C009E1003 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		F4D750171BD38F0C009E1003 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
@@ -158,7 +158,6 @@
 		7E55C1871EF863FA00528AC3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				7E6150FA1EF875710077B4E5 /* NewsTableViewController.swift */,
 				7E6291AC1EFE1457008A25E1 /* ScheduledTripsTableViewController.swift */,
 			);
 			name = Model;
@@ -177,13 +176,14 @@
 			children = (
 				7E6291AB1EFE1457008A25E1 /* ScheduledTripsTableViewCell.swift */,
 				7E6150F91EF875710077B4E5 /* NewsTableViewCell.swift */,
+				7E6150FA1EF875710077B4E5 /* NewsTableViewController.swift */,
 				7E1465221EFDD25900F1102A /* RiderViewController.swift */,
 				7E95382E1EF9D1D9008204AA /* ScrollableGraphViewController.swift */,
 				7EEB39FF1EF8E241001A281D /* SettingsViewController.swift */,
 				F4702A171A7F351C00E30A3C /* MenuController.swift */,
 				F491E7491A7F4B300026528E /* DirectoryViewController.swift */,
 				F491E7521A7F7DF20026528E /* MapViewController.swift */,
-				F491E7541A7F7E010026528E /* PhotoViewController.swift */,
+				F491E7541A7F7E010026528E /* RegisterViewController.swift */,
 				7E6150FF1EF8B62C0077B4E5 /* MainController.swift */,
 				7EEB3A011EF97E45001A281D /* TimelineViewController.swift */,
 			);
@@ -572,7 +572,7 @@
 				F491E74A1A7F4B300026528E /* DirectoryViewController.swift in Sources */,
 				7E6291AE1EFE1457008A25E1 /* ScheduledTripsTableViewController.swift in Sources */,
 				7E6291AD1EFE1457008A25E1 /* ScheduledTripsTableViewCell.swift in Sources */,
-				F491E7551A7F7E010026528E /* PhotoViewController.swift in Sources */,
+				F491E7551A7F7E010026528E /* RegisterViewController.swift in Sources */,
 				7EEB3A0A1EF97FBC001A281D /* TimelinePoint.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -13,7 +13,6 @@ class RiderViewController: UIViewController,
                         UITextFieldDelegate  {
     
     @IBOutlet weak var menuButton:UIBarButtonItem!
-   
     @IBOutlet weak var extraButton: UIBarButtonItem!
     
     var driverOnTheWay = false

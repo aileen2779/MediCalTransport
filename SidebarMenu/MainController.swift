@@ -1,10 +1,7 @@
 //
 //  MainController.swift
-//  702Shifters
-//
 //  Created by Gamy Malasarte on 6/6/17.
-//  Copyright © 2017 Jonny B. All rights reserved.
-//
+
 
 import UIKit
 import LocalAuthentication
