@@ -4,6 +4,8 @@
 
 import UIKit
 import MapKit
+import FirebaseDatabase
+
 
 class RiderViewController: UIViewController,
                         MKMapViewDelegate,
@@ -11,6 +13,10 @@ class RiderViewController: UIViewController,
                         UITableViewDataSource,
                         UITableViewDelegate,
                         UITextFieldDelegate  {
+    
+    // Firebase handles
+    var ref:DatabaseReference?
+    
     
     @IBOutlet weak var menuButton:UIBarButtonItem!
     @IBOutlet weak var extraButton: UIBarButtonItem!
@@ -38,39 +44,22 @@ class RiderViewController: UIViewController,
                 //
             }
         
-            /*
-            callAnUberButton.setTitle("Go ahead and schedule this ride", for: [])
-            riderRequestActive = false
-            let query = PFQuery(className: "RiderRequest")
-            
-            query.whereKey("username", equalTo: (PFUser.current()?.username)!)
-            query.findObjectsInBackground(block: {
-                    (objects, error) in
-                    if let riderRequests = objects {
-                        for riderRequest in riderRequests {
-                            riderRequest.deleteInBackground()
-                        }
-                    }
-                }
-            )
-            */
-        
         let optionMenu = UIAlertController(title: nil, message: "Are you sure?", preferredStyle: .actionSheet)
         let scheduleAction = UIAlertAction(title: "Schedule this ride", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             
+            print(self.fromTextField.text!)
+            print(self.toTextField.text!)
+            print(self.whenTextField!)
             
-            //Insert into AWS
-            if self.userLocation.latitude != 0 && self.userLocation.longitude != 0 {
-                self.riderRequestActive = true
-                //self.callAnUberButton.setTitle("Cancel this ride", for: [])
-            } else {
-                
-                self.displayAlert(title: "Could not schedule a ride", message: "Cannot detect your location.")
-                
-            }
-            //End insert
+            let username = "gamy316"
+            //let preferences = UsegrDefaults.standard
+            //username = preferences.object(forKey: "username") as! String
             
+            self.ref?.child("Posts").childByAutoId().setValue(username)
+            self.ref?.child("Posts").childByAutoId().setValue(self.fromTextField.text!)
+            self.ref?.child("Posts").childByAutoId().setValue(self.toTextField.text!)
+            self.ref?.child("Posts").childByAutoId().setValue(self.whenTextField.text!)
             
             
         })
@@ -105,6 +94,10 @@ class RiderViewController: UIViewController,
         callAnUberButton.isHidden = true
 
         
+        // firebase reference
+        //ref = Database.database().reference()
+        ref = Database.database().reference()
+        
         // reveal controller
         if revealViewController() != nil {
             //revealViewController().rearViewRevealWidth = 150
@@ -118,20 +111,6 @@ class RiderViewController: UIViewController,
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
         
-        /*
-        let query = PFQuery(className: "RiderRequest")
-        query.whereKey("username", equalTo: (PFUser.current()?.username)!)
-        query.findObjectsInBackground(block: { (objects, error) in
-            
-            if let objects = objects {
-                if objects.count > 0 {
-                    self.riderRequestActive = true
-                    self.callAnUberButton.setTitle("Cancel Uber", for: [])
-                }
-            }
-            self.callAnUberButton.isHidden = false
-        })
- */
         self.callAnUberButton.isHidden = false
         
         // Textfield
@@ -170,9 +149,6 @@ class RiderViewController: UIViewController,
                 
                 self.mapView.showsUserLocation = true
             }
-            
-        
-            
         }
         
         if riderRequestActive == true {
@@ -251,7 +227,7 @@ class RiderViewController: UIViewController,
     
     // Toggle the tableView visibility when click on textField
     func fromTextFieldActive() {
-        values = ["Home:\n668 Holland Heights Ave.,\nLas Vegas NV 89123",
+        values = ["668 Holland Heights Ave.,\nLas Vegas NV 89123",
                   "Current Location"]
         tableView.reloadData()
         tableView.frame = CGRect(x: tableView.frame.origin.x, y: tableView.frame.origin.y, width: tableView.frame.size.width, height: tableView.contentSize.height + 100)

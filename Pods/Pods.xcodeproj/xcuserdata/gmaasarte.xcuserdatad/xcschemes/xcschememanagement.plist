@@ -4,12 +4,22 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>GoogleToolboxForMac.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-SidebarMenu.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
 		<key>Pods-SidebarMenuTests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Protobuf.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -22,17 +32,27 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>13482BF96FF6E52D293F85EDD48EED13</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>362B7618AC394DCDB9EB70DA1AD47DC6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A87C66D288C12B21005B129B884392FD</key>
+		<key>AD300EA0888180D16304561C5EABFBA8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C5B80060FE8C664DF08841000F41D515</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EBF77E7D1F639583459AD41D374DD1BB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F137860C28F0AE7C6A20D761675C6529</key>
 		<dict>
 			<key>primary</key>
 			<true/>

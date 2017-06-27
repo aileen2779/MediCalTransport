@@ -33,6 +33,7 @@
 		7EEB3A0A1EF97FBC001A281D /* TimelinePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEB3A061EF97FBC001A281D /* TimelinePoint.swift */; };
 		7EEB3A0B1EF97FBC001A281D /* TimelineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEB3A071EF97FBC001A281D /* TimelineTableViewCell.swift */; };
 		7EEB3A0F1EF98066001A281D /* TimelineTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7EEB3A0E1EF98066001A281D /* TimelineTableViewCell.xib */; };
+		7EFE1D6D1F022BC700DF792D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7EFE1D6C1F022BC700DF792D /* GoogleService-Info.plist */; };
 		CBBD4813B4AA2CDE206C9572 /* Pods_SidebarMenuTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3DB96698DAFB617467C510F /* Pods_SidebarMenuTests.framework */; };
 		F47029F61A7F27DB00E30A3C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47029F51A7F27DB00E30A3C /* AppDelegate.swift */; };
 		F47029FB1A7F27DB00E30A3C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F47029F91A7F27DB00E30A3C /* Main.storyboard */; };
@@ -87,6 +88,7 @@
 		7EEB3A071EF97FBC001A281D /* TimelineTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineTableViewCell.swift; sourceTree = "<group>"; };
 		7EEB3A0D1EF98054001A281D /* TimelineTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimelineTableViewCell.h; sourceTree = "<group>"; };
 		7EEB3A0E1EF98066001A281D /* TimelineTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimelineTableViewCell.xib; sourceTree = "<group>"; };
+		7EFE1D6C1F022BC700DF792D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8ED2541DA61D74FFFEF368A5 /* Pods-SidebarMenu.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SidebarMenu.release.xcconfig"; path = "Pods/Target Support Files/Pods-SidebarMenu/Pods-SidebarMenu.release.xcconfig"; sourceTree = "<group>"; };
 		94BD6E615F44FDE9F425B05D /* Pods-SidebarMenu.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SidebarMenu.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SidebarMenu/Pods-SidebarMenu.debug.xcconfig"; sourceTree = "<group>"; };
 		C34BAC6104DB0E54BBECC6DB /* Pods-SidebarMenuTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SidebarMenuTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SidebarMenuTests/Pods-SidebarMenuTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 		7E55C18A1EF8640D00528AC3 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				7EFE1D6C1F022BC700DF792D /* GoogleService-Info.plist */,
 				7E14652F1EFDE92100F1102A /* icon_180.png */,
 				7E55C1931EF8645200528AC3 /* Constants.swift */,
 			);
@@ -436,6 +439,7 @@
 				F4702A001A7F27DC00E30A3C /* LaunchScreen.xib in Resources */,
 				7EEB3A0F1EF98066001A281D /* TimelineTableViewCell.xib in Resources */,
 				F47029FD1A7F27DB00E30A3C /* Images.xcassets in Resources */,
+				7EFE1D6D1F022BC700DF792D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
