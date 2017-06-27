@@ -29,7 +29,58 @@ class RiderViewController: UIViewController,
     var riderRequestActive = true
     var userLocation: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0)
     
+    
+    @IBOutlet var callAnUberButton: UIButton!
     @IBOutlet var mapView: MKMapView!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        dropShadow(thisObject: requestARide)
+        dropShadow(thisObject: fromTextField)
+        dropShadow(thisObject: toTextField)
+        dropShadow(thisObject: whenTextField)
+        
+        // Do any additional setup after loading the view.
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+ 
+        // firebase reference
+        ref = Database.database().reference()
+        
+        // reveal controller
+        if revealViewController() != nil {
+            //revealViewController().rearViewRevealWidth = 150
+            menuButton.target = revealViewController()
+            menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
+            
+            revealViewController().rightViewRevealWidth = 200
+            extraButton.target = revealViewController()
+            extraButton.action = #selector(SWRevealViewController.rightRevealToggle(_:))
+            
+            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
+
+        // Textfield
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        fromTextField.delegate = self
+        toTextField.delegate = self
+        whenTextField.delegate = self
+        
+        tableView.isHidden = true
+        
+        // Manage tableView visibility via TouchDown in textField
+        fromTextField.addTarget(self, action: #selector(fromTextFieldActive), for: UIControlEvents.touchDown)
+        toTextField.addTarget(self, action: #selector(toTextFieldActive), for: UIControlEvents.touchDown)
+        whenTextField.addTarget(self, action: #selector(whenTextFieldActive), for: UIControlEvents.touchDown)
+        
+    }
     
     @IBAction func callAnUber(_ sender: AnyObject) {
         
@@ -55,14 +106,19 @@ class RiderViewController: UIViewController,
             print(self.toTextField.text!)
             print(self.whenTextField!)
             
+            //print("Latitude \(self.locationManager.location?.coordinate.latitude)")
+            
+            
             let username = "gamy316"
             //let preferences = UsegrDefaults.standard
             //username = preferences.object(forKey: "username") as! String
             
-            self.ref?.child("Posts").childByAutoId().setValue(username)
-            self.ref?.child("Posts").childByAutoId().setValue(self.fromTextField.text!)
-            self.ref?.child("Posts").childByAutoId().setValue(self.toTextField.text!)
-            self.ref?.child("Posts").childByAutoId().setValue(self.whenTextField.text!)
+            self.ref?.child("RideSchedule").childByAutoId().setValue(username)
+            self.ref?.child("RideSchedule").childByAutoId().setValue(self.fromTextField.text!)
+            self.ref?.child("RideSchedule").childByAutoId().setValue(self.toTextField.text!)
+            self.ref?.child("RideSchedule").childByAutoId().setValue(self.whenTextField.text!)
+            self.ref?.child("RideSchedule").childByAutoId().setValue((self.locationManager.location?.coordinate.longitude))
+            self.ref?.child("RideSchedule").childByAutoId().setValue((self.locationManager.location?.coordinate.latitude))
             
             
         })
@@ -76,67 +132,7 @@ class RiderViewController: UIViewController,
         optionMenu.addAction(cancelAction)
         self.present(optionMenu, animated: true, completion: nil)
     }
-    
 
-    
-    @IBOutlet var callAnUberButton: UIButton!
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        dropShadow(thisObject: requestARide)
-        dropShadow(thisObject: fromTextField)
-        addShadow(textField: toTextField)
-        addShadow(textField: whenTextField)
-
-        // Do any additional setup after loading the view.
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-        
-        
-        callAnUberButton.isHidden = true
-
-        
-        // firebase reference
-        ref = Database.database().reference()
-        
-        // reveal controller
-        if revealViewController() != nil {
-            //revealViewController().rearViewRevealWidth = 150
-            menuButton.target = revealViewController()
-            menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
-            
-            revealViewController().rightViewRevealWidth = 200
-            extraButton.target = revealViewController()
-            extraButton.action = #selector(SWRevealViewController.rightRevealToggle(_:))
-            
-            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-        }
-        
-        self.callAnUberButton.isHidden = false
-        
-        // Textfield
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-        fromTextField.delegate = self
-        toTextField.delegate = self
-        whenTextField.delegate = self
-
-        tableView.isHidden = true
-        
-        // Manage tableView visibility via TouchDown in textField
-        fromTextField.addTarget(self, action: #selector(fromTextFieldActive), for: UIControlEvents.touchDown)
-        toTextField.addTarget(self, action: #selector(toTextFieldActive), for: UIControlEvents.touchDown)
-        whenTextField.addTarget(self, action: #selector(whenTextFieldActive), for: UIControlEvents.touchDown)
-        
-    }
-    
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         if let location = manager.location?.coordinate {
@@ -350,25 +346,16 @@ class RiderViewController: UIViewController,
         UIView.animate(withDuration: 0.1, delay: 0.1, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseIn, animations: {_thisTextField.center.x -= 20 }, completion: nil)
         UIView.animate(withDuration: 0.1, delay: 0.2, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseIn, animations: {_thisTextField.center.x += 10 }, completion: nil)
     }
-    
-    func addShadow(textField: UITextField) {
-        textField.layer.borderColor = UIColor.clear.cgColor
-        textField.layer.masksToBounds = false
-        textField.layer.shadowColor = UIColor.black.cgColor
-        textField.layer.shadowOffset = CGSize.zero
-        textField.layer.shadowOpacity = 0.5
-        textField.layer.shadowRadius = 5.0
-    }
 
     func dropShadow(thisObject: Any) {
         (thisObject as AnyObject).layer.borderColor = UIColor.clear.cgColor
         (thisObject as AnyObject).layer.masksToBounds = false
         (thisObject as AnyObject).layer.shadowColor = UIColor.black.cgColor
         (thisObject as AnyObject).layer.shadowOffset = CGSize.zero
-        (thisObject as AnyObject).layer.shadowOpacity = 0.5
+        (thisObject as AnyObject).layer.shadowOpacity = 1
         (thisObject as AnyObject).layer.shadowRadius = 5.0
     }
-    
+        
     func displayAlert(title: String, message: String) {
         
         let alertcontroller = UIAlertController(title: title, message: message, preferredStyle: .alert)
