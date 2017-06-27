@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>GoogleToolboxForMac.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>Pods-SidebarMenu.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>Pods-SidebarMenuTests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>Protobuf.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
+		<key>TextFieldEffects.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>362B7618AC394DCDB9EB70DA1AD47DC6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AD300EA0888180D16304561C5EABFBA8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C5B80060FE8C664DF08841000F41D515</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EBF77E7D1F639583459AD41D374DD1BB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F137860C28F0AE7C6A20D761675C6529</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>

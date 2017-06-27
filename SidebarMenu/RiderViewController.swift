@@ -21,6 +21,9 @@ class RiderViewController: UIViewController,
     @IBOutlet weak var menuButton:UIBarButtonItem!
     @IBOutlet weak var extraButton: UIBarButtonItem!
     
+
+    @IBOutlet weak var requestARide: UIButton!
+    
     var driverOnTheWay = false
     var locationManager = CLLocationManager()
     var riderRequestActive = true
@@ -81,7 +84,8 @@ class RiderViewController: UIViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        addShadow(textField: fromTextField)
+        dropShadow(thisObject: requestARide)
+        dropShadow(thisObject: fromTextField)
         addShadow(textField: toTextField)
         addShadow(textField: whenTextField)
 
@@ -91,11 +95,11 @@ class RiderViewController: UIViewController,
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         
+        
         callAnUberButton.isHidden = true
 
         
         // firebase reference
-        //ref = Database.database().reference()
         ref = Database.database().reference()
         
         // reveal controller
@@ -132,10 +136,12 @@ class RiderViewController: UIViewController,
         
     }
     
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         if let location = manager.location?.coordinate {
             userLocation = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+            print(userLocation)
             if driverOnTheWay == false {
                 
                 let region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
@@ -145,7 +151,6 @@ class RiderViewController: UIViewController,
                 //annotation.coordinate = userLocation
                 //annotation.title = "Your Location"
                 //self.mapView.addAnnotation(annotation)
-                
                 
                 self.mapView.showsUserLocation = true
             }
@@ -354,6 +359,16 @@ class RiderViewController: UIViewController,
         textField.layer.shadowOpacity = 0.5
         textField.layer.shadowRadius = 5.0
     }
+
+    func dropShadow(thisObject: Any) {
+        (thisObject as AnyObject).layer.borderColor = UIColor.clear.cgColor
+        (thisObject as AnyObject).layer.masksToBounds = false
+        (thisObject as AnyObject).layer.shadowColor = UIColor.black.cgColor
+        (thisObject as AnyObject).layer.shadowOffset = CGSize.zero
+        (thisObject as AnyObject).layer.shadowOpacity = 0.5
+        (thisObject as AnyObject).layer.shadowRadius = 5.0
+    }
+    
     func displayAlert(title: String, message: String) {
         
         let alertcontroller = UIAlertController(title: title, message: message, preferredStyle: .alert)

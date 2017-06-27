@@ -378,7 +378,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WrR-nd-qT6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="10" y="440"/>
+            <point key="canvasLocation" x="44" y="448"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="BVF-Mk-wJJ">
@@ -426,7 +426,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iil-KJ-Xsz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9" y="1131"/>
+            <point key="canvasLocation" x="44" y="1150"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="UtP-zp-P1I">
@@ -444,7 +444,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M9g-Pf-VqC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1241" y="1796"/>
+            <point key="canvasLocation" x="1286" y="1796"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="B6R-nG-wXd">
@@ -472,7 +472,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FD5-yq-NH4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2089" y="1785"/>
+            <point key="canvasLocation" x="2188" y="1796"/>
         </scene>
         <!--Register View Controller-->
         <scene sceneID="rMB-hO-x8n">
@@ -818,7 +818,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </mapView>
             </objects>
-            <point key="canvasLocation" x="-864" y="515"/>
+            <point key="canvasLocation" x="-705" y="502"/>
         </scene>
         <!--News-->
         <scene sceneID="Sdh-bc-z2T">
@@ -1140,7 +1140,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w06-We-mb5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1646" y="-287"/>
+            <point key="canvasLocation" x="-1647" y="-478"/>
         </scene>
         <!--Rider View Controller-->
         <scene sceneID="1Mh-et-f4X">
@@ -1157,63 +1157,8 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="OZS-Xm-fSG">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </mapView>
-                            <textField opaque="NO" clipsSubviews="YES" alpha="0.80000001192092896" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="When?" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JdU-Rb-9ap" customClass="CustomTextField" customModule="SidebarMenu">
-                                <rect key="frame" x="23" y="199" width="330" height="60"/>
-                                <color key="backgroundColor" red="0.91477886730000002" green="0.94991112759999996" blue="0.93750542299999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="330" id="an6-RY-pHA"/>
-                                    <constraint firstAttribute="width" constant="330" id="dlG-sR-Sqk"/>
-                                    <constraint firstAttribute="height" constant="60" id="jph-5q-OUB"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="k6y-Cq-UQa"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" keyboardAppearance="alert"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="calendar1"/>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
-                                        <real key="value" value="15"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="whenTextFieldChanged:" destination="3lM-C7-f12" eventType="editingChanged" id="dYr-23-Hw1"/>
-                                </connections>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WTo-zC-G5b">
-                                <rect key="frame" x="22" y="592" width="330" height="55"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="330" id="9uJ-rq-6x7"/>
-                                    <constraint firstAttribute="height" constant="55" id="F6j-5l-xgs"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Request a ride">
-                                    <color key="titleColor" red="0.91477886730000002" green="0.94991112759999996" blue="0.93750542299999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="callAnUber:" destination="3lM-C7-f12" eventType="touchUpInside" id="FcI-7V-T0Z"/>
-                                </connections>
-                            </button>
-                            <textField opaque="NO" clipsSubviews="YES" alpha="0.85000002384185791" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Where to?" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="vs1-2c-cIf" customClass="CustomTextField" customModule="SidebarMenu">
-                                <rect key="frame" x="23" y="134" width="330" height="60"/>
-                                <color key="backgroundColor" red="0.91477886730000002" green="0.94991112759999996" blue="0.93750542299999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="330" id="79V-a2-kBz"/>
-                                    <constraint firstAttribute="height" constant="60" id="s2v-Lu-83R"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" keyboardAppearance="alert"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="sports-car"/>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
-                                        <real key="value" value="15"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="toTextFieldChanged:" destination="3lM-C7-f12" eventType="editingChanged" id="1iX-ps-5Eg"/>
-                                </connections>
-                            </textField>
                             <textField opaque="NO" clipsSubviews="YES" alpha="0.80000001192092896" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Pick up from" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="hZM-oD-XxB" userLabel="Pick up" customClass="CustomTextField" customModule="SidebarMenu">
-                                <rect key="frame" x="22.5" y="69" width="330" height="60"/>
+                                <rect key="frame" x="22" y="69" width="330" height="60"/>
                                 <color key="backgroundColor" red="0.91477886730000002" green="0.94991112759999996" blue="0.93750542299999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="FNg-0c-DoO"/>
@@ -1231,6 +1176,44 @@
                                     <action selector="fromTextFieldChanged:" destination="3lM-C7-f12" eventType="editingChanged" id="89a-4s-H79"/>
                                 </connections>
                             </textField>
+                            <textField opaque="NO" clipsSubviews="YES" alpha="0.85000002384185791" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Where to?" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="vs1-2c-cIf" customClass="CustomTextField" customModule="SidebarMenu">
+                                <rect key="frame" x="23" y="134" width="330" height="60"/>
+                                <color key="backgroundColor" red="0.91477886730000002" green="0.94991112759999996" blue="0.93750542299999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="330" id="nvh-jR-xfe"/>
+                                    <constraint firstAttribute="height" constant="60" id="s2v-Lu-83R"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" keyboardAppearance="alert"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="sports-car"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
+                                        <real key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="toTextFieldChanged:" destination="3lM-C7-f12" eventType="editingChanged" id="1iX-ps-5Eg"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" alpha="0.80000001192092896" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="When?" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JdU-Rb-9ap" customClass="CustomTextField" customModule="SidebarMenu">
+                                <rect key="frame" x="23" y="199" width="330" height="60"/>
+                                <color key="backgroundColor" red="0.91477886730000002" green="0.94991112759999996" blue="0.93750542299999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="330" id="dlG-sR-Sqk"/>
+                                    <constraint firstAttribute="height" constant="60" id="jph-5q-OUB"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" keyboardAppearance="alert"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="calendar1"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
+                                        <real key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="whenTextFieldChanged:" destination="3lM-C7-f12" eventType="editingChanged" id="dYr-23-Hw1"/>
+                                </connections>
+                            </textField>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="egS-cl-b14">
                                 <rect key="frame" x="23" y="134" width="330" height="0.0"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1240,6 +1223,21 @@
                                 </constraints>
                                 <sections/>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WTo-zC-G5b" userLabel="RequestARide">
+                                <rect key="frame" x="22" y="592" width="330" height="55"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="330" id="9uJ-rq-6x7"/>
+                                    <constraint firstAttribute="height" constant="55" id="F6j-5l-xgs"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="Request a ride">
+                                    <color key="titleColor" red="0.91477886730000002" green="0.94991112759999996" blue="0.93750542299999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="callAnUber:" destination="3lM-C7-f12" eventType="touchUpInside" id="FcI-7V-T0Z"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -1247,12 +1245,12 @@
                             <constraint firstItem="vs1-2c-cIf" firstAttribute="centerX" secondItem="bge-hM-9M8" secondAttribute="centerX" id="EeJ-vL-vj8"/>
                             <constraint firstItem="cUK-AO-Avd" firstAttribute="top" secondItem="OZS-Xm-fSG" secondAttribute="bottom" id="KGt-Sz-KEH"/>
                             <constraint firstAttribute="trailing" secondItem="OZS-Xm-fSG" secondAttribute="trailing" id="KQf-mQ-nce"/>
-                            <constraint firstItem="vs1-2c-cIf" firstAttribute="top" secondItem="egS-cl-b14" secondAttribute="top" id="WVu-C8-8Pn"/>
                             <constraint firstItem="egS-cl-b14" firstAttribute="top" secondItem="hZM-oD-XxB" secondAttribute="bottom" constant="5" id="cee-cq-25G"/>
                             <constraint firstItem="cUK-AO-Avd" firstAttribute="top" secondItem="WTo-zC-G5b" secondAttribute="bottom" constant="20" id="efA-Rq-qAK"/>
                             <constraint firstItem="JdU-Rb-9ap" firstAttribute="centerX" secondItem="bge-hM-9M8" secondAttribute="centerX" id="gG8-et-GL7"/>
                             <constraint firstItem="OZS-Xm-fSG" firstAttribute="leading" secondItem="bge-hM-9M8" secondAttribute="leading" id="hPu-Q5-xhh"/>
                             <constraint firstItem="hZM-oD-XxB" firstAttribute="top" secondItem="A3n-LA-T69" secondAttribute="bottom" constant="5" id="jgU-33-Mla"/>
+                            <constraint firstItem="vs1-2c-cIf" firstAttribute="top" secondItem="hZM-oD-XxB" secondAttribute="bottom" constant="5" id="kQT-7R-xgH"/>
                             <constraint firstItem="egS-cl-b14" firstAttribute="centerX" secondItem="bge-hM-9M8" secondAttribute="centerX" id="oZJ-9a-W4H"/>
                             <constraint firstItem="JdU-Rb-9ap" firstAttribute="top" secondItem="vs1-2c-cIf" secondAttribute="bottom" constant="5" id="rAr-as-BhF"/>
                             <constraint firstItem="hZM-oD-XxB" firstAttribute="centerX" secondItem="bge-hM-9M8" secondAttribute="centerX" id="rFL-jc-s5q"/>
@@ -1272,6 +1270,7 @@
                         <outlet property="heightConstraint" destination="WvT-Ha-xtH" id="Icz-mK-KRl"/>
                         <outlet property="mapView" destination="OZS-Xm-fSG" id="gOY-0E-saD"/>
                         <outlet property="menuButton" destination="xtu-b7-umg" id="Pxa-qS-PE3"/>
+                        <outlet property="requestARide" destination="WTo-zC-G5b" id="nbJ-0x-phR"/>
                         <outlet property="tableView" destination="egS-cl-b14" id="902-wF-VMX"/>
                         <outlet property="toTextField" destination="vs1-2c-cIf" id="cMc-5x-Itn"/>
                         <outlet property="whenTextField" destination="JdU-Rb-9ap" id="3yG-gg-oIk"/>
