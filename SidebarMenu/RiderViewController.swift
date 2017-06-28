@@ -102,23 +102,63 @@ class RiderViewController: UIViewController,
         let scheduleAction = UIAlertAction(title: "Schedule this ride", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             
-            print(self.fromTextField.text!)
-            print(self.toTextField.text!)
-            print(self.whenTextField!)
-            
+            //print(self.fromTextField.text!)
+            //print(self.toTextField.text!)
+            //print(self.whenTextField!)
             //print("Latitude \(self.locationManager.location?.coordinate.latitude)")
+    
             
-            
+            //let username = Auth.auth().currentUser
+            //let userID = Auth.auth().currentUser?.uid
             let username = "gamy316"
+            let userID = "gamy316"
             //let preferences = UsegrDefaults.standard
             //username = preferences.object(forKey: "username") as! String
             
-            self.ref?.child("RideSchedule").childByAutoId().setValue(username)
-            self.ref?.child("RideSchedule").childByAutoId().setValue(self.fromTextField.text!)
-            self.ref?.child("RideSchedule").childByAutoId().setValue(self.toTextField.text!)
-            self.ref?.child("RideSchedule").childByAutoId().setValue(self.whenTextField.text!)
-            self.ref?.child("RideSchedule").childByAutoId().setValue((self.locationManager.location?.coordinate.longitude))
-            self.ref?.child("RideSchedule").childByAutoId().setValue((self.locationManager.location?.coordinate.latitude))
+            
+            // Create new post at /user-posts/$userid/$postid and at
+            // /posts/$postid simultaneously
+            // [START write_fan_out]
+            //let key = (self.ref?.child("ScheduledRides").childByAutoId().key)!
+            let datetimekey =  self.whenTextField.text!.replacingOccurrences(of: "/", with: "")
+
+            //print(datetimekey)
+            
+            var scheduledTrips = [:] as [String : Any]
+            
+            if self.fromTextField.text == "Current Location" {
+                scheduledTrips = ["uid": userID,
+                                      "patientid": username,
+                                      "fromlocation": self.fromTextField.text!,
+                                      "tolocation": self.toTextField.text!,
+                                      "pickupdatetime": self.whenTextField.text!,
+                     "currentlongitude": (self.locationManager.location?.coordinate.longitude)!,
+                     "currentlatitude": (self.locationManager.location?.coordinate.latitude)!]
+            } else {
+                scheduledTrips = ["uid": userID,
+                                      "patientid": username,
+                                      "fromlocation": self.fromTextField.text!,
+                                      "tolocation": self.toTextField.text!,
+                                      "pickupdatetime": self.whenTextField.text!]
+            }
+            
+            
+            
+            let scheduledTripUpdates = ["/scheduledtrips/\(userID)/\(datetimekey)/": scheduledTrips]
+            self.ref?.updateChildValues(scheduledTripUpdates)
+            // [END write_fan_out]
+            
+            let savedFromTripsKey = self.fromTextField.text!.hash
+            
+            let savedFromTrips = ["from":self.fromTextField.text!]
+            let savedFromTripUpdates = ["/savedtrips/\(userID)/from/\(savedFromTripsKey)": savedFromTrips]
+            self.ref?.updateChildValues(savedFromTripUpdates)
+
+            let savedToTripsKey = self.toTextField.text!.hash
+            
+            let savedToTrips = ["to": self.toTextField.text!]
+            let savedToTripUpdates = ["/savedtrips/\(userID)/to/\(savedToTripsKey)": savedToTrips]
+            self.ref?.updateChildValues(savedToTripUpdates)
             
             
         })
@@ -228,8 +268,24 @@ class RiderViewController: UIViewController,
     
     // Toggle the tableView visibility when click on textField
     func fromTextFieldActive() {
-        values = ["668 Holland Heights Ave.,\nLas Vegas NV 89123",
-                  "Current Location"]
+        values =  [String]()
+        
+        //var databaseHandle:DatabaseHandle?
+        
+        // set the firebase reference
+        
+        Database.database().reference().child("savedtrips/gamy316/from").observeSingleEvent(of: .value, with: { (snapshot) in
+            if let result = snapshot.children.allObjects as? [DataSnapshot] {
+                for child in result {
+                    var meanAcc = child.key as! String
+                    print(meanAcc)
+                }
+            }
+        })
+        
+        
+        self.values.append("Current Location")
+        
         tableView.reloadData()
         tableView.frame = CGRect(x: tableView.frame.origin.x, y: tableView.frame.origin.y, width: tableView.frame.size.width, height: tableView.contentSize.height + 100)
         tableView.isHidden = !tableView.isHidden

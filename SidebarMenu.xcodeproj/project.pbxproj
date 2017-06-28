@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		10285A0746798FCC3D09C65A /* Pods_SidebarMenu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE53E52749F89184E034462F /* Pods_SidebarMenu.framework */; };
+		3DE281A31F02E043001D841A /* ScheduledTrips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE281A21F02E043001D841A /* ScheduledTrips.swift */; };
 		7E1465231EFDD25900F1102A /* RiderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1465221EFDD25900F1102A /* RiderViewController.swift */; };
 		7E1465281EFDD2EF00F1102A /* DateTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1465251EFDD2EF00F1102A /* DateTimePicker.swift */; };
 		7E1465291EFDD2EF00F1102A /* DateCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1465261EFDD2EF00F1102A /* DateCollectionViewCell.swift */; };
@@ -59,6 +60,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3DE281A21F02E043001D841A /* ScheduledTrips.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduledTrips.swift; sourceTree = "<group>"; };
 		7E1465221EFDD25900F1102A /* RiderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RiderViewController.swift; sourceTree = "<group>"; };
 		7E1465251EFDD2EF00F1102A /* DateTimePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateTimePicker.swift; sourceTree = "<group>"; };
 		7E1465261EFDD2EF00F1102A /* DateCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				7E6291AC1EFE1457008A25E1 /* ScheduledTripsTableViewController.swift */,
+				3DE281A21F02E043001D841A /* ScheduledTrips.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -554,6 +557,7 @@
 				7E6150FB1EF875710077B4E5 /* NewsTableViewCell.swift in Sources */,
 				7E9538321EF9D1D9008204AA /* ScrollableGraphView.swift in Sources */,
 				F4D750181BD38F0C009E1003 /* SWRevealViewController.m in Sources */,
+				3DE281A31F02E043001D841A /* ScheduledTrips.swift in Sources */,
 				7EEB3A021EF97E45001A281D /* TimelineViewController.swift in Sources */,
 				F4702A181A7F351C00E30A3C /* MenuController.swift in Sources */,
 				7EEB3A0B1EF97FBC001A281D /* TimelineTableViewCell.swift in Sources */,
