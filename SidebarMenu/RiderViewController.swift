@@ -29,6 +29,7 @@ class RiderViewController: UIViewController,
     var riderRequestActive = true
     var userLocation: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0)
     
+    var patientId:String = ""
     
     @IBOutlet var callAnUberButton: UIButton!
     @IBOutlet var mapView: MKMapView!
@@ -36,8 +37,9 @@ class RiderViewController: UIViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //
-        
+        let preferences = UserDefaults.standard
+        patientId = preferences.object(forKey: "username") as! String
+
         
         // add shadow
         dropShadow(thisObject: requestARide)
@@ -114,14 +116,8 @@ class RiderViewController: UIViewController,
             
             //let username = Auth.auth().currentUser
             //let userID = Auth.auth().currentUser?.uid
-            //let username = "gamy316"
-            //let patientId = "gamy316"
-            
-            let preferences = UserDefaults.standard
-            let patientId = preferences.object(forKey: "username") as! String
-            
-            print(patientId)
-            
+
+
             // Create new post at /user-posts/$userid/$postid and at
             // /posts/$postid simultaneously
             // [START write_fan_out]
@@ -133,37 +129,37 @@ class RiderViewController: UIViewController,
             var scheduledTrips = [:] as [String : Any]
             
             if self.fromTextField.text == "Current Location" {
-                scheduledTrips = ["patientid": patientId,
-                                      "pickupfrom": self.fromTextField.text!,
-                                      "pickupto": self.toTextField.text!,
+                scheduledTrips = ["patientid": self.patientId,
+                                      "pickupfrom": self.fromTextField.text!.capitalized,
+                                      "pickupto": self.toTextField.text!.capitalized,
                                       "pickupdatetime": self.whenTextField.text!,
                                       "longitude": (self.locationManager.location?.coordinate.longitude)!,
                                       "latitude": (self.locationManager.location?.coordinate.latitude)!]
             } else {
-                scheduledTrips = ["patientid": patientId,
-                                      "pickupfrom": self.fromTextField.text!,
-                                      "pickupto": self.toTextField.text!,
+                scheduledTrips = ["patientid": self.patientId,
+                                      "pickupfrom": self.fromTextField.text!.capitalized,
+                                      "pickupto": self.toTextField.text!.capitalized,
                                       "pickupdatetime": self.whenTextField.text!]
             }
             
             
             
-            let scheduledTripUpdates = ["/scheduledtrips/\(patientId)/\(datetimekey)/": scheduledTrips]
+            let scheduledTripUpdates = ["/scheduledtrips/\(self.patientId)/\(datetimekey)/": scheduledTrips]
             self.ref?.updateChildValues(scheduledTripUpdates)
             // [END write_fan_out]
             
             // from trips
             if self.fromTextField.text != "Current Location" {
                 let savedFromTripsKey = self.fromTextField.text!.hash
-                let savedFromTrips = ["from":self.fromTextField.text!]
-                let savedFromTripUpdates = ["/savedtrips/\(patientId)/from/\(savedFromTripsKey)": savedFromTrips]
+                let savedFromTrips = ["from":self.fromTextField.text!.capitalized]
+                let savedFromTripUpdates = ["/savedtrips/\(self.patientId)/from/\(savedFromTripsKey)": savedFromTrips]
                 self.ref?.updateChildValues(savedFromTripUpdates)
             }
             
             // to trips
             let savedToTripsKey = self.toTextField.text!.hash
-            let savedToTrips = ["to": self.toTextField.text!]
-            let savedToTripUpdates = ["/savedtrips/\(patientId)/to/\(savedToTripsKey)": savedToTrips]
+            let savedToTrips = ["to": self.toTextField.text!.capitalized]
+            let savedToTripUpdates = ["/savedtrips/\(self.patientId)/to/\(savedToTripsKey)": savedToTrips]
             self.ref?.updateChildValues(savedToTripUpdates)
             
             
@@ -279,7 +275,7 @@ class RiderViewController: UIViewController,
         values = [String]()
         
         
-        Database.database().reference().child("savedtrips/gamy316/from").observeSingleEvent(of: .value, with: { (snapshot) in
+        Database.database().reference().child("savedtrips/" + patientId + "/from").observeSingleEvent(of: .value, with: { (snapshot) in
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
                 for snap in result {
                     if let postDict = snap.value as? Dictionary<String, AnyObject> {
@@ -303,7 +299,7 @@ class RiderViewController: UIViewController,
         
         self.values.removeAll()
 
-        Database.database().reference().child("savedtrips/gamy316/to").observeSingleEvent(of: .value, with: { (snapshot) in
+        Database.database().reference().child("savedtrips/" + patientId + "/to").observeSingleEvent(of: .value, with: { (snapshot) in
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
                 for snap in result {
                     if let postDict = snap.value as? Dictionary<String, AnyObject> {
