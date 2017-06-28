@@ -132,8 +132,8 @@ class RiderViewController: UIViewController,
                                       "fromlocation": self.fromTextField.text!,
                                       "tolocation": self.toTextField.text!,
                                       "pickupdatetime": self.whenTextField.text!,
-                     "currentlongitude": (self.locationManager.location?.coordinate.longitude)!,
-                     "currentlatitude": (self.locationManager.location?.coordinate.latitude)!]
+                                      "currentlongitude": (self.locationManager.location?.coordinate.longitude)!,
+                                      "currentlatitude": (self.locationManager.location?.coordinate.latitude)!]
             } else {
                 scheduledTrips = ["uid": userID,
                                       "patientid": username,
@@ -148,14 +148,14 @@ class RiderViewController: UIViewController,
             self.ref?.updateChildValues(scheduledTripUpdates)
             // [END write_fan_out]
             
+            // from trips
             let savedFromTripsKey = self.fromTextField.text!.hash
-            
             let savedFromTrips = ["from":self.fromTextField.text!]
             let savedFromTripUpdates = ["/savedtrips/\(userID)/from/\(savedFromTripsKey)": savedFromTrips]
             self.ref?.updateChildValues(savedFromTripUpdates)
 
+            // to trips
             let savedToTripsKey = self.toTextField.text!.hash
-            
             let savedToTrips = ["to": self.toTextField.text!]
             let savedToTripUpdates = ["/savedtrips/\(userID)/to/\(savedToTripsKey)": savedToTrips]
             self.ref?.updateChildValues(savedToTripUpdates)
