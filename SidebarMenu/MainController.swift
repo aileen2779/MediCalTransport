@@ -49,7 +49,7 @@ class MainController: UIViewController, UITextFieldDelegate {
         thumbIdButton.isHidden = true
         
         // show activity activityIndicator
-        activityIndicatorStartNoAsync()
+        //activityIndicatorStartNoAsync()
 
         login_now(username:loginTextField.text!, password: passwordTextField.text!)
         
@@ -86,7 +86,7 @@ class MainController: UIViewController, UITextFieldDelegate {
         let preferences = UserDefaults.standard
         if preferences.object(forKey: "session") != nil {
             // turn on activity monitor for 1 second in async mode
-            activityIndicatorStartAsync()
+            //activityIndicatorStartAsync()
             
             login_session  = preferences.object(forKey: "session") as! String
             check_session()
@@ -122,24 +122,30 @@ class MainController: UIViewController, UITextFieldDelegate {
 
     
     func login_now(username:String, password:String) {
-        let post_data: NSDictionary = NSMutableDictionary()
-        
-        post_data.setValue(username, forKey: "username")
-        post_data.setValue(password, forKey: "password")
+        //let post_data: NSDictionary = NSMutableDictionary()
+        //post_data.setValue(username, forKey: "username")
+        //post_data.setValue(password, forKey: "password")
             
         let session_data = "1234567890"
         self.login_session = session_data
     
         let preferences = UserDefaults.standard
         preferences.set(session_data, forKey: "session")
+        preferences.set(username, forKey: "username")
+        preferences.set(password, forKey: "password")
         preferences.set(true, forKey: "touchIdEnrolled")
-                    
+        
+        //print("gamy \(preferences.object(forKey: "username")!)")
+        //print("gamy \(preferences.object(forKey: "password")!)")
+        //print("gamy \(preferences.object(forKey: "session")!)")
+        //print("gamy \(preferences.object(forKey: "touchIdEnrolled")!)")
+        
         DispatchQueue.main.async(execute: self.loginDone)
     }
 
     
     func loginDone() {
-        self.performSegue(withIdentifier: "ShifterPokedexVC", sender: self)
+        self.performSegue(withIdentifier: "MainControllerVC", sender: self)
     }
     
     
@@ -154,6 +160,13 @@ class MainController: UIViewController, UITextFieldDelegate {
         //activityIndicatorStartNoAsync()
         
         let preferences = UserDefaults.standard
+        
+        if preferences.object(forKey: "username") != nil {
+            loginTextField.text = (preferences.object(forKey: "username") as! String)
+            passwordTextField.text = (preferences.object(forKey: "password") as! String)
+        }
+        
+        
         if preferences.object(forKey: "touchIdEnrolled") != nil {
             if ((preferences.object(forKey: "touchIdEnrolled")) != nil) {
                 thumbIdImage.isHidden = false
@@ -165,12 +178,11 @@ class MainController: UIViewController, UITextFieldDelegate {
         }
         loginStackView.isHidden = false
         //login_button.isEnabled = true
-        
-        loginTextField.text = "gamy316"
+
         loginTextField.leftViewMode = UITextFieldViewMode.always
         loginTextField.leftView = UIImageView(image: UIImage(named: "username"))
         
-        passwordTextField.text = "gamy666"
+
         passwordTextField.leftViewMode = UITextFieldViewMode.always
         passwordTextField.leftView = UIImageView(image: UIImage(named: "password"))
 
@@ -185,6 +197,7 @@ class MainController: UIViewController, UITextFieldDelegate {
         
         let preferences = UserDefaults.standard
         preferences.set(true, forKey: "touchIdEnrolled")
+        
         DispatchQueue.main.async(execute: loginDone)
     }
     

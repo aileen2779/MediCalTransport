@@ -36,6 +36,10 @@ class RiderViewController: UIViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //
+        
+        
+        // add shadow
         dropShadow(thisObject: requestARide)
         dropShadow(thisObject: fromTextField)
         dropShadow(thisObject: toTextField)

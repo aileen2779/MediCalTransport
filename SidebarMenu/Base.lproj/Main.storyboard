@@ -207,7 +207,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </mapView>
             </objects>
-            <point key="canvasLocation" x="189.59999999999999" y="-555.47226386806597"/>
+            <point key="canvasLocation" x="321" y="-505"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="a23-LC-1XJ">
@@ -777,14 +777,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="touch-id-icon" translatesAutoresizingMaskIntoConstraints="NO" id="aIM-WC-zRC">
-                                <rect key="frame" x="152" y="443" width="70" height="70"/>
+                                <rect key="frame" x="152" y="446" width="70" height="70"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="RSk-qa-QTc"/>
                                     <constraint firstAttribute="width" constant="70" id="tBh-Yo-84y"/>
                                 </constraints>
                             </imageView>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jF5-Gx-B4j">
-                                <rect key="frame" x="148" y="437" width="80" height="80"/>
+                                <rect key="frame" x="148" y="440" width="80" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="NIv-oZ-S5B"/>
                                     <constraint firstAttribute="width" constant="80" id="Q3V-tW-97b"/>
@@ -800,8 +800,8 @@
                                     <constraint firstAttribute="width" constant="40" id="jfy-d1-JW8"/>
                                 </constraints>
                             </activityIndicatorView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="nRR-wp-d3Y" userLabel="LoginStackView">
-                                <rect key="frame" x="37" y="243" width="300" height="180"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="nRR-wp-d3Y" userLabel="LoginStackView">
+                                <rect key="frame" x="37" y="240" width="300" height="186"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="PbZ-Qx-Z7Z" customClass="CustomTextField" customModule="SidebarMenu" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="60"/>
@@ -820,7 +820,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="swP-59-Epq" customClass="CustomTextField" customModule="SidebarMenu" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="60" width="300" height="60"/>
+                                        <rect key="frame" x="0.0" y="63" width="300" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="300" id="1Au-gX-vpW"/>
                                             <constraint firstAttribute="height" constant="60" id="J5Y-De-Twx"/>
@@ -836,7 +836,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xkb-aP-xLy">
-                                        <rect key="frame" x="0.0" y="120" width="300" height="60"/>
+                                        <rect key="frame" x="0.0" y="126" width="300" height="60"/>
                                         <color key="backgroundColor" red="0.4941176471" green="0.72941176470000002" blue="0.70980392160000005" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="W0r-D6-GDx"/>
@@ -908,7 +908,7 @@
                         <outlet property="passwordTextField" destination="swP-59-Epq" id="Fv9-Fc-1s9"/>
                         <outlet property="thumbIdButton" destination="jF5-Gx-B4j" id="yyj-8L-XUS"/>
                         <outlet property="thumbIdImage" destination="aIM-WC-zRC" id="bVM-ag-Uq9"/>
-                        <segue destination="vXZ-lx-hvc" kind="show" identifier="ShifterPokedexVC" id="hox-mK-kFW"/>
+                        <segue destination="vXZ-lx-hvc" kind="show" identifier="MainControllerVC" id="hox-mK-kFW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w06-We-mb5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1189,6 +1189,6 @@
         <image name="wishlist" width="1024" height="1024"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="IsB-La-WLS"/>
+        <segue reference="0jY-V3-zoc"/>
     </inferredMetricsTieBreakers>
 </document>
