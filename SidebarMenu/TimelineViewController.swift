@@ -9,7 +9,8 @@
 import UIKit
 
 class TimelineViewController: UITableViewController {
-        @IBOutlet weak var menuButton:UIBarButtonItem!
+    @IBOutlet weak var menuButton:UIBarButtonItem!
+    @IBOutlet weak var extraButton: UIBarButtonItem!
 
     // TimelinePoint, Timeline back color, title, description, lineInfo, thumbnail
     let data:[Int: [(TimelinePoint, UIColor, String, String, String?, String?)]] = [0:[
