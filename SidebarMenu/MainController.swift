@@ -135,8 +135,6 @@ class MainController: UIViewController, UITextFieldDelegate {
         preferences.set(true, forKey: "touchIdEnrolled")
                     
         DispatchQueue.main.async(execute: self.loginDone)
-
-        
     }
 
     
