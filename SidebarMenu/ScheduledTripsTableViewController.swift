@@ -13,10 +13,17 @@ class ScheduledTripsTableViewController: UITableViewController {
     var ref:DatabaseReference?
     var databaseHandle:DatabaseHandle?
     
+    var patientId:String = ""
+    
     var postData = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let preferences = UserDefaults.standard
+        patientId = preferences.object(forKey: "username") as! String
+        
+        self.title = "Scheduled trips for: " + patientId
         
         if revealViewController() != nil {
             menuButton.target = revealViewController()
@@ -38,23 +45,28 @@ class ScheduledTripsTableViewController: UITableViewController {
         ref = Database.database().reference()
         // Retrieve the posts and listen for changes
         
-        //databaseHandle = ref?.child("scheduledtrips/gamy316/06282017 05:48 PM/").observe(.childAdded, with: { (snapshot) in
+        //databaseHandle = ref?.child("scheduledtrips/gamy316/").observe(.childAdded, with: { (snapshot) in
         
-        Database.database().reference().child("scheduledtrips/gamy316/").observeSingleEvent(of: .value, with: { (snapshot) in
+        Database.database().reference().child("scheduledtrips/" + patientId).observe(.childAdded, with: { (snapshot) in
+            
+        //Database.database().reference().child("scheduledtrips/gamy316/").observeSingleEvent(of: .value, with: { (snapshot) in
+            
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
-                //print(result)
+                //print("gamy \(result)")
+                
+                var myPatientID = ""
                 for snap in result {
-                    if let postDict = snap.value as? Dictionary<String, AnyObject> {
-                        //print(postDict["patientid"]! as! String)
-                        //print(postDict["pickupdatetime"]! as! String)
-                        //print(postDict["pickupfrom"]! as! String)
-                        //print(postDict["pickupto"]! as! String)
-                        
-                        self.postData.append(postDict["patientid"]! as! String)
-                        self.postData.append(postDict["pickupdatetime"]! as! String)
-                        self.postData.append(postDict["pickupfrom"]! as! String)
-                        self.postData.append(postDict["pickupto"]! as! String)
+                    
+                    myPatientID = snap.value as! String
+                    if (myPatientID != self.patientId) {  // exclude patientid
+                        self.postData.append(snap.value as! String)
                     }
+                    //if let postDict = snap.value as? Dictionary<String, AnyObject> {
+                    //    print(postDict)
+                    //    self.postData.append(postDict["pickupdatetime"]! as! String)
+                    //    self.postData.append(postDict["pickupfrom"]! as! String)
+                    //    self.postData.append(postDict["pickupto"]! as! String)
+                    //}
                 }
             }
             

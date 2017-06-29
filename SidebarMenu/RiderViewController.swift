@@ -253,16 +253,13 @@ class RiderViewController: UIViewController,
         }
 
         whenTextField.isEnabled = true
-
     }
 
-    
     
     // Toggle the tableView visibility when click on textField
     func fromTextFieldActive() {
         values = [String]()
-        
-        
+
         Database.database().reference().child("savedtrips/" + patientId + "/from").observeSingleEvent(of: .value, with: { (snapshot) in
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
                 for snap in result {
