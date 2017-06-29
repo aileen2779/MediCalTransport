@@ -1,4 +1,3 @@
-
 import UIKit
 import FirebaseDatabase
 
@@ -28,23 +27,24 @@ class ScheduledTripsTableViewController: UITableViewController {
             extraButton.action = #selector(SWRevealViewController.rightRevealToggle(_:))
             
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-            
-            
         }
         
-        
-        
+
         // Do any additional setup after loading the view, typically from a nib.
         myTableView.delegate = self
         myTableView.dataSource = self
         
         // Set the firebase reference
-        ref = Database.database().reference()
+        //ref = Database.database().reference()
         // Retrieve the posts and listen for changes
-        databaseHandle = ref?.child("Posts").observe(.childAdded, with: { (snapshot) in
+        
+        //databaseHandle = ref?.child("scheduledtrips/gamy316").observe(.childAdded, with: { (snapshot) in
+        
+        Database.database().reference().child("scheduledtrips/gamy316").observe(.childAdded, with: { (snapshot) in
             
             // Try to convert the value of the data to a string
             let post = snapshot.value as? String
+            
             if let actualPost = post {
                 // Append the data to our postData array
                 self.postData.append(actualPost)
@@ -52,12 +52,14 @@ class ScheduledTripsTableViewController: UITableViewController {
                 self.myTableView.reloadData()
             }
         })
+ 
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return postData.count
