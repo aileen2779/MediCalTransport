@@ -9,6 +9,7 @@ class ScheduledTripsTableViewController: UITableViewController {
 
     @IBOutlet weak var myTableView: UITableView!
  
+    //@IBOutlet weak var fromLabel: UILabel!
     
     var ref:DatabaseReference?
     var databaseHandle:DatabaseHandle?
@@ -41,32 +42,21 @@ class ScheduledTripsTableViewController: UITableViewController {
         myTableView.delegate = self
         myTableView.dataSource = self
         
-        // Set the firebase reference
-        ref = Database.database().reference()
         // Retrieve the posts and listen for changes
-        
-        //databaseHandle = ref?.child("scheduledtrips/gamy316/").observe(.childAdded, with: { (snapshot) in
-        
         Database.database().reference().child("scheduledtrips/" + patientId).observe(.childAdded, with: { (snapshot) in
-            
-        //Database.database().reference().child("scheduledtrips/gamy316/").observeSingleEvent(of: .value, with: { (snapshot) in
-            
+        
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
-                //print("gamy \(result)")
+                print("snapshot \(snapshot.key)")
+                print("snapshot.key \(snapshot.key)")
                 
                 var myPatientID = ""
                 for snap in result {
-                    
                     myPatientID = snap.value as! String
                     if (myPatientID != self.patientId) {  // exclude patientid
                         self.postData.append(snap.value as! String)
+                        //self.fromLabel.text = snap.value as! String
                     }
-                    //if let postDict = snap.value as? Dictionary<String, AnyObject> {
-                    //    print(postDict)
-                    //    self.postData.append(postDict["pickupdatetime"]! as! String)
-                    //    self.postData.append(postDict["pickupfrom"]! as! String)
-                    //    self.postData.append(postDict["pickupto"]! as! String)
-                    //}
+
                 }
             }
             

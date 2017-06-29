@@ -29,7 +29,10 @@ class RiderViewController: UIViewController,
     var riderRequestActive = true
     var userLocation: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0)
     
-    var patientId:String = ""
+    var patientId = ""
+    let fromString = "pickup"
+    let toString = "dropoff"
+    let whenString = "datetime"
     
     @IBOutlet var callAnUberButton: UIButton!
     @IBOutlet var mapView: MKMapView!
@@ -115,20 +118,13 @@ class RiderViewController: UIViewController,
             //print(datetimekey)
             
             var scheduledTrips = [:] as [String : Any]
+            let longitude = (self.locationManager.location?.coordinate.longitude)!
+            let latitude = (self.locationManager.location?.coordinate.latitude)!
             
-            if self.fromTextField.text == "Current Location" {
-                scheduledTrips = ["patientid": self.patientId,
-                                      "pickupfrom": self.fromTextField.text!.capitalized,
-                                      "pickupto": self.toTextField.text!.capitalized,
-                                      "pickupdatetime": self.whenTextField.text!,
-                                      "longitude": (self.locationManager.location?.coordinate.longitude)!,
-                                      "latitude": (self.locationManager.location?.coordinate.latitude)!]
-            } else {
-                scheduledTrips = ["patientid": self.patientId,
-                                      "pickupfrom": self.fromTextField.text!.capitalized,
-                                      "pickupto": self.toTextField.text!.capitalized,
-                                      "pickupdatetime": self.whenTextField.text!]
-            }
+            // if current location, then use coordinates, else use from address
+            scheduledTrips = ["\(self.fromString)": (self.fromTextField.text != "Current Location" ? self.fromTextField.text!.capitalized : ("\(String(describing: longitude)),\(String(describing: latitude))")),
+                                      "\(self.toString)": self.toTextField.text!.capitalized,
+                                      "\(self.whenString)": self.whenTextField.text!]
             
             
             let scheduledTripUpdates = ["/scheduledtrips/\(self.patientId)/\(datetimekey)/": scheduledTrips]
@@ -138,15 +134,15 @@ class RiderViewController: UIViewController,
             // from trips
             if self.fromTextField.text != "Current Location" {
                 let savedFromTripsKey = self.fromTextField.text!.hash
-                let savedFromTrips = ["from":self.fromTextField.text!]
-                let savedFromTripUpdates = ["/savedtrips/\(self.patientId)/from/\(savedFromTripsKey)": savedFromTrips]
+                let savedFromTrips = ["pickup":self.fromTextField.text!]
+                let savedFromTripUpdates = ["/savedtrips/\(self.patientId)/pickup/\(savedFromTripsKey)": savedFromTrips]
                 self.ref?.updateChildValues(savedFromTripUpdates)
             }
             
             // to trips
             let savedToTripsKey = self.toTextField.text!.hash
-            let savedToTrips = ["to": self.toTextField.text!]
-            let savedToTripUpdates = ["/savedtrips/\(self.patientId)/to/\(savedToTripsKey)": savedToTrips]
+            let savedToTrips = ["dropoff": self.toTextField.text!]
+            let savedToTripUpdates = ["/savedtrips/\(self.patientId)/dropoff/\(savedToTripsKey)": savedToTrips]
             self.ref?.updateChildValues(savedToTripUpdates)
             /* end confirm */
             
@@ -260,11 +256,11 @@ class RiderViewController: UIViewController,
     func fromTextFieldActive() {
         values = [String]()
 
-        Database.database().reference().child("savedtrips/" + patientId + "/from").observeSingleEvent(of: .value, with: { (snapshot) in
+        Database.database().reference().child("savedtrips/" + patientId + "/" + fromString).observeSingleEvent(of: .value, with: { (snapshot) in
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
                 for snap in result {
                     if let postDict = snap.value as? Dictionary<String, AnyObject> {
-                        self.values.append(postDict["from"]! as! String)
+                        self.values.append(postDict["\(self.fromString)"]! as! String)
                     }
                 }
             }
@@ -284,11 +280,11 @@ class RiderViewController: UIViewController,
         
         self.values.removeAll()
 
-        Database.database().reference().child("savedtrips/" + patientId + "/to").observeSingleEvent(of: .value, with: { (snapshot) in
+        Database.database().reference().child("savedtrips/" + patientId + "/" + toString).observeSingleEvent(of: .value, with: { (snapshot) in
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
                 for snap in result {
                     if let postDict = snap.value as? Dictionary<String, AnyObject> {
-                        self.values.append(postDict["to"]! as! String)
+                        self.values.append(postDict["\(self.toString)"]! as! String)
                     }
                 }
             }
