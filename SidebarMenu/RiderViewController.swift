@@ -127,7 +127,7 @@ class RiderViewController: UIViewController,
             let latitude = (self.locationManager.location?.coordinate.latitude)!
             
             // if current location, then use coordinates, else use from address
-            scheduledTrips = ["\(self.fromString)": (self.fromTextField.text != "Current Location" ? self.fromTextField.text!.capitalized : ("\(String(describing: longitude)),\(String(describing: latitude))")),
+            scheduledTrips = ["\(self.fromString)": (self.fromTextField.text != "Current Location" ? self.fromTextField.text!.capitalized : ("\(String(describing: latitude)), \(String(describing: longitude))")),
                                       "\(self.toString)": self.toTextField.text!.capitalized,
                                       "\(self.whenString)": self.whenTextField.text!,
                                       "dateadded" : todaysDate]
