@@ -122,10 +122,12 @@ class MainController: UIViewController, UITextFieldDelegate {
 
     
     func login_now(username:String, password:String) {
-        //let post_data: NSDictionary = NSMutableDictionary()
-        //post_data.setValue(username, forKey: "username")
-        //post_data.setValue(password, forKey: "password")
-            
+        
+        
+        loginTextField.endEditing(true)
+        passwordTextField.endEditing(true)
+
+    
         let session_data = "1234567890"
         self.login_session = session_data
     

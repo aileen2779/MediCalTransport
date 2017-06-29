@@ -108,20 +108,8 @@ class RiderViewController: UIViewController,
         let scheduleAction = UIAlertAction(title: "Schedule this ride", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             
-            //print(self.fromTextField.text!)
-            //print(self.toTextField.text!)
-            //print(self.whenTextField!)
-            //print("Latitude \(self.locationManager.location?.coordinate.latitude)")
-    
             
-            //let username = Auth.auth().currentUser
-            //let userID = Auth.auth().currentUser?.uid
-
-
-            // Create new post at /user-posts/$userid/$postid and at
-            // /posts/$postid simultaneously
-            // [START write_fan_out]
-            //let key = (self.ref?.child("ScheduledRides").childByAutoId().key)!
+            /* start confirm */
             let datetimekey =  self.whenTextField.text!.replacingOccurrences(of: "/", with: "")
 
             //print(datetimekey)
@@ -143,7 +131,6 @@ class RiderViewController: UIViewController,
             }
             
             
-            
             let scheduledTripUpdates = ["/scheduledtrips/\(self.patientId)/\(datetimekey)/": scheduledTrips]
             self.ref?.updateChildValues(scheduledTripUpdates)
             // [END write_fan_out]
@@ -151,20 +138,21 @@ class RiderViewController: UIViewController,
             // from trips
             if self.fromTextField.text != "Current Location" {
                 let savedFromTripsKey = self.fromTextField.text!.hash
-                let savedFromTrips = ["from":self.fromTextField.text!.capitalized]
+                let savedFromTrips = ["from":self.fromTextField.text!]
                 let savedFromTripUpdates = ["/savedtrips/\(self.patientId)/from/\(savedFromTripsKey)": savedFromTrips]
                 self.ref?.updateChildValues(savedFromTripUpdates)
             }
             
             // to trips
             let savedToTripsKey = self.toTextField.text!.hash
-            let savedToTrips = ["to": self.toTextField.text!.capitalized]
+            let savedToTrips = ["to": self.toTextField.text!]
             let savedToTripUpdates = ["/savedtrips/\(self.patientId)/to/\(savedToTripsKey)": savedToTrips]
             self.ref?.updateChildValues(savedToTripUpdates)
-            
+            /* end confirm */
             
         })
         //
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
             (alert: UIAlertAction!) -> Void in
             print("Cancelled")
@@ -370,12 +358,12 @@ class RiderViewController: UIViewController,
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell") as UITableViewCell!
         // Set text from the data model
         cell.textLabel?.text = values[indexPath.row]
-        //cell.textLabel?.font = textField.font
-        cell.textLabel?.font =  UIFont(name:"Avenir", size:16)
+        cell.textLabel?.font =  UIFont(name:"Avenir", size:14)
         cell.textLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping
         cell.textLabel?.numberOfLines = 3
         return cell
