@@ -135,7 +135,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.92620444297790527" green="0.93612229824066162" blue="0.94110381603240967" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
-                                            <segue destination="YST-2z-g0L" kind="custom" customClass="SWRevealViewControllerSeguePushController" id="Nj7-eW-8Zw"/>
+                                            <segue destination="YST-2z-g0L" kind="custom" identifier="ScheduledTripsVC" customClass="SWRevealViewControllerSeguePushController" id="Nj7-eW-8Zw"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="h24-9D-bS8" userLabel="Past Trips">
@@ -262,7 +262,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="46"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="J1z-r7-uJX" id="ovj-az-T9a">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="45.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="46"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -1109,6 +1109,6 @@
         <image name="wishlist" width="1024" height="1024"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="0jY-V3-zoc"/>
+        <segue reference="IsB-La-WLS"/>
     </inferredMetricsTieBreakers>
 </document>

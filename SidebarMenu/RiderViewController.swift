@@ -32,7 +32,7 @@ class RiderViewController: UIViewController,
     var patientId = ""
     let fromString = "pickup"
     let toString = "dropoff"
-    let whenString = "datetime"
+    let whenString = "pickupdate"
     
     @IBOutlet var callAnUberButton: UIButton!
     @IBOutlet var mapView: MKMapView!
@@ -115,7 +115,12 @@ class RiderViewController: UIViewController,
             /* start confirm */
             let datetimekey =  self.whenTextField.text!.replacingOccurrences(of: "/", with: "")
 
-            //print(datetimekey)
+            // Date time
+            let date : Date = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM/dd/YYYY hh:mm aa"
+            let todaysDate = dateFormatter.string(from: date)
+            
             
             var scheduledTrips = [:] as [String : Any]
             let longitude = (self.locationManager.location?.coordinate.longitude)!
@@ -124,7 +129,8 @@ class RiderViewController: UIViewController,
             // if current location, then use coordinates, else use from address
             scheduledTrips = ["\(self.fromString)": (self.fromTextField.text != "Current Location" ? self.fromTextField.text!.capitalized : ("\(String(describing: longitude)),\(String(describing: latitude))")),
                                       "\(self.toString)": self.toTextField.text!.capitalized,
-                                      "\(self.whenString)": self.whenTextField.text!]
+                                      "\(self.whenString)": self.whenTextField.text!,
+                                      "dateadded" : todaysDate]
             
             
             let scheduledTripUpdates = ["/scheduledtrips/\(self.patientId)/\(datetimekey)/": scheduledTrips]
@@ -145,6 +151,9 @@ class RiderViewController: UIViewController,
             let savedToTripUpdates = ["/savedtrips/\(self.patientId)/dropoff/\(savedToTripsKey)": savedToTrips]
             self.ref?.updateChildValues(savedToTripUpdates)
             /* end confirm */
+            
+            //self.performSegue(withIdentifier: "ScheduledTripsVC", sender: self)
+            
             
         })
         //
@@ -176,11 +185,6 @@ class RiderViewController: UIViewController,
                 
                 self.mapView.showsUserLocation = true
             }
-        }
-        
-        if riderRequestActive == true {
-            
- 
         }
     }
     
