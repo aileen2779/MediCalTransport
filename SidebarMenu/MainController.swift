@@ -123,10 +123,8 @@ class MainController: UIViewController, UITextFieldDelegate {
     
     func login_now(username:String, password:String) {
         
-        
         loginTextField.endEditing(true)
         passwordTextField.endEditing(true)
-
     
         let session_data = "1234567890"
         self.login_session = session_data
@@ -137,12 +135,8 @@ class MainController: UIViewController, UITextFieldDelegate {
         preferences.set(password, forKey: "password")
         preferences.set(true, forKey: "touchIdEnrolled")
         
-        //print("gamy \(preferences.object(forKey: "username")!)")
-        //print("gamy \(preferences.object(forKey: "password")!)")
-        //print("gamy \(preferences.object(forKey: "session")!)")
-        //print("gamy \(preferences.object(forKey: "touchIdEnrolled")!)")
-        
         DispatchQueue.main.async(execute: self.loginDone)
+        
     }
 
     
@@ -284,7 +278,5 @@ class MainController: UIViewController, UITextFieldDelegate {
         activityIndicator.startAnimating()
         self.view.addSubview(activityIndicator)
     }
-    
-
 
 }
