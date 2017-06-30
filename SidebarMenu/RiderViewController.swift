@@ -30,6 +30,7 @@ class RiderViewController: UIViewController,
     var userLocation: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0)
     
     var patientId = ""
+    
     let fromString = "pickup"
     let toString = "dropoff"
     let whenString = "pickupdate"
@@ -271,8 +272,10 @@ class RiderViewController: UIViewController,
     
     // Toggle the tableView visibility when click on textField
     func fromTextFieldActive() {
+        
         values = [String]()
-
+        self.values.append("Current Location")
+        
         Database.database().reference().child("savedtrips/" + patientId + "/" + fromString).observeSingleEvent(of: .value, with: { (snapshot) in
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
                 for snap in result {
@@ -282,8 +285,8 @@ class RiderViewController: UIViewController,
                 }
             }
             
-            self.values.append("Current Location")
-            self.values.sort()
+            
+            //self.values.sort()
             self.tableView.reloadData()
             self.tableView.frame = CGRect(x: self.tableView.frame.origin.x, y: self.tableView.frame.origin.y, width: self.tableView.frame.size.width, height: self.tableView.contentSize.height + 100)
             self.tableView.isHidden = !self.tableView.isHidden
@@ -312,13 +315,11 @@ class RiderViewController: UIViewController,
         })
         
         editField = "toTextField"
-
     }
 
     func whenTextFieldActive() {
         showDatePicker()
         whenTextField.isEnabled = false
-
     }
 
     // MARK: UITextFieldDelegate
@@ -408,7 +409,7 @@ class RiderViewController: UIViewController,
     func animateMe(textField: UITextField) {
         
         let _thisTextField = textField
-        
+
         UIView.animate(withDuration: 0.1, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseIn, animations: {_thisTextField.center.x += 10 }, completion: nil)
         UIView.animate(withDuration: 0.1, delay: 0.1, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseIn, animations: {_thisTextField.center.x -= 20 }, completion: nil)
         UIView.animate(withDuration: 0.1, delay: 0.2, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseIn, animations: {_thisTextField.center.x += 10 }, completion: nil)

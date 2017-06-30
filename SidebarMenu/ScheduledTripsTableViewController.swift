@@ -58,12 +58,8 @@ class ScheduledTripsTableViewController: UITableViewController {
                 var toString:String = ""
                 var whenString:String = ""
             
-            for snap in result {
-                    //print("snap.key \(snap.key)")
-                    //print("snap.value \(snap.value!)")
-
+                for snap in result {
                     if (snap.key != "dateadded") {
-                        
                         if (snap.key == "pickup") {
                             fromString = snap.value as! String
                         }
@@ -76,23 +72,12 @@ class ScheduledTripsTableViewController: UITableViewController {
 
                     }
                 }
-                self.postData.append("From: \(fromString)\nTo :\(toString)\nWhen: \(whenString)\n")
+           
+                self.postData.append("From: \(fromString)\nTo: \(toString)\nWhen: \(whenString)\n")
+            
            } else {
-            print("Error retrieving FrB data") // snapshot value is nil
+                print("Error retrieving FrB data") // snapshot value is nil
             }
-            
-            
-            
-            
-            // Try to convert the value of the data to a string
-            //let post = snapshot.value as? String
-            
-            //if let actualPost = post {
-                // Append the data to our postData array
-            //    self.postData.append(actualPost)
-                // Reload the tableview
-            //    self.myTableView.reloadData()
-            //}
             
             self.myTableView.reloadData()
         })
