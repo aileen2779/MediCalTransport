@@ -234,7 +234,7 @@
         <!--Navigation Controller-->
         <scene sceneID="O4a-aL-NR9">
             <objects>
-                <navigationController storyboardIdentifier="ScheduledTripsVC" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YST-2z-g0L" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ScheduledTripsVC" automaticallyAdjustsScrollViewInsets="NO" id="YST-2z-g0L" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="RVM-IA-W1p">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -262,7 +262,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="109"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="J1z-r7-uJX" id="ovj-az-T9a">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="108.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="109"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>

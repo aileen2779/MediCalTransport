@@ -18,9 +18,16 @@ class ScheduledTripsTableViewController: UITableViewController {
     
     var postData = [String]()
     
+    override func viewDidAppear(_ animated: Bool) {
+        //
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // firebase database init
+        
+        // preferences init
         let preferences = UserDefaults.standard
         patientId = preferences.object(forKey: "username") as! String
         

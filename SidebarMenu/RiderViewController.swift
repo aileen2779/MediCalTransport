@@ -43,15 +43,12 @@ class RiderViewController: UIViewController,
         let preferences = UserDefaults.standard
         patientId = preferences.object(forKey: "username") as! String
 
-        
         // add shadow
         dropShadow(thisObject: requestARide)
         dropShadow(thisObject: fromTextField)
         dropShadow(thisObject: toTextField)
         dropShadow(thisObject: whenTextField)
-        
 
-        
         // Do any additional setup after loading the view.
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -168,6 +165,8 @@ class RiderViewController: UIViewController,
             
             // stop transmitting location
             self.locationManager.stopUpdatingLocation()
+            
+            //segue into Scheduled Trips VC
             self.present( UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ScheduledTripsVC") as UIViewController, animated: true, completion: nil)
         })
         //
