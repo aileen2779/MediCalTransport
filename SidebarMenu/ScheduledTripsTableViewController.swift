@@ -10,7 +10,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     
     @IBOutlet weak var tableView: UITableView!
     
-    //var PostDatas = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "Team Pluto!"]
+    //var postData = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "Team Pluto!"]
     var deletePostDataIndexPath: IndexPath? = nil
     
     var ref:DatabaseReference?
@@ -94,7 +94,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell")!
         cell.textLabel?.text = postData[indexPath.row]
         cell.textLabel?.font =  UIFont.systemFont(ofSize: 14.0)
-        cell.textLabel?.numberOfLines = 4
+        cell.textLabel?.numberOfLines = 0
         return cell
     }
     
@@ -108,8 +108,8 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     // Delete Confirmation and Handling
-    func confirmDelete(_ PostData: String) {
-        let alert = UIAlertController(title: "Delete PostData", message: "Are you sure you want to permanently delete \(postData)?", preferredStyle: .actionSheet)
+    func confirmDelete(_ dataToDelete: String) {
+        let alert = UIAlertController(title: "Delete Scheduled Ride", message: "Are you sure you want to permanently delete \(dataToDelete)?", preferredStyle: .actionSheet)
         
         let DeleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: handleDeletePostData)
         let CancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: cancelDeletePostData)
