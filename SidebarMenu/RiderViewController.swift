@@ -19,11 +19,11 @@ class RiderViewController: UIViewController,
     // Firebase handles
     var ref:DatabaseReference?
     
-    
+    // Navigation bars
     @IBOutlet weak var menuButton:UIBarButtonItem!
     @IBOutlet weak var extraButton: UIBarButtonItem!
     
-
+    // UIButton
     @IBOutlet weak var requestARide: UIButton!
     
     var driverOnTheWay = false
@@ -31,7 +31,7 @@ class RiderViewController: UIViewController,
     var riderRequestActive = true
     var userLocation: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0)
     
-    var patientId = ""
+    var patientId:String = ""
     
     let fromString = "pickup"
     let toString = "dropoff"
@@ -176,7 +176,7 @@ class RiderViewController: UIViewController,
             // End add to calendar
             
             // Display confirmation
-            self.displayAlert(title: "Success", message: "A ride request has been submitted for \(whenPickup)")
+            self.displayAlert(title: "Success", message: "A ride request has been submitted for \(whenPickup) from \(fromLocation) to \(toLocation).\nThe event has been added to your calendar")
             
             // clear textfields
             self.fromTextField.text = ""

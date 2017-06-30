@@ -1,12 +1,14 @@
 import UIKit
 import FirebaseDatabase
 
-class ScheduledTripsTableViewController: UITableViewController {
+class ScheduledTripsTableViewController: UITableViewController /*, UITableViewDataSource, UITableViewDelegate*/{
     
     @IBOutlet var menuButton:UIBarButtonItem!
     @IBOutlet var extraButton:UIBarButtonItem!
     
-
+    var deleteCellIndexPath: NSIndexPath? = nil
+    
+    
     @IBOutlet weak var myTableView: UITableView!
  
     //@IBOutlet weak var fromLabel: UILabel!
@@ -37,13 +39,15 @@ class ScheduledTripsTableViewController: UITableViewController {
             menuButton.target = revealViewController()
             menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
             
+         
             revealViewController().rightViewRevealWidth = 200
             extraButton.target = revealViewController()
             extraButton.action = #selector(SWRevealViewController.rightRevealToggle(_:))
             
-            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-        }
+            //view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         
+        }
+ 
 
         // Do any additional setup after loading the view, typically from a nib.
         myTableView.delegate = self
@@ -103,8 +107,50 @@ class ScheduledTripsTableViewController: UITableViewController {
         return cell!
     }
     
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .delete {
+            deleteCellIndexPath = indexPath
+            let cellToDelete = postData[indexPath.row]
+            confirmDelete(cell: cellToDelete)
+        }
+    }
 
+        
+    func confirmDelete(cell: String) {
+        let alert = UIAlertController(title: "Delete Planet", message: "Are you sure you want to permanently delete \(postData)?", preferredStyle: .actionSheet)
+        
+        let DeleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: handleDeletePlanet)
+        let CancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: cancelDeletePlanet)
+        
+        alert.addAction(DeleteAction)
+        alert.addAction(CancelAction)
+        
+        // Support display in iPad
+        alert.popoverPresentationController?.sourceView = self.view
+        alert.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
+        
+        self.present(alert, animated: true, completion: nil)
+    }
     
+    
+    func handleDeletePlanet(_ alertAction: UIAlertAction!) -> Void {
+        if let indexPath = deleteCellIndexPath {
+            tableView.beginUpdates()
+            
+            postData.remove(at: indexPath.row)
+            
+            // Note that indexPath is wrapped in an array:  [indexPath]
+            tableView.deleteRows(at: [indexPath as IndexPath], with: .automatic)
+            
+            deleteCellIndexPath = nil
+            
+            tableView.endUpdates()
+        }
+    }
+    
+    func cancelDeletePlanet(_ alertAction: UIAlertAction!) {
+        deleteCellIndexPath = nil
+    }
 }
 
 
