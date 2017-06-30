@@ -115,43 +115,48 @@ class RiderViewController: UIViewController,
             
             
             /* start confirm */
-            let datetimekey =  self.whenTextField.text!.replacingOccurrences(of: "/", with: "")
-
+            
             // Date time
             let date : Date = Date()
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "MM/dd/YYYY hh:mm aa"
             let todaysDate = dateFormatter.string(from: date)
             
+            let fromLocation = self.fromTextField.text!
+            let toLocation = self.toTextField.text!
+            let whenPickup = self.whenTextField.text!
+            let patientId = self.patientId
             
+            let datetimekey =  whenPickup.replacingOccurrences(of: "/", with: "")
+
             var scheduledTrips = [:] as [String : Any]
             let longitude = (self.locationManager.location?.coordinate.longitude)!
             let latitude = (self.locationManager.location?.coordinate.latitude)!
             
             // if current location, then use coordinates, else use from address
-            scheduledTrips = ["\(self.fromString)": (self.fromTextField.text != "Current Location" ? self.fromTextField.text! : ("\(String(describing: latitude)), \(String(describing: longitude))")),
-                                      "\(self.toString)": self.toTextField.text!,
-                                      "\(self.whenString)": self.whenTextField.text!,
+            scheduledTrips = ["\(self.fromString)": (fromLocation != "Current Location" ? fromLocation : ("\(String(describing: latitude)), \(String(describing: longitude))")),
+                                      "\(self.toString)": toLocation,
+                                      "\(self.whenString)": whenPickup,
                                       "dateadded" : todaysDate]
             
             
-            let scheduledTripUpdates = ["/scheduledtrips/\(self.patientId)/\(datetimekey)/": scheduledTrips]
+            let scheduledTripUpdates = ["/scheduledtrips/\(patientId)/\(datetimekey)/": scheduledTrips]
             
             self.ref?.updateChildValues(scheduledTripUpdates)
             // [END write_fan_out]
             
             // save from trips to firebase
             if self.fromTextField.text != "Current Location" {
-                let savedFromTripsKey = self.fromTextField.text!.hash
-                let savedFromTrips = ["pickup":self.fromTextField.text!]
-                let savedFromTripUpdates = ["/savedtrips/\(self.patientId)/pickup/\(savedFromTripsKey)": savedFromTrips]
+                let savedFromTripsKey = fromLocation.hash
+                let savedFromTrips = ["pickup": fromLocation]
+                let savedFromTripUpdates = ["/savedtrips/\(patientId)/pickup/\(savedFromTripsKey)": savedFromTrips]
                 self.ref?.updateChildValues(savedFromTripUpdates)
             }
             
             // save to trips to firebase
-            let savedToTripsKey = self.toTextField.text!.hash
-            let savedToTrips = ["dropoff": self.toTextField.text!]
-            let savedToTripUpdates = ["/savedtrips/\(self.patientId)/dropoff/\(savedToTripsKey)": savedToTrips]
+            let savedToTripsKey = toLocation.hash
+            let savedToTrips = ["dropoff": toLocation]
+            let savedToTripUpdates = ["/savedtrips/\(patientId)/dropoff/\(savedToTripsKey)": savedToTrips]
             self.ref?.updateChildValues(savedToTripUpdates)
             /* end confirm */
             
@@ -159,19 +164,19 @@ class RiderViewController: UIViewController,
             self.locationManager.stopUpdatingLocation()
             
             // Add to calendar
-            let myDate = self.whenTextField.text!
+            let myDate = whenPickup
             let myDateFormatter = DateFormatter()
             myDateFormatter.dateFormat = "MM/dd/yy h:mm a"
             myDateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
             
             let dateString = myDateFormatter.date(from: myDate)
-            //print("\(dateString!) - \(self.whenTextField.text!)")
+            print("\(dateString!) - \(whenPickup)")
             
-            self.addEventToCalendar(title: "Ride Schedule", description: "\(scheduledTripUpdates)", startDate: dateString!, endDate: dateString!)
+            self.addEventToCalendar(title: "Ride Schedule to \(toLocation)", description: "\(scheduledTripUpdates)", startDate: dateString!, endDate: dateString!)
             // End add to calendar
             
             // Display confirmation
-            self.displayAlert(title: "Success", message: "A ride request has been submitted on \(dateString!)")
+            self.displayAlert(title: "Success", message: "A ride request has been submitted for \(whenPickup)")
             
             // clear textfields
             self.fromTextField.text = ""
