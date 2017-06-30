@@ -167,7 +167,7 @@ class RiderViewController: UIViewController,
             self.locationManager.stopUpdatingLocation()
             
             //segue into Scheduled Trips VC
-            self.present( UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ScheduledTripsVC") as UIViewController, animated: true, completion: nil)
+            //self.present( UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ScheduledTripsVC") as UIViewController, animated: true, completion: nil)
         })
         //
         

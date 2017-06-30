@@ -51,20 +51,34 @@ class ScheduledTripsTableViewController: UITableViewController {
         
         // Retrieve the posts and listen for changes
         Database.database().reference().child("scheduledtrips/" + patientId).observe(.childAdded, with: { (snapshot) in
-        
-            if let result = snapshot.children.allObjects as? [DataSnapshot] {
-                print("snapshot \(snapshot.key)")
-                print("snapshot.key \(snapshot.key)")
-                
-                var myPatientID = ""
-                for snap in result {
-                    myPatientID = snap.value as! String
-                    if (myPatientID != self.patientId) {  // exclude patientid
-                        self.postData.append(snap.value as! String)
-                        //self.fromLabel.text = snap.value as! String
-                    }
+    
+           if let result = snapshot.children.allObjects as? [DataSnapshot] {
+                //print("\(result)")
+                var fromString:String = ""
+                var toString:String = ""
+                var whenString:String = ""
+            
+            for snap in result {
+                    //print("snap.key \(snap.key)")
+                    //print("snap.value \(snap.value!)")
 
+                    if (snap.key != "dateadded") {
+                        
+                        if (snap.key == "pickup") {
+                            fromString = snap.value as! String
+                        }
+                        if (snap.key == "dropoff") {
+                            toString = snap.value as! String
+                        }
+                        if (snap.key == "pickupdate") {
+                            whenString = snap.value as! String
+                        }
+
+                    }
                 }
+                self.postData.append("From: \(fromString)\nTo :\(toString)\nWhen: \(whenString)\n")
+           } else {
+            print("Error retrieving FrB data") // snapshot value is nil
             }
             
             
@@ -97,9 +111,14 @@ class ScheduledTripsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = myTableView.dequeueReusableCell(withIdentifier: "PostCell")
+        //cell?.textLabel?.text = postData[indexPath.row]
+        cell?.textLabel?.font =  UIFont.systemFont(ofSize: 14.0)
+        cell?.textLabel?.numberOfLines = 4
         cell?.textLabel?.text = postData[indexPath.row]
         return cell!
     }
+    
+
     
 }
 
