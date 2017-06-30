@@ -50,6 +50,8 @@ class RiderViewController: UIViewController,
         dropShadow(thisObject: toTextField)
         dropShadow(thisObject: whenTextField)
         
+
+        
         // Do any additional setup after loading the view.
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -152,7 +154,16 @@ class RiderViewController: UIViewController,
             self.ref?.updateChildValues(savedToTripUpdates)
             /* end confirm */
             
-            //self.performSegue(withIdentifier: "ScheduledTripsVC", sender: self)
+            //self.performSegue(withIdentifier: "ScheduledTripsVC", sender: nil)
+            //self.dismiss(animated: false) {
+
+            //}
+            //self.viewDidLoad()
+            //self.viewWillAppear(true)
+            //
+            self.fromTextField.text = ""
+            self.toTextField.text = ""
+            self.whenTextField.text = ""
             
             
         })
