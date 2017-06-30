@@ -153,11 +153,7 @@ class RiderViewController: UIViewController,
             let savedToTripUpdates = ["/savedtrips/\(self.patientId)/dropoff/\(savedToTripsKey)": savedToTrips]
             self.ref?.updateChildValues(savedToTripUpdates)
             /* end confirm */
-            
-            //self.performSegue(withIdentifier: "ScheduledTripsVC", sender: nil)
-            //self.dismiss(animated: false) {
 
-            //}
             //self.viewDidLoad()
             //self.viewWillAppear(true)
             //
@@ -165,7 +161,14 @@ class RiderViewController: UIViewController,
             self.toTextField.text = ""
             self.whenTextField.text = ""
             
+            //self.dismiss(animated: false, completion: nil)
+            //self.dismiss(animated: false) {
+                
+            //}
             
+            // stop transmitting location
+            self.locationManager.stopUpdatingLocation()
+            self.present( UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ScheduledTripsVC") as UIViewController, animated: true, completion: nil)
         })
         //
         
