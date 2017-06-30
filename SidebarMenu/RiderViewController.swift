@@ -4,7 +4,9 @@
 
 import UIKit
 import MapKit
+import EventKit
 import FirebaseDatabase
+import Foundation
 
 
 class RiderViewController: UIViewController,
@@ -134,10 +136,11 @@ class RiderViewController: UIViewController,
             
             
             let scheduledTripUpdates = ["/scheduledtrips/\(self.patientId)/\(datetimekey)/": scheduledTrips]
+            
             self.ref?.updateChildValues(scheduledTripUpdates)
             // [END write_fan_out]
             
-            // from trips
+            // save from trips to firebase
             if self.fromTextField.text != "Current Location" {
                 let savedFromTripsKey = self.fromTextField.text!.hash
                 let savedFromTrips = ["pickup":self.fromTextField.text!]
@@ -145,27 +148,35 @@ class RiderViewController: UIViewController,
                 self.ref?.updateChildValues(savedFromTripUpdates)
             }
             
-            // to trips
+            // save to trips to firebase
             let savedToTripsKey = self.toTextField.text!.hash
             let savedToTrips = ["dropoff": self.toTextField.text!]
             let savedToTripUpdates = ["/savedtrips/\(self.patientId)/dropoff/\(savedToTripsKey)": savedToTrips]
             self.ref?.updateChildValues(savedToTripUpdates)
             /* end confirm */
-
-            //self.viewDidLoad()
-            //self.viewWillAppear(true)
-            //
-            self.fromTextField.text = ""
-            self.toTextField.text = ""
-            self.whenTextField.text = ""
-            
-            //self.dismiss(animated: false, completion: nil)
-            //self.dismiss(animated: false) {
-                
-            //}
             
             // stop transmitting location
             self.locationManager.stopUpdatingLocation()
+            
+            // Add to calendar
+            let myDate = self.whenTextField.text!
+            let myDateFormatter = DateFormatter()
+            myDateFormatter.dateFormat = "MM/dd/yy h:mm a"
+            myDateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+            
+            let dateString = myDateFormatter.date(from: myDate)
+            //print("\(dateString!) - \(self.whenTextField.text!)")
+            
+            self.addEventToCalendar(title: "Ride Schedule", description: "\(scheduledTripUpdates)", startDate: dateString!, endDate: dateString!)
+            // End add to calendar
+            
+            // Display confirmation
+            self.displayAlert(title: "Success", message: "A ride request has been submitted on \(dateString!)")
+            
+            // clear textfields
+            self.fromTextField.text = ""
+            self.toTextField.text = ""
+            self.whenTextField.text = ""
             
             //segue into Scheduled Trips VC
             //self.present( UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ScheduledTripsVC") as UIViewController, animated: true, completion: nil)
@@ -318,6 +329,7 @@ class RiderViewController: UIViewController,
     }
 
     func whenTextFieldActive() {
+        whenTextField.resignFirstResponder()
         showDatePicker()
         whenTextField.isEnabled = false
     }
@@ -405,7 +417,6 @@ class RiderViewController: UIViewController,
         return 0.0
     }
 
-    
     func animateMe(textField: UITextField) {
         
         let _thisTextField = textField
@@ -431,4 +442,30 @@ class RiderViewController: UIViewController,
         self.present(alertcontroller, animated: true, completion: nil)
         
     }
+
+    func addEventToCalendar(title: String, description: String?, startDate: Date, endDate: Date, completion: ((_ success: Bool, _ error: NSError?) -> Void)? = nil) {
+        let eventStore = EKEventStore()
+        
+        eventStore.requestAccess(to: .event, completion: { (granted, error) in
+            if (granted) && (error == nil) {
+                let event = EKEvent(eventStore: eventStore)
+                event.title = title
+                event.startDate = startDate
+                event.endDate = endDate
+                event.notes = description
+                event.calendar = eventStore.defaultCalendarForNewEvents
+                do {
+                    try eventStore.save(event, span: .thisEvent)
+                } catch let e as NSError {
+                    completion?(false, e)
+                    return
+                }
+                completion?(true, nil)
+            } else {
+                completion?(false, error as NSError?)
+            }
+        })
+    }
+
 }
+
