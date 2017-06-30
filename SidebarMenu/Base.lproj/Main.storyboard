@@ -53,7 +53,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="My Profile" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="F4U-2a-tgt">
-                                                    <rect key="frame" x="16" y="0.0" width="344" height="43.5"/>
+                                                    <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                                     <nil key="textColor"/>
@@ -242,50 +242,12 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="RxP-RR-hP0" kind="relationship" relationship="rootViewController" id="HKk-cv-TQe"/>
+                        <segue destination="Uuo-s6-4OZ" kind="relationship" relationship="rootViewController" id="oqj-vi-n8Y"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Zi-DC-yja" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1286" y="-478"/>
-        </scene>
-        <!--ScheduledTripsVC-->
-        <scene sceneID="ecx-57-wM8">
-            <objects>
-                <tableViewController title="ScheduledTripsVC" id="RxP-RR-hP0" customClass="ScheduledTripsTableViewController" customModule="SidebarMenu" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="62" sectionHeaderHeight="28" sectionFooterHeight="28" id="cQi-iH-3MO">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PostCell" rowHeight="62" id="J1z-r7-uJX">
-                                <rect key="frame" x="0.0" y="28" width="375" height="62"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="J1z-r7-uJX" id="ovj-az-T9a">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="62"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="RxP-RR-hP0" id="3mI-lS-Amb"/>
-                            <outlet property="delegate" destination="RxP-RR-hP0" id="lhC-uZ-VyZ"/>
-                        </connections>
-                    </tableView>
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Scheduled Trips" id="LxX-7z-cej">
-                        <barButtonItem key="leftBarButtonItem" image="menu" id="XCD-oN-lxV"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="organize" id="ana-5Z-pey"/>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="extraButton" destination="ana-5Z-pey" id="I3n-tb-JNc"/>
-                        <outlet property="menuButton" destination="XCD-oN-lxV" id="3GR-Gu-aOd"/>
-                        <outlet property="myTableView" destination="cQi-iH-3MO" id="tpw-O6-xGq"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="5Ow-6V-I19" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2188" y="-478.11094452773619"/>
         </scene>
         <!--RegisterVC-->
         <scene sceneID="rMB-hO-x8n">
@@ -1090,6 +1052,70 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5oi-pB-tuE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2188" y="-1200"/>
+        </scene>
+        <!--Scheduled Trips View Controller-->
+        <scene sceneID="4qL-DH-f8s">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="Uuo-s6-4OZ" customClass="ScheduledTripsViewController" customModule="SidebarMenu" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="rps-Fn-zLu"/>
+                        <viewControllerLayoutGuide type="bottom" id="fy6-r5-YBG"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="2zx-Do-anI">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="72" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="dRd-N9-5sE">
+                                <rect key="frame" x="0.0" y="64" width="375" height="559"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PostCell" textLabel="wcC-rl-Ou9" rowHeight="72" style="IBUITableViewCellStyleDefault" id="MTg-Y3-tvG">
+                                        <rect key="frame" x="0.0" y="22" width="375" height="72"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MTg-Y3-tvG" id="dHK-ta-eP1">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="71.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wcC-rl-Ou9">
+                                                    <rect key="frame" x="15" y="0.0" width="345" height="71.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Uuo-s6-4OZ" id="rEA-TC-2qf"/>
+                                    <outlet property="delegate" destination="Uuo-s6-4OZ" id="kbr-2q-IMs"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="dRd-N9-5sE" firstAttribute="width" secondItem="2zx-Do-anI" secondAttribute="width" id="3kj-LH-Gu4"/>
+                            <constraint firstItem="dRd-N9-5sE" firstAttribute="top" secondItem="rps-Fn-zLu" secondAttribute="bottom" id="CV3-tw-rpf"/>
+                            <constraint firstAttribute="centerX" secondItem="dRd-N9-5sE" secondAttribute="centerX" id="Paz-jP-yHJ"/>
+                            <constraint firstItem="fy6-r5-YBG" firstAttribute="top" secondItem="dRd-N9-5sE" secondAttribute="bottom" id="oZ9-4y-Qbs"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="HVI-jJ-3ed">
+                        <barButtonItem key="leftBarButtonItem" image="menu" id="RpP-Nh-DTH"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="organize" id="ezC-KX-FhN"/>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="extraButton" destination="ezC-KX-FhN" id="iY1-G2-pgJ"/>
+                        <outlet property="menuButton" destination="RpP-Nh-DTH" id="uCV-ox-nGh"/>
+                        <outlet property="tableView" destination="dRd-N9-5sE" id="Jz9-P1-VmU"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wyu-Mv-6ey" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2188" y="-478.11094452773619"/>
         </scene>
     </scenes>
     <resources>
