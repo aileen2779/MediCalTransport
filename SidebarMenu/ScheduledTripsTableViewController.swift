@@ -10,13 +10,14 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     
     @IBOutlet weak var tableView: UITableView!
     
-    //var postData = ["Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "Team Pluto!"]
     var deletePostDataIndexPath: IndexPath? = nil
     
     var ref:DatabaseReference?
     var databaseHandle:DatabaseHandle?
     
     var patientId:String = ""
+    
+    var root:String = "scheduledtrips"
     
     var postData = [String]()
     
@@ -52,7 +53,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         tableView.dataSource = self
         
         // Retrieve the posts and listen for changes
-        Database.database().reference().child("scheduledtrips/" + patientId).observe(.childAdded, with: { (snapshot) in
+        Database.database().reference().child( "\(root)/\(patientId)" ).observe(.childAdded, with: { (snapshot) in
             
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
                 //print("\(result)")
@@ -128,10 +129,16 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         if let indexPath = deletePostDataIndexPath {
             tableView.beginUpdates()
             
+            print(postData[indexPath.row])
+            
             postData.remove(at: indexPath.row)
+            
             
             // Note that indexPath is wrapped in an array:  [indexPath]
             tableView.deleteRows(at: [indexPath], with: .automatic)
+            
+            //delete firebase
+            firebaseDelete(childIWantToRemove: "scheduledtrips/\(patientId)/06302017 04:00 PM")
             
             deletePostDataIndexPath = nil
             
@@ -141,6 +148,15 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     
     func cancelDeletePostData(_ alertAction: UIAlertAction!) {
         deletePostDataIndexPath = nil
+    }
+    
+    func firebaseDelete(childIWantToRemove: String) {
+        
+        Database.database().reference().child(childIWantToRemove).removeValue { (error, ref) in
+            if error != nil {
+                print("error \(String(describing: error))")
+            }
+        }
     }
 }
 

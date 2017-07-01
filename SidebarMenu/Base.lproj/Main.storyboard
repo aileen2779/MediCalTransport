@@ -608,7 +608,7 @@
                                 <rect key="frame" x="0.0" y="22" width="375" height="243"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VgX-mL-tAj" id="ABS-I6-LgN">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="243"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="242.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="INa-P2-PFd">
@@ -683,6 +683,7 @@
                         <barButtonItem key="leftBarButtonItem" image="menu" id="RRx-j2-t9o"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="organize" id="CXR-g7-wzh"/>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="extraButton" destination="CXR-g7-wzh" id="ut8-d7-bh2"/>
                         <outlet property="menuButton" destination="RRx-j2-t9o" id="Dej-DC-vio"/>
