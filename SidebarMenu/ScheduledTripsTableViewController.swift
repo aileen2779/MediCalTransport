@@ -19,11 +19,18 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     
     var root:String = "scheduledtrips"
     
-    var postData = [String]()
+    var trips: [String: [String]] = [:]
+
+    struct Objects {
+        var sectionName : String!
+        var sectionObjects : [String]!
+    }
+    
+    var objectArray = [Objects]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+
         
         // firebase database init
         ref = Database.database().reference()
@@ -48,35 +55,41 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             // view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
             
         }
-        // Do any additional setup after loading the view, typically from a nib.
-        tableView.delegate = self
-        tableView.dataSource = self
         
         // Retrieve the posts and listen for changes
         Database.database().reference().child( "\(root)/\(patientId)" ).observe(.childAdded, with: { (snapshot) in
             
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
                 //print("\(result)")
+                
+                var keyString:String = snapshot.key
                 var fromString:String = ""
                 var toString:String = ""
                 var whenString:String = ""
+                var dateAddedString:String = ""
                 
                 for snap in result {
-                    if (snap.key != "dateadded") {
-                        if (snap.key == "pickup") {
-                            fromString = snap.value as! String
-                        }
-                        if (snap.key == "dropoff") {
-                            toString = snap.value as! String
-                        }
-                        if (snap.key == "pickupdate") {
-                            whenString = snap.value as! String
-                        }
-                        
+                    if (snap.key == "pickup") {
+                        fromString = snap.value as! String
+                    }
+                    if (snap.key == "dropoff") {
+                        toString = snap.value as! String
+                    }
+                    if (snap.key == "pickupdate") {
+                        whenString = snap.value as! String
+                    }
+                    if (snap.key == "dateadded") {
+                        dateAddedString = snap.value as! String
                     }
                 }
                 
-                self.postData.append("From: \(fromString)\nTo: \(toString)\nWhen: \(whenString)\n")
+                //self.postData.append("From: \(fromString)\nTo: \(toString)\nWhen: \(whenString)\n")
+                self.trips = [keyString: ["\(fromString)","\(toString)","\(whenString)"]]
+                
+                for (key, value) in self.trips {
+                    //print("\(key) -> \(value)")
+                    self.objectArray.append(Objects(sectionName: key, sectionObjects: value))
+                }
                 
             } else {
                 print("Error retrieving FrB data") // snapshot value is nil
@@ -84,36 +97,56 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             
             self.tableView.reloadData()
         })
+        // Do any additional setup after loading the view, typically from a nib.
+        tableView.delegate = self
+        tableView.dataSource = self
+
     }
     
-    //MARK: UITableViewDataSource Methods
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return postData.count
+    // MARK: - Table view data source
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return objectArray.count
     }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        //return objectArray[section].sectionObjects.count
+        return objectArray.count
+    }
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell")!
-        cell.textLabel?.text = postData[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath as IndexPath)
+        
+        // Configure the cell...
+        //cell.textLabel?.text = objectArray[indexPath.section].sectionObjects[indexPath.row]
+        let id      = objectArray[indexPath.row].sectionName!
+        let from    = objectArray[indexPath.row].sectionObjects![0]
+        let to      = objectArray[indexPath.row].sectionObjects![1]
+        let when    = objectArray[indexPath.row].sectionObjects![2]
+        
         cell.textLabel?.font =  UIFont.systemFont(ofSize: 14.0)
         cell.textLabel?.numberOfLines = 0
+        cell.textLabel?.text = ("From: \(from)\nTo: \(to)\nWhen: \(when)")
         return cell
     }
+
     
     // MARK: UITableViewDelegate Methods
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             deletePostDataIndexPath = indexPath
-            let PostDataToDelete = postData[indexPath.row]
+            let PostDataToDelete = objectArray[indexPath.row]
+            print(PostDataToDelete)
             confirmDelete(PostDataToDelete)
         }
     }
     
     // Delete Confirmation and Handling
-    func confirmDelete(_ dataToDelete: String) {
-        let alert = UIAlertController(title: "Delete Scheduled Ride", message: "Are you sure you want to permanently delete \(dataToDelete)?", preferredStyle: .actionSheet)
+    func confirmDelete(_ dataToDelete: Any) {
+        let alert = UIAlertController(title: "Cancel Ride", message: "Are you sure you want to Cancel \(dataToDelete)?", preferredStyle: .actionSheet)
         
-        let DeleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: handleDeletePostData)
-        let CancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: cancelDeletePostData)
+        let DeleteAction = UIAlertAction(title: "Cancel Ride", style: .destructive, handler: handleDeletePostData)
+        let CancelAction = UIAlertAction(title: "Go Back", style: .cancel, handler: cancelDeletePostData)
         
         alert.addAction(DeleteAction)
         alert.addAction(CancelAction)
@@ -129,16 +162,16 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         if let indexPath = deletePostDataIndexPath {
             tableView.beginUpdates()
             
-            print(postData[indexPath.row])
+            print(objectArray[indexPath.row])
             
-            postData.remove(at: indexPath.row)
+            objectArray.remove(at: indexPath.row)
             
             
             // Note that indexPath is wrapped in an array:  [indexPath]
             tableView.deleteRows(at: [indexPath], with: .automatic)
             
             //delete firebase
-            firebaseDelete(childIWantToRemove: "scheduledtrips/\(patientId)/06302017 04:00 PM")
+            //firebaseDelete(childIWantToRemove: "scheduledtrips/\(patientId)/06302017 04:00 PM")
             
             deletePostDataIndexPath = nil
             
