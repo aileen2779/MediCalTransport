@@ -167,10 +167,10 @@ class RiderViewController: UIViewController,
             let myDate = whenPickup
             let myDateFormatter = DateFormatter()
             myDateFormatter.dateFormat = "MM/dd/yy h:mm a"
-            myDateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+            myDateFormatter.timeZone = TimeZone(secondsFromGMT: TimeZone.current.secondsFromGMT())
             
             let dateString = myDateFormatter.date(from: myDate)
-            print("\(dateString!) - \(whenPickup)")
+            print("\(dateString!) - \(whenPickup) - \(TimeZone.current.secondsFromGMT())")
             
             self.addEventToCalendar(title: "Ride Schedule to \(toLocation)", description: "\(scheduledTripUpdates)", startDate: dateString!, endDate: dateString!)
             // End add to calendar

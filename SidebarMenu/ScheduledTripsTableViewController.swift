@@ -38,7 +38,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         let preferences = UserDefaults.standard
         patientId = preferences.object(forKey: "username") as! String
         
-        self.title = "Scheduled trips for: " + patientId
+        self.title = "Scheduled trips"
         
         
         if revealViewController() != nil {
@@ -59,7 +59,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         Database.database().reference().child( "\(root)/\(patientId)" ).observe(.childAdded, with: { (snapshot) in
             
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
-                //print("\(result)")
                 
                 let keyString:String = snapshot.key
                 var fromString:String = ""
@@ -128,7 +127,11 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         cell.textLabel?.text = ("From: \(from)\nTo: \(to)\nWhen: \(when)")
         return cell
     }
-
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        // set the group title
+        return ("Patient ID: \(patientId)")
+    }
     
     // MARK: UITableViewDelegate Methods
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
