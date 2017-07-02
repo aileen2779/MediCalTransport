@@ -31,7 +31,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
         // firebase database init
         ref = Database.database().reference()
         
@@ -62,11 +61,11 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
                 //print("\(result)")
                 
-                var keyString:String = snapshot.key
+                let keyString:String = snapshot.key
                 var fromString:String = ""
                 var toString:String = ""
                 var whenString:String = ""
-                var dateAddedString:String = ""
+                //var dateAddedString:String = ""
                 
                 for snap in result {
                     if (snap.key == "pickup") {
@@ -78,12 +77,12 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                     if (snap.key == "pickupdate") {
                         whenString = snap.value as! String
                     }
-                    if (snap.key == "dateadded") {
-                        dateAddedString = snap.value as! String
-                    }
+                    //if (snap.key == "dateadded") {
+                    //    dateAddedString = snap.value as! String
+                    //}
                 }
                 
-                //self.postData.append("From: \(fromString)\nTo: \(toString)\nWhen: \(whenString)\n")
+                //Append to array
                 self.trips = [keyString: ["\(fromString)","\(toString)","\(whenString)"]]
                 
                 for (key, value) in self.trips {
@@ -119,7 +118,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         
         // Configure the cell...
         //cell.textLabel?.text = objectArray[indexPath.section].sectionObjects[indexPath.row]
-        let id      = objectArray[indexPath.row].sectionName!
+        //let id      = objectArray[indexPath.row].sectionName!
         let from    = objectArray[indexPath.row].sectionObjects![0]
         let to      = objectArray[indexPath.row].sectionObjects![1]
         let when    = objectArray[indexPath.row].sectionObjects![2]
@@ -145,7 +144,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     func confirmDelete(_ dataToDelete: Any) {
         let alert = UIAlertController(title: "Cancel Ride", message: "Are you sure you want to Cancel \(dataToDelete)?", preferredStyle: .actionSheet)
         
-        let DeleteAction = UIAlertAction(title: "Cancel Ride", style: .destructive, handler: handleDeletePostData)
+        let DeleteAction = UIAlertAction(title: "Yes, I want to cancel This Ride", style: .destructive, handler: handleDeletePostData)
         let CancelAction = UIAlertAction(title: "Go Back", style: .cancel, handler: cancelDeletePostData)
         
         alert.addAction(DeleteAction)
@@ -162,16 +161,19 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         if let indexPath = deletePostDataIndexPath {
             tableView.beginUpdates()
             
-            print(objectArray[indexPath.row])
+            let id      = objectArray[indexPath.row].sectionName!
             
+            //print(objectArray[indexPath.row])
+            
+            // remove from array
             objectArray.remove(at: indexPath.row)
-            
             
             // Note that indexPath is wrapped in an array:  [indexPath]
             tableView.deleteRows(at: [indexPath], with: .automatic)
             
-            //delete firebase
-            //firebaseDelete(childIWantToRemove: "scheduledtrips/\(patientId)/06302017 04:00 PM")
+            //delete from firebase
+            print("scheduledtrips/\(patientId)/\(id)")
+            firebaseDelete(childIWantToRemove: "scheduledtrips/\(patientId)/\(id)")
             
             deletePostDataIndexPath = nil
             
