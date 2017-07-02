@@ -7,6 +7,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     @IBOutlet var menuButton:UIBarButtonItem!
     @IBOutlet var extraButton:UIBarButtonItem!
     
+    var myBGColor:UIColor = UIColor(red:0.49, green:0.73, blue:0.71, alpha:1.0)
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -116,7 +117,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath as IndexPath)
         
         // Configure the cell...
-        //cell.textLabel?.text = objectArray[indexPath.section].sectionObjects[indexPath.row]
         //let id      = objectArray[indexPath.row].sectionName!
         let from    = objectArray[indexPath.row].sectionObjects![0]
         let to      = objectArray[indexPath.row].sectionObjects![1]
@@ -131,6 +131,20 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         // set the group title
         return ("Patient ID: \(patientId)")
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        headerView.backgroundColor = myBGColor
+        
+        let headerLabel = UILabel(frame: CGRect(x: 50, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
+        headerLabel.font = UIFont(name: "System", size: 17)
+        headerLabel.textColor = UIColor.white
+        headerLabel.text = self.tableView(self.tableView, titleForHeaderInSection: section)
+        headerLabel.sizeToFit()
+        headerView.addSubview(headerLabel)
+        
+        return headerView
     }
     
     // MARK: UITableViewDelegate Methods
@@ -164,7 +178,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         if let indexPath = deletePostDataIndexPath {
             tableView.beginUpdates()
             
-            let id      = objectArray[indexPath.row].sectionName!
+            let id = objectArray[indexPath.row].sectionName!
             
             //print(objectArray[indexPath.row])
             
