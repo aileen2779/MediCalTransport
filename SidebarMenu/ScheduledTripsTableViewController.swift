@@ -107,7 +107,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 while (x < self.objectArray.count) {
                     print("\(x)-\(self.objectArray.count-1)")
                     if searchedID == self.objectArray[x].sectionName! {
-                        print("searchID\(searchedID) Deleted")
+                        print("searchID\(searchedID) has been Deleted")
                         self.objectArray.remove(at: x)
                         
                         // exit
