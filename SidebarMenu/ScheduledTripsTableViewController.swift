@@ -107,8 +107,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 while (x < self.objectArray.count) {
                     print("\(x)-\(self.objectArray.count-1)")
                     if searchedID == self.objectArray[x].sectionName! {
-                        print("searchID\(searchedID),sectionname\(self.objectArray[x].sectionName!)")
-                        print("Deleted!!!!")
+                        print("searchID\(searchedID) Deleted")
                         self.objectArray.remove(at: x)
                         
                         // exit
@@ -184,7 +183,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         if editingStyle == .delete {
             deletePostDataIndexPath = indexPath
             let PostDataToDelete = objectArray[indexPath.row]
-            print(PostDataToDelete)
             confirmDelete(PostDataToDelete)
         }
     }
@@ -215,17 +213,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             let when = objectArray[indexPath.row].sectionObjects![2]
             let event = "Ride Schedule to \(to)"
             
-            //print(objectArray[indexPath.row])
-            
-            // remove from array
-            // Do not delete from the array immediately. let firebase trigger do this to refresh the subscribers
-            //objectArray.remove(at: indexPath.row)
-           
-            // Note that indexPath is wrapped in an array:  [indexPath]
-            //tableView.deleteRows(at: [indexPath], with: .automatic)
-            
             //delete from firebase
-            print("scheduledtrips/\(patientId)/\(id)")
             firebaseDelete(childIWantToRemove: "scheduledtrips/\(patientId)/\(id)")
             
             // Remove from calendar
@@ -234,14 +222,14 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             myDateFormatter.dateFormat = "MM/dd/yy h:mm a"
             myDateFormatter.timeZone = TimeZone(secondsFromGMT: TimeZone.current.secondsFromGMT())
             
+            /* Remove from calendar */
             let dateString = myDateFormatter.date(from: myDate)
             print("\(dateString!)-\(event)")
-  //         self.addEventToCalendar(title: "", description: "", startDate: dateString!, endDate: dateString!)
-  
-            //
+            //self.addEventToCalendar(title: "", description: "", startDate: dateString!, endDate: dateString!)
+
             
             // Display confirmation
-            self.displayAlert(title: "Ride canceled", message: "A ride cancelation has been sent.\nThe event has been removed from your calendar")
+            self.displayAlert(title: "Ride canceled", message: "A ride cancelation has been sent.\nThis event has been removed from your calendar")
             
             deletePostDataIndexPath = nil
             
