@@ -103,11 +103,16 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 
                 // remove from array
                 let searchedID = snapshot.key // "01012011 11:59 PM"
-                print(searchedID)
                 var x = 0
                 while (x < self.objectArray.count) {
-                    if searchedID == self.objectArray[0].sectionName! {
+                    print("\(x)-\(self.objectArray.count-1)")
+                    if searchedID == self.objectArray[x].sectionName! {
+                        print("searchID\(searchedID),sectionname\(self.objectArray[x].sectionName!)")
+                        print("Deleted!!!!")
                         self.objectArray.remove(at: x)
+                        
+                        // exit
+                        x = self.objectArray.count
                     }
                     x += 1
                 }
@@ -214,7 +219,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             
             // remove from array
             // Do not delete from the array immediately. let firebase trigger do this to refresh the subscribers
-            // objectArray.remove(at: indexPath.row)
+            //objectArray.remove(at: indexPath.row)
            
             // Note that indexPath is wrapped in an array:  [indexPath]
             //tableView.deleteRows(at: [indexPath], with: .automatic)
