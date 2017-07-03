@@ -1,5 +1,7 @@
 import UIKit
+import EventKit
 import FirebaseDatabase
+import Foundation
 
 
 class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
@@ -7,7 +9,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     @IBOutlet var menuButton:UIBarButtonItem!
     @IBOutlet var extraButton:UIBarButtonItem!
     
-    var myBGColor:UIColor = UIColor(red:0.49, green:0.73, blue:0.71, alpha:1.0)
+    var myBGColor = CONST_BG_COLOR
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -58,7 +60,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         
         // Retrieve the posts and listen for changes
         Database.database().reference().child( "\(root)/\(patientId)" ).observe(.childAdded, with: { (snapshot) in
-            
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
                 
                 let keyString:String = snapshot.key
@@ -91,11 +92,33 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 }
                 
             } else {
-                print("Error retrieving FrB data") // snapshot value is nil
+                print("Error retrieving Firebase data") // snapshot value is nil
             }
-            
             self.tableView.reloadData()
         })
+
+        // Retrieve the posts and listen for changes
+        Database.database().reference().child( "\(root)/\(patientId)" ).observe(.childRemoved, with: { (snapshot) in
+            if snapshot.children.allObjects is [DataSnapshot] {
+                
+                // remove from array
+                let searchedID = snapshot.key // "01012011 11:59 PM"
+                print(searchedID)
+                var x = 0
+                while (x < self.objectArray.count) {
+                    if searchedID == self.objectArray[0].sectionName! {
+                        self.objectArray.remove(at: x)
+                    }
+                    x += 1
+                }
+                
+            } else {
+                print("Error retrieving Firebase data") // snapshot value is nil
+            }
+        
+            self.tableView.reloadData()
+        })
+
         // Do any additional setup after loading the view, typically from a nib.
         tableView.delegate = self
         tableView.dataSource = self
@@ -108,7 +131,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //return objectArray[section].sectionObjects.count
         return objectArray.count
     }
     
@@ -128,11 +150,12 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         return cell
     }
     
+    // Header title
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        // set the group title
         return ("Patient ID: \(patientId)")
     }
     
+    // Header title formatting
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
         headerView.backgroundColor = myBGColor
@@ -145,6 +168,10 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         headerView.addSubview(headerLabel)
         
         return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "Cancel ride"
     }
     
     // MARK: UITableViewDelegate Methods
@@ -161,7 +188,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     func confirmDelete(_ dataToDelete: Any) {
         let alert = UIAlertController(title: "Cancel Ride", message: "Are you sure you want to Cancel \(dataToDelete)?", preferredStyle: .actionSheet)
         
-        let DeleteAction = UIAlertAction(title: "Yes, I want to cancel This Ride", style: .destructive, handler: handleDeletePostData)
+        let DeleteAction = UIAlertAction(title: "Yes, I want to cancel this ride", style: .destructive, handler: handleDeletePostData)
         let CancelAction = UIAlertAction(title: "Go Back", style: .cancel, handler: cancelDeletePostData)
         
         alert.addAction(DeleteAction)
@@ -179,18 +206,37 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             tableView.beginUpdates()
             
             let id = objectArray[indexPath.row].sectionName!
+            let to = objectArray[indexPath.row].sectionObjects![1]
+            let when = objectArray[indexPath.row].sectionObjects![2]
+            let event = "Ride Schedule to \(to)"
             
             //print(objectArray[indexPath.row])
             
             // remove from array
-            objectArray.remove(at: indexPath.row)
-            
+            // Do not delete from the array immediately. let firebase trigger do this to refresh the subscribers
+            // objectArray.remove(at: indexPath.row)
+           
             // Note that indexPath is wrapped in an array:  [indexPath]
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+            //tableView.deleteRows(at: [indexPath], with: .automatic)
             
             //delete from firebase
             print("scheduledtrips/\(patientId)/\(id)")
             firebaseDelete(childIWantToRemove: "scheduledtrips/\(patientId)/\(id)")
+            
+            // Remove from calendar
+            let myDate = when
+            let myDateFormatter = DateFormatter()
+            myDateFormatter.dateFormat = "MM/dd/yy h:mm a"
+            myDateFormatter.timeZone = TimeZone(secondsFromGMT: TimeZone.current.secondsFromGMT())
+            
+            let dateString = myDateFormatter.date(from: myDate)
+            print("\(dateString!)-\(event)")
+  //         self.addEventToCalendar(title: "", description: "", startDate: dateString!, endDate: dateString!)
+  
+            //
+            
+            // Display confirmation
+            self.displayAlert(title: "Ride canceled", message: "A ride cancelation has been sent.\nThe event has been removed from your calendar")
             
             deletePostDataIndexPath = nil
             
@@ -209,6 +255,14 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 print("error \(String(describing: error))")
             }
         }
+    }
+    
+    func displayAlert(title: String, message: String) {
+        
+        let alertcontroller = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertcontroller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alertcontroller, animated: true, completion: nil)
+        
     }
 }
 
