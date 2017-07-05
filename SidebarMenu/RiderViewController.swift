@@ -63,6 +63,7 @@ class RiderViewController: UIViewController,
         
         // reveal controller
         if revealViewController() != nil {
+
             //revealViewController().rearViewRevealWidth = 150
             menuButton.target = revealViewController()
             menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
@@ -134,10 +135,12 @@ class RiderViewController: UIViewController,
             let latitude = (self.locationManager.location?.coordinate.latitude)!
             
             // if current location, then use coordinates, else use from address
-            scheduledTrips = ["\(self.fromString)": (fromLocation != "Current Location" ? fromLocation : ("\(String(describing: latitude)), \(String(describing: longitude))")),
+            scheduledTrips = ["\(self.fromString)": fromLocation,
                                       "\(self.toString)": toLocation,
                                       "\(self.whenString)": whenPickup,
-                                      "dateadded" : todaysDate]
+                                      "dateadded" : todaysDate,
+                                      "longitude" : longitude,
+                                    "latitude":  latitude]
             
             
             let scheduledTripUpdates = ["/scheduledtrips/\(patientId)/\(datetimekey)/": scheduledTrips]
@@ -283,6 +286,8 @@ class RiderViewController: UIViewController,
         }
 
         whenTextField.isEnabled = true
+        view.endEditing(true)
+        
     }
 
     

@@ -5,13 +5,14 @@
 
 import UIKit
 
-//class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
-
 class MenuController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Dismiss the keyboard
 
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -47,5 +48,6 @@ class MenuController: UITableViewController {
         
         self.present(optionMenu, animated: true, completion: nil)
     }
+
 
 }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		10285A0746798FCC3D09C65A /* Pods_SidebarMenu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE53E52749F89184E034462F /* Pods_SidebarMenu.framework */; };
+		3D1793461F0B411900FC5329 /* ScheduledTripsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1793451F0B411900FC5329 /* ScheduledTripsDetailViewController.swift */; };
 		3DE281A31F02E043001D841A /* ScheduledTrips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE281A21F02E043001D841A /* ScheduledTrips.swift */; };
 		7E1465231EFDD25900F1102A /* RiderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1465221EFDD25900F1102A /* RiderViewController.swift */; };
 		7E1465281EFDD2EF00F1102A /* DateTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1465251EFDD2EF00F1102A /* DateTimePicker.swift */; };
@@ -59,6 +60,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3D1793451F0B411900FC5329 /* ScheduledTripsDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduledTripsDetailViewController.swift; sourceTree = "<group>"; };
 		3DE281A21F02E043001D841A /* ScheduledTrips.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduledTrips.swift; sourceTree = "<group>"; };
 		7E1465221EFDD25900F1102A /* RiderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RiderViewController.swift; sourceTree = "<group>"; };
 		7E1465251EFDD2EF00F1102A /* DateTimePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateTimePicker.swift; sourceTree = "<group>"; };
@@ -74,7 +76,6 @@
 		7E6151041EF8B6930077B4E5 /* TouchIDManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchIDManager.h; sourceTree = "<group>"; };
 		7E6151051EF8B6930077B4E5 /* TouchIDManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchIDManager.swift; sourceTree = "<group>"; };
 		7E6151061EF8B6930077B4E5 /* TouchIDManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchIDManager.m; sourceTree = "<group>"; };
-		7E6151071EF8B6930077B4E5 /* 702Shifters-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "702Shifters-Bridging-Header.h"; sourceTree = "<group>"; };
 		7E6291AC1EFE1457008A25E1 /* ScheduledTripsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduledTripsTableViewController.swift; sourceTree = "<group>"; };
 		7E95382D1EF9D1D9008204AA /* UIColor+colorFromHex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+colorFromHex.swift"; sourceTree = "<group>"; };
 		7E95382E1EF9D1D9008204AA /* ScrollableGraphViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollableGraphViewController.swift; sourceTree = "<group>"; };
@@ -176,7 +177,6 @@
 		7E55C1891EF8640700528AC3 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				7E6291AC1EFE1457008A25E1 /* ScheduledTripsTableViewController.swift */,
 				7E6150F91EF875710077B4E5 /* NewsTableViewCell.swift */,
 				7E6150FA1EF875710077B4E5 /* NewsTableViewController.swift */,
 				7E1465221EFDD25900F1102A /* RiderViewController.swift */,
@@ -188,6 +188,8 @@
 				F491E7541A7F7E010026528E /* RegisterViewController.swift */,
 				7E6150FF1EF8B62C0077B4E5 /* MainController.swift */,
 				7EEB3A011EF97E45001A281D /* TimelineViewController.swift */,
+				7E6291AC1EFE1457008A25E1 /* ScheduledTripsTableViewController.swift */,
+				3D1793451F0B411900FC5329 /* ScheduledTripsDetailViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -256,7 +258,6 @@
 				7E6151041EF8B6930077B4E5 /* TouchIDManager.h */,
 				7E6151051EF8B6930077B4E5 /* TouchIDManager.swift */,
 				7E6151061EF8B6930077B4E5 /* TouchIDManager.m */,
-				7E6151071EF8B6930077B4E5 /* 702Shifters-Bridging-Header.h */,
 			);
 			name = TouchID;
 			sourceTree = "<group>";
@@ -570,6 +571,7 @@
 				7E1465231EFDD25900F1102A /* RiderViewController.swift in Sources */,
 				7EEB3A091EF97FBC001A281D /* Timeline.swift in Sources */,
 				7EEB3A001EF8E241001A281D /* SettingsViewController.swift in Sources */,
+				3D1793461F0B411900FC5329 /* ScheduledTripsDetailViewController.swift in Sources */,
 				7E9538311EF9D1D9008204AA /* ScrollableGraphViewController.swift in Sources */,
 				7E1465281EFDD2EF00F1102A /* DateTimePicker.swift in Sources */,
 				7E6150FC1EF875710077B4E5 /* NewsTableViewController.swift in Sources */,

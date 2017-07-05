@@ -24,12 +24,15 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     
     var trips: [String: [String]] = [:]
 
-    struct Objects {
+    struct objects {
         var sectionName : String!
         var sectionObjects : [String]!
     }
     
-    var objectArray = [Objects]()
+    var objectArray = [objects]()
+    
+    
+    var valueToPass:[Any] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +44,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         let preferences = UserDefaults.standard
         patientId = preferences.object(forKey: "username") as! String
         
-        self.title = "Scheduled trips"
+        self.title = "Scheduled Rides"
         
         
         if revealViewController() != nil {
@@ -66,8 +69,10 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 var fromString:String = ""
                 var toString:String = ""
                 var whenString:String = ""
-                //var dateAddedString:String = ""
-                
+                var dateAdded:String = ""
+                var longitude:Double = 0.0
+                var latitude:Double = 0.0
+
                 for snap in result {
                     if (snap.key == "pickup") {
                         fromString = snap.value as! String
@@ -78,17 +83,23 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                     if (snap.key == "pickupdate") {
                         whenString = snap.value as! String
                     }
-                    //if (snap.key == "dateadded") {
-                    //    dateAddedString = snap.value as! String
-                    //}
+                    if (snap.key == "dateadded") {
+                        dateAdded = snap.value as! String
+                    }
+                    if (snap.key == "longitude") {
+                        longitude = snap.value as! Double
+                    }
+                    if (snap.key == "longitude") {
+                        latitude = snap.value as! Double
+                    }
                 }
-                
+
                 //Append to array
-                self.trips = [keyString: ["\(fromString)","\(toString)","\(whenString)"]]
+                self.trips = [keyString: ["\(fromString)","\(toString)","\(whenString)","\(longitude)","\(latitude)","\(dateAdded)"]]
                 
                 for (key, value) in self.trips {
                     //print("\(key) -> \(value)")
-                    self.objectArray.append(Objects(sectionName: key, sectionObjects: value))
+                    self.objectArray.append(objects(sectionName: key, sectionObjects: value))
                 }
                 
             } else {
@@ -176,6 +187,23 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     
     func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
         return "Cancel ride"
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        valueToPass = [objectArray[indexPath.row].sectionObjects![0],   // from
+                    objectArray[indexPath.row].sectionObjects![1],      // to
+                    objectArray[indexPath.row].sectionObjects![3],      // from longitude
+                    objectArray[indexPath.row].sectionObjects![4]]      // from latitude
+        performSegue(withIdentifier: "ScheduledTripsVC", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ScheduledTripsVC" {
+            // initialize new view controller and cast it as your view controller
+            let viewController = segue.destination as! ScheduledTripsDetailViewController
+            // your new view controller should have property that will store passed value
+            viewController.passedValue = valueToPass
+        }
     }
     
     // MARK: UITableViewDelegate Methods
