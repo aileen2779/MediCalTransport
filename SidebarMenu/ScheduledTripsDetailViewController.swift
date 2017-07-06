@@ -58,7 +58,7 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate {
         } else {
             fromLatitude = location.fromLatitude
             fromLongitude = location.fromLongitude
-            print("fromLat: \(self.fromLatitude), fromLon: \(self.fromLongitude), fromAddr \(self.location.fromAddress)")
+            print("fromLat: \(self.fromLatitude), fromLon: \(self.fromLongitude), toAddr \(self.location.toAddress)")
             
         }
         
@@ -68,7 +68,7 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate {
             let toPlacemark = placemarks!.first
             self.toLatitude = toPlacemark!.location!.coordinate.latitude
             self.toLongitude = toPlacemark!.location!.coordinate.longitude
-            print("toLat: \(self.toLatitude), toLon: \(self.toLongitude)")
+            print("toLat: \(self.toLatitude), toLon: \(self.toLongitude), toAddr \(self.location.toAddress)")
             
             self.displayMap()
         }

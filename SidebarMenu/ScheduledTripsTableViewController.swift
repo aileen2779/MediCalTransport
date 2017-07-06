@@ -24,14 +24,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     
     var trips: [String: [String]] = [:]
 
-    //struct objects {
-    //    var sectionName : String!
-     //   var sectionObjects : [String]!
-    //}
-    
-    //var objectArray = [objects]()
-    
-    //var valueToPass:[Any] = []
 
     var objectArray = [LocationClass]()
     
@@ -178,8 +170,8 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         locationClassVar = objectArray[indexPath.row]
         
         // Configure the cell...
-        //let id      = objectArray[indexPath.row].sectionName!
-        let from    = locationClassVar.fromAddress
+        //if current_location, append coordinates rounded to 3 decimal places, else use from address
+        let from    = (locationClassVar.fromAddress != "Current Location" ? locationClassVar.fromAddress : ("\(locationClassVar.fromAddress) (\(String(format: "%.3f", locationClassVar.fromLatitude)), \(String(format: "%.3f", locationClassVar.fromLongitude)))"))
         let to      = locationClassVar.toAddress
         let when    = locationClassVar.pickUpDate
         
@@ -223,12 +215,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ScheduledTripsVC" {
-            // initialize new view controller and cast it as your view controller
-            //let viewController = segue.destination as! ScheduledTripsDetailViewController
-            // your new view controller should have property that will store passed value
-            //viewController.passedValue = valueToPass
-            
-            
             if let detailsVC = segue.destination as? ScheduledTripsDetailViewController {
                 if let locationClassVar = sender as? LocationClass {
                     detailsVC.location = locationClassVar
@@ -277,10 +263,10 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             firebaseDelete(childIWantToRemove: "scheduledtrips/\(patientId)/\(id)")
             
             // Remove from calendar
-            let myDate = locationClassVar.pickUpDate
-            let myDateFormatter = DateFormatter()
-            myDateFormatter.dateFormat = "MM/dd/yy h:mm a"
-            myDateFormatter.timeZone = TimeZone(secondsFromGMT: TimeZone.current.secondsFromGMT())
+            //let myDate = locationClassVar.pickUpDate
+            //let myDateFormatter = DateFormatter()
+            //myDateFormatter.dateFormat = "MM/dd/yy h:mm a"
+            //myDateFormatter.timeZone = TimeZone(secondsFromGMT: TimeZone.current.secondsFromGMT())
             
             /* Remove from calendar */
             //let dateString = myDateFormatter.date(from: myDate)
