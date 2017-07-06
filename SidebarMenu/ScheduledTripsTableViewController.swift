@@ -283,7 +283,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             myDateFormatter.timeZone = TimeZone(secondsFromGMT: TimeZone.current.secondsFromGMT())
             
             /* Remove from calendar */
-            let dateString = myDateFormatter.date(from: myDate)
+            //let dateString = myDateFormatter.date(from: myDate)
             //print("\(dateString!)-\(event)")
             //self.addEventToCalendar(title: "", description: "", startDate: dateString!, endDate: dateString!)
 

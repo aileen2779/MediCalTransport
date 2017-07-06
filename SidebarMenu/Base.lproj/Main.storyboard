@@ -1132,7 +1132,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Kwn-pZ-oD7">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="25" width="375" height="642"/>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VmQ-9a-0h7">
                                 <rect key="frame" x="16" y="28" width="58" height="30"/>
@@ -1146,7 +1146,7 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Kwn-pZ-oD7" secondAttribute="trailing" id="HFY-oL-OdQ"/>
                             <constraint firstItem="VmQ-9a-0h7" firstAttribute="top" secondItem="MeW-YR-s2O" secondAttribute="bottom" constant="8" id="JNW-XL-NgM"/>
-                            <constraint firstItem="Kwn-pZ-oD7" firstAttribute="top" secondItem="ZhD-CM-wbn" secondAttribute="top" id="W95-38-i2b"/>
+                            <constraint firstItem="Kwn-pZ-oD7" firstAttribute="top" secondItem="ZhD-CM-wbn" secondAttribute="top" constant="25" id="W95-38-i2b"/>
                             <constraint firstItem="VmQ-9a-0h7" firstAttribute="leading" secondItem="ZhD-CM-wbn" secondAttribute="leadingMargin" id="t3d-5J-C33"/>
                             <constraint firstItem="Kwn-pZ-oD7" firstAttribute="leading" secondItem="ZhD-CM-wbn" secondAttribute="leading" id="waq-Fe-ubl"/>
                             <constraint firstItem="B5i-iT-kdD" firstAttribute="top" secondItem="Kwn-pZ-oD7" secondAttribute="bottom" id="y2f-RN-ucK"/>
