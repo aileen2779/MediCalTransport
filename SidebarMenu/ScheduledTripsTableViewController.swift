@@ -24,29 +24,31 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     
     var trips: [String: [String]] = [:]
 
-    struct objects {
-        var sectionName : String!
-        var sectionObjects : [String]!
-    }
+    //struct objects {
+    //    var sectionName : String!
+     //   var sectionObjects : [String]!
+    //}
     
-    var objectArray = [objects]()
+    //var objectArray = [objects]()
     
-    
-    var valueToPass:[Any] = []
+    //var valueToPass:[Any] = []
+
+    var objectArray = [LocationClass]()
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
 
         // firebase database init
         ref = Database.database().reference()
+
         
         // preferences init
         let preferences = UserDefaults.standard
         patientId = preferences.object(forKey: "username") as! String
         
         self.title = "Scheduled Rides"
-        
-        
+
         if revealViewController() != nil {
             menuButton.target = revealViewController()
             menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
@@ -66,41 +68,61 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
                 
                 let keyString:String = snapshot.key
-                var fromString:String = ""
-                var toString:String = ""
-                var whenString:String = ""
+                var patientID:String = ""
+                var fromAddress:String = ""
+                var fromLongitude:Double = 0.0
+                var fromLatitude:Double = 0.0
+                var toAddress:String = ""
+                var toLongitude:Double = 0.0
+                var toLatitude:Double = 0.0
+                var pickUpDate:String = ""
                 var dateAdded:String = ""
-                var longitude:Double = 0.0
-                var latitude:Double = 0.0
 
                 for snap in result {
-                    if (snap.key == "pickup") {
-                        fromString = snap.value as! String
+                    if (snap.key == "PatientID") {
+                        patientID = snap.value as! String
                     }
-                    if (snap.key == "dropoff") {
-                        toString = snap.value as! String
+                    if (snap.key == "FromAddress") {
+                        fromAddress = snap.value as! String
                     }
-                    if (snap.key == "pickupdate") {
-                        whenString = snap.value as! String
+                    if (snap.key == "FromLongitude") {
+                        fromLongitude = snap.value as! Double
+                        
                     }
-                    if (snap.key == "dateadded") {
+                    if (snap.key == "FromLatitude") {
+                        fromLatitude = snap.value as! Double
+                    }
+                
+                    if (snap.key == "ToAddress") {
+                        toAddress = snap.value as! String
+                    }
+                    if (snap.key == "ToLongitude") {
+                        toLongitude = snap.value as! Double
+                        
+                    }
+                    if (snap.key == "ToLatitude") {
+                        toLatitude = snap.value as! Double
+                    }
+                    if (snap.key == "PickUpDate") {
+                        pickUpDate = snap.value as! String
+                    }
+                    if (snap.key == "DateAdded") {
                         dateAdded = snap.value as! String
-                    }
-                    if (snap.key == "longitude") {
-                        longitude = snap.value as! Double
-                    }
-                    if (snap.key == "longitude") {
-                        latitude = snap.value as! Double
                     }
                 }
 
-                //Append to array
-                self.trips = [keyString: ["\(fromString)","\(toString)","\(whenString)","\(longitude)","\(latitude)","\(dateAdded)"]]
-                
-                for (key, value) in self.trips {
-                    //print("\(key) -> \(value)")
-                    self.objectArray.append(objects(sectionName: key, sectionObjects: value))
-                }
+                let location = LocationClass(key: keyString,
+                                             patientID: patientID,
+                                             fromAddress: fromAddress,
+                                             fromLongitude: fromLongitude,
+                                             fromLatitude: fromLatitude,
+                                             toAddress: toAddress,
+                                             toLongitude: toLongitude,
+                                             toLatitude: toLatitude,
+                                             pickUpDate: pickUpDate,
+                                             dateAdded: dateAdded)
+
+                self.objectArray.append(location)
                 
             } else {
                 print("Error retrieving Firebase data") // snapshot value is nil
@@ -111,14 +133,12 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         // Retrieve the posts and listen for changes
         Database.database().reference().child( "\(root)/\(patientId)" ).observe(.childRemoved, with: { (snapshot) in
             if snapshot.children.allObjects is [DataSnapshot] {
-                
-                // remove from array
-                let searchedID = snapshot.key // "01012011 11:59 PM"
+                let removedID = snapshot.key // "01012011 11:59 PM"
                 var x = 0
                 while (x < self.objectArray.count) {
-                    print("\(x)-\(self.objectArray.count-1)")
-                    if searchedID == self.objectArray[x].sectionName! {
-                        print("searchID\(searchedID) has been Deleted")
+                    print("Hey\(x)-\(self.objectArray)")
+                    if removedID == self.objectArray[x].key  {
+                        print("searchID\(removedID) has been Deleted")
                         self.objectArray.remove(at: x)
                         
                         // exit
@@ -151,15 +171,19 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath as IndexPath)
+        let locationClassVar: LocationClass!
+        
+        locationClassVar = objectArray[indexPath.row]
         
         // Configure the cell...
         //let id      = objectArray[indexPath.row].sectionName!
-        let from    = objectArray[indexPath.row].sectionObjects![0]
-        let to      = objectArray[indexPath.row].sectionObjects![1]
-        let when    = objectArray[indexPath.row].sectionObjects![2]
+        let from    = locationClassVar.fromAddress
+        let to      = locationClassVar.toAddress
+        let when    = locationClassVar.pickUpDate
         
-        cell.textLabel?.font =  UIFont.systemFont(ofSize: 14.0)
+        cell.textLabel?.font =  UIFont.systemFont(ofSize: 12.0)
         cell.textLabel?.numberOfLines = 0
         cell.textLabel?.text = ("From: \(from)\nTo: \(to)\nWhen: \(when)")
         return cell
@@ -190,19 +214,27 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        valueToPass = [objectArray[indexPath.row].sectionObjects![0],   // from
-                    objectArray[indexPath.row].sectionObjects![1],      // to
-                    objectArray[indexPath.row].sectionObjects![3],      // from longitude
-                    objectArray[indexPath.row].sectionObjects![4]]      // from latitude
-        performSegue(withIdentifier: "ScheduledTripsVC", sender: self)
+        
+        let locationClassVar: LocationClass!
+        locationClassVar = objectArray[indexPath.row]
+        
+        performSegue(withIdentifier: "ScheduledTripsVC", sender: locationClassVar)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ScheduledTripsVC" {
             // initialize new view controller and cast it as your view controller
-            let viewController = segue.destination as! ScheduledTripsDetailViewController
+            //let viewController = segue.destination as! ScheduledTripsDetailViewController
             // your new view controller should have property that will store passed value
-            viewController.passedValue = valueToPass
+            //viewController.passedValue = valueToPass
+            
+            
+            if let detailsVC = segue.destination as? ScheduledTripsDetailViewController {
+                if let locationClassVar = sender as? LocationClass {
+                    detailsVC.location = locationClassVar
+                }
+            }
+            
         }
     }
     
@@ -236,23 +268,23 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         if let indexPath = deletePostDataIndexPath {
             tableView.beginUpdates()
             
-            let id = objectArray[indexPath.row].sectionName!
-            let to = objectArray[indexPath.row].sectionObjects![1]
-            let when = objectArray[indexPath.row].sectionObjects![2]
-            let event = "Ride Schedule to \(to)"
+            let locationClassVar: LocationClass!
+            locationClassVar = objectArray[indexPath.row]
+            let id = locationClassVar.key
+
             
             //delete from firebase
             firebaseDelete(childIWantToRemove: "scheduledtrips/\(patientId)/\(id)")
             
             // Remove from calendar
-            let myDate = when
+            let myDate = locationClassVar.pickUpDate
             let myDateFormatter = DateFormatter()
             myDateFormatter.dateFormat = "MM/dd/yy h:mm a"
             myDateFormatter.timeZone = TimeZone(secondsFromGMT: TimeZone.current.secondsFromGMT())
             
             /* Remove from calendar */
             let dateString = myDateFormatter.date(from: myDate)
-            print("\(dateString!)-\(event)")
+            //print("\(dateString!)-\(event)")
             //self.addEventToCalendar(title: "", description: "", startDate: dateString!, endDate: dateString!)
 
             

@@ -33,9 +33,9 @@ class RiderViewController: UIViewController,
     
     var patientId:String = ""
     
-    let fromString = "pickup"
-    let toString = "dropoff"
-    let whenString = "pickupdate"
+    let fromString = "FromAddress"
+    let toString = "ToAddress"
+    let whenString = "PickUpDate"
     
     @IBOutlet var callAnUberButton: UIButton!
     @IBOutlet var mapView: MKMapView!
@@ -136,11 +136,13 @@ class RiderViewController: UIViewController,
             
             // if current location, then use coordinates, else use from address
             scheduledTrips = ["\(self.fromString)": fromLocation,
-                                      "\(self.toString)": toLocation,
-                                      "\(self.whenString)": whenPickup,
-                                      "dateadded" : todaysDate,
-                                      "longitude" : longitude,
-                                    "latitude":  latitude]
+                              "FromLongitude" : longitude,
+                              "FromLatitude":  latitude,
+                              "\(self.toString)": toLocation,
+                              "ToLongitude" : longitude,
+                              "ToLatitude":  latitude,
+                              "\(self.whenString)": whenPickup,
+                              "DateAdded" : todaysDate]
             
             
             let scheduledTripUpdates = ["/scheduledtrips/\(patientId)/\(datetimekey)/": scheduledTrips]
@@ -151,15 +153,15 @@ class RiderViewController: UIViewController,
             // save from trips to firebase
             if self.fromTextField.text != "Current Location" {
                 let savedFromTripsKey = fromLocation.hash
-                let savedFromTrips = ["pickup": fromLocation]
-                let savedFromTripUpdates = ["/savedtrips/\(patientId)/pickup/\(savedFromTripsKey)": savedFromTrips]
+                let savedFromTrips = ["\(self.fromString)": fromLocation]
+                let savedFromTripUpdates = ["/savedtrips/\(patientId)/\(self.fromString)/\(savedFromTripsKey)": savedFromTrips]
                 self.ref?.updateChildValues(savedFromTripUpdates)
             }
             
             // save to trips to firebase
             let savedToTripsKey = toLocation.hash
-            let savedToTrips = ["dropoff": toLocation]
-            let savedToTripUpdates = ["/savedtrips/\(patientId)/dropoff/\(savedToTripsKey)": savedToTrips]
+            let savedToTrips = ["\(self.toString)": toLocation]
+            let savedToTripUpdates = ["/savedtrips/\(patientId)/\(self.toString)/\(savedToTripsKey)": savedToTrips]
             self.ref?.updateChildValues(savedToTripUpdates)
             /* end confirm */
             
@@ -299,7 +301,7 @@ class RiderViewController: UIViewController,
         
         Database.database().reference().child("savedtrips/" + patientId + "/" + fromString).observeSingleEvent(of: .value, with: { (snapshot) in
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
-                for snap in result {
+            for snap in result {
                     if let postDict = snap.value as? Dictionary<String, AnyObject> {
                         self.values.append(postDict["\(self.fromString)"]! as! String)
                     }

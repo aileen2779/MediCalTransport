@@ -8,6 +8,8 @@
 
 import UIKit
 import MapKit
+import CoreLocation
+
 
 class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate {
         @IBOutlet weak var mapView: MKMapView!
@@ -15,24 +17,55 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate {
     @IBAction func goBackButtonTapped(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
+
+    var location: LocationClass!
     
     
     var passedValue:[Any] = []
     
+    var fromLatitude:Double = 0
+    var fromLongitude:Double = 0
+    var toLatitude:Double = 0 //36.0749404
+    var toLongitude:Double = 0 //-115.01323589999998
+    
     override func viewDidAppear(_ animated: Bool) {
-        print(passedValue)
-        //labelTextField.text = passedValu
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
+        fromLatitude = location.fromLatitude
+        fromLongitude = location.fromLongitude
+        toLatitude = location.toLatitude
+        toLongitude = location.toLongitude
+        print(location.key)
+        print("\(fromLatitude)-\(fromLongitude)")
+        print("\(toLatitude)-\(toLongitude)")
+        
+        let fromGeocoder = CLGeocoder()
+        fromGeocoder.geocodeAddressString("668 Holland Heights Ave. Las Vegas NV 89123") {
+            placemarks, error in
+            let fromPlacemark = placemarks!.first
+            let fromLatitude = fromPlacemark!.location!.coordinate.latitude
+            let fromLongitude = fromPlacemark!.location!.coordinate.longitude
+            //print("fromLat: \(String(describing: fromLatitude!)), fromLon: \(String(describing: fromLongitude!))")
+        }
+
+        let toGeocoder = CLGeocoder()
+        toGeocoder.geocodeAddressString("909 Adobe Flat Dr. Henderson NV 89011") {
+            placemarks, error in
+            let toPlacemark = placemarks!.first
+            let toLatitude = toPlacemark!.location!.coordinate.latitude
+            let toLongitude = toPlacemark!.location!.coordinate.longitude
+            print("toLat: \(String(describing: toLatitude)), toLon: \(String(describing: toLongitude))")
+        }
         
         // 1.
         mapView.delegate = self
         
         // 2.
-        let sourceLocation = CLLocationCoordinate2D(latitude: 40.759011, longitude: -73.984472)
-        let destinationLocation = CLLocationCoordinate2D(latitude: 40.748441, longitude: -73.985564)
+        let sourceLocation      = CLLocationCoordinate2D(latitude: fromLatitude, longitude: fromLongitude)
+        let destinationLocation = CLLocationCoordinate2D(latitude: toLatitude, longitude: toLongitude)
         
         // 3.
         let sourcePlacemark = MKPlacemark(coordinate: sourceLocation, addressDictionary: nil)
@@ -44,7 +77,7 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate {
         
         // 5.
         let sourceAnnotation = MKPointAnnotation()
-        sourceAnnotation.title = "Times Square"
+        sourceAnnotation.title = "From"
         
         if let location = sourcePlacemark.location {
             sourceAnnotation.coordinate = location.coordinate
@@ -52,7 +85,7 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate {
         
         
         let destinationAnnotation = MKPointAnnotation()
-        destinationAnnotation.title = "Empire State Building"
+        destinationAnnotation.title = "To"
         
         if let location = destinationPlacemark.location {
             destinationAnnotation.coordinate = location.coordinate
@@ -93,7 +126,7 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(overlay: overlay)
-        renderer.strokeColor = UIColor.red
+        renderer.strokeColor = UIColor.blue
         renderer.lineWidth = 4.0
         
         return renderer
