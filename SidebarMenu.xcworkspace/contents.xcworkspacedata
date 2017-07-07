@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:SidebarMenu.xcodeproj">
+      location = "group:/Users/gmalasarte/Desktop/iPhoneApps/Sidebar+MediTran/MediCalTransport.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

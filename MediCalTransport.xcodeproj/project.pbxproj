@@ -98,13 +98,13 @@
 		C93BFC9B2595FD55D0A2E2E6 /* Pods-SidebarMenuTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SidebarMenuTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SidebarMenuTests/Pods-SidebarMenuTests.release.xcconfig"; sourceTree = "<group>"; };
 		DE53E52749F89184E034462F /* Pods_SidebarMenu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SidebarMenu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3DB96698DAFB617467C510F /* Pods_SidebarMenuTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SidebarMenuTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F47029F01A7F27DB00E30A3C /* SidebarMenu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SidebarMenu.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F47029F01A7F27DB00E30A3C /* MediCalTransport.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MediCalTransport.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F47029F41A7F27DB00E30A3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F47029F51A7F27DB00E30A3C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F47029FA1A7F27DB00E30A3C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F47029FC1A7F27DB00E30A3C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F47029FF1A7F27DB00E30A3C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		F4702A051A7F27DC00E30A3C /* SidebarMenuTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SidebarMenuTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4702A051A7F27DC00E30A3C /* MediCalTransportTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MediCalTransportTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4702A0A1A7F27DC00E30A3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4702A0B1A7F27DC00E30A3C /* SidebarMenuTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarMenuTests.swift; sourceTree = "<group>"; };
 		F4702A151A7F342F00E30A3C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -268,7 +268,7 @@
 		F47029E71A7F27DB00E30A3C = {
 			isa = PBXGroup;
 			children = (
-				F47029F21A7F27DB00E30A3C /* SidebarMenu */,
+				F47029F21A7F27DB00E30A3C /* MediCalTransport */,
 				F4702A081A7F27DC00E30A3C /* SidebarMenuTests */,
 				F47029F11A7F27DB00E30A3C /* Products */,
 				7E9538331EF9DBAB008204AA /* Frameworks */,
@@ -279,13 +279,13 @@
 		F47029F11A7F27DB00E30A3C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F47029F01A7F27DB00E30A3C /* SidebarMenu.app */,
-				F4702A051A7F27DC00E30A3C /* SidebarMenuTests.xctest */,
+				F47029F01A7F27DB00E30A3C /* MediCalTransport.app */,
+				F4702A051A7F27DC00E30A3C /* MediCalTransportTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		F47029F21A7F27DB00E30A3C /* SidebarMenu */ = {
+		F47029F21A7F27DB00E30A3C /* MediCalTransport */ = {
 			isa = PBXGroup;
 			children = (
 				7E1465241EFDD2DA00F1102A /* DateTimePicker */,
@@ -305,6 +305,7 @@
 				F47029FE1A7F27DB00E30A3C /* LaunchScreen.xib */,
 				F47029F31A7F27DB00E30A3C /* Supporting Files */,
 			);
+			name = MediCalTransport;
 			path = SidebarMenu;
 			sourceTree = "<group>";
 		};
@@ -346,9 +347,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F47029EF1A7F27DB00E30A3C /* SidebarMenu */ = {
+		F47029EF1A7F27DB00E30A3C /* MediCalTransport */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F4702A0F1A7F27DC00E30A3C /* Build configuration list for PBXNativeTarget "SidebarMenu" */;
+			buildConfigurationList = F4702A0F1A7F27DC00E30A3C /* Build configuration list for PBXNativeTarget "MediCalTransport" */;
 			buildPhases = (
 				A276C5B79759EEC7484F8F1D /* [CP] Check Pods Manifest.lock */,
 				F47029EC1A7F27DB00E30A3C /* Sources */,
@@ -361,14 +362,14 @@
 			);
 			dependencies = (
 			);
-			name = SidebarMenu;
+			name = MediCalTransport;
 			productName = SidebarMenu;
-			productReference = F47029F01A7F27DB00E30A3C /* SidebarMenu.app */;
+			productReference = F47029F01A7F27DB00E30A3C /* MediCalTransport.app */;
 			productType = "com.apple.product-type.application";
 		};
-		F4702A041A7F27DC00E30A3C /* SidebarMenuTests */ = {
+		F4702A041A7F27DC00E30A3C /* MediCalTransportTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F4702A121A7F27DC00E30A3C /* Build configuration list for PBXNativeTarget "SidebarMenuTests" */;
+			buildConfigurationList = F4702A121A7F27DC00E30A3C /* Build configuration list for PBXNativeTarget "MediCalTransportTests" */;
 			buildPhases = (
 				28F4846D031E27F74A888A66 /* [CP] Check Pods Manifest.lock */,
 				F4702A011A7F27DC00E30A3C /* Sources */,
@@ -382,9 +383,9 @@
 			dependencies = (
 				F4702A071A7F27DC00E30A3C /* PBXTargetDependency */,
 			);
-			name = SidebarMenuTests;
+			name = MediCalTransportTests;
 			productName = SidebarMenuTests;
-			productReference = F4702A051A7F27DC00E30A3C /* SidebarMenuTests.xctest */;
+			productReference = F4702A051A7F27DC00E30A3C /* MediCalTransportTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -414,7 +415,7 @@
 					};
 				};
 			};
-			buildConfigurationList = F47029EB1A7F27DB00E30A3C /* Build configuration list for PBXProject "SidebarMenu" */;
+			buildConfigurationList = F47029EB1A7F27DB00E30A3C /* Build configuration list for PBXProject "MediCalTransport" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -427,8 +428,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F47029EF1A7F27DB00E30A3C /* SidebarMenu */,
-				F4702A041A7F27DC00E30A3C /* SidebarMenuTests */,
+				F47029EF1A7F27DB00E30A3C /* MediCalTransport */,
+				F4702A041A7F27DC00E30A3C /* MediCalTransportTests */,
 			);
 		};
 /* End PBXProject section */
@@ -600,7 +601,7 @@
 /* Begin PBXTargetDependency section */
 		F4702A071A7F27DC00E30A3C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = F47029EF1A7F27DB00E30A3C /* SidebarMenu */;
+			target = F47029EF1A7F27DB00E30A3C /* MediCalTransport */;
 			targetProxy = F4702A061A7F27DC00E30A3C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -763,7 +764,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.appcoda.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SidebarMenu.app/SidebarMenu";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MediCalTransport.app/MediCalTransport";
 			};
 			name = Debug;
 		};
@@ -781,14 +782,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.appcoda.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SidebarMenu.app/SidebarMenu";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MediCalTransport.app/MediCalTransport";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F47029EB1A7F27DB00E30A3C /* Build configuration list for PBXProject "SidebarMenu" */ = {
+		F47029EB1A7F27DB00E30A3C /* Build configuration list for PBXProject "MediCalTransport" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F4702A0D1A7F27DC00E30A3C /* Debug */,
@@ -797,7 +798,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F4702A0F1A7F27DC00E30A3C /* Build configuration list for PBXNativeTarget "SidebarMenu" */ = {
+		F4702A0F1A7F27DC00E30A3C /* Build configuration list for PBXNativeTarget "MediCalTransport" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F4702A101A7F27DC00E30A3C /* Debug */,
@@ -806,7 +807,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F4702A121A7F27DC00E30A3C /* Build configuration list for PBXNativeTarget "SidebarMenuTests" */ = {
+		F4702A121A7F27DC00E30A3C /* Build configuration list for PBXNativeTarget "MediCalTransportTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F4702A131A7F27DC00E30A3C /* Debug */,

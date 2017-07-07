@@ -36,7 +36,7 @@
         <!--Menu Controller-->
         <scene sceneID="WvI-gM-KFV">
             <objects>
-                <tableViewController id="c8U-hf-vWv" customClass="MenuController" customModule="SidebarMenu" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="c8U-hf-vWv" customClass="MenuController" customModule="MediCalTransport" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="haP-s8-5Sh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -53,7 +53,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="My Profile" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="F4U-2a-tgt">
-                                                    <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
+                                                    <rect key="frame" x="16" y="0.0" width="344" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                                     <nil key="textColor"/>
@@ -264,7 +264,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="BWN-3q-0TK" userLabel="Username Stack View">
                                 <rect key="frame" x="23" y="60" width="330" height="212"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="User ID" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="Z5m-w3-Jvr" customClass="CustomTextField" customModule="SidebarMenu" customModuleProvider="target">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="User ID" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="Z5m-w3-Jvr" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="330" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="330" id="Itl-tJ-Za3"/>
@@ -280,7 +280,7 @@
                                             <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="username"/>
                                         </userDefinedRuntimeAttributes>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First Name" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="rmP-21-ImG" customClass="CustomTextField" customModule="SidebarMenu" customModuleProvider="target">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First Name" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="rmP-21-ImG" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="43" width="330" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="Aru-qm-lb6"/>
@@ -296,7 +296,7 @@
                                             <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="username"/>
                                         </userDefinedRuntimeAttributes>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Last Name" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="sC4-e3-OU7" customClass="CustomTextField" customModule="SidebarMenu" customModuleProvider="target">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Last Name" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="sC4-e3-OU7" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="86" width="330" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="IxU-Dz-9iX"/>
@@ -312,7 +312,7 @@
                                             <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="username"/>
                                         </userDefinedRuntimeAttributes>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="N3H-c0-ano" customClass="CustomTextField" customModule="SidebarMenu" customModuleProvider="target">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="N3H-c0-ano" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="129" width="330" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="330" id="ILw-64-uzd"/>
@@ -328,7 +328,7 @@
                                             <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="password"/>
                                         </userDefinedRuntimeAttributes>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1db-q0-zhf" customClass="CustomTextField" customModule="SidebarMenu" customModuleProvider="target">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1db-q0-zhf" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="172" width="330" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="330" id="LFq-yk-gg7"/>
@@ -432,7 +432,7 @@
         <!--Menu Controller-->
         <scene sceneID="WPB-H1-2OU">
             <objects>
-                <tableViewController id="1iL-ll-I54" customClass="MenuController" customModule="SidebarMenu" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="1iL-ll-I54" customClass="MenuController" customModule="MediCalTransport" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="7BA-gd-JvH">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -598,13 +598,13 @@
         <!--News-->
         <scene sceneID="Sdh-bc-z2T">
             <objects>
-                <tableViewController id="hkM-JG-q4a" customClass="NewsTableViewController" customModule="SidebarMenu" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="hkM-JG-q4a" customClass="NewsTableViewController" customModule="MediCalTransport" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="243" sectionHeaderHeight="22" sectionFooterHeight="22" id="9fw-f0-MSe">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="243" id="VgX-mL-tAj" customClass="NewsTableViewCell" customModule="SidebarMenu" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="243" id="VgX-mL-tAj" customClass="NewsTableViewCell" customModule="MediCalTransport" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="22" width="375" height="243"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VgX-mL-tAj" id="ABS-I6-LgN">
@@ -714,7 +714,7 @@
         <!--Timeline-->
         <scene sceneID="773-dA-9Gv">
             <objects>
-                <tableViewController id="sGU-fh-Mbi" customClass="TimelineViewController" customModule="SidebarMenu" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="sGU-fh-Mbi" customClass="TimelineViewController" customModule="MediCalTransport" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="y1p-LD-V5I">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -768,7 +768,7 @@
         <!--Main Controller-->
         <scene sceneID="BPG-Qj-RI4">
             <objects>
-                <viewController id="Ybb-i9-paL" customClass="MainController" customModule="SidebarMenu" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Ybb-i9-paL" customClass="MainController" customModule="MediCalTransport" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="z0z-m5-Nzq"/>
                         <viewControllerLayoutGuide type="bottom" id="IaB-ie-RJD"/>
@@ -804,7 +804,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="nRR-wp-d3Y" userLabel="LoginStackView">
                                 <rect key="frame" x="37" y="240" width="300" height="186"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="PbZ-Qx-Z7Z" customClass="CustomTextField" customModule="SidebarMenu" customModuleProvider="target">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="PbZ-Qx-Z7Z" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="300" id="B1q-cV-wZy"/>
@@ -820,7 +820,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="swP-59-Epq" customClass="CustomTextField" customModule="SidebarMenu" customModuleProvider="target">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="swP-59-Epq" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="63" width="300" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="300" id="1Au-gX-vpW"/>
@@ -919,7 +919,7 @@
         <!--Rider View Controller-->
         <scene sceneID="1Mh-et-f4X">
             <objects>
-                <viewController id="3lM-C7-f12" customClass="RiderViewController" customModule="SidebarMenu" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="3lM-C7-f12" customClass="RiderViewController" customModule="MediCalTransport" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="A3n-LA-T69"/>
                         <viewControllerLayoutGuide type="bottom" id="cUK-AO-Avd"/>
@@ -1057,7 +1057,7 @@
         <!--Scheduled Trips View Controller-->
         <scene sceneID="4qL-DH-f8s">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="Uuo-s6-4OZ" customClass="ScheduledTripsViewController" customModule="SidebarMenu" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="Uuo-s6-4OZ" customClass="ScheduledTripsViewController" customModule="MediCalTransport" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="rps-Fn-zLu"/>
                         <viewControllerLayoutGuide type="bottom" id="fy6-r5-YBG"/>
@@ -1070,7 +1070,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="559"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PostCell" textLabel="Cl2-u1-HAV" rowHeight="72" style="IBUITableViewCellStyleDefault" id="MTg-Y3-tvG" customClass="NewsTableViewCell" customModule="SidebarMenu" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PostCell" textLabel="Cl2-u1-HAV" rowHeight="72" style="IBUITableViewCellStyleDefault" id="MTg-Y3-tvG" customClass="NewsTableViewCell" customModule="MediCalTransport" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="22" width="375" height="72"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MTg-Y3-tvG" id="dHK-ta-eP1">
@@ -1122,7 +1122,7 @@
         <!--Scheduled Trips Detail View Controller-->
         <scene sceneID="kCi-U6-bj3">
             <objects>
-                <viewController id="dVL-gQ-THv" customClass="ScheduledTripsDetailViewController" customModule="SidebarMenu" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="dVL-gQ-THv" customClass="ScheduledTripsDetailViewController" customModule="MediCalTransport" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MeW-YR-s2O"/>
                         <viewControllerLayoutGuide type="bottom" id="B5i-iT-kdD"/>
