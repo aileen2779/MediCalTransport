@@ -26,7 +26,7 @@ class RiderViewController: UIViewController,
     // UIButton
     @IBOutlet weak var requestARide: UIButton!
     
-    var driverOnTheWay = false
+    //var driverOnTheWay = false
     var locationManager = CLLocationManager()
     var riderRequestActive = true
     var userLocation: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0)
@@ -207,19 +207,11 @@ class RiderViewController: UIViewController,
         
         if let location = manager.location?.coordinate {
             userLocation = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
-            print(userLocation)
-            if driverOnTheWay == false {
-                
-                let region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-                self.mapView.setRegion(region, animated: true)
-                self.mapView.removeAnnotations(self.mapView.annotations)
-                //let annotation = MKPointAnnotation()
-                //annotation.coordinate = userLocation
-                //annotation.title = "Your Location"
-                //self.mapView.addAnnotation(annotation)
-                
-                self.mapView.showsUserLocation = true
-            }
+            //print(userLocation)
+            let region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001))
+            self.mapView.setRegion(region, animated: false )
+            self.mapView.removeAnnotations(self.mapView.annotations)
+            self.mapView.showsUserLocation = true
         }
     }
     
