@@ -171,13 +171,15 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         
         // Configure the cell...
         //if current_location, append coordinates rounded to 3 decimal places, else use from address
-        let from    = (locationClassVar.fromAddress != "Current Location" ? locationClassVar.fromAddress : ("\(locationClassVar.fromAddress) (\(String(format: "%.3f", locationClassVar.fromLatitude)), \(String(format: "%.3f", locationClassVar.fromLongitude)))"))
+        let from    = locationClassVar.fromAddress
+        let fromCoordinates = ("\(String(format: "%.3f", locationClassVar.fromLatitude)), \(String(format: "%.3f", locationClassVar.fromLongitude))")
         let to      = locationClassVar.toAddress
+        let toCoordinates = ("\(String(format: "%.3f", locationClassVar.toLatitude)), \(String(format: "%.3f", locationClassVar.toLongitude))")
         let when    = locationClassVar.pickUpDate
         
         cell.textLabel?.font =  UIFont.systemFont(ofSize: 12.0)
         cell.textLabel?.numberOfLines = 0
-        cell.textLabel?.text = ("From: \(from)\nTo: \(to)\nWhen: \(when)")
+        cell.textLabel?.text = ("From: \(from)\nFrom Coordinates: \(fromCoordinates)\nTo: \(to)\nTo Coordinates: \(toCoordinates)\nWhen: \(when)")
         return cell
     }
     

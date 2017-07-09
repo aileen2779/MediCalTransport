@@ -54,8 +54,8 @@ class NewsTableViewController: UITableViewController {
         // Configure the cell...
         if indexPath.row == 0 {
             cell.postImageView.image = UIImage(named: "watchkit-intro")
-            cell.postTitleLabel.text = "WatchKit Introduction: Building a Simple Guess Game"
-            cell.authorLabel.text = "Simon Ng"
+            cell.postTitleLabel.text = "Calderon Medical Group launches its first mobile app"
+            cell.authorLabel.text = "Dr. Benito Calderon"
             cell.authorImageView.image = UIImage(named: "author")
 
         } else if indexPath.row == 1 {

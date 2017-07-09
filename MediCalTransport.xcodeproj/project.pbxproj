@@ -10,6 +10,7 @@
 		10285A0746798FCC3D09C65A /* Pods_SidebarMenu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE53E52749F89184E034462F /* Pods_SidebarMenu.framework */; };
 		3D1793461F0B411900FC5329 /* ScheduledTripsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1793451F0B411900FC5329 /* ScheduledTripsDetailViewController.swift */; };
 		3D1793481F0D6EC400FC5329 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1793471F0D6EC400FC5329 /* Location.swift */; };
+		3D9479221F11E06B0005947F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D9479211F11E06B0005947F /* Images.xcassets */; };
 		3DE281A31F02E043001D841A /* ScheduledTrips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE281A21F02E043001D841A /* ScheduledTrips.swift */; };
 		7E1465231EFDD25900F1102A /* RiderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1465221EFDD25900F1102A /* RiderViewController.swift */; };
 		7E1465281EFDD2EF00F1102A /* DateTimePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1465251EFDD2EF00F1102A /* DateTimePicker.swift */; };
@@ -39,7 +40,6 @@
 		CBBD4813B4AA2CDE206C9572 /* Pods_SidebarMenuTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3DB96698DAFB617467C510F /* Pods_SidebarMenuTests.framework */; };
 		F47029F61A7F27DB00E30A3C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47029F51A7F27DB00E30A3C /* AppDelegate.swift */; };
 		F47029FB1A7F27DB00E30A3C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F47029F91A7F27DB00E30A3C /* Main.storyboard */; };
-		F47029FD1A7F27DB00E30A3C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F47029FC1A7F27DB00E30A3C /* Images.xcassets */; };
 		F4702A001A7F27DC00E30A3C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F47029FE1A7F27DB00E30A3C /* LaunchScreen.xib */; };
 		F4702A0C1A7F27DC00E30A3C /* SidebarMenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4702A0B1A7F27DC00E30A3C /* SidebarMenuTests.swift */; };
 		F4702A161A7F342F00E30A3C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4702A151A7F342F00E30A3C /* MapKit.framework */; };
@@ -63,6 +63,7 @@
 /* Begin PBXFileReference section */
 		3D1793451F0B411900FC5329 /* ScheduledTripsDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduledTripsDetailViewController.swift; sourceTree = "<group>"; };
 		3D1793471F0D6EC400FC5329 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		3D9479211F11E06B0005947F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		3DE281A21F02E043001D841A /* ScheduledTrips.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduledTrips.swift; sourceTree = "<group>"; };
 		7E1465221EFDD25900F1102A /* RiderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RiderViewController.swift; sourceTree = "<group>"; };
 		7E1465251EFDD2EF00F1102A /* DateTimePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateTimePicker.swift; sourceTree = "<group>"; };
@@ -102,7 +103,6 @@
 		F47029F41A7F27DB00E30A3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F47029F51A7F27DB00E30A3C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F47029FA1A7F27DB00E30A3C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		F47029FC1A7F27DB00E30A3C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F47029FF1A7F27DB00E30A3C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		F4702A051A7F27DC00E30A3C /* MediCalTransportTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MediCalTransportTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4702A0A1A7F27DC00E30A3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -288,6 +288,7 @@
 		F47029F21A7F27DB00E30A3C /* MediCalTransport */ = {
 			isa = PBXGroup;
 			children = (
+				3D9479211F11E06B0005947F /* Images.xcassets */,
 				7E1465241EFDD2DA00F1102A /* DateTimePicker */,
 				7E9538361EF9DBC5008204AA /* BSUMaps */,
 				7E95382C1EF9D0D7008204AA /* ScrollableGraph */,
@@ -301,7 +302,6 @@
 				F4D750141BD38E56009E1003 /* SWRevealViewController */,
 				F47029F51A7F27DB00E30A3C /* AppDelegate.swift */,
 				F47029F91A7F27DB00E30A3C /* Main.storyboard */,
-				F47029FC1A7F27DB00E30A3C /* Images.xcassets */,
 				F47029FE1A7F27DB00E30A3C /* LaunchScreen.xib */,
 				F47029F31A7F27DB00E30A3C /* Supporting Files */,
 			);
@@ -442,8 +442,8 @@
 				F47029FB1A7F27DB00E30A3C /* Main.storyboard in Resources */,
 				7E1465301EFDE92100F1102A /* icon_180.png in Resources */,
 				F4702A001A7F27DC00E30A3C /* LaunchScreen.xib in Resources */,
+				3D9479221F11E06B0005947F /* Images.xcassets in Resources */,
 				7EEB3A0F1EF98066001A281D /* TimelineTableViewCell.xib in Resources */,
-				F47029FD1A7F27DB00E30A3C /* Images.xcassets in Resources */,
 				7EFE1D6D1F022BC700DF792D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
