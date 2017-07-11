@@ -214,7 +214,6 @@ class RiderViewController: UIViewController,
             self.mapView.showsUserLocation = true
         }
     }
-    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -33,6 +33,8 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("From Address:\(location.fromAddress)")
+        print("To Address: \(location.toAddress)")
         
         if (location.fromAddress != "Current Location") {
             let Geocoder = CLGeocoder()
@@ -41,7 +43,7 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate {
                 let fromPlacemark = placemarks!.first
                 self.fromLatitude = fromPlacemark!.location!.coordinate.latitude
                 self.fromLongitude = fromPlacemark!.location!.coordinate.longitude
-                print("fromLat: \(self.fromLatitude), fromLon: \(self.fromLongitude), fromAddr \(self.location.fromAddress)")
+                //print("fromLat: \(self.fromLatitude), fromLon: \(self.fromLongitude), fromAddr \(self.location.fromAddress)")
 
             }
 
@@ -50,7 +52,7 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate {
                 let toPlacemark = placemarks!.first
                 self.toLatitude = toPlacemark!.location!.coordinate.latitude
                 self.toLongitude = toPlacemark!.location!.coordinate.longitude
-                print("toLat: \(self.toLatitude), toLon: \(self.toLongitude)")
+                //print("toLat: \(self.toLatitude), toLon: \(self.toLongitude)")
                 
                 self.displayMap()
             }
@@ -73,7 +75,6 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate {
             self.displayMap()
         }
 
-        //displayMap()
         
     }
 
@@ -135,18 +136,18 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate {
          (response, error) -> Void in
          
          guard let response = response else {
-         if let error = error {
-         print("Error: \(error)")
-         }
-         
-         return
+            if let error = error {
+                print("Error: \(error)")
+            }
+            return
          }
          
          let route = response.routes[0]
+         print("test:\(route)")
          self.mapView.add((route.polyline), level: MKOverlayLevel.aboveRoads)
          
          let rect = route.polyline.boundingMapRect
-         self.mapView.setRegion(MKCoordinateRegionForMapRect(rect), animated: true)
+         self.mapView.setRegion(MKCoordinateRegionForMapRect(rect), animated: false)
          }
  
     }

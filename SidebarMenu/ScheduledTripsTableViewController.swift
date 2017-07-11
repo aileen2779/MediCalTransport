@@ -34,7 +34,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         // firebase database init
         ref = Database.database().reference()
 
-        
         // preferences init
         let preferences = UserDefaults.standard
         patientId = preferences.object(forKey: "username") as! String
@@ -163,23 +162,21 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath as IndexPath)
         let locationClassVar: LocationClass!
         
         locationClassVar = objectArray[indexPath.row]
         
         // Configure the cell...
-        //if current_location, append coordinates rounded to 3 decimal places, else use from address
         let from    = locationClassVar.fromAddress
-        let fromCoordinates = ("\(String(format: "%.3f", locationClassVar.fromLatitude)), \(String(format: "%.3f", locationClassVar.fromLongitude))")
+        let fromCoord = ("\(String(format: "%.3f", locationClassVar.fromLatitude)), \(String(format: "%.3f", locationClassVar.fromLongitude))")
         let to      = locationClassVar.toAddress
-        let toCoordinates = ("\(String(format: "%.3f", locationClassVar.toLatitude)), \(String(format: "%.3f", locationClassVar.toLongitude))")
+        let toCoord = ("\(String(format: "%.3f", locationClassVar.toLatitude)), \(String(format: "%.3f", locationClassVar.toLongitude))")
         let when    = locationClassVar.pickUpDate
         
         cell.textLabel?.font =  UIFont.systemFont(ofSize: 12.0)
         cell.textLabel?.numberOfLines = 0
-        cell.textLabel?.text = ("From: \(from)\nFrom Coordinates: \(fromCoordinates)\nTo: \(to)\nTo Coordinates: \(toCoordinates)\nWhen: \(when)")
+        cell.textLabel?.text = ("From: \(from)\nFrom Coordinates: \(fromCoord)\nTo: \(to)\nTo Coordinates: \(toCoord)\nWhen: \(when)")
         return cell
     }
     
@@ -187,7 +184,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return ("Patient ID: \(patientId)")
     }
-    
+
     // Header title formatting
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
@@ -208,11 +205,11 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         let locationClassVar: LocationClass!
         locationClassVar = objectArray[indexPath.row]
+        print("test:\(locationClassVar!)")
         
-        performSegue(withIdentifier: "ScheduledTripsVC", sender: locationClassVar)
+        performSegue(withIdentifier: "ScheduledTripsVC", sender: locationClassVar!)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
