@@ -262,13 +262,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="BWN-3q-0TK" userLabel="Username Stack View">
-                                <rect key="frame" x="42" y="60" width="330" height="212"/>
+                                <rect key="frame" x="42" y="60" width="330" height="262"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="User ID" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="Z5m-w3-Jvr" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="330" height="40"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email Address" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="Z5m-w3-Jvr" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="330" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="330" id="Itl-tJ-Za3"/>
-                                            <constraint firstAttribute="height" constant="40" id="nJx-3T-iuC"/>
+                                            <constraint firstAttribute="height" constant="50" id="nJx-3T-iuC"/>
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -281,9 +281,9 @@
                                         </userDefinedRuntimeAttributes>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First Name" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="rmP-21-ImG" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="43" width="330" height="40"/>
+                                        <rect key="frame" x="0.0" y="53" width="330" height="50"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="Aru-qm-lb6"/>
+                                            <constraint firstAttribute="height" constant="50" id="Aru-qm-lb6"/>
                                             <constraint firstAttribute="width" constant="330" id="zeh-qg-GC5"/>
                                         </constraints>
                                         <nil key="textColor"/>
@@ -297,9 +297,9 @@
                                         </userDefinedRuntimeAttributes>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Last Name" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="sC4-e3-OU7" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="86" width="330" height="40"/>
+                                        <rect key="frame" x="0.0" y="106" width="330" height="50"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="IxU-Dz-9iX"/>
+                                            <constraint firstAttribute="height" constant="50" id="IxU-Dz-9iX"/>
                                             <constraint firstAttribute="width" constant="330" id="yGQ-8E-5da"/>
                                         </constraints>
                                         <nil key="textColor"/>
@@ -313,10 +313,10 @@
                                         </userDefinedRuntimeAttributes>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="N3H-c0-ano" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="129" width="330" height="40"/>
+                                        <rect key="frame" x="0.0" y="159" width="330" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="330" id="ILw-64-uzd"/>
-                                            <constraint firstAttribute="height" constant="40" id="a9k-FE-Lhc"/>
+                                            <constraint firstAttribute="height" constant="50" id="a9k-FE-Lhc"/>
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -329,10 +329,10 @@
                                         </userDefinedRuntimeAttributes>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1db-q0-zhf" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="172" width="330" height="40"/>
+                                        <rect key="frame" x="0.0" y="212" width="330" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="330" id="LFq-yk-gg7"/>
-                                            <constraint firstAttribute="height" constant="40" id="mBP-DV-d2t"/>
+                                            <constraint firstAttribute="height" constant="50" id="mBP-DV-d2t"/>
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -347,18 +347,18 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ZCG-fi-FT1" userLabel="Submit Stack View">
-                                <rect key="frame" x="42" y="517" width="330" height="105"/>
+                                <rect key="frame" x="42" y="527" width="330" height="105"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gLA-gx-4bq">
                                         <rect key="frame" x="0.0" y="0.0" width="330" height="50"/>
-                                        <color key="backgroundColor" red="0.4941176471" green="0.72941176470000002" blue="0.70980392160000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="06m-bt-6cz"/>
                                             <constraint firstAttribute="width" constant="330" id="z0b-vk-pR0"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                         <state key="normal" title="Create an Account">
-                                            <color key="titleColor" red="0.91477886730000002" green="0.94991112759999996" blue="0.93750542299999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                         </state>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -368,14 +368,14 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="chY-5y-MhC">
                                         <rect key="frame" x="0.0" y="55" width="330" height="50"/>
-                                        <color key="backgroundColor" red="0.4941176471" green="0.72941176470000002" blue="0.70980392160000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="Dzf-Le-ktt"/>
                                             <constraint firstAttribute="width" constant="330" id="n57-7F-7Pj"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                         <state key="normal" title="Go Back">
-                                            <color key="titleColor" red="0.91477886730000002" green="0.94991112759999996" blue="0.93750542299999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -388,8 +388,8 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="-10" translatesAutoresizingMaskIntoConstraints="NO" id="mlN-6r-6Xf" userLabel="PHCP Stack View">
-                                <rect key="frame" x="41.666666666666657" y="304" width="320" height="180"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="mlN-6r-6Xf" userLabel="PHCP Stack View">
+                                <rect key="frame" x="41.666666666666657" y="337" width="320" height="180"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Primary Health Care Specialist:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qih-16-zVE">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="22"/>
@@ -401,22 +401,23 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gN2-gl-SVY">
-                                        <rect key="frame" x="0.0" y="12" width="320" height="168"/>
+                                        <rect key="frame" x="0.0" y="23" width="320" height="157"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     </pickerView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="qih-16-zVE" firstAttribute="centerX" secondItem="mlN-6r-6Xf" secondAttribute="centerX" id="6mf-sq-P5h"/>
                                     <constraint firstAttribute="height" constant="180" id="Eyj-Rv-gBw"/>
                                 </constraints>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.4941176471" green="0.72941176470000002" blue="0.70980392160000005" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="ZCG-fi-FT1" firstAttribute="centerX" secondItem="GLq-nB-aAy" secondAttribute="centerX" id="1bi-Qs-SVn"/>
                             <constraint firstItem="BWN-3q-0TK" firstAttribute="top" secondItem="qDh-kD-FZZ" secondAttribute="bottom" constant="40" id="GAl-uH-Tc0"/>
-                            <constraint firstItem="ZCG-fi-FT1" firstAttribute="top" secondItem="mlN-6r-6Xf" secondAttribute="bottom" constant="33" id="HIF-Of-HEM"/>
-                            <constraint firstItem="mlN-6r-6Xf" firstAttribute="top" secondItem="BWN-3q-0TK" secondAttribute="bottom" constant="32" id="p0T-9j-BrI"/>
+                            <constraint firstItem="ZCG-fi-FT1" firstAttribute="top" secondItem="mlN-6r-6Xf" secondAttribute="bottom" constant="10" id="HIF-Of-HEM"/>
+                            <constraint firstItem="mlN-6r-6Xf" firstAttribute="top" secondItem="BWN-3q-0TK" secondAttribute="bottom" constant="15" id="p0T-9j-BrI"/>
                             <constraint firstItem="mlN-6r-6Xf" firstAttribute="centerX" secondItem="GLq-nB-aAy" secondAttribute="centerX" constant="-5.5" id="r3K-he-Slr"/>
                             <constraint firstItem="BWN-3q-0TK" firstAttribute="centerX" secondItem="GLq-nB-aAy" secondAttribute="centerX" id="vDx-sE-e84"/>
                         </constraints>
@@ -1164,7 +1165,7 @@
         <!--RestPasswordVC-->
         <scene sceneID="1cd-0g-seM">
             <objects>
-                <viewController title="RegisterVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="2nI-AO-Vnn" userLabel="RestPasswordVC" customClass="ResetPasswordViewController" customModule="MediCalTransport" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="ResetPasswordVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="2nI-AO-Vnn" userLabel="RestPasswordVC" customClass="ResetPasswordViewController" customModule="MediCalTransport" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="1jj-mC-cVf"/>
                         <viewControllerLayoutGuide type="bottom" id="uss-mN-EVN"/>
@@ -1174,13 +1175,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="HW8-Kg-4M4" userLabel="Username Stack View">
-                                <rect key="frame" x="42" y="60" width="330" height="212"/>
+                                <rect key="frame" x="42" y="60" width="330" height="103"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="User ID" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="bI7-eF-5Q5" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="330" height="40"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email Address" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="bI7-eF-5Q5" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="330" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="330" id="Weo-Ub-9fM"/>
-                                            <constraint firstAttribute="height" constant="40" id="rSd-fi-KAl"/>
+                                            <constraint firstAttribute="height" constant="50" id="rSd-fi-KAl"/>
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -1193,9 +1194,9 @@
                                         </userDefinedRuntimeAttributes>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First Name" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="E84-7q-WHv" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="43" width="330" height="40"/>
+                                        <rect key="frame" x="0.0" y="53" width="330" height="50"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="2au-bn-TrV"/>
+                                            <constraint firstAttribute="height" constant="50" id="2au-bn-TrV"/>
                                             <constraint firstAttribute="width" constant="330" id="zfb-7U-liQ"/>
                                         </constraints>
                                         <nil key="textColor"/>
@@ -1208,69 +1209,21 @@
                                             <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="username"/>
                                         </userDefinedRuntimeAttributes>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Last Name" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="hSZ-d6-cjs" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="86" width="330" height="40"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="330" id="2Wr-pG-PVu"/>
-                                            <constraint firstAttribute="height" constant="40" id="ts3-Ji-DGv"/>
-                                        </constraints>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
-                                                <real key="value" value="15"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="username"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mtJ-H0-PpJ" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="129" width="330" height="40"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="330" id="EfP-dF-fJ1"/>
-                                            <constraint firstAttribute="height" constant="40" id="lJw-g3-aU6"/>
-                                        </constraints>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
-                                                <real key="value" value="15"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="password"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9tD-E8-XBs" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="172" width="330" height="40"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="Es5-Wv-SxM"/>
-                                            <constraint firstAttribute="width" constant="330" id="TP7-d6-XNy"/>
-                                        </constraints>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
-                                                <real key="value" value="15"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="password"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </textField>
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="4wZ-Vk-rYx" userLabel="Submit Stack View">
-                                <rect key="frame" x="42" y="517" width="330" height="105"/>
+                                <rect key="frame" x="42" y="408" width="330" height="105"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="071-AJ-Dhm">
                                         <rect key="frame" x="0.0" y="0.0" width="330" height="50"/>
-                                        <color key="backgroundColor" red="0.4941176471" green="0.72941176470000002" blue="0.70980392160000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="330" id="Wts-LV-fWd"/>
                                             <constraint firstAttribute="height" constant="50" id="bys-wu-cTq"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                         <state key="normal" title="Reset Password">
-                                            <color key="titleColor" red="0.91477886730000002" green="0.94991112759999996" blue="0.93750542299999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -1280,14 +1233,14 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xrv-9e-shd">
                                         <rect key="frame" x="0.0" y="55" width="330" height="50"/>
-                                        <color key="backgroundColor" red="0.4941176471" green="0.72941176470000002" blue="0.70980392160000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="330" id="Cqz-l5-7Wf"/>
                                             <constraint firstAttribute="height" constant="50" id="QNp-tW-Foc"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                         <state key="normal" title="Go Back">
-                                            <color key="titleColor" red="0.91477886730000002" green="0.94991112759999996" blue="0.93750542299999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -1301,14 +1254,14 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="-10" translatesAutoresizingMaskIntoConstraints="NO" id="P1p-ys-8Id" userLabel="PHCP Stack View">
-                                <rect key="frame" x="70" y="304" width="274" height="180"/>
+                                <rect key="frame" x="70" y="195" width="274" height="180"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="180" id="zph-gL-28w"/>
                                 </constraints>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.4941176471" green="0.72941176470000002" blue="0.70980392160000005" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="4wZ-Vk-rYx" firstAttribute="top" secondItem="P1p-ys-8Id" secondAttribute="bottom" constant="33" id="1C8-as-3pe"/>
                             <constraint firstItem="P1p-ys-8Id" firstAttribute="centerX" secondItem="86C-N6-vlr" secondAttribute="centerX" id="L2R-mp-6q7"/>
