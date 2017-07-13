@@ -74,8 +74,6 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate {
             
             self.displayMap()
         }
-
-        
     }
 
     
@@ -149,9 +147,5 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate {
          let rect = route.polyline.boundingMapRect
          self.mapView.setRegion(MKCoordinateRegionForMapRect(rect), animated: false)
          }
- 
     }
-    
-
-    
 }

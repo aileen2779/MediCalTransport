@@ -238,12 +238,7 @@ class MainController: UIViewController, UITextFieldDelegate {
     }
     
     
-    @IBAction func createAccountButtonTapped(_ sender: Any) {
-        // hide login stack view and thumb id buttons
-        loginStackView.isHidden = !loginStackView.isHidden
-        thumbIdImage.isHidden = !thumbIdImage.isHidden
-        thumbIdButton.isHidden = thumbIdButton.isHidden
-    }
+
     
     @IBAction func forgotPasswordButtonTapped(_ sender: Any) {
                         
