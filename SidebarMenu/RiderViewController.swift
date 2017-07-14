@@ -7,6 +7,7 @@ import MapKit
 import EventKit
 import FirebaseDatabase
 import Foundation
+import CoreLocation
 
 
 class RiderViewController: UIViewController,
@@ -131,19 +132,33 @@ class RiderViewController: UIViewController,
             let datetimekey =  whenPickup.replacingOccurrences(of: "/", with: "")
 
             var scheduledTrips = [:] as [String : Any]
-            let longitude = (self.locationManager.location?.coordinate.longitude)!
-            let latitude = (self.locationManager.location?.coordinate.latitude)!
+            var fromLongitude = (self.locationManager.location?.coordinate.longitude)!
+            var fromLatitude = (self.locationManager.location?.coordinate.latitude)!
+            
+            // Convert destination address to coord
+            let toLongitude = 0
+            let toLatitude = 0
+            
+            let Geocoder = CLGeocoder()
+            Geocoder.geocodeAddressString(toLocation) {
+                placemarks, error in
+                let fromPlacemark = placemarks!.first
+                fromLatitude = fromPlacemark!.location!.coordinate.latitude
+                fromLongitude = fromPlacemark!.location!.coordinate.longitude
+            
+                print(toLatitude)
+                print(toLongitude)
+            }
             
             // if current location, then use coordinates, else use from address
             scheduledTrips = ["\(self.fromString)": fromLocation,
-                              "FromLongitude" : longitude,
-                              "FromLatitude":  latitude,
+                              "FromLongitude" : fromLongitude,
+                              "FromLatitude":  fromLatitude,
                               "\(self.toString)": toLocation,
-                              "ToLongitude" : longitude,
-                              "ToLatitude":  latitude,
+                              "ToLongitude" : toLongitude,
+                              "ToLatitude":  toLatitude,
                               "\(self.whenString)": whenPickup,
                               "DateAdded" : todaysDate]
-            
             
             let scheduledTripUpdates = ["/scheduledtrips/\(patientId)/\(datetimekey)/": scheduledTrips]
             
@@ -288,7 +303,8 @@ class RiderViewController: UIViewController,
     func fromTextFieldActive() {
         
         values = [String]()
-        self.values.append("Current Location")
+        values = ["Current Location"]
+//        self.values.append("Current Location")
         
         Database.database().reference().child("savedtrips/" + patientId + "/" + fromString).observeSingleEvent(of: .value, with: { (snapshot) in
             if let result = snapshot.children.allObjects as? [DataSnapshot] {

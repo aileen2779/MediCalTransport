@@ -374,7 +374,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="mlN-6r-6Xf" userLabel="PHCP Stack View">
                                 <rect key="frame" x="42" y="320" width="330" height="180"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Primary Health Care Specialist:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qih-16-zVE">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Primary Health Care Provider:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qih-16-zVE">
                                         <rect key="frame" x="0.0" y="0.0" width="330" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="22" id="fdC-wu-1Y9"/>
@@ -971,15 +971,6 @@
                                     <action selector="whenTextFieldChanged:" destination="3lM-C7-f12" eventType="editingChanged" id="dYr-23-Hw1"/>
                                 </connections>
                             </textField>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="egS-cl-b14">
-                                <rect key="frame" x="42" y="134" width="330" height="0.0"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="330" id="J1N-Ad-x3a"/>
-                                    <constraint firstAttribute="height" id="WvT-Ha-xtH"/>
-                                </constraints>
-                                <sections/>
-                            </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WTo-zC-G5b" userLabel="RequestARide">
                                 <rect key="frame" x="42" y="661" width="330" height="55"/>
                                 <color key="backgroundColor" red="0.4941176471" green="0.72941176470000002" blue="0.70980392160000005" alpha="1" colorSpace="calibratedRGB"/>
@@ -1014,6 +1005,15 @@
                                     <action selector="toTextFieldChanged:" destination="3lM-C7-f12" eventType="editingChanged" id="1iX-ps-5Eg"/>
                                 </connections>
                             </textField>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="egS-cl-b14">
+                                <rect key="frame" x="42" y="134" width="330" height="0.0"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="330" id="J1N-Ad-x3a"/>
+                                    <constraint firstAttribute="height" id="WvT-Ha-xtH"/>
+                                </constraints>
+                                <sections/>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
