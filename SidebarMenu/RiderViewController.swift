@@ -92,7 +92,6 @@ class RiderViewController: UIViewController,
         fromTextField.addTarget(self, action: #selector(fromTextFieldActive), for: UIControlEvents.touchDown)
         toTextField.addTarget(self, action: #selector(toTextFieldActive), for: UIControlEvents.touchDown)
         whenTextField.addTarget(self, action: #selector(whenTextFieldActive), for: UIControlEvents.touchDown)
-        
     }
     
     @IBAction func callAnUber(_ sender: AnyObject) {
@@ -111,11 +110,12 @@ class RiderViewController: UIViewController,
                 //
             }
         
+        //Begin confirm
         let optionMenu = UIAlertController(title: nil, message: "Are you sure?", preferredStyle: .actionSheet)
         let scheduleAction = UIAlertAction(title: "Schedule this ride", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             
-            
+        
             /* start confirm */
             
             // Date time
@@ -215,6 +215,8 @@ class RiderViewController: UIViewController,
         optionMenu.addAction(scheduleAction)
         optionMenu.addAction(cancelAction)
         self.present(optionMenu, animated: true, completion: nil)
+        //End confirm
+        
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -303,7 +305,6 @@ class RiderViewController: UIViewController,
         
         values = [String]()
         values = ["Current Location"]
-//        self.values.append("Current Location")
         
         Database.database().reference().child("savedtrips/" + patientId + "/" + fromString).observeSingleEvent(of: .value, with: { (snapshot) in
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
@@ -326,7 +327,6 @@ class RiderViewController: UIViewController,
 
     func toTextFieldActive() {
  
-        
         self.values.removeAll()
 
         Database.database().reference().child("savedtrips/" + patientId + "/" + toString).observeSingleEvent(of: .value, with: { (snapshot) in
@@ -435,23 +435,9 @@ class RiderViewController: UIViewController,
         return 0.0
     }
 
-    func animateMe(textField: UITextField) {
-        
-        let _thisTextField = textField
 
-        UIView.animate(withDuration: 0.1, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseIn, animations: {_thisTextField.center.x += 10 }, completion: nil)
-        UIView.animate(withDuration: 0.1, delay: 0.1, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseIn, animations: {_thisTextField.center.x -= 20 }, completion: nil)
-        UIView.animate(withDuration: 0.1, delay: 0.2, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseIn, animations: {_thisTextField.center.x += 10 }, completion: nil)
-    }
 
-    func dropShadow(thisObject: Any) {
-        (thisObject as AnyObject).layer.borderColor = UIColor.clear.cgColor
-        (thisObject as AnyObject).layer.masksToBounds = false
-        (thisObject as AnyObject).layer.shadowColor = UIColor.black.cgColor
-        (thisObject as AnyObject).layer.shadowOffset = CGSize.zero
-        (thisObject as AnyObject).layer.shadowOpacity = 1
-        (thisObject as AnyObject).layer.shadowRadius = 5.0
-    }
+
         
     func displayAlert(title: String, message: String) {
         

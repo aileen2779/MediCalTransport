@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D0F779D1F196907000B51ED /* Patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0F779C1F196907000B51ED /* Patient.swift */; };
 		3D1793461F0B411900FC5329 /* ScheduledTripsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1793451F0B411900FC5329 /* ScheduledTripsDetailViewController.swift */; };
 		3D1793481F0D6EC400FC5329 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1793471F0D6EC400FC5329 /* Location.swift */; };
 		3D9479221F11E06B0005947F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D9479211F11E06B0005947F /* Images.xcassets */; };
@@ -61,6 +62,7 @@
 /* Begin PBXFileReference section */
 		0FA5ED8545D9AD294CF351C2 /* Pods_MediCalTransport.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MediCalTransport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F3C950ACD8C978133FBA62E /* Pods-MediCalTransport.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MediCalTransport.release.xcconfig"; path = "Pods/Target Support Files/Pods-MediCalTransport/Pods-MediCalTransport.release.xcconfig"; sourceTree = "<group>"; };
+		3D0F779C1F196907000B51ED /* Patient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Patient.swift; sourceTree = "<group>"; };
 		3D1793451F0B411900FC5329 /* ScheduledTripsDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduledTripsDetailViewController.swift; sourceTree = "<group>"; };
 		3D1793471F0D6EC400FC5329 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		3D9479211F11E06B0005947F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 			children = (
 				3DE281A21F02E043001D841A /* ScheduledTrips.swift */,
 				3D1793471F0D6EC400FC5329 /* Location.swift */,
+				3D0F779C1F196907000B51ED /* Patient.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -547,6 +550,7 @@
 				3DE281A31F02E043001D841A /* ScheduledTrips.swift in Sources */,
 				7EEB3A021EF97E45001A281D /* TimelineViewController.swift in Sources */,
 				3DF822341F17D4F100882F02 /* ResetPasswordViewController.swift in Sources */,
+				3D0F779D1F196907000B51ED /* Patient.swift in Sources */,
 				F4702A181A7F351C00E30A3C /* MenuController.swift in Sources */,
 				7EEB3A0B1EF97FBC001A281D /* TimelineTableViewCell.swift in Sources */,
 				7E61510B1EF8B6930077B4E5 /* TouchIDManager.m in Sources */,

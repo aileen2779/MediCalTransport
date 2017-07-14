@@ -15,6 +15,14 @@ func animateMe(textField: UITextField) {
     UIView.animate(withDuration: 0.1, delay: 0.2, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseIn, animations: {_thisTextField.center.x += 10 }, completion: nil)
 }
 
+func dropShadow(thisObject: Any) {
+    (thisObject as AnyObject).layer.borderColor = UIColor.clear.cgColor
+    (thisObject as AnyObject).layer.masksToBounds = false
+    (thisObject as AnyObject).layer.shadowColor = UIColor.black.cgColor
+    (thisObject as AnyObject).layer.shadowOffset = CGSize.zero
+    (thisObject as AnyObject).layer.shadowOpacity = 1
+    (thisObject as AnyObject).layer.shadowRadius = 5.0
+}
 
 func vibrate(howMany: Int) {
     let x = Int(howMany)
@@ -24,5 +32,10 @@ func vibrate(howMany: Int) {
     }
 }
 
+func delayWithSeconds(_ seconds: Double, completion: @escaping () -> ()) {
+    DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+        completion()
+    }
+}
 
 

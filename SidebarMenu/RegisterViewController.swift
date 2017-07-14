@@ -1,16 +1,22 @@
 import UIKit
+import FirebaseDatabase
+import NVActivityIndicatorView
 
-class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,NVActivityIndicatorViewable {
+    
+    // Firebase handles
+    var ref:DatabaseReference?
     
     var pickerData: [String] = [String]()
+    var userPCP:String = ""
     
     @IBOutlet weak var phcpPickerView: UIPickerView!
     
-    @IBOutlet weak var emailAddressTextField: CustomTextField!
+    @IBOutlet weak var phoneNumberTextField: CustomTextField!
     @IBOutlet weak var firstNameTextField: CustomTextField!
     @IBOutlet weak var lastNameTextField: CustomTextField!
-    @IBOutlet weak var passwordTextField: CustomTextField!
-    @IBOutlet weak var passwordConfirmTextField: CustomTextField!
+    @IBOutlet weak var pinTextField: CustomTextField!
+    @IBOutlet weak var pinConfirmTextField: CustomTextField!
     
     @IBAction func backButtonTapped(_ sender: Any) {
         dismiss(animated: true, completion: nil)
@@ -21,10 +27,14 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        // firebase reference
+        ref = Database.database().reference()
+        
         // change navigation title color
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white]
         
-        // change radius
+        // change corner radius of button
         phcpPickerView.layer.masksToBounds = true
         phcpPickerView.layer.borderWidth = 2.0
         phcpPickerView.layer.borderColor = UIColor.cyan.cgColor
@@ -39,6 +49,8 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                       "Dr. Topher Rey",
                       "Dr. Sammie D. Dog",
                       "Dr. Joyce Lee"]
+
+        
     }
     
     @IBAction func createAnAccountTapped(_ sender: Any) {
@@ -48,49 +60,123 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         createAnAccountButton.isEnabled = true
         
         // evaluate login and password
-        let userEmailAddress = emailAddressTextField.text
-        let userFirstName = firstNameTextField.text
-        let userLastName = lastNameTextField.text
-        let userPassword = passwordTextField.text
-        let userPasswordConfirm = passwordConfirmTextField.text
-
+        let userPhoneNumber = phoneNumberTextField.text!
+        let userFirstName = firstNameTextField.text!
+        let userLastName = lastNameTextField.text!
+        let userPin = pinTextField.text!
+        let userPinConfirm = pinConfirmTextField.text!
+        
         // Check for empty fields
-        if (userEmailAddress?.isEmpty)! {
-            animateMe(textField: self.emailAddressTextField)
+        if (userPhoneNumber.isEmpty) {
+            animateMe(textField: self.phoneNumberTextField)
             return
         }
         
-        if !self.validate(email: userEmailAddress!) {
-            animateMe(textField: self.emailAddressTextField)
-            return
-        }
-        
-        if (userFirstName?.isEmpty)! {
+        if (userFirstName.isEmpty) {
             animateMe(textField: self.firstNameTextField)
             return
         }
-        if (userLastName?.isEmpty)! {
+        if (userLastName.isEmpty) {
             animateMe(textField: self.lastNameTextField)
             return
         }
-        if (userPassword?.isEmpty)! {
-            animateMe(textField: self.passwordTextField)
+        if (userPin.isEmpty) {
+            animateMe(textField: self.pinTextField)
             return
         }
-        if (userPasswordConfirm?.isEmpty)! {
-            animateMe(textField: self.passwordConfirmTextField)
+        if (userPinConfirm.isEmpty) {
+            animateMe(textField: self.pinConfirmTextField)
             return
         }
 
-        if (userPassword != userPasswordConfirm) {
-            animateMe(textField: self.passwordTextField)
-            animateMe(textField: self.passwordConfirmTextField)
+        if (userPin != userPinConfirm) {
+            animateMe(textField: self.pinTextField)
+            animateMe(textField: self.pinConfirmTextField)
             return
         }
+
+        // assign a default value to PCP
+        if (userPCP == "") {
+            userPCP = pickerData[0]
+        }
+
+        //createAnAccountButton.isEnabled = false
         
-        createAnAccountButton.isEnabled = false
+        //Begin confirm
+        let optionMenu = UIAlertController(title: nil, message: "Are you sure?", preferredStyle: .actionSheet)
+        let scheduleAction = UIAlertAction(title: "Go ahead and create my account", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+
+            // show activity activityIndicator
+            self.startAnimating(CGSize(width: 40, height: 40), message: "Validating...", type: NVActivityIndicatorType(rawValue: Int(6))!)
+            
+            
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+                NVActivityIndicatorPresenter.sharedInstance.setMessage("Submitting registration...")
+            }
+
+            
+            //Begin: Save Trips to Firebase
+            
+            // Date time
+            let date : Date = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM/dd/YYYY hh:mm aa"
+            let todaysDate = dateFormatter.string(from: date)
+            
+            
+            // save patient information
+            var patientRegistration = [:] as [String : Any]
+            patientRegistration = ["FirstName" : userFirstName,
+                                   "LastName":  userLastName,
+                                   "PCP":  self.userPCP,
+                                   "DateAdded" : todaysDate
+            ]
+            
+            let patientRegistrationUpdates = ["/users/\(userPhoneNumber)/": patientRegistration]
+            self.ref?.updateChildValues(patientRegistrationUpdates)
+            //End: Save Trips to Firebase
+            
+            // save pin information
+            var pinInformation = [:] as [String : Any]
+            pinInformation = ["DateAdded" : todaysDate,
+                              "IsActive" : false,       // this should be initially set to false pending approval
+                              "Pin" : userPin.hashValue
+            ]
+            
+            let pinInformationUpdates = ["/pin/\(userPhoneNumber)/": pinInformation]
+            self.ref?.updateChildValues(pinInformationUpdates)
+            //End: Save Trips to Firebase
+            
+            
+            
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+                self.stopAnimating()
+            }
+
+            delayWithSeconds(2) {
+                self.dismiss(animated: true, completion: nil)
+            }
+            
+            
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            print("Cancelled")
+        })
+        
+        optionMenu.addAction(scheduleAction)
+        optionMenu.addAction(cancelAction)
+        
+        self.present(optionMenu, animated: true, completion: nil)
+        //End confirm
+        
+        //createAnAccountButton.isEnabled = true
+
 
     }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -106,6 +192,10 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         return pickerData.count
     }
     
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        userPCP = pickerData[row]
+        //print(userPCP)
+    }
     // The data to return for the row and component (column) that's being passed in
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return pickerData[row]
@@ -133,4 +223,14 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         regex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
         return NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: email)
     }
+    
+    func displayAlert(title: String, message: String) {
+        
+        let alertcontroller = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertcontroller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alertcontroller, animated: true, completion: nil)
+        
+    }
+
+    
 }

@@ -2,9 +2,9 @@
 //  MainController.swift
 //  Created by Gamy Malasarte on 6/6/17.
 
-
 import UIKit
 import LocalAuthentication
+import FirebaseDatabase
 import NVActivityIndicatorView
 
 class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicatorViewable {
@@ -19,6 +19,9 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
     @IBOutlet weak var thumbIdButton: UIButton!
     
     var login_session:String = ""
+    
+    // Firebase handles
+    var ref:DatabaseReference?
     
     @IBAction func loginButtonTapped(_ sender: Any) {
         
@@ -43,21 +46,23 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         }
 
         // hide login stack view and thumb id buttons
-        loginStackView.isHidden = true
-        thumbIdImage.isHidden = true
-        thumbIdButton.isHidden = true
+        //loginStackView.isHidden = true
+        //thumbIdImage.isHidden = true
+        //thumbIdButton.isHidden = true
         
         // show activity activityIndicator
         let randomNum:UInt32 = arc4random_uniform(30) + 1 // generates random number between (0 and 30) + 1
         startAnimating(CGSize(width: 40, height: 40), message: "Loading...", type: NVActivityIndicatorType(rawValue: Int(randomNum))!)
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
             NVActivityIndicatorPresenter.sharedInstance.setMessage("Authenticating...")
         }
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
             self.stopAnimating()
         }
         
-        login_now(username:loginTextField.text!, password: passwordTextField.text!)
+        delayWithSeconds(2) {
+            self.login_now(username:self.loginTextField.text!, password: self.passwordTextField.text!)
+        }
         
     }
     
@@ -132,26 +137,54 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         loginTextField.endEditing(true)
         passwordTextField.endEditing(true)
     
-        let session_data = "1234567890"
-        self.login_session = session_data
-    
-        let preferences = UserDefaults.standard
-        preferences.set(session_data, forKey: "session")
-        preferences.set(username, forKey: "username")
-        preferences.set(password, forKey: "password")
-        preferences.set(true, forKey: "touchIdEnrolled")
         
-        DispatchQueue.main.async(execute: self.loginDone)
+        Database.database().reference().child("pin/\(username)/").observeSingleEvent(of: .value, with: { (snapshot) in
+            if let result = snapshot.children.allObjects as? [DataSnapshot] {
+                print("test:\(result)")
+                    
+                if (result.isEmpty) {
+                    print("user does not exist")
+                    self.displayAlert(title: "Alert!", message: "User does not exist")
+                } else {
+                    for snap in result {
+                        if (snap.key == "IsActive") {
+                            let isActive:Bool = snap.value! as! Bool
+                            if (isActive) {
+                                print("user is active")
+
+                                
+                                let session_data = "1234567890"
+                                self.login_session = session_data
+                                
+                                let preferences = UserDefaults.standard
+                                preferences.set(session_data, forKey: "session")
+                                preferences.set(username, forKey: "username")
+                                preferences.set(password, forKey: "password")
+                                preferences.set(true, forKey: "touchIdEnrolled")
+                                
+                                DispatchQueue.main.async(execute: self.loginDone)
+                                
+                            } else {
+                                print("user is inactive")
+                                self.displayAlert(title: "Alert!", message: "User is not activated")
+                            }
+                        }
+                    }
+                }
+            }
+                
+        })
+            
+
         
     }
-
     
     func loginDone() {
         
         self.performSegue(withIdentifier: "MainControllerVC", sender: self)
     }
     
-    
+
     func loginToDo() {
         //activityIndicatorStartNoAsync()
         
@@ -252,5 +285,11 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         self.view.addSubview(activityIndicator)
     }
 
-
+    func displayAlert(title: String, message: String) {
+        
+        let alertcontroller = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertcontroller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alertcontroller, animated: true, completion: nil)
+        
+    }
 }
