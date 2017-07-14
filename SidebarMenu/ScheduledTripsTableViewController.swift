@@ -302,5 +302,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         self.present(alertcontroller, animated: true, completion: nil)
         
     }
+
 }
 

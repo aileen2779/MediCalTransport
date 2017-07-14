@@ -1,16 +1,18 @@
 # Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+platform :ios, '9.0'
 
-target 'SidebarMenu' do
+target 'MediCalTransport' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
   pod 'TextFieldEffects'
   pod 'Firebase/Core'
    pod 'Firebase/Database'
-   pod ‘Firebase/Messaging’
+   pod 'Firebase/Messaging'
+   pod 'NVActivityIndicatorView'
+   #, :path => '../'
   # Pods for SidebarMenu
 
-  target 'SidebarMenuTests' do
+  target 'MediCalTransportTests' do
     inherit! :search_paths
     # Pods for testing
   end

@@ -5,8 +5,9 @@
 
 import UIKit
 import LocalAuthentication
+import NVActivityIndicatorView
 
-class MainController: UIViewController, UITextFieldDelegate {
+class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicatorViewable {
 
     @IBOutlet weak var login_button: UIButton!
     @IBOutlet weak var loginTextField: CustomTextField!
@@ -47,8 +48,16 @@ class MainController: UIViewController, UITextFieldDelegate {
         thumbIdButton.isHidden = true
         
         // show activity activityIndicator
-        //activityIndicatorStartNoAsync()
-
+        let randomNum:UInt32 = arc4random_uniform(30) + 1 // generates random number between (0 and 30) + 1
+        startAnimating(CGSize(width: 40, height: 40), message: "Loading...", type: NVActivityIndicatorType(rawValue: Int(randomNum))!)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {
+            NVActivityIndicatorPresenter.sharedInstance.setMessage("Authenticating...")
+        }
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
+            self.stopAnimating()
+        }
+        
+        
         login_now(username:loginTextField.text!, password: passwordTextField.text!)
         
     }
@@ -139,6 +148,7 @@ class MainController: UIViewController, UITextFieldDelegate {
 
     
     func loginDone() {
+        
         self.performSegue(withIdentifier: "MainControllerVC", sender: self)
     }
     

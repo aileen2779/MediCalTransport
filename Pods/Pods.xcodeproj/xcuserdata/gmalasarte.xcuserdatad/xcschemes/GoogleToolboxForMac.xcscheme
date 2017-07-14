@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F47029EF1A7F27DB00E30A3C"
-               BuildableName = "MediCalTransport.app"
-               BlueprintName = "MediCalTransport"
-               ReferencedContainer = "container:MediCalTransport.xcodeproj">
+               BlueprintIdentifier = "C5B80060FE8C664DF08841000F41D515"
+               BuildableName = "GoogleToolboxForMac.framework"
+               BlueprintName = "GoogleToolboxForMac"
+               ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -29,15 +29,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F47029EF1A7F27DB00E30A3C"
-            BuildableName = "MediCalTransport.app"
-            BlueprintName = "MediCalTransport"
-            ReferencedContainer = "container:MediCalTransport.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -51,16 +42,15 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F47029EF1A7F27DB00E30A3C"
-            BuildableName = "MediCalTransport.app"
-            BlueprintName = "MediCalTransport"
-            ReferencedContainer = "container:MediCalTransport.xcodeproj">
+            BlueprintIdentifier = "C5B80060FE8C664DF08841000F41D515"
+            BuildableName = "GoogleToolboxForMac.framework"
+            BlueprintName = "GoogleToolboxForMac"
+            ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -70,16 +60,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "F47029EF1A7F27DB00E30A3C"
-            BuildableName = "MediCalTransport.app"
-            BlueprintName = "MediCalTransport"
-            ReferencedContainer = "container:MediCalTransport.xcodeproj">
+            BlueprintIdentifier = "C5B80060FE8C664DF08841000F41D515"
+            BuildableName = "GoogleToolboxForMac.framework"
+            BlueprintName = "GoogleToolboxForMac"
+            ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
