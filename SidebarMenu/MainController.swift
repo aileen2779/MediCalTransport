@@ -57,7 +57,6 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
             self.stopAnimating()
         }
         
-        
         login_now(username:loginTextField.text!, password: passwordTextField.text!)
         
     }

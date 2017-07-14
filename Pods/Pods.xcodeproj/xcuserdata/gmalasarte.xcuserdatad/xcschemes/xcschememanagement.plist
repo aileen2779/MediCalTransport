@@ -6,58 +6,48 @@
 	<dict>
 		<key>GoogleToolboxForMac.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>1</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>NVActivityIndicatorView.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>2</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>Pods-MediCalTransport.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>3</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>Pods-MediCalTransportTests.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>4</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>Protobuf.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>5</integer>
-		</dict>
-		<key>TextFieldEffects.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>6</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0970E017DB52C0651C754A4E8D7F6938</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>29860FE8F450E91AFBC67299FCFD675C</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>3EDFE4052B5DE7D509935AC0774CB135</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>72E4878AE5704021D861EAA5D8E93DD3</key>
+		<key>60E0502AE47B7C2A1262D7644F16979C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C0B755AAEAE910C9AF7AF27B45D04C52</key>
+		<key>6F16D167C27A1747AA3EED9649D16C9F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>72E4878AE5704021D861EAA5D8E93DD3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
