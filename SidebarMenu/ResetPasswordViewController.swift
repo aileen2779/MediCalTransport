@@ -3,12 +3,9 @@ import UIKit
 class ResetPasswordViewController: UIViewController {
     
     var pickerData: [String] = [String]()
-
-    
     @IBAction func backButtonTapped(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,10 +19,7 @@ class ResetPasswordViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
+
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         self.view.endEditing(true)

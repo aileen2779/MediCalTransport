@@ -365,6 +365,9 @@
                                                 <integer key="value" value="25"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="createAnAccountTapped:" destination="fBl-SP-V7t" eventType="touchUpInside" id="7dw-Vm-h6k"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -416,6 +419,12 @@
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="createAnAccountButton" destination="gLA-gx-4bq" id="wLb-MW-slD"/>
+                        <outlet property="emailAddressTextField" destination="Z5m-w3-Jvr" id="DhV-dT-Fx4"/>
+                        <outlet property="firstNameTextField" destination="rmP-21-ImG" id="5qp-dk-juE"/>
+                        <outlet property="lastNameTextField" destination="sC4-e3-OU7" id="fZk-kY-zJp"/>
+                        <outlet property="passwordConfirmTextField" destination="1db-q0-zhf" id="6mu-m8-G8s"/>
+                        <outlet property="passwordTextField" destination="N3H-c0-ano" id="Rte-MT-SiK"/>
                         <outlet property="phcpPickerView" destination="gN2-gl-SVY" id="SCu-bd-1YX"/>
                     </connections>
                 </viewController>
@@ -875,8 +884,7 @@
                                 <size key="titleShadowOffset" width="0.0" height="1"/>
                                 <state key="normal" title="Forgot Password"/>
                                 <connections>
-                                    <action selector="forgotPasswordButtonTapped:" destination="Ybb-i9-paL" eventType="touchUpInside" id="t0h-ko-DOS"/>
-                                    <segue destination="tQO-uP-kt6" kind="showDetail" id="8Y9-HQ-V9f"/>
+                                    <segue destination="tQO-uP-kt6" kind="showDetail" id="nYl-om-hcB"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1250,11 +1258,12 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" distribution="fillProportionally" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ET2-U3-VAW" userLabel="PHCP Stack View">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ET2-U3-VAW" userLabel="PHCP Stack View">
                                 <rect key="frame" x="89" y="240" width="236.33333333333331" height="180"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="180" id="71o-ha-3AA"/>
+                                    <constraint firstAttribute="width" constant="236.33000000000001" id="RWA-Xa-LYf"/>
                                 </constraints>
                             </stackView>
                         </subviews>

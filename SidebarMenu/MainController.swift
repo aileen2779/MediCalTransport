@@ -5,10 +5,8 @@
 
 import UIKit
 import LocalAuthentication
-import AudioToolbox
 
 class MainController: UIViewController, UITextFieldDelegate {
-
 
     @IBOutlet weak var login_button: UIButton!
     @IBOutlet weak var loginTextField: CustomTextField!
@@ -145,13 +143,6 @@ class MainController: UIViewController, UITextFieldDelegate {
     }
     
     
-    func animateMe(textField: UITextField) {
-        let _thisTextField = textField
-        UIView.animate(withDuration: 0.1, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseIn, animations: {_thisTextField.center.x += 10 }, completion: nil)
-        UIView.animate(withDuration: 0.1, delay: 0.1, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseIn, animations: {_thisTextField.center.x -= 20 }, completion: nil)
-        UIView.animate(withDuration: 0.1, delay: 0.2, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseIn, animations: {_thisTextField.center.x += 10 }, completion: nil)
-    }
-    
     func loginToDo() {
         //activityIndicatorStartNoAsync()
         
@@ -177,18 +168,15 @@ class MainController: UIViewController, UITextFieldDelegate {
 
         loginTextField.leftViewMode = UITextFieldViewMode.always
         loginTextField.leftView = UIImageView(image: UIImage(named: "username"))
-        
 
         passwordTextField.leftViewMode = UITextFieldViewMode.always
         passwordTextField.leftView = UIImageView(image: UIImage(named: "password"))
 
     }
     
-    
     func check_session() {
         
         let post_data: NSDictionary = NSMutableDictionary()
-        
         post_data.setValue(login_session, forKey: "session")
         
         let preferences = UserDefaults.standard
@@ -228,25 +216,6 @@ class MainController: UIViewController, UITextFieldDelegate {
             self.loginToDo()
         })
     }
-
-    func vibrate(howMany: Int) {
-        let x = Int(howMany)
-        for _ in 1...x {
-            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
-            //sleep(1)
-        }
-    }
-    
-    
-
-    
-    @IBAction func forgotPasswordButtonTapped(_ sender: Any) {
-                        
-        // hide login stack view and thumb id buttons
-        loginStackView.isHidden = !loginStackView.isHidden
-        thumbIdImage.isHidden = !thumbIdImage.isHidden
-        thumbIdButton.isHidden = thumbIdButton.isHidden
-    }
     
     func activityIndicatorStartAsync() {
         var activityIndicator = UIActivityIndicatorView()
@@ -273,5 +242,6 @@ class MainController: UIViewController, UITextFieldDelegate {
         activityIndicator.startAnimating()
         self.view.addSubview(activityIndicator)
     }
+
 
 }

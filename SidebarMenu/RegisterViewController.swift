@@ -6,10 +6,17 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     @IBOutlet weak var phcpPickerView: UIPickerView!
     
+    @IBOutlet weak var emailAddressTextField: CustomTextField!
+    @IBOutlet weak var firstNameTextField: CustomTextField!
+    @IBOutlet weak var lastNameTextField: CustomTextField!
+    @IBOutlet weak var passwordTextField: CustomTextField!
+    @IBOutlet weak var passwordConfirmTextField: CustomTextField!
+    
     @IBAction func backButtonTapped(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
+    @IBOutlet weak var createAnAccountButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +27,7 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         // change radius
         phcpPickerView.layer.masksToBounds = true
         phcpPickerView.layer.borderWidth = 2.0
-        phcpPickerView.layer.borderColor = UIColor.purple.cgColor
+        phcpPickerView.layer.borderColor = UIColor.cyan.cgColor
         phcpPickerView.layer.cornerRadius = 10.0
             
         self.phcpPickerView.delegate = self
@@ -29,13 +36,62 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         pickerData = ["Dr. Ben Calderon",
                       "Dr. Aileen Ramos",
                       "Dr. Butch Edano",
-                      "Dr. Topher",
-                      "Dr. Sammy",
-                      "Dr. Joyce"]
-       
+                      "Dr. Topher Rey",
+                      "Dr. Sammie D. Dog",
+                      "Dr. Joyce Lee"]
+    }
+    
+    @IBAction func createAnAccountTapped(_ sender: Any) {
+        // dismiss the keyboard
+        self.view.endEditing(true)
+        
+        createAnAccountButton.isEnabled = true
+        
+        // evaluate login and password
+        let userEmailAddress = emailAddressTextField.text
+        let userFirstName = firstNameTextField.text
+        let userLastName = lastNameTextField.text
+        let userPassword = passwordTextField.text
+        let userPasswordConfirm = passwordConfirmTextField.text
+
+        // Check for empty fields
+        if (userEmailAddress?.isEmpty)! {
+            animateMe(textField: self.emailAddressTextField)
+            return
+        }
+        
+        if !self.validate(email: userEmailAddress!) {
+            animateMe(textField: self.emailAddressTextField)
+            return
+        }
+        
+        if (userFirstName?.isEmpty)! {
+            animateMe(textField: self.firstNameTextField)
+            return
+        }
+        if (userLastName?.isEmpty)! {
+            animateMe(textField: self.lastNameTextField)
+            return
+        }
+        if (userPassword?.isEmpty)! {
+            animateMe(textField: self.passwordTextField)
+            return
+        }
+        if (userPasswordConfirm?.isEmpty)! {
+            animateMe(textField: self.passwordConfirmTextField)
+            return
+        }
+
+        if (userPassword != userPasswordConfirm) {
+            animateMe(textField: self.passwordTextField)
+            animateMe(textField: self.passwordConfirmTextField)
+            return
+        }
+        
+        createAnAccountButton.isEnabled = false
 
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -71,6 +127,10 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         view.endEditing(true)
         super.touchesBegan(touches, with: event)
     }
-    
-    
+
+    func validate(email: String) -> Bool {
+        let regex: String
+        regex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
+        return NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: email)
+    }
 }
