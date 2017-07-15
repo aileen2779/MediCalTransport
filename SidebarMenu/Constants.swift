@@ -43,6 +43,12 @@ func delayWithSeconds(_ seconds: Double, completion: @escaping () -> ()) {
 
 func firebaseLog(logToSave: Any) {
     
+    //User preferences
+    let preferences = UserDefaults.standard
+    if (preferences.object(forKey: "userid") == nil) {
+        preferences.set("0000000000", forKey: "userid")
+    }
+    
     // firebase reference
     let ref = Database.database().reference()
     
@@ -66,7 +72,7 @@ func firebaseLog(logToSave: Any) {
     let hourString = myDateFormatter.string(from: myDate)
     print(hourString)
     
-    let logToSaveDetail = ["/logs/\(yearString)/\(monthString)/\(dayString)/\(hourString)": logToSave]
+    let logToSaveDetail = ["/logs/\(yearString)/\(monthString)/\(dayString)/\(preferences.object(forKey: "userid")!)/\(hourString)": logToSave]
     
     ref.updateChildValues(logToSaveDetail)
 }

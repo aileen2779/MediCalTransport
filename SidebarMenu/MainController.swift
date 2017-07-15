@@ -130,6 +130,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         loginTextField.endEditing(true)
         passwordTextField.endEditing(true)
         
+        //Start database check
         Database.database().reference().child("user_access/\(userid)/").observeSingleEvent(of: .value, with: { (snapshot) in
         
             var isActive:Bool = false
@@ -139,7 +140,8 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                 //print("test:\(result)")
                     
                 if (result.isEmpty) {
-                    self.displayAlert(title: "Alert!", message: "User ID does not exist")
+                    
+                    self.displayAlert(title: "Alert!", message: "User ID \(userid) does not exist")
                 } else {
 
                     for snap in result {
@@ -168,11 +170,11 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                             preferences.set(password, forKey: "password")
                             preferences.set(true, forKey: "touchIdEnrolled")
                             
-                            firebaseLog(logToSave: ["UserID": preferences.object(forKey: "userid"), "ErrorMessage": "Login successful"])
+                            firebaseLog(logToSave: ["Message": "Login successful"])
                         
                             DispatchQueue.main.async(execute: self.loginDone)
                         } else {
-                            self.displayAlert(title: "Alert!", message: "Incorrect PIN")
+                            self.displayAlert(title: "Alert!", message: "Incorrect PIN entered for \(userid)")
 
                         }
                     } else {
@@ -184,6 +186,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
             }
             
         })
+        //End database
     }
     
     func loginDone() {
@@ -193,8 +196,6 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
     
 
     func loginToDo() {
-        //activityIndicatorStartNoAsync()
-        
         let preferences = UserDefaults.standard
         
         if preferences.object(forKey: "userid") != nil {
@@ -239,28 +240,27 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         let touchIDManager = TouchIDManager()
         
         touchIDManager.authenticateUser(success: { () -> () in
-            OperationQueue.main.addOperation({ () -> Void in
+                OperationQueue.main.addOperation({ () -> Void in
+                
+                //logging
+                firebaseLog(logToSave: ["Message": "Touch ID login successfull"])
+                    
                 self.loginDone()
             })
         }, failure: { (evaluationError: NSError) -> () in
             switch evaluationError.code {
             case LAError.Code.systemCancel.rawValue:
                 print("Authentication cancelled by the system")
-                //self.loginToDo()
             case LAError.Code.userCancel.rawValue:
                 print("Authentication cancelled by the user")
-                //self.loginToDo()
             case LAError.Code.userFallback.rawValue:
                 print("User wants to use a password")
-                //self.loginToDo()
             case LAError.Code.touchIDNotEnrolled.rawValue:
                 print("TouchID not enrolled")
             case LAError.Code.passcodeNotSet.rawValue:
                 print("Passcode not set")
-                
             default:
                 print("Authentication failed")
-                //self.loginToDo()
             }
             self.loginToDo()
         })
@@ -293,8 +293,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
     }
 
     func displayAlert(title: String, message: String) {
-        let preferences = UserDefaults.standard
-        firebaseLog(logToSave: ["UserID": preferences.object(forKey: "userid"), "ErrorMessage": message])
+        firebaseLog(logToSave: ["Message": message])
         
         let alertcontroller = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertcontroller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))

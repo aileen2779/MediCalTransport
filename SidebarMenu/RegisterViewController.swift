@@ -111,51 +111,66 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 NVActivityIndicatorPresenter.sharedInstance.setMessage("Submitting registration...")
             }
 
-            
-            
-            
-            //Begin: Save Trips to Firebase
-            
-            // Date time
-            let date : Date = Date()
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MM/dd/YYYY HH:mm:ssss"
-            let todaysDate = dateFormatter.string(from: date)
-            
-            
-            // save patient information
-            var patientRegistration = [:] as [String : Any]
-            patientRegistration = ["FirstName" : userFirstName,
-                                   "LastName":  userLastName,
-                                   "PCP":  self.userPCP,
-                                   "DateAdded" : todaysDate
-            ]
-            
-            let patientRegistrationUpdates = ["/users/\(userPhoneNumber)/": patientRegistration]
-            self.ref?.updateChildValues(patientRegistrationUpdates)
-            //End: Save Trips to Firebase
-            
-            // save pin information
-            var pinInformation = [:] as [String : Any]
-            pinInformation = ["DateAdded" : todaysDate,
-                              "IsActive" : true,       // this should be initially set to false pending approval
-                              "Pin" : userPin.hashValue
-            ]
-            
-            let pinInformationUpdates = ["/user_access/\(userPhoneNumber)/": pinInformation]
-            self.ref?.updateChildValues(pinInformationUpdates)
-            //End: Save Trips to Firebase
-            
-            
-            
+
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
                 self.stopAnimating()
             }
 
-            delayWithSeconds(2) {
-                self.dismiss(animated: true, completion: nil)
-            }
-            
+            //Start database
+            Database.database().reference().child("user_access/\(userPhoneNumber)/").observeSingleEvent(of: .value, with: { (snapshot) in
+
+                if let result = snapshot.children.allObjects as? [DataSnapshot] {
+                    
+                    if (result.isEmpty) {
+                        
+                        //Begin: Save Trips to Firebase
+                        
+                        // Date time
+                        let date : Date = Date()
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "MM/dd/YYYY HH:mm:ssss"
+                        let todaysDate = dateFormatter.string(from: date)
+                        
+                        
+                        // save patient information
+                        var patientRegistration = [:] as [String : Any]
+                        patientRegistration = ["FirstName" : userFirstName.lowercased(),
+                                               "LastName":  userLastName.lowercased(),
+                                               "PCP":  self.userPCP,
+                                               "DateAdded" : todaysDate
+                        ]
+                        
+                        let patientRegistrationUpdates = ["/users/\(userPhoneNumber)/": patientRegistration]
+                        self.ref?.updateChildValues(patientRegistrationUpdates)
+                        //End: Save Trips to Firebase
+                        
+                        // save pin information
+                        var pinInformation = [:] as [String : Any]
+                        pinInformation = ["DateAdded" : todaysDate,
+                                          "IsActive" : true,       // this should be initially set to false pending approval
+                            "Pin" : userPin.hashValue
+                        ]
+                        
+                        let pinInformationUpdates = ["/user_access/\(userPhoneNumber)/": pinInformation]
+                        self.ref?.updateChildValues(pinInformationUpdates)
+                        //End: Save Trips to Firebase
+
+                        firebaseLog(logToSave: ["UserID": userPhoneNumber, "Message": "Registration successful"])
+
+                        delayWithSeconds(2) {
+                            self.dismiss(animated: true, completion: nil)
+                        }
+                        
+                        
+                    } else {
+                        self.displayAlert(title: "Registration Denied!", message: "Phone Number \(userPhoneNumber) already exists")
+                        
+                    }
+                }
+                
+            })
+            //End database
+
             
         })
         
@@ -223,6 +238,9 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     func displayAlert(title: String, message: String) {
+        
+        let preferences = UserDefaults.standard
+        firebaseLog(logToSave: ["UserID": preferences.object(forKey: "userid"), "Message": message])
         
         let alertcontroller = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertcontroller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
