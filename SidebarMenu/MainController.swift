@@ -18,38 +18,58 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
     @IBOutlet weak var thumbIdImage: UIImageView!
     @IBOutlet weak var thumbIdButton: UIButton!
     
-    var login_session:String = ""
-    
+    var login_session:Int = 0
+    var errorMessage = ""
+
     // Firebase handles
     var ref:DatabaseReference?
     
+    override func viewDidLoad() {
+        
+        super.viewDidLoad()
+        
+        // hide the login stack view initially
+        loginStackView.isHidden = true
+        
+        // firebase reference
+        ref = Database.database().reference()
+        
+        //Init routine to hide keyboard
+        self.loginTextField.delegate = self
+        self.passwordTextField.delegate = self
+        
+        // redirect if logged in or not
+        let preferences = UserDefaults.standard
+        if preferences.object(forKey: "session") != nil {
+            login_session  = preferences.object(forKey: "session") as! Int
+            check_session()
+        } else {
+            loginToDo()
+        
+        }
+        
+    }
+
     @IBAction func loginButtonTapped(_ sender: Any) {
         
          // dismiss the keyboard
         self.view.endEditing(true)
         
         // evaluate login and password
-        let userEmail = loginTextField.text!
+        let userID = loginTextField.text!
         let userPassword = passwordTextField.text!
         
         // Check for empty fields
-        if (userEmail.isEmpty) {
+        if (userID.isEmpty) {
             animateMe(textField: self.loginTextField)
-            //login_button.isEnabled = true
             return
         }
         
         if (userPassword.isEmpty) {
             animateMe(textField: self.passwordTextField)
-            //login_button.isEnabled = true
             return
         }
 
-        // hide login stack view and thumb id buttons
-        //loginStackView.isHidden = true
-        //thumbIdImage.isHidden = true
-        //thumbIdButton.isHidden = true
-        
         // show activity activityIndicator
         let randomNum:UInt32 = arc4random_uniform(30) + 1 // generates random number between (0 and 30) + 1
         startAnimating(CGSize(width: 40, height: 40), message: "Loading...", type: NVActivityIndicatorType(rawValue: Int(randomNum))!)
@@ -61,7 +81,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         }
         
         delayWithSeconds(2) {
-            self.login_now(username:self.loginTextField.text!, password: self.passwordTextField.text!)
+            self.login_now(userid:self.loginTextField.text!, password: self.passwordTextField.text!)
         }
         
     }
@@ -81,33 +101,6 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         }
     }
     
-    override func viewDidLoad() {
-        
-        super.viewDidLoad()
-        
-        // hide the login stack view initially
-        loginStackView.isHidden = true
-        
-
-        //Init routine to hide keyboard
-        self.loginTextField.delegate = self
-        self.passwordTextField.delegate = self
-        
-        // redirect if logged in or not
-        let preferences = UserDefaults.standard
-        if preferences.object(forKey: "session") != nil {
-            // turn on activity monitor for 1 second in async mode
-            //activityIndicatorStartAsync()
-            
-            login_session  = preferences.object(forKey: "session") as! String
-            check_session()
-        } else {
-            loginToDo()
-
-        }
-        
-    }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -116,7 +109,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
     
     // function without arguments that are run from async
     func displayMyAlertMessage() {
-        let myAlert =  UIAlertController(title:"Invalid username or password", message: "Please try again", preferredStyle: UIAlertControllerStyle.alert)
+        let myAlert =  UIAlertController(title:"Invalid User ID or password", message: "Please try again", preferredStyle: UIAlertControllerStyle.alert)
         
         let okAction = UIAlertAction(title:"Ok", style: UIAlertActionStyle.default, handler: nil)
         myAlert.addAction(okAction)
@@ -132,51 +125,65 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
     }
 
     
-    func login_now(username:String, password:String) {
+    func login_now(userid:String, password:String) {
         
         loginTextField.endEditing(true)
         passwordTextField.endEditing(true)
-    
         
-        Database.database().reference().child("pin/\(username)/").observeSingleEvent(of: .value, with: { (snapshot) in
+        Database.database().reference().child("user_access/\(userid)/").observeSingleEvent(of: .value, with: { (snapshot) in
+        
+            var isActive:Bool = false
+            var myPin = 0
+
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
-                print("test:\(result)")
+                //print("test:\(result)")
                     
                 if (result.isEmpty) {
-                    print("user does not exist")
-                    self.displayAlert(title: "Alert!", message: "User does not exist")
+                    self.displayAlert(title: "Alert!", message: "User ID does not exist")
                 } else {
+
                     for snap in result {
                         if (snap.key == "IsActive") {
-                            let isActive:Bool = snap.value! as! Bool
-                            if (isActive) {
-                                print("user is active")
-
-                                
-                                let session_data = "1234567890"
-                                self.login_session = session_data
-                                
-                                let preferences = UserDefaults.standard
-                                preferences.set(session_data, forKey: "session")
-                                preferences.set(username, forKey: "username")
-                                preferences.set(password, forKey: "password")
-                                preferences.set(true, forKey: "touchIdEnrolled")
-                                
-                                DispatchQueue.main.async(execute: self.loginDone)
-                                
-                            } else {
-                                print("user is inactive")
-                                self.displayAlert(title: "Alert!", message: "User is not activated")
-                            }
+                            isActive = snap.value! as! Bool
+                        }
+                        if (snap.key == "Pin") {
+                            myPin = snap.value as! Int
                         }
                     }
+                    
+                    
+                    if (isActive) {
+                        print("user is active")
+                        print("\(myPin)-\(password.hashValue)")
+                        
+                        if (myPin == password.hashValue) {
+                        
+                            let session_data:Int = userid.hashValue
+
+                            self.login_session = session_data
+                        
+                            let preferences = UserDefaults.standard
+                            preferences.set(session_data, forKey: "session")
+                            preferences.set(userid, forKey: "userid")
+                            preferences.set(password, forKey: "password")
+                            preferences.set(true, forKey: "touchIdEnrolled")
+                            
+                            firebaseLog(logToSave: ["UserID": preferences.object(forKey: "userid"), "ErrorMessage": "Login successful"])
+                        
+                            DispatchQueue.main.async(execute: self.loginDone)
+                        } else {
+                            self.displayAlert(title: "Alert!", message: "Incorrect PIN")
+
+                        }
+                    } else {
+                        self.displayAlert(title: "Alert!", message: "User is disabled or has not been activated")
+                    }
+                    
+                    
                 }
             }
-                
-        })
             
-
-        
+        })
     }
     
     func loginDone() {
@@ -190,8 +197,8 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         
         let preferences = UserDefaults.standard
         
-        if preferences.object(forKey: "username") != nil {
-            loginTextField.text = (preferences.object(forKey: "username") as! String)
+        if preferences.object(forKey: "userid") != nil {
+            loginTextField.text = (preferences.object(forKey: "userid") as! String)
             passwordTextField.text = (preferences.object(forKey: "password") as! String)
         }
         
@@ -209,7 +216,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         //login_button.isEnabled = true
 
         loginTextField.leftViewMode = UITextFieldViewMode.always
-        loginTextField.leftView = UIImageView(image: UIImage(named: "username"))
+        loginTextField.leftView = UIImageView(image: UIImage(named: "userid"))
 
         passwordTextField.leftViewMode = UITextFieldViewMode.always
         passwordTextField.leftView = UIImageView(image: UIImage(named: "password"))
@@ -286,10 +293,16 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
     }
 
     func displayAlert(title: String, message: String) {
+        let preferences = UserDefaults.standard
+        firebaseLog(logToSave: ["UserID": preferences.object(forKey: "userid"), "ErrorMessage": message])
         
         let alertcontroller = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertcontroller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alertcontroller, animated: true, completion: nil)
         
     }
+    
+
+
 }
+

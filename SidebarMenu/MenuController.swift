@@ -30,10 +30,13 @@ class MenuController: UITableViewController {
         let optionMenu = UIAlertController(title: nil, message: "Are you sure?", preferredStyle: .actionSheet)
         let logoutAction = UIAlertAction(title: "Logout", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
+  
             
             let preferences = UserDefaults.standard
             preferences.removeObject(forKey: "session")
             self.dismiss(animated: true, completion: nil)
+            
+            firebaseLog(logToSave: ["UserID": preferences.object(forKey: "userid"), "ErrorMessage": "Logout successful"])
             
             
         })

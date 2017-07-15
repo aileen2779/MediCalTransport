@@ -26,8 +26,7 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
+
         // firebase reference
         ref = Database.database().reference()
         
@@ -49,8 +48,6 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                       "Dr. Topher Rey",
                       "Dr. Sammie D. Dog",
                       "Dr. Joyce Lee"]
-
-        
     }
     
     @IBAction func createAnAccountTapped(_ sender: Any) {
@@ -100,7 +97,6 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             userPCP = pickerData[0]
         }
 
-        //createAnAccountButton.isEnabled = false
         
         //Begin confirm
         let optionMenu = UIAlertController(title: nil, message: "Are you sure?", preferredStyle: .actionSheet)
@@ -116,12 +112,14 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             }
 
             
+            
+            
             //Begin: Save Trips to Firebase
             
             // Date time
             let date : Date = Date()
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MM/dd/YYYY hh:mm aa"
+            dateFormatter.dateFormat = "MM/dd/YYYY HH:mm:ssss"
             let todaysDate = dateFormatter.string(from: date)
             
             
@@ -140,11 +138,11 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             // save pin information
             var pinInformation = [:] as [String : Any]
             pinInformation = ["DateAdded" : todaysDate,
-                              "IsActive" : false,       // this should be initially set to false pending approval
+                              "IsActive" : true,       // this should be initially set to false pending approval
                               "Pin" : userPin.hashValue
             ]
             
-            let pinInformationUpdates = ["/pin/\(userPhoneNumber)/": pinInformation]
+            let pinInformationUpdates = ["/user_access/\(userPhoneNumber)/": pinInformation]
             self.ref?.updateChildValues(pinInformationUpdates)
             //End: Save Trips to Firebase
             

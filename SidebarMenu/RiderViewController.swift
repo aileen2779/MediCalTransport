@@ -121,7 +121,7 @@ class RiderViewController: UIViewController,
             // Date time
             let date : Date = Date()
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MM/dd/YYYY hh:mm aa"
+            dateFormatter.dateFormat = "MM/dd/YYYY HH:mm:ssss"
             let todaysDate = dateFormatter.string(from: date)
             
             let fromLocation = self.fromTextField.text!

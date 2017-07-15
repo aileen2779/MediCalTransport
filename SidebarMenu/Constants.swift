@@ -4,6 +4,9 @@
 
 import Foundation
 import AudioToolbox
+import FirebaseDatabase
+
+
 
 var CONST_BG_COLOR:UIColor = UIColor(red:0.49, green:0.73, blue:0.71, alpha:1.0)
 
@@ -38,4 +41,33 @@ func delayWithSeconds(_ seconds: Double, completion: @escaping () -> ()) {
     }
 }
 
+func firebaseLog(logToSave: Any) {
+    
+    // firebase reference
+    let ref = Database.database().reference()
+    
+    let myDate = Date()
+    let myDateFormatter = DateFormatter()
+    myDateFormatter.timeZone = TimeZone(secondsFromGMT: TimeZone.current.secondsFromGMT())
+    //myDateFormatter.dateFormat = "MMddyyyy h:mm:ss a"
+    myDateFormatter.dateFormat = "yyyy"
+    let yearString = myDateFormatter.string(from: myDate)
+    print(yearString)
+    
+    myDateFormatter.dateFormat = "MM"
+    let monthString = myDateFormatter.string(from: myDate)
+    print(monthString)
+    
+    myDateFormatter.dateFormat = "dd"
+    let dayString = myDateFormatter.string(from: myDate)
+    print(dayString)
+    
+    myDateFormatter.dateFormat = "HH:mm:ss:SSS"
+    let hourString = myDateFormatter.string(from: myDate)
+    print(hourString)
+    
+    let logToSaveDetail = ["/logs/\(yearString)/\(monthString)/\(dayString)/\(hourString)": logToSave]
+    
+    ref.updateChildValues(logToSaveDetail)
+}
 
