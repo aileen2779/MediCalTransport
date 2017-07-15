@@ -178,7 +178,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
 
                         }
                     } else {
-                        self.displayAlert(title: "Alert!", message: "User is disabled or has not been activated")
+                        self.displayAlert(title: "Alert!", message: "User ID \(userid)( is disabled or has not been activated")
                     }
                     
                     
