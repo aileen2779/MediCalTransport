@@ -45,7 +45,7 @@ class RiderViewController: UIViewController,
         super.viewDidLoad()
         
         let preferences = UserDefaults.standard
-        patientId = preferences.object(forKey: "username") as! String
+        patientId = preferences.object(forKey: "userid") as! String
 
         // add shadow
         dropShadow(thisObject: requestARide)

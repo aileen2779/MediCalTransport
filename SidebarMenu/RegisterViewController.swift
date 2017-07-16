@@ -148,14 +148,14 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                         var pinInformation = [:] as [String : Any]
                         pinInformation = ["DateAdded" : todaysDate,
                                           "IsActive" : true,       // this should be initially set to false pending approval
-                            "Pin" : userPin.hashValue
+                                            "Pin" : userPin.hashValue
                         ]
                         
                         let pinInformationUpdates = ["/user_access/\(userPhoneNumber)/": pinInformation]
                         self.ref?.updateChildValues(pinInformationUpdates)
                         //End: Save Trips to Firebase
 
-                        firebaseLog(logToSave: ["UserID": userPhoneNumber, "Message": "Registration successful"])
+                        firebaseLog(userID: userPhoneNumber, logToSave: ["Message": "Registration successful"])
 
                         delayWithSeconds(2) {
                             self.dismiss(animated: true, completion: nil)
@@ -240,7 +240,7 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     func displayAlert(title: String, message: String) {
         
         let preferences = UserDefaults.standard
-        firebaseLog(logToSave: ["UserID": preferences.object(forKey: "userid"), "Message": message])
+        firebaseLog(userID: preferences.object(forKey: "userid") as! String, logToSave: ["UserID": preferences.object(forKey: "userid"), "Message": message])
         
         let alertcontroller = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertcontroller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))

@@ -34,9 +34,10 @@ class MenuController: UITableViewController {
             
             let preferences = UserDefaults.standard
             preferences.removeObject(forKey: "session")
-            self.dismiss(animated: true, completion: nil)
             
-            firebaseLog(logToSave: ["Message": "Logout successful"])
+            firebaseLog(userID: preferences.object(forKey: "userid") as! String, logToSave: ["Message": "Logout successful"])
+
+            self.dismiss(animated: true, completion: nil)
             
             
         })

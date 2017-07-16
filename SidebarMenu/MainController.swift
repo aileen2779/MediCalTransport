@@ -18,7 +18,8 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
     @IBOutlet weak var thumbIdImage: UIImageView!
     @IBOutlet weak var thumbIdButton: UIButton!
     
-    var login_session:Int = 0
+    //var login_session:Int = 0
+    var login_session:String = ""
     var errorMessage = ""
 
     // Firebase handles
@@ -41,13 +42,13 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         // redirect if logged in or not
         let preferences = UserDefaults.standard
         if preferences.object(forKey: "session") != nil {
-            login_session  = preferences.object(forKey: "session") as! Int
+            login_session  = preferences.object(forKey: "session") as! String
             check_session()
         } else {
             loginToDo()
         
         }
-        
+
     }
 
     @IBAction func loginButtonTapped(_ sender: Any) {
@@ -137,13 +138,11 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
             var myPin = 0
 
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
-                //print("test:\(result)")
+                print("test:\(result)")
                     
                 if (result.isEmpty) {
-                    
-                    self.displayAlert(title: "Alert!", message: "User ID \(userid) does not exist")
+                    self.displayAlert(title: "Alert!", message: "User ID \(userid) does not exist", userid: "0000000000")
                 } else {
-
                     for snap in result {
                         if (snap.key == "IsActive") {
                             isActive = snap.value! as! Bool
@@ -162,26 +161,24 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                         
                             let session_data:Int = userid.hashValue
 
-                            self.login_session = session_data
+                            self.login_session = "\(session_data)"
                         
                             let preferences = UserDefaults.standard
-                            preferences.set(session_data, forKey: "session")
+                            preferences.set(self.login_session, forKey: "session")
                             preferences.set(userid, forKey: "userid")
                             preferences.set(password, forKey: "password")
                             preferences.set(true, forKey: "touchIdEnrolled")
+ 
+     
+                            firebaseLog(userID: userid, logToSave: ["Message": "Login successful"])
                             
-                            firebaseLog(logToSave: ["Message": "Login successful"])
-                        
                             DispatchQueue.main.async(execute: self.loginDone)
                         } else {
-                            self.displayAlert(title: "Alert!", message: "Incorrect PIN entered for \(userid)")
-
+                            self.displayAlert(title: "Alert!", message: "Incorrect PIN entered", userid: userid)
                         }
                     } else {
-                        self.displayAlert(title: "Alert!", message: "User ID \(userid)( is disabled or has not been activated")
+                        self.displayAlert(title: "Alert!", message: "User ID \(userid) is disabled or has not been activated",  userid: userid)
                     }
-                    
-                    
                 }
             }
             
@@ -190,7 +187,6 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
     }
     
     func loginDone() {
-        
         self.performSegue(withIdentifier: "MainControllerVC", sender: self)
     }
     
@@ -241,9 +237,11 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         
         touchIDManager.authenticateUser(success: { () -> () in
                 OperationQueue.main.addOperation({ () -> Void in
-                
+                    
                 //logging
-                firebaseLog(logToSave: ["Message": "Touch ID login successfull"])
+                let preferences = UserDefaults.standard
+    
+                firebaseLog(userID: preferences.object(forKey: "userid") as! String, logToSave: ["Message": "Touch ID login successfull"])
                     
                 self.loginDone()
             })
@@ -292,8 +290,10 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         self.view.addSubview(activityIndicator)
     }
 
-    func displayAlert(title: String, message: String) {
-        firebaseLog(logToSave: ["Message": message])
+    func displayAlert(title: String, message: String, userid: String) {
+        
+        // log to firebase
+        firebaseLog(userID: userid, logToSave: ["Message": message])
         
         let alertcontroller = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertcontroller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
