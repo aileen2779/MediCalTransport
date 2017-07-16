@@ -36,7 +36,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
 
         // preferences init
         let preferences = UserDefaults.standard
-        patientId = preferences.object(forKey: "username") as! String
+        patientId = preferences.object(forKey: "userid") as! String
         
         self.title = "Scheduled Rides"
 

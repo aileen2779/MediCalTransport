@@ -50,22 +50,22 @@ func firebaseLog(userID: String, logToSave: Any) {
     let myDate = Date()
     let myDateFormatter = DateFormatter()
     myDateFormatter.timeZone = TimeZone(secondsFromGMT: TimeZone.current.secondsFromGMT())
-    //myDateFormatter.dateFormat = "MMddyyyy h:mm:ss a"
+    
+    // year
     myDateFormatter.dateFormat = "yyyy"
     let yearString = myDateFormatter.string(from: myDate)
-    print(yearString)
-    
+
+    // month
     myDateFormatter.dateFormat = "MM"
     let monthString = myDateFormatter.string(from: myDate)
-    print(monthString)
     
+    //day
     myDateFormatter.dateFormat = "dd"
     let dayString = myDateFormatter.string(from: myDate)
-    print(dayString)
     
+    //timestamp in microseconds
     myDateFormatter.dateFormat = "HH:mm:ss:SSS"
     let hourString = myDateFormatter.string(from: myDate)
-    print(hourString)
     
     let logToSaveDetail = ["/logs/\(yearString)/\(monthString)/\(dayString)/\(_userID)/\(hourString)": logToSave]
     
