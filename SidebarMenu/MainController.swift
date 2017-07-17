@@ -112,7 +112,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
     
     // function without arguments that are run from async
     func displayMyAlertMessage() {
-        let myAlert =  UIAlertController(title:"Invalid User ID or password", message: "Please try again", preferredStyle: UIAlertControllerStyle.alert)
+        let myAlert =  UIAlertController(title:"Invalid Patient ID or password", message: "Please try again", preferredStyle: UIAlertControllerStyle.alert)
         
         let okAction = UIAlertAction(title:"Ok", style: UIAlertActionStyle.default, handler: nil)
         myAlert.addAction(okAction)
@@ -143,7 +143,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                 print("test:\(result)")
                     
                 if (result.isEmpty) {
-                    self.displayAlert(title: "Alert!", message: "User ID \(userid) does not exist", userid: "0000000000")
+                    self.displayAlert(title: "Alert!", message: "Patient ID \(userid) does not exist", userid: "0000000000")
                 } else {
                     for snap in result {
                         if (snap.key == "IsActive") {
@@ -179,7 +179,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                             self.displayAlert(title: "Alert!", message: "Incorrect PIN entered", userid: userid)
                         }
                     } else {
-                        self.displayAlert(title: "Alert!", message: "User ID \(userid) is disabled or has not been activated",  userid: userid)
+                        self.displayAlert(title: "Alert!", message: "Patient ID \(userid) is disabled or has not been activated",  userid: userid)
                     }
                 }
             }

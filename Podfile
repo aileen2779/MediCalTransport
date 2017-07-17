@@ -7,6 +7,7 @@ target 'MediCalTransport' do
   pod 'Firebase/Core'
    pod 'Firebase/Database'
    pod 'Firebase/Messaging'
+   pod 'Firebase/Auth'
    pod 'NVActivityIndicatorView'
   
   # Pods for SidebarMenu
