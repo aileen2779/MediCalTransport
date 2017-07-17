@@ -192,6 +192,10 @@ class RiderViewController: UIViewController,
             
                 self.addEventToCalendar(title: "Ride Schedule to \(toLocation)", description: "\(scheduledTripUpdates)", startDate: dateString!, endDate: dateString!)
                 // End add to calendar
+                
+                
+                // Log to firebase
+                firebaseLog(userID: patientId, logToSave: scheduledTrips)
             
                 // Display confirmation
                 self.displayAlert(title: "Success", message: "A ride request has been submitted for \(whenPickup) from \(fromLocation) to \(toLocation).\nThe event has been added to your calendar")
@@ -434,9 +438,6 @@ class RiderViewController: UIViewController,
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 0.0
     }
-
-
-
 
         
     func displayAlert(title: String, message: String) {
