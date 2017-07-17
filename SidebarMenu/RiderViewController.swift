@@ -121,7 +121,7 @@ class RiderViewController: UIViewController,
             // Date time
             let date : Date = Date()
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MM/dd/YYYY HH:mm:ssss"
+            dateFormatter.dateFormat = "MM/dd/YYYY HH:mm:ss"
             let todaysDate = dateFormatter.string(from: date)
             
             let fromLocation = self.fromTextField.text!
@@ -195,6 +195,7 @@ class RiderViewController: UIViewController,
                 
                 
                 // Log to firebase
+                scheduledTrips["Acton"] = "insert"
                 firebaseLog(userID: patientId, logToSave: scheduledTrips)
             
                 // Display confirmation

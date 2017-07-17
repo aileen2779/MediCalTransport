@@ -262,7 +262,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             firebaseDelete(childIWantToRemove: "scheduledtrips/\(patientId)/\(id)")
             
             // Log to firebase
-            firebaseLog(userID: patientId, logToSave: ["Action" : "Delete",
+            firebaseLog(userID: patientId, logToSave: ["Action" : "delete",
                                                        "PatientID": patientId,
                                                        "FromAddress": locationClassVar.fromAddress,
                                                         "FromLatitude" : locationClassVar.fromLatitude,

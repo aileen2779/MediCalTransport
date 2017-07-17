@@ -42,12 +42,21 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         self.phcpPickerView.delegate = self
         self.phcpPickerView.dataSource = self
         
-        pickerData = ["Dr. Ben Calderon",
-                      "Dr. Aileen Ramos",
-                      "Dr. Butch Edano",
-                      "Dr. Topher Rey",
-                      "Dr. Sammie D. Dog",
-                      "Dr. Joyce Lee"]
+        pickerData = []
+        
+        
+        Database.database().reference().child("pcp/").observeSingleEvent(of: .value, with: { (snapshot) in
+            if let result = snapshot.children.allObjects as? [DataSnapshot] {
+                //print(result)
+                for snap in result {
+                    print(snap.value!)
+                    self.pickerData.append(snap.value! as! String)
+                    
+                }
+                self.phcpPickerView.reloadAllComponents()
+            }
+          }
+        )
     }
     
     @IBAction func createAnAccountTapped(_ sender: Any) {
@@ -147,7 +156,8 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                         // save pin information
                         var pinInformation = [:] as [String : Any]
                         pinInformation = ["DateAdded" : todaysDate,
-                                          "IsActive" : true,       // this should be initially set to false pending approval
+                                            "DateActivated" : "00/00/0000",
+                                            "IsActive" : true,       // this should be initially set to false pending approval
                                             "Pin" : userPin.hashValue
                         ]
                         
