@@ -72,3 +72,32 @@ func firebaseLog(userID: String, logToSave: Any) {
     ref.updateChildValues(logToSaveDetail)
 }
 
+/*
+func getIPAddress() -> String {
+    var address: String = "error"
+    
+    var interfaces: ifaddrs? = nil
+    
+    var temp_addr: ifaddrs? = nil
+    var success: Int = 0
+    // retrieve the current interfaces - returns 0 on success
+    success = getifaddrs(interfaces)
+    if success == 0 {
+        // Loop through linked list of interfaces
+        temp_addr = interfaces
+        while temp_addr != nil {
+            if temp_addr?.ifa_addr?.sa_family == AF_INET {
+                // Check if interface is en0 which is the wifi connection on the iPhone
+                if (String(utf8String: temp_addr?.ifa_name) == "en0") {
+                    // Get NSString from C String
+                    address = String(utf8String: inet_ntoa((temp_addr?.ifa_addr as? sockaddr_in)?.sin_addr))
+                }
+            }
+            temp_addr = temp_addr?.ifa_next
+        }
+    }
+    // Free memory
+    freeifaddrs(interfaces)
+    return address
+}
+ */

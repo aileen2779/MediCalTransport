@@ -29,6 +29,8 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         
         super.viewDidLoad()
         
+        //print("test:\(getIPAddress())")
+        
         // hide the login stack view initially
         loginStackView.isHidden = true
         
@@ -74,14 +76,14 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         // show activity activityIndicator
         let randomNum:UInt32 = arc4random_uniform(30) + 1 // generates random number between (0 and 30) + 1
         startAnimating(CGSize(width: 40, height: 40), message: "Loading...", type: NVActivityIndicatorType(rawValue: Int(randomNum))!)
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
             NVActivityIndicatorPresenter.sharedInstance.setMessage("Authenticating...")
         }
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
             self.stopAnimating()
         }
         
-        delayWithSeconds(2) {
+        delayWithSeconds(1) {
             self.login_now(userid:self.loginTextField.text!, password: self.passwordTextField.text!)
         }
         

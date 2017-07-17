@@ -175,6 +175,11 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                     }
                 }
                 
+                // start auth
+                //FIRAuth.auth().signIn(with)
+                
+                // end auth
+                
             })
             //End database
 
