@@ -44,14 +44,11 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
         pickerData = []
         
-        
+        // Populate picker data from firebase
         Database.database().reference().child("pcp/").observeSingleEvent(of: .value, with: { (snapshot) in
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
-                //print(result)
                 for snap in result {
-                    print(snap.value!)
                     self.pickerData.append(snap.value! as! String)
-                    
                 }
                 self.phcpPickerView.reloadAllComponents()
             }
@@ -241,11 +238,6 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         super.touchesBegan(touches, with: event)
     }
 
-    func validate(email: String) -> Bool {
-        let regex: String
-        regex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
-        return NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: email)
-    }
     
     func displayAlert(title: String, message: String) {
         
