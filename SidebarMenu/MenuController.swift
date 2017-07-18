@@ -4,6 +4,7 @@
 
 
 import UIKit
+import FirebaseAuth
 
 class MenuController: UITableViewController {
 
@@ -35,8 +36,12 @@ class MenuController: UITableViewController {
             let preferences = UserDefaults.standard
             preferences.removeObject(forKey: "session")
             
-            firebaseLog(userID: preferences.object(forKey: "userid") as! String, logToSave: ["Message": "Logout successful"])
+            //log
+            firebaseLog(userID: preferences.object(forKey: "userid") as! String, logToSave: ["Message": "Logout"])
 
+            //signout from firebase
+            try! Auth.auth().signOut()
+            
             self.dismiss(animated: true, completion: nil)
             
             

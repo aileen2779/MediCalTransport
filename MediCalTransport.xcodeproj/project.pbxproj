@@ -65,6 +65,7 @@
 		3D0F779C1F196907000B51ED /* Patient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Patient.swift; sourceTree = "<group>"; };
 		3D1793451F0B411900FC5329 /* ScheduledTripsDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduledTripsDetailViewController.swift; sourceTree = "<group>"; };
 		3D1793471F0D6EC400FC5329 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		3D58F4991F1DCFC3000AFDAD /* MediCalTransport.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MediCalTransport.entitlements; sourceTree = SOURCE_ROOT; };
 		3D9479211F11E06B0005947F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		3DE281A21F02E043001D841A /* ScheduledTrips.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduledTrips.swift; sourceTree = "<group>"; };
 		3DF822331F17D4F100882F02 /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
@@ -278,6 +279,7 @@
 		F47029F21A7F27DB00E30A3C /* MediCalTransport */ = {
 			isa = PBXGroup;
 			children = (
+				3D58F4991F1DCFC3000AFDAD /* MediCalTransport.entitlements */,
 				3D9479211F11E06B0005947F /* Images.xcassets */,
 				7E1465241EFDD2DA00F1102A /* DateTimePicker */,
 				7E9538361EF9DBC5008204AA /* BSUMaps */,
@@ -394,6 +396,9 @@
 						SystemCapabilities = {
 							com.apple.Maps.iOS = {
 								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 0;
 							};
 						};
 					};

@@ -52,7 +52,18 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         } else {
             loginToDo()
         }
-
+        
+        PhoneAuthProvider.provider().verifyPhoneNumber("+17022736420") { (verificationID, error) in
+            if ((error) != nil) {
+                // Verification code not sent.
+                print(error as Any)
+            } else {
+                // Successful. -> it's sucessfull here
+                print(verificationID as Any)
+                UserDefaults.standard.set(verificationID, forKey: "firebase_verification")
+                UserDefaults.standard.synchronize()
+            }
+        }
     }
 
     @IBAction func loginButtonTapped(_ sender: Any) {
@@ -76,7 +87,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         }
 
         // show activity activityIndicator
-        let randomNum:UInt32 = arc4random_uniform(30) + 1 // generates random number between (0 and 30) + 1
+        let randomNum:UInt32 = arc4random_uniform(30) + 1 // generates random number between (0 and 30) + 1 each representing an animation
         startAnimating(CGSize(width: 40, height: 40), message: "Loading...", type: NVActivityIndicatorType(rawValue: Int(randomNum))!)
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
             NVActivityIndicatorPresenter.sharedInstance.setMessage("Authenticating...")
@@ -168,7 +179,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                                 preferences.set(true, forKey: "touchIdEnrolled")
                                 
                                 //Log action
-                                firebaseLog(userID: userid, logToSave: ["Message": "Login successful"])
+                                firebaseLog(userID: userid, logToSave: ["Message": "Login"])
                                 
                                 DispatchQueue.main.async(execute: self.loginDone)
                                 
@@ -274,7 +285,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                 //logging
                 let preferences = UserDefaults.standard
     
-                firebaseLog(userID: preferences.object(forKey: "userid") as! String, logToSave: ["Message": "Touch ID login successfull"])
+                firebaseLog(userID: preferences.object(forKey: "userid") as! String, logToSave: ["Message": "Touch ID login"])
                     
                 self.loginDone()
             })
