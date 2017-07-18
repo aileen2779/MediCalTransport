@@ -191,8 +191,7 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                                 var pinInformation = [:] as [String : Any]
                                 pinInformation = ["DateAdded" : todaysDate,
                                                   "DateActivated" : "00/00/0000",
-                                                  "IsActive" : false,       // this should be initially set to false pending approval
-                                                "Pin" : userPin.hashValue
+                                                  "IsActive" : false
                                 ]
                                 
                                 let pinInformationUpdates = ["/user_access/\(userPhoneNumber)/": pinInformation]

@@ -33,8 +33,6 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         
         super.viewDidLoad()
         
-        //print("test:\(getIPAddress())")
-        
         // hide the login stack view initially
         loginStackView.isHidden = true
         
@@ -47,12 +45,12 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         
         // redirect if logged in or not
         let preferences = UserDefaults.standard
+
         if preferences.object(forKey: "session") != nil {
             login_session  = preferences.object(forKey: "session") as! String
             check_session()
         } else {
             loginToDo()
-        
         }
 
     }
@@ -141,20 +139,13 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         Auth.auth().signIn(withEmail: userid+myDomain, password: password) { (user, error) in
             
             if error == nil {
-                //Print into the console if successfully logged in
-                print("You have successfully logged in")
-                
-                
                 // Authenticate database
                 //Start database check
                 Database.database().reference().child("user_access/\(userid)/").observeSingleEvent(of: .value, with: { (snapshot) in
                     
                     var isActive:Bool = false
-                    var myPin = 0
                     
                     if let result = snapshot.children.allObjects as? [DataSnapshot] {
-                        print("test:\(result)")
-                        
                         if (result.isEmpty) {
                             self.displayAlert(title: "Alert!", message: "Patient ID \(userid) does not exist", userid: "0000000000")
                         } else {
@@ -162,35 +153,25 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                                 if (snap.key == "IsActive") {
                                     isActive = snap.value! as! Bool
                                 }
-                                if (snap.key == "Pin") {
-                                    myPin = snap.value as! Int
-                                }
                             }
                             
-                            
                             if (isActive) {
-                                print("user is active")
-                                print("\(myPin)-\(password.hashValue)")
                                 
-                                if (myPin == password.hashValue) {
+                                let session_data:Int = userid.hashValue
                                     
-                                    let session_data:Int = userid.hashValue
+                                self.login_session = "\(session_data)"
                                     
-                                    self.login_session = "\(session_data)"
-                                    
-                                    let preferences = UserDefaults.standard
-                                    preferences.set(self.login_session, forKey: "session")
-                                    preferences.set(userid, forKey: "userid")
-                                    preferences.set(password, forKey: "password")
-                                    preferences.set(true, forKey: "touchIdEnrolled")
-                                    
-                                    
-                                    firebaseLog(userID: userid, logToSave: ["Message": "Login successful"])
-                                    
-                                    DispatchQueue.main.async(execute: self.loginDone)
-                                } else {
-                                    self.displayAlert(title: "Alert!", message: "Incorrect PIN entered", userid: userid)
-                                }
+                                let preferences = UserDefaults.standard
+                                preferences.set(self.login_session, forKey: "session")
+                                preferences.set(userid, forKey: "userid")
+                                preferences.set(password, forKey: "password")
+                                preferences.set(true, forKey: "touchIdEnrolled")
+                                
+                                //Log action
+                                firebaseLog(userID: userid, logToSave: ["Message": "Login successful"])
+                                
+                                DispatchQueue.main.async(execute: self.loginDone)
+                                
                             } else {
                                 self.displayAlert(title: "Alert!", message: "Patient ID \(userid) is disabled or has not been activated",  userid: userid)
                             }
@@ -199,18 +180,19 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                     
                 })
                 //End database
-                
 
-                
             } else {
                 
                 //Tells the user that there is an error and then gets firebase to tell them the error
-                let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
+                self.displayAlert(title: "Alert!", message: (error?.localizedDescription)!,  userid: userid)
                 
-                let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                alertController.addAction(defaultAction)
-                
-                self.present(alertController, animated: true, completion: nil)
+                let preferences = UserDefaults.standard
+                // set password to null
+                //preferences.removeObject(forKey: "password")
+                preferences.set("", forKey: "password")
+                preferences.removeObject(forKey: "touchIdEnrolled")
+                self.passwordTextField.text = ""
+                self.passwordTextField.becomeFirstResponder()
             }
         }
         
