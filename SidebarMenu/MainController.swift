@@ -138,8 +138,8 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         // Authenticate Firebase
         Auth.auth().signIn(withEmail: userid+myDomain, password: password) { (user, error) in
             
+            // Authenticate database
             if error == nil {
-                // Authenticate database
                 //Start database check
                 Database.database().reference().child("user_access/\(userid)/").observeSingleEvent(of: .value, with: { (snapshot) in
                     
@@ -183,16 +183,41 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
 
             } else {
                 
-                //Tells the user that there is an error and then gets firebase to tell them the error
+                if let errCode = AuthErrorCode(rawValue: (error!._code)) {
+                    print("test:\(errCode.rawValue)")
+                
+                    let preferences = UserDefaults.standard
+
+                    
+                    switch (errCode.rawValue) {
+                    case 17009:
+                        print("The password is invalid or the user does not have a password.")
+                        
+                        self.passwordTextField.text = ""
+                        self.passwordTextField.becomeFirstResponder()
+                        preferences.set("", forKey: "password")
+                        
+                    case 17011:
+                        print("There is no user record corresponding to this identifier. The user may have been deleted.")
+                        
+                        //self.loginTextField.text = ""
+                        self.loginTextField.becomeFirstResponder()
+                        preferences.set("", forKey: "userid")
+                        preferences.set("", forKey: "password")
+
+                    default:
+                        print("\(errCode.rawValue): Handle default situation")
+                    }
+                    
+                    preferences.removeObject(forKey: "touchIdEnrolled")
+                    
+                }
+            
+                                //Tells the user that there is an error and then gets firebase to tell them the error
                 self.displayAlert(title: "Alert!", message: (error?.localizedDescription)!,  userid: userid)
                 
-                let preferences = UserDefaults.standard
-                // set password to null
-                //preferences.removeObject(forKey: "password")
-                preferences.set("", forKey: "password")
-                preferences.removeObject(forKey: "touchIdEnrolled")
-                self.passwordTextField.text = ""
-                self.passwordTextField.becomeFirstResponder()
+                
+                
             }
         }
         
