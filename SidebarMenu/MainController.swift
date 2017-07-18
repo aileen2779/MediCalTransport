@@ -213,14 +213,10 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                     
                 }
             
-                                //Tells the user that there is an error and then gets firebase to tell them the error
-                self.displayAlert(title: "Alert!", message: (error?.localizedDescription)!,  userid: userid)
-                
-                
-                
+                //Tells the user that there is an error and then gets firebase to tell them the error
+                self.displayAlert(title: "Alert!", message: "\(userid):\((error?.localizedDescription)!)",  userid: "0000000000")
             }
         }
-        
     }
     
     func loginDone() {
