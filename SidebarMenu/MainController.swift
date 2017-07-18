@@ -53,6 +53,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
             loginToDo()
         }
         
+        /*
         PhoneAuthProvider.provider().verifyPhoneNumber("+17022736420") { (verificationID, error) in
             if ((error) != nil) {
                 // Verification code not sent.
@@ -64,6 +65,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                 UserDefaults.standard.synchronize()
             }
         }
+ */
     }
 
     @IBAction func loginButtonTapped(_ sender: Any) {
@@ -177,6 +179,8 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                                 preferences.set(userid, forKey: "userid")
                                 preferences.set(password, forKey: "password")
                                 preferences.set(true, forKey: "touchIdEnrolled")
+                                preferences.set(false, forKey: "saveLocation")
+                                preferences.set(false, forKey: "saveCalendar")
                                 
                                 //Log action
                                 firebaseLog(userID: userid, logToSave: ["Message": "Login"])

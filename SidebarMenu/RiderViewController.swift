@@ -44,6 +44,8 @@ class RiderViewController: UIViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        requestAccessToCalendar()
+        
         let preferences = UserDefaults.standard
         patientId = preferences.object(forKey: "userid") as! String
 
@@ -147,7 +149,7 @@ class RiderViewController: UIViewController,
             
                 print(toLatitude)
                 print(toLongitude)
-            
+                
                 // if current location, then use coordinates, else use from address
                 scheduledTrips = ["\(self.fromString)": fromLocation,
                               "FromLongitude" : fromLongitude,
@@ -182,24 +184,37 @@ class RiderViewController: UIViewController,
                 self.locationManager.stopUpdatingLocation()
             
                 // Add to calendar
-                let myDate = whenPickup
-                let myDateFormatter = DateFormatter()
-                myDateFormatter.dateFormat = "MM/dd/yy h:mm a"
-                myDateFormatter.timeZone = TimeZone(secondsFromGMT: TimeZone.current.secondsFromGMT())
-            
-                let dateString = myDateFormatter.date(from: myDate)
-                //print("\(dateString!) - \(whenPickup) - \(TimeZone.current.secondsFromGMT())")
-            
-                self.addEventToCalendar(title: "Ride Schedule to \(toLocation)", description: "\(scheduledTripUpdates)", startDate: dateString!, endDate: dateString!)
-                // End add to calendar
+                var calendarMessage:String = ""
+                var saveCalendar:Bool = false
                 
+                //Retreive preferences
+                let preferences = UserDefaults.standard
+                if preferences.object(forKey: "saveCalendar") != nil {
+                    saveCalendar = preferences.object(forKey: "saveCalendar") as! Bool
+                    if (saveCalendar) {
+                        calendarMessage = "The event has been added to your calendar"
+                    
+                        let myDate = whenPickup
+                        let myDateFormatter = DateFormatter()
+                        myDateFormatter.dateFormat = "MM/dd/yy h:mm a"
+                        myDateFormatter.timeZone = TimeZone(secondsFromGMT: TimeZone.current.secondsFromGMT())
+                        
+                        let dateString = myDateFormatter.date(from: myDate)
+                        self.addEventToCalendar(title: "Ride Schedule to \(toLocation)", description: "\(scheduledTripUpdates)", startDate: dateString!, endDate: dateString!)
+
+                    } else {
+                        calendarMessage = "Calendar access not granted. The event will NOT be added to your calendar"
+                    }
+                    //print("test:\(calendarMessage)")
+                }
+                // End add to calendar
                 
                 // Log to firebase
                 scheduledTrips["Acton"] = "insert"
                 firebaseLog(userID: patientId, logToSave: scheduledTrips)
             
                 // Display confirmation
-                self.displayAlert(title: "Success", message: "A ride request has been submitted for \(whenPickup) from \(fromLocation) to \(toLocation).\nThe event has been added to your calendar")
+                self.displayAlert(title: "Success", message: "A ride request has been submitted for \(whenPickup) from \(fromLocation) to \(toLocation).\n\n\(calendarMessage)")
             
                 // clear textfields
                 self.fromTextField.text = ""
@@ -439,7 +454,6 @@ class RiderViewController: UIViewController,
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 0.0
     }
-
         
     func displayAlert(title: String, message: String) {
         
@@ -460,6 +474,7 @@ class RiderViewController: UIViewController,
                 event.endDate = endDate
                 event.notes = description
                 event.calendar = eventStore.defaultCalendarForNewEvents
+        
                 do {
                     try eventStore.save(event, span: .thisEvent)
                 } catch let e as NSError {
@@ -473,5 +488,20 @@ class RiderViewController: UIViewController,
         })
     }
 
+    func requestAccessToCalendar() {
+        let eventStore = EKEventStore()
+        
+        let preferences = UserDefaults.standard
+
+        eventStore.requestAccess(to: .event, completion: { (granted, error) in
+            if (granted) && (error == nil) {
+                preferences.set(true, forKey: "saveCalendar")
+            } else {
+                preferences.set(false, forKey: "saveCalendar")
+            }
+        })
+        return
+    }
+    
 }
 
