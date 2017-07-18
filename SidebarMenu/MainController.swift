@@ -5,6 +5,7 @@
 import UIKit
 import LocalAuthentication
 import FirebaseDatabase
+import FirebaseAuth
 import NVActivityIndicatorView
 
 class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicatorViewable {
@@ -17,6 +18,9 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
     
     @IBOutlet weak var thumbIdImage: UIImageView!
     @IBOutlet weak var thumbIdButton: UIButton!
+    
+    // Fetch constants
+    var myDomain = CONST_DOMAIN
     
     //var login_session:Int = 0
     var login_session:String = ""
@@ -76,10 +80,10 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         // show activity activityIndicator
         let randomNum:UInt32 = arc4random_uniform(30) + 1 // generates random number between (0 and 30) + 1
         startAnimating(CGSize(width: 40, height: 40), message: "Loading...", type: NVActivityIndicatorType(rawValue: Int(randomNum))!)
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.5) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
             NVActivityIndicatorPresenter.sharedInstance.setMessage("Authenticating...")
         }
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
             self.stopAnimating()
         }
         
@@ -133,59 +137,83 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         loginTextField.endEditing(true)
         passwordTextField.endEditing(true)
         
-        //Start database check
-        Database.database().reference().child("user_access/\(userid)/").observeSingleEvent(of: .value, with: { (snapshot) in
-        
-            var isActive:Bool = false
-            var myPin = 0
-
-            if let result = snapshot.children.allObjects as? [DataSnapshot] {
-                print("test:\(result)")
-                    
-                if (result.isEmpty) {
-                    self.displayAlert(title: "Alert!", message: "Patient ID \(userid) does not exist", userid: "0000000000")
-                } else {
-                    for snap in result {
-                        if (snap.key == "IsActive") {
-                            isActive = snap.value! as! Bool
-                        }
-                        if (snap.key == "Pin") {
-                            myPin = snap.value as! Int
-                        }
-                    }
-                    
-                    
-                    if (isActive) {
-                        print("user is active")
-                        print("\(myPin)-\(password.hashValue)")
-                        
-                        if (myPin == password.hashValue) {
-                        
-                            let session_data:Int = userid.hashValue
-
-                            self.login_session = "\(session_data)"
-                        
-                            let preferences = UserDefaults.standard
-                            preferences.set(self.login_session, forKey: "session")
-                            preferences.set(userid, forKey: "userid")
-                            preferences.set(password, forKey: "password")
-                            preferences.set(true, forKey: "touchIdEnrolled")
- 
-     
-                            firebaseLog(userID: userid, logToSave: ["Message": "Login successful"])
-                            
-                            DispatchQueue.main.async(execute: self.loginDone)
-                        } else {
-                            self.displayAlert(title: "Alert!", message: "Incorrect PIN entered", userid: userid)
-                        }
-                    } else {
-                        self.displayAlert(title: "Alert!", message: "Patient ID \(userid) is disabled or has not been activated",  userid: userid)
-                    }
-                }
-            }
+        // Authenticate Firebase
+        Auth.auth().signIn(withEmail: userid+myDomain, password: password) { (user, error) in
             
-        })
-        //End database
+            if error == nil {
+                //Print into the console if successfully logged in
+                print("You have successfully logged in")
+                
+                
+                // Authenticate database
+                //Start database check
+                Database.database().reference().child("user_access/\(userid)/").observeSingleEvent(of: .value, with: { (snapshot) in
+                    
+                    var isActive:Bool = false
+                    var myPin = 0
+                    
+                    if let result = snapshot.children.allObjects as? [DataSnapshot] {
+                        print("test:\(result)")
+                        
+                        if (result.isEmpty) {
+                            self.displayAlert(title: "Alert!", message: "Patient ID \(userid) does not exist", userid: "0000000000")
+                        } else {
+                            for snap in result {
+                                if (snap.key == "IsActive") {
+                                    isActive = snap.value! as! Bool
+                                }
+                                if (snap.key == "Pin") {
+                                    myPin = snap.value as! Int
+                                }
+                            }
+                            
+                            
+                            if (isActive) {
+                                print("user is active")
+                                print("\(myPin)-\(password.hashValue)")
+                                
+                                if (myPin == password.hashValue) {
+                                    
+                                    let session_data:Int = userid.hashValue
+                                    
+                                    self.login_session = "\(session_data)"
+                                    
+                                    let preferences = UserDefaults.standard
+                                    preferences.set(self.login_session, forKey: "session")
+                                    preferences.set(userid, forKey: "userid")
+                                    preferences.set(password, forKey: "password")
+                                    preferences.set(true, forKey: "touchIdEnrolled")
+                                    
+                                    
+                                    firebaseLog(userID: userid, logToSave: ["Message": "Login successful"])
+                                    
+                                    DispatchQueue.main.async(execute: self.loginDone)
+                                } else {
+                                    self.displayAlert(title: "Alert!", message: "Incorrect PIN entered", userid: userid)
+                                }
+                            } else {
+                                self.displayAlert(title: "Alert!", message: "Patient ID \(userid) is disabled or has not been activated",  userid: userid)
+                            }
+                        }
+                    }
+                    
+                })
+                //End database
+                
+
+                
+            } else {
+                
+                //Tells the user that there is an error and then gets firebase to tell them the error
+                let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
+                
+                let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                alertController.addAction(defaultAction)
+                
+                self.present(alertController, animated: true, completion: nil)
+            }
+        }
+        
     }
     
     func loginDone() {

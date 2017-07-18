@@ -11,6 +11,9 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     var pickerData: [String] = [String]()
     var userPCP:String = ""
     
+    // Fetch constants
+    var myDomain = CONST_DOMAIN
+
     @IBOutlet weak var phcpPickerView: UIPickerView!
     
     @IBOutlet weak var phoneNumberTextField: CustomTextField!
@@ -105,7 +108,7 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             let alert = UIAlertController(title: "Alert", message: "Telephone Number must include area code", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default) { _ in })
             self.present(alert, animated: true){}
-            
+                        
             return
         }
         
@@ -134,7 +137,7 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             }
             
             // Start auth
-            Auth.auth().createUser(withEmail: userPhoneNumber+"@zundo.com", password: userPin, completion: { (user, error) in
+            Auth.auth().createUser(withEmail: userPhoneNumber + self.myDomain, password: userPin, completion: { (user, error) in
 
                 // Date time
                 let date : Date = Date()
