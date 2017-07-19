@@ -22,7 +22,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
     // Fetch constants
     var myDomain = CONST_DOMAIN
     
-    //var login_session:Int = 0
+    var ipAddress = ""
     var login_session:String = ""
     var errorMessage = ""
 
@@ -32,6 +32,9 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        //Get IP Address
+        //getIP()
         
         // hide the login stack view initially
         loginStackView.isHidden = true
@@ -43,15 +46,27 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         self.loginTextField.delegate = self
         self.passwordTextField.delegate = self
         
-        // redirect if logged in or not
-        let preferences = UserDefaults.standard
-
-        if preferences.object(forKey: "session") != nil {
-            login_session  = preferences.object(forKey: "session") as! String
-            check_session()
-        } else {
-            loginToDo()
-        }
+        
+        self.getIpAddress(completion: { success in
+            if success {
+                let preferences = UserDefaults.standard
+                
+                // Store ip address
+                self.ipAddress = preferences.object(forKey: "ipAddress") as! String
+                
+                // redirect if logged in or not
+                if preferences.object(forKey: "session") != nil {
+                    self.login_session  = preferences.object(forKey: "session") as! String
+                    self.check_session()
+                } else {
+                    self.loginToDo()
+                }
+                
+            } else {
+                //
+            }
+        })
+        
         
         /*
         PhoneAuthProvider.provider().verifyPhoneNumber("+17022736420") { (verificationID, error) in
@@ -143,7 +158,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
     }
 
     
-    func login_now(userid:String, password:String) {
+    func login_now(userid: String, password: String) {
         
         loginTextField.endEditing(true)
         passwordTextField.endEditing(true)
@@ -181,9 +196,10 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                                 preferences.set(true, forKey: "touchIdEnrolled")
                                 preferences.set(false, forKey: "saveLocation")
                                 preferences.set(false, forKey: "saveCalendar")
+                                preferences.set(self.ipAddress, forKey: "ipAddress")
                                 
                                 //Log action
-                                firebaseLog(userID: userid, logToSave: ["Action": "login"])
+                                firebaseLog(userID: userid, logToSave: ["Action" : "login", "IPAddress" : self.ipAddress])
                                 
                                 DispatchQueue.main.async(execute: self.loginDone)
                                 
@@ -289,7 +305,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                 //logging
                 let preferences = UserDefaults.standard
     
-                firebaseLog(userID: preferences.object(forKey: "userid") as! String, logToSave: ["Message": "Touch ID login"])
+                firebaseLog(userID: preferences.object(forKey: "userid") as! String, logToSave: ["Message": "Touch ID login", "IPAddress": self.ipAddress])
                     
                 self.loginDone()
             })
@@ -341,15 +357,43 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
     func displayAlert(title: String, message: String, userid: String) {
         
         // log to firebase
-        firebaseLog(userID: userid, logToSave: ["Message": message])
+        firebaseLog(userID: userid, logToSave: ["Message": message, "IPAddress": self.ipAddress])
         
         let alertcontroller = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertcontroller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alertcontroller, animated: true, completion: nil)
         
     }
-    
 
+    func getIpAddress (completion: @escaping (Bool) -> () ) {
+        
+        let preferences = UserDefaults.standard
+        
+        let url = "https://api.ipify.org?format=json"
+        
+        if let url = NSURL(string: url) {
+            if let data = try? Data(contentsOf: url as URL) {
+                do {
+                    let parsedData = try JSONSerialization.jsonObject(with: data as Data, options: .allowFragments)
+                    let dict = parsedData as? NSDictionary
+                    let _ipAddress = "\(dict!["ip"]!)"
+                    preferences.set(_ipAddress, forKey: "ipAddress")
+                    print(_ipAddress)
+                    completion(true)
+                    
+                }
+                    //else throw an error detailing what went wrong
+                catch let error as NSError {
+                    print("Details of JSON parsing error:\n \(error.localizedDescription)")
+                    let _ipAddress = "0.0.0.0"
+                    preferences.set(_ipAddress, forKey: "ipAddress")
+                    completion(false)
+                }
+            }
+        }
+
+        
+    }
 
 }
 

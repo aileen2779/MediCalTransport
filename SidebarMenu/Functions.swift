@@ -1,22 +1,9 @@
-//
-//  Constants.swift
-
 
 import Foundation
 import AudioToolbox
 import FirebaseDatabase
 
 
-
-var CONST_BG_COLOR:UIColor = UIColor(red:0.49, green:0.73, blue:0.71, alpha:1.0)
-var CONST_DOMAIN = "@zundo.com"
-
-func animateMe(textField: UITextField) {
-    let _thisTextField = textField
-    UIView.animate(withDuration: 0.1, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseIn, animations: {_thisTextField.center.x += 10 }, completion: nil)
-    UIView.animate(withDuration: 0.1, delay: 0.1, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseIn, animations: {_thisTextField.center.x -= 20 }, completion: nil)
-    UIView.animate(withDuration: 0.1, delay: 0.2, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseIn, animations: {_thisTextField.center.x += 10 }, completion: nil)
-}
 
 func dropShadow(thisObject: Any) {
     (thisObject as AnyObject).layer.borderColor = UIColor.clear.cgColor
@@ -44,7 +31,7 @@ func delayWithSeconds(_ seconds: Double, completion: @escaping () -> ()) {
 func firebaseLog(userID: String, logToSave: Any) {
     
     let _userID:String = userID
-            
+    
     let ref = Database.database().reference()
     
     let myDate = Date()
@@ -54,7 +41,7 @@ func firebaseLog(userID: String, logToSave: Any) {
     // year
     myDateFormatter.dateFormat = "yyyy"
     let yearString = myDateFormatter.string(from: myDate)
-
+    
     // month
     myDateFormatter.dateFormat = "MM"
     let monthString = myDateFormatter.string(from: myDate)
@@ -72,5 +59,32 @@ func firebaseLog(userID: String, logToSave: Any) {
     ref.updateChildValues(logToSaveDetail)
 }
 
-
-
+/*
+ func getIPAddress() -> String {
+ var address: String = "error"
+ 
+ var interfaces: ifaddrs? = nil
+ 
+ var temp_addr: ifaddrs? = nil
+ var success: Int = 0
+ // retrieve the current interfaces - returns 0 on success
+ success = getifaddrs(interfaces)
+ if success == 0 {
+ // Loop through linked list of interfaces
+ temp_addr = interfaces
+ while temp_addr != nil {
+ if temp_addr?.ifa_addr?.sa_family == AF_INET {
+ // Check if interface is en0 which is the wifi connection on the iPhone
+ if (String(utf8String: temp_addr?.ifa_name) == "en0") {
+ // Get NSString from C String
+ address = String(utf8String: inet_ntoa((temp_addr?.ifa_addr as? sockaddr_in)?.sin_addr))
+ }
+ }
+ temp_addr = temp_addr?.ifa_next
+ }
+ }
+ // Free memory
+ freeifaddrs(interfaces)
+ return address
+ }
+ */

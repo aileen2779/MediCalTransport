@@ -28,6 +28,7 @@ class RiderViewController: UIViewController,
     var userLocation: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0)
     
     var patientId:String = ""
+    var ipAddress:String = ""
     
     let fromString = "FromAddress"
     let toString = "ToAddress"
@@ -41,6 +42,7 @@ class RiderViewController: UIViewController,
         
         let preferences = UserDefaults.standard
         patientId = preferences.object(forKey: "userid") as! String
+        ipAddress = preferences.object(forKey: "ipAddress") as! String
         
         requestAccessToCalendar()
         requestAccessToLocation()
@@ -476,7 +478,7 @@ class RiderViewController: UIViewController,
     func displayAlert(title: String, message: String, userid: String) {
         
         // log to firebase
-        firebaseLog(userID: userid, logToSave: ["Message": message])
+        firebaseLog(userID: userid, logToSave: ["Message": message, "IPAddress" : ipAddress])
         
         let alertcontroller = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertcontroller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -518,11 +520,11 @@ class RiderViewController: UIViewController,
             if (granted) && (error == nil) {
                 preferences.set(true, forKey: "saveCalendar")
                 //Log action
-                firebaseLog(userID: self.patientId, logToSave: ["Action": "grant calendar"])
+                firebaseLog(userID: self.patientId, logToSave: ["Action": "grant calendar", "IPAddress" : self.ipAddress])
             } else {
                 preferences.set(false, forKey: "saveCalendar")
                 //Log action
-                firebaseLog(userID: self.patientId, logToSave: ["Action": "deny calendar"])
+                firebaseLog(userID: self.patientId, logToSave: ["Action": "deny calendar", "IPAddress" : self.ipAddress])
             }
         })
         return
@@ -541,15 +543,15 @@ class RiderViewController: UIViewController,
         case .notDetermined:
             //Log action
             preferences.set(false, forKey: "saveLocation")
-            firebaseLog(userID: patientId, logToSave: ["Action": "undetermined access to location"])
+            firebaseLog(userID: patientId, logToSave: ["Action": "undetermined access to location", "IPAddress" : ipAddress])
         case .restricted, .denied:
             //Log action
             preferences.set(false, forKey: "saveLocation")
-            firebaseLog(userID: patientId, logToSave: ["Action": "deny location"])
+            firebaseLog(userID: patientId, logToSave: ["Action": "deny location", "IPAddress" : ipAddress])
         case .authorizedAlways, .authorizedWhenInUse:
             //Log action
             preferences.set(true, forKey: "saveLocation")
-            firebaseLog(userID: patientId, logToSave: ["Action": "grant location"])
+            firebaseLog(userID: patientId, logToSave: ["Action": "grant location", "IPAddress" : ipAddress])
             
         }
         
