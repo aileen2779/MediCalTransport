@@ -66,21 +66,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                 //
             }
         })
-        
-        
-        /*
-        PhoneAuthProvider.provider().verifyPhoneNumber("+17022736420") { (verificationID, error) in
-            if ((error) != nil) {
-                // Verification code not sent.
-                print(error as Any)
-            } else {
-                // Successful. -> it's sucessfull here
-                print(verificationID as Any)
-                UserDefaults.standard.set(verificationID, forKey: "firebase_verification")
-                UserDefaults.standard.synchronize()
-            }
-        }
- */
+ 
     }
 
     @IBAction func loginButtonTapped(_ sender: Any) {

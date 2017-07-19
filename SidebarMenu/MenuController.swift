@@ -38,7 +38,7 @@ class MenuController: UITableViewController {
             let ipAddress = preferences.object(forKey: "ipAddress") as! String
             
             //log
-            firebaseLog(userID: preferences.object(forKey: "userid") as! String, logToSave: ["Action": "logout", "ipAddress" : ipAddress])
+            firebaseLog(userID: preferences.object(forKey: "userid") as! String, logToSave: ["Action": "logout", "IPAddress" : ipAddress])
 
             //signout from firebase
             try! Auth.auth().signOut()

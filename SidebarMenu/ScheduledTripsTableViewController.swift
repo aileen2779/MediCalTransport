@@ -274,7 +274,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                                                         "ToLongitude" : locationClassVar.toLongitude,
                                                         "PickUpDate" : locationClassVar.pickUpDate,
                                                         "DateAdded" : locationClassVar.dateAdded,
-                                                        "ipAddress" : ipAddress
+                                                        "IPAddress" : ipAddress
                                                         ])
             
             // Remove from calendar

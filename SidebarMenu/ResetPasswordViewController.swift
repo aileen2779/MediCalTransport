@@ -1,5 +1,6 @@
 import UIKit
-import MessageUI
+import FirebaseDatabase
+import FirebaseAuth
 
 class ResetPasswordViewController: UIViewController {
     
@@ -23,29 +24,20 @@ class ResetPasswordViewController: UIViewController {
 
     
     @IBAction func resetPasswordButtonTapped(_ sender: Any) {
-        let messageVC = MFMessageComposeViewController()
-        
-        messageVC.body = "Enter a message"
-        messageVC.recipients = ["7022736420"]
-        messageVC.messageComposeDelegate = self as? MFMessageComposeViewControllerDelegate
-        self.present(messageVC, animated: false, completion: nil)
-    }
-
-    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
-        switch (result.rawValue) {
-        case MessageComposeResult.cancelled.rawValue:
-            print("Message was cancelled")
-            self.dismiss(animated: true, completion: nil)
-        case MessageComposeResult.failed.rawValue:
-            print("Message failed")
-            self.dismiss(animated: true, completion: nil)
-        case MessageComposeResult.sent.rawValue:
-            print("Message was sent")
-            self.dismiss(animated: true, completion: nil)
-        default:
-            break;
+        PhoneAuthProvider.provider().verifyPhoneNumber("+17022736420") { (verificationID, error) in
+            if ((error) != nil) {
+                // Verification code not sent.
+                print(error as Any)
+            } else {
+                // Successful. -> it's sucessfull here
+                print(verificationID as Any)
+                UserDefaults.standard.set(verificationID, forKey: "firebase_verification")
+                UserDefaults.standard.synchronize()
+            }
         }
     }
+
+
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         self.view.endEditing(true)
