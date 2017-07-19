@@ -36,44 +36,13 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate {
         print("From Address:\(location.fromAddress)")
         print("To Address: \(location.toAddress)")
         
-        if (location.fromAddress != "Current Location") {
-            let Geocoder = CLGeocoder()
-            Geocoder.geocodeAddressString(location.fromAddress) {
-                placemarks, error in
-                let fromPlacemark = placemarks!.first
-                self.fromLatitude = fromPlacemark!.location!.coordinate.latitude
-                self.fromLongitude = fromPlacemark!.location!.coordinate.longitude
-                //print("fromLat: \(self.fromLatitude), fromLon: \(self.fromLongitude), fromAddr \(self.location.fromAddress)")
-
-            }
-
-            Geocoder.geocodeAddressString(self.location.toAddress) {
-                placemarks, error in
-                let toPlacemark = placemarks!.first
-                self.toLatitude = toPlacemark!.location!.coordinate.latitude
-                self.toLongitude = toPlacemark!.location!.coordinate.longitude
-                //print("toLat: \(self.toLatitude), toLon: \(self.toLongitude)")
-                
-                self.displayMap()
-            }
-            
-        } else {
-            fromLatitude = location.fromLatitude
-            fromLongitude = location.fromLongitude
-            print("fromLat: \(self.fromLatitude), fromLon: \(self.fromLongitude), toAddr \(self.location.toAddress)")
-            
-        }
+        fromLongitude = location.fromLongitude
+        fromLatitude = location.fromLatitude
+        toLongitude = location.toLongitude
+        toLatitude = location.toLatitude
         
-        let Geocoder = CLGeocoder()
-        Geocoder.geocodeAddressString(self.location.toAddress) {
-            placemarks, error in
-            let toPlacemark = placemarks!.first
-            self.toLatitude = toPlacemark!.location!.coordinate.latitude
-            self.toLongitude = toPlacemark!.location!.coordinate.longitude
-            print("toLat: \(self.toLatitude), toLon: \(self.toLongitude), toAddr \(self.location.toAddress)")
-            
-            self.displayMap()
-        }
+        
+        self.displayMap()
     }
 
     
