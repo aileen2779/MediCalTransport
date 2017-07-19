@@ -555,23 +555,24 @@ UITextFieldDelegate  {
         
         if (address == "Current Location") {
             completion(true, CLLocationCoordinate2D(latitude: (self.locationManager.location?.coordinate.latitude)!, longitude: (self.locationManager.location?.coordinate.longitude)!))
-        }
-        
-        let Geocoder = CLGeocoder()
-        Geocoder.geocodeAddressString(address) { placemarks, error in
-            
-            if error != nil {
-                print(error?.localizedDescription as Any)
-                completion(false, CLLocationCoordinate2D(latitude: 0, longitude: 0))
-
-            } else {
-                if placemarks!.count > 0 {
-                    let placemark = placemarks![0] as CLPlacemark
-                    let location = placemark.location
-                    completion(true, (location?.coordinate)!)
+        } else{
+            let Geocoder = CLGeocoder()
+            Geocoder.geocodeAddressString(address) { placemarks, error in
+                
+                if error != nil {
+                    print(error?.localizedDescription as Any)
+                    completion(false, CLLocationCoordinate2D(latitude: 0, longitude: 0))
+                    
+                } else {
+                    if placemarks!.count > 0 {
+                        let placemark = placemarks![0] as CLPlacemark
+                        let location = placemark.location
+                        completion(true, (location?.coordinate)!)
+                    }
                 }
             }
         }
+
     }
     
 }
