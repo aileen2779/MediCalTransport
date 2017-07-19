@@ -292,6 +292,11 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         let preferences = UserDefaults.standard
         preferences.set(true, forKey: "touchIdEnrolled")
         
+        let patientID = preferences.object(forKey: "userid") as! String
+        
+        //Log action
+        firebaseLog(userID: patientID, logToSave: ["Action" : "redirect session", "IPAddress" : ipAddress])
+        
         DispatchQueue.main.async(execute: loginDone)
     }
     

@@ -19,6 +19,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     var databaseHandle:DatabaseHandle?
     
     var patientId:String = ""
+    var ipAddress:String = ""
     
     var root:String = "scheduledtrips"
     
@@ -37,6 +38,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         // preferences init
         let preferences = UserDefaults.standard
         patientId = preferences.object(forKey: "userid") as! String
+        ipAddress = preferences.object(forKey: "ipAddress") as! String
         
         self.title = "Scheduled Rides"
 
@@ -271,7 +273,8 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                                                         "ToLatitude" : locationClassVar.toLatitude,
                                                         "ToLongitude" : locationClassVar.toLongitude,
                                                         "PickUpDate" : locationClassVar.pickUpDate,
-                                                        "DateAdded" : locationClassVar.dateAdded
+                                                        "DateAdded" : locationClassVar.dateAdded,
+                                                        "ipAddress" : ipAddress
                                                         ])
             
             // Remove from calendar
