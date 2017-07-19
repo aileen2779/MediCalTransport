@@ -183,7 +183,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                                 preferences.set(false, forKey: "saveCalendar")
                                 
                                 //Log action
-                                firebaseLog(userID: userid, logToSave: ["Message": "Login"])
+                                firebaseLog(userID: userid, logToSave: ["Action": "login"])
                                 
                                 DispatchQueue.main.async(execute: self.loginDone)
                                 

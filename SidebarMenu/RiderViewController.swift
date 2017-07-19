@@ -27,9 +27,8 @@ class RiderViewController: UIViewController,
     // UIButton
     @IBOutlet weak var requestARide: UIButton!
     
-    //var driverOnTheWay = false
+    //Location manager
     var locationManager = CLLocationManager()
-    var riderRequestActive = true
     var userLocation: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0)
     
     var patientId:String = ""
@@ -44,10 +43,11 @@ class RiderViewController: UIViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        requestAccessToCalendar()
-        
         let preferences = UserDefaults.standard
         patientId = preferences.object(forKey: "userid") as! String
+
+        requestAccessToCalendar()
+        requestAccessToLocation()
 
         // add shadow
         dropShadow(thisObject: requestARide)
@@ -55,11 +55,6 @@ class RiderViewController: UIViewController,
         dropShadow(thisObject: toTextField)
         dropShadow(thisObject: whenTextField)
 
-        // Do any additional setup after loading the view.
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
  
         // firebase reference
         ref = Database.database().reference()
@@ -134,8 +129,14 @@ class RiderViewController: UIViewController,
             let datetimekey =  whenPickup.replacingOccurrences(of: "/", with: "")
 
             var scheduledTrips = [:] as [String : Any]
-            let fromLongitude = (self.locationManager.location?.coordinate.longitude)!
-            let fromLatitude = (self.locationManager.location?.coordinate.latitude)!
+
+            var fromLongitude = 0.0
+            var fromLatitude = 0.0
+
+            if (self.locationManager.location?.coordinate.longitude != nil) {
+                fromLongitude = (self.locationManager.location?.coordinate.longitude)!
+                fromLatitude = (self.locationManager.location?.coordinate.latitude)!
+            }
             
             var toLongitude = 0.0
             var toLatitude = 0.0
@@ -214,7 +215,7 @@ class RiderViewController: UIViewController,
                 firebaseLog(userID: patientId, logToSave: scheduledTrips)
             
                 // Display confirmation
-                self.displayAlert(title: "Success", message: "A ride request has been submitted for \(whenPickup) from \(fromLocation) to \(toLocation).\n\n\(calendarMessage)")
+                self.displayAlert(title: "Ride Confirmation", message: "A ride request has been submitted for \(whenPickup) from \(fromLocation) to \(toLocation).\n\n\(calendarMessage)")
             
                 // clear textfields
                 self.fromTextField.text = ""
@@ -496,10 +497,42 @@ class RiderViewController: UIViewController,
         eventStore.requestAccess(to: .event, completion: { (granted, error) in
             if (granted) && (error == nil) {
                 preferences.set(true, forKey: "saveCalendar")
+                //Log action
+                firebaseLog(userID: self.patientId, logToSave: ["Action": "grant calendar"])
             } else {
                 preferences.set(false, forKey: "saveCalendar")
+                //Log action
+                firebaseLog(userID: self.patientId, logToSave: ["Action": "deny calendar"])
+                //self.values = ["ayayay"]
+                //self.values.remove(at: 0)
+                //self.tableView.reloadData()
             }
         })
+        return
+    }
+    
+    func requestAccessToLocation() {
+        // Do any additional setup after loading the view.
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        
+        let status = CLLocationManager.authorizationStatus()
+        switch(status) {
+        case .notDetermined:
+            //Log action
+            firebaseLog(userID: patientId, logToSave: ["Action": "undetermined access to location"])
+        case .restricted, .denied:
+            //Log action
+            firebaseLog(userID: patientId, logToSave: ["Action": "deny location"])
+        case .authorizedAlways, .authorizedWhenInUse:
+            //Log action
+            firebaseLog(userID: patientId, logToSave: ["Action": "grant location"])
+
+        }
+        
+        locationManager.startUpdatingLocation()
+        
         return
     }
     

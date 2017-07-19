@@ -37,7 +37,7 @@ class MenuController: UITableViewController {
             preferences.removeObject(forKey: "session")
             
             //log
-            firebaseLog(userID: preferences.object(forKey: "userid") as! String, logToSave: ["Message": "Logout"])
+            firebaseLog(userID: preferences.object(forKey: "userid") as! String, logToSave: ["Action": "logout"])
 
             //signout from firebase
             try! Auth.auth().signOut()
