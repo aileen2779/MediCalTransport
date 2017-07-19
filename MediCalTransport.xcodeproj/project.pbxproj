@@ -398,7 +398,7 @@
 								enabled = 1;
 							};
 							com.apple.Push = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -710,6 +710,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = MediCalTransport.entitlements;
 				DEVELOPMENT_TEAM = U47Q3369SJ;
 				INFOPLIST_FILE = SidebarMenu/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
@@ -728,6 +729,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = MediCalTransport.entitlements;
 				DEVELOPMENT_TEAM = U47Q3369SJ;
 				INFOPLIST_FILE = SidebarMenu/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;

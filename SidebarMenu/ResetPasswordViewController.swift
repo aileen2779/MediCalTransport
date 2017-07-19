@@ -49,6 +49,7 @@ class ResetPasswordViewController: UIViewController {
         view.endEditing(true)
         super.touchesBegan(touches, with: event)
     }
+
     
     
 }

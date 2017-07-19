@@ -20,6 +20,8 @@
 	<string>com.GamyMalasarte.Zundo</string>
 	<key>PROJECT_ID</key>
 	<string>zundo-ebd9f</string>
+	<key>CFBundleIdentifier</key>
+	<string></string>
 	<key>STORAGE_BUCKET</key>
 	<string>zundo-ebd9f.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>

@@ -33,9 +33,6 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         
         super.viewDidLoad()
         
-        //Get IP Address
-        //getIP()
-        
         // hide the login stack view initially
         loginStackView.isHidden = true
         
@@ -67,6 +64,20 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
             }
         })
  
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        // renew ip address
+        self.getIpAddress(completion: { success in
+            if success {
+                let preferences = UserDefaults.standard
+                // Store ip address
+                self.ipAddress = preferences.object(forKey: "ipAddress") as! String
+            } else {
+                //
+            }
+        })
+    
     }
 
     @IBAction func loginButtonTapped(_ sender: Any) {
@@ -382,9 +393,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                 }
             }
         }
-
-        
     }
-
+    
 }
 
