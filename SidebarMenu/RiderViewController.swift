@@ -1,7 +1,3 @@
-//
-//  RiderViewController.swift
-
-
 import UIKit
 import MapKit
 import EventKit
@@ -11,11 +7,11 @@ import CoreLocation
 
 
 class RiderViewController: UIViewController,
-                        MKMapViewDelegate,
-                        CLLocationManagerDelegate,
-                        UITableViewDataSource,
-                        UITableViewDelegate,
-                        UITextFieldDelegate  {
+    MKMapViewDelegate,
+    CLLocationManagerDelegate,
+    UITableViewDataSource,
+    UITableViewDelegate,
+UITextFieldDelegate  {
     
     // Firebase handles
     var ref:DatabaseReference?
@@ -45,23 +41,23 @@ class RiderViewController: UIViewController,
         
         let preferences = UserDefaults.standard
         patientId = preferences.object(forKey: "userid") as! String
-
+        
         requestAccessToCalendar()
         requestAccessToLocation()
-
+        
         // add shadow
         dropShadow(thisObject: requestARide)
         dropShadow(thisObject: fromTextField)
         dropShadow(thisObject: toTextField)
         dropShadow(thisObject: whenTextField)
-
- 
+        
+        
         // firebase reference
         ref = Database.database().reference()
         
         // reveal controller
         if revealViewController() != nil {
-
+            
             //revealViewController().rearViewRevealWidth = 150
             menuButton.target = revealViewController()
             menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
@@ -72,7 +68,7 @@ class RiderViewController: UIViewController,
             
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
-
+        
         // Textfield
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         
@@ -93,26 +89,26 @@ class RiderViewController: UIViewController,
     
     @IBAction func callAnUber(_ sender: AnyObject) {
         
-            // Check for empty fields
-            if (fromTextField.text!.isEmpty) {
-                animateMe(textField: fromTextField)
-                return
-            } else if (toTextField.text!.isEmpty){
-                animateMe(textField: toTextField)
-                return
-            } else if (whenTextField.text!.isEmpty){
-                animateMe(textField: whenTextField)
-                return
-            } else {
-                //
-            }
+        // Check for empty fields
+        if (fromTextField.text!.isEmpty || fromTextField.text!.characters.count < 10) {
+            animateMe(textField: fromTextField)
+            return
+        } else if (toTextField.text!.isEmpty  || toTextField.text!.characters.count < 10){
+            animateMe(textField: toTextField)
+            return
+        } else if (whenTextField.text!.isEmpty){
+            animateMe(textField: whenTextField)
+            return
+        } else {
+            //
+        }
         
         //Begin confirm
         let optionMenu = UIAlertController(title: nil, message: "Are you sure?", preferredStyle: .actionSheet)
         let scheduleAction = UIAlertAction(title: "Schedule this ride", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             
-        
+            
             /* start confirm */
             
             // Date time
@@ -127,107 +123,122 @@ class RiderViewController: UIViewController,
             let patientId = self.patientId
             
             let datetimekey =  whenPickup.replacingOccurrences(of: "/", with: "")
-
+            
             var scheduledTrips = [:] as [String : Any]
-
+            
             var fromLongitude = 0.0
             var fromLatitude = 0.0
-
-            if (self.locationManager.location?.coordinate.longitude != nil) {
-                fromLongitude = (self.locationManager.location?.coordinate.longitude)!
-                fromLatitude = (self.locationManager.location?.coordinate.latitude)!
-            }
-            
             var toLongitude = 0.0
             var toLatitude = 0.0
             
-            let Geocoder = CLGeocoder()
-            Geocoder.geocodeAddressString(toLocation) {
-                placemarks, error in
-                let toPlacemark = placemarks!.first
-                toLatitude = toPlacemark!.location!.coordinate.latitude
-                toLongitude = toPlacemark!.location!.coordinate.longitude
-            
-                print(toLatitude)
-                print(toLongitude)
-                
-                // if current location, then use coordinates, else use from address
-                scheduledTrips = ["\(self.fromString)": fromLocation,
-                              "FromLongitude" : fromLongitude,
-                              "FromLatitude":  fromLatitude,
-                              "\(self.toString)": toLocation,
-                              "ToLongitude" : toLongitude,
-                              "ToLatitude":  toLatitude,
-                              "\(self.whenString)": whenPickup,
-                              "DateAdded" : todaysDate]
-            
-                let scheduledTripUpdates = ["/scheduledtrips/\(patientId)/\(datetimekey)/": scheduledTrips]
-            
-                self.ref?.updateChildValues(scheduledTripUpdates)
-                // [END write_fan_out]
-            
-                // save from trips to firebase
-                if self.fromTextField.text != "Current Location" {
-                    let savedFromTripsKey = fromLocation.hash
-                    let savedFromTrips = ["\(self.fromString)": fromLocation]
-                    let savedFromTripUpdates = ["/savedtrips/\(patientId)/\(self.fromString)/\(savedFromTripsKey)": savedFromTrips]
-                    self.ref?.updateChildValues(savedFromTripUpdates)
-                }
-            
-                // save to trips to firebase
-                let savedToTripsKey = toLocation.hash
-                let savedToTrips = ["\(self.toString)": toLocation]
-                let savedToTripUpdates = ["/savedtrips/\(patientId)/\(self.toString)/\(savedToTripsKey)": savedToTrips]
-                self.ref?.updateChildValues(savedToTripUpdates)
-                /* end confirm */
-                
-                // stop transmitting location
-                self.locationManager.stopUpdatingLocation()
-            
-                // Add to calendar
-                var calendarMessage:String = ""
-                var saveCalendar:Bool = false
-                
-                //Retreive preferences
-                let preferences = UserDefaults.standard
-                if preferences.object(forKey: "saveCalendar") != nil {
-                    saveCalendar = preferences.object(forKey: "saveCalendar") as! Bool
-                    if (saveCalendar) {
-                        calendarMessage = "The event has been added to your calendar"
-                    
-                        let myDate = whenPickup
-                        let myDateFormatter = DateFormatter()
-                        myDateFormatter.dateFormat = "MM/dd/yy h:mm a"
-                        myDateFormatter.timeZone = TimeZone(secondsFromGMT: TimeZone.current.secondsFromGMT())
-                        
-                        let dateString = myDateFormatter.date(from: myDate)
-                        self.addEventToCalendar(title: "Ride Schedule to \(toLocation)", description: "\(scheduledTripUpdates)", startDate: dateString!, endDate: dateString!)
 
-                    } else {
-                        calendarMessage = "Calendar access not granted. The event will NOT be added to your calendar"
-                    }
-                    //print("test:\(calendarMessage)")
+            //This is a poor structure since this is being called asynchronusly
+            self.forwardGeocoding(address: fromLocation, completion: { success, coordinate in
+                if success {
+                    fromLatitude = coordinate.latitude
+                    fromLongitude = coordinate.longitude
+                    print("From:\(fromLatitude),\(fromLongitude)")
+                    
+                    self.forwardGeocoding(address: toLocation, completion: { success, coordinate in
+                        if success {
+                            toLatitude = coordinate.latitude
+                            toLongitude = coordinate.longitude
+                            
+                            print("To:\(toLatitude),\(toLongitude)")
+                            
+                            // if current location, then use coordinates, else use from address
+                            scheduledTrips = ["\(self.fromString)": fromLocation,
+                                              "FromLongitude" : fromLongitude,
+                                              "FromLatitude":  fromLatitude,
+                                              "\(self.toString)": toLocation,
+                                              "ToLongitude" : toLongitude,
+                                              "ToLatitude":  toLatitude,
+                                              "\(self.whenString)": whenPickup,
+                                              "DateAdded" : todaysDate]
+                            
+                            let scheduledTripUpdates = ["/scheduledtrips/\(patientId)/\(datetimekey)/": scheduledTrips]
+                            
+                            self.ref?.updateChildValues(scheduledTripUpdates)
+                            // [END write_fan_out]
+                            
+                            // save from trips to firebase
+                            if self.fromTextField.text != "Current Location" {
+                                let savedFromTripsKey = fromLocation.hash
+                                let savedFromTrips = ["\(self.fromString)": fromLocation]
+                                let savedFromTripUpdates = ["/savedtrips/\(patientId)/\(self.fromString)/\(savedFromTripsKey)": savedFromTrips]
+                                self.ref?.updateChildValues(savedFromTripUpdates)
+                            }
+                            
+                            // save to trips to firebase
+                            let savedToTripsKey = toLocation.hash
+                            let savedToTrips = ["\(self.toString)": toLocation]
+                            let savedToTripUpdates = ["/savedtrips/\(patientId)/\(self.toString)/\(savedToTripsKey)": savedToTrips]
+                            self.ref?.updateChildValues(savedToTripUpdates)
+                            /* end confirm */
+                            
+                            // stop transmitting location
+                            self.locationManager.stopUpdatingLocation()
+                            
+                            // Add to calendar
+                            var calendarMessage:String = ""
+                            var saveCalendar:Bool = false
+                            
+                            //Retreive preferences
+                            let preferences = UserDefaults.standard
+                            if preferences.object(forKey: "saveCalendar") != nil {
+                                saveCalendar = preferences.object(forKey: "saveCalendar") as! Bool
+                                if (saveCalendar) {
+                                    calendarMessage = "The event has been added to your calendar"
+                                    
+                                    let myDate = whenPickup
+                                    let myDateFormatter = DateFormatter()
+                                    myDateFormatter.dateFormat = "MM/dd/yy h:mm a"
+                                    myDateFormatter.timeZone = TimeZone(secondsFromGMT: TimeZone.current.secondsFromGMT())
+                                    
+                                    let dateString = myDateFormatter.date(from: myDate)
+                                    self.addEventToCalendar(title: "Ride Schedule to \(toLocation)", description: "\(scheduledTripUpdates)", startDate: dateString!, endDate: dateString!)
+                                    
+                                } else {
+                                    calendarMessage = "Calendar access not granted. The event will NOT be added to your calendar"
+                                }
+                                //print("test:\(calendarMessage)")
+                            }
+                            // End add to calendar
+                            
+                            // Log to firebase
+                            scheduledTrips["Acton"] = "insert"
+                            firebaseLog(userID: patientId, logToSave: scheduledTrips)
+                            
+                            // Display confirmation
+                            self.displayAlert(title: "Ride Confirmation", message: "A ride request has been submitted for \(whenPickup) from \(fromLocation) to \(toLocation).\n\n\(calendarMessage)", userid: patientId)
+                            
+                            // clear textfields
+                            self.fromTextField.text = ""
+                            self.toTextField.text = ""
+                            self.whenTextField.text = ""
+                            
+                            //segue into Scheduled Trips VC
+                            //self.present( UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ScheduledTripsVC") as UIViewController, animated: true, completion: nil)
+                        } else {
+                            print("to coordinates is incorrect")
+                            // Display confirmation
+                            self.displayAlert(title: "Error!", message: "The destination address returned invalid coordimates. Please enter a valid address.", userid: patientId)
+                            
+                        }
+                        
+                    })
+                    
+                } else {
+                    print("from coordinates is incorrect")
+                    // Display confirmation
+                    self.displayAlert(title: "Error!", message: "The pickup address returned invalid coordimates. Please enter a valid address.", userid: patientId)
                 }
-                // End add to calendar
                 
-                // Log to firebase
-                scheduledTrips["Acton"] = "insert"
-                firebaseLog(userID: patientId, logToSave: scheduledTrips)
+            })
             
-                // Display confirmation
-                self.displayAlert(title: "Ride Confirmation", message: "A ride request has been submitted for \(whenPickup) from \(fromLocation) to \(toLocation).\n\n\(calendarMessage)")
-            
-                // clear textfields
-                self.fromTextField.text = ""
-                self.toTextField.text = ""
-                self.whenTextField.text = ""
-            
-                //segue into Scheduled Trips VC
-                //self.present( UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ScheduledTripsVC") as UIViewController, animated: true, completion: nil)
-            }
         })
         //
-    
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
             (alert: UIAlertAction!) -> Void in
             print("Cancelled")
@@ -239,7 +250,7 @@ class RiderViewController: UIViewController,
         //End confirm
         
     }
-
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         if let location = manager.location?.coordinate {
@@ -251,16 +262,16 @@ class RiderViewController: UIViewController,
             self.mapView.showsUserLocation = true
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     // The sample values
     var values = [""]
-
+    
     let cellReuseIdentifier = "cell"
     var editField = ""
     
@@ -279,11 +290,11 @@ class RiderViewController: UIViewController,
     
     @IBAction func fromTextFieldChanged(_ sender: Any) {
         tableView.isHidden = true
-
+        
     }
     @IBAction func toTextFieldChanged(_ sender: Any) {
         tableView.isHidden = true
-
+        
     }
     
     @IBAction func whenTextFieldChanged(_ sender: Any) {
@@ -298,7 +309,7 @@ class RiderViewController: UIViewController,
         // Alternatively can set to another size, such as using row heights and setting frame
         heightConstraint.constant = tableView.contentSize.height
     }
-
+    
     
     // Manage keyboard and tableView visibility
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
@@ -314,12 +325,12 @@ class RiderViewController: UIViewController,
             whenTextField.endEditing(true)
             tableView.isHidden = true
         }
-
+        
         whenTextField.isEnabled = true
         view.endEditing(true)
         
     }
-
+    
     
     // Toggle the tableView visibility when click on textField
     func fromTextFieldActive() {
@@ -329,7 +340,7 @@ class RiderViewController: UIViewController,
         
         Database.database().reference().child("savedtrips/" + patientId + "/" + fromString).observeSingleEvent(of: .value, with: { (snapshot) in
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
-            for snap in result {
+                for snap in result {
                     if let postDict = snap.value as? Dictionary<String, AnyObject> {
                         self.values.append(postDict["\(self.fromString)"]! as! String)
                     }
@@ -344,12 +355,12 @@ class RiderViewController: UIViewController,
         })
         
         editField = "fromTextField"
-}
-
+    }
+    
     func toTextFieldActive() {
- 
+        
         self.values.removeAll()
-
+        
         Database.database().reference().child("savedtrips/" + patientId + "/" + toString).observeSingleEvent(of: .value, with: { (snapshot) in
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
                 for snap in result {
@@ -366,13 +377,13 @@ class RiderViewController: UIViewController,
         
         editField = "toTextField"
     }
-
+    
     func whenTextFieldActive() {
         whenTextField.resignFirstResponder()
         showDatePicker()
         whenTextField.isEnabled = false
     }
-
+    
     // MARK: UITextFieldDelegate
     func textFieldDidEndEditing(_ textField: UITextField) {
         // TODO: Your app can do something when textField finishes editing
@@ -385,7 +396,7 @@ class RiderViewController: UIViewController,
         whenTextField.resignFirstResponder()
         return true
     }
-
+    
     func showDatePicker() {
         let min = Date()
         let max = Date().addingTimeInterval(60 * 60 * 24 * 30)
@@ -455,15 +466,19 @@ class RiderViewController: UIViewController,
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 0.0
     }
+    
+    
+    func displayAlert(title: String, message: String, userid: String) {
         
-    func displayAlert(title: String, message: String) {
+        // log to firebase
+        firebaseLog(userID: userid, logToSave: ["Message": message])
         
         let alertcontroller = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertcontroller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alertcontroller, animated: true, completion: nil)
         
     }
-
+    
     func addEventToCalendar(title: String, description: String?, startDate: Date, endDate: Date, completion: ((_ success: Bool, _ error: NSError?) -> Void)? = nil) {
         let eventStore = EKEventStore()
         
@@ -475,7 +490,7 @@ class RiderViewController: UIViewController,
                 event.endDate = endDate
                 event.notes = description
                 event.calendar = eventStore.defaultCalendarForNewEvents
-        
+                
                 do {
                     try eventStore.save(event, span: .thisEvent)
                 } catch let e as NSError {
@@ -488,12 +503,12 @@ class RiderViewController: UIViewController,
             }
         })
     }
-
+    
     func requestAccessToCalendar() {
         let eventStore = EKEventStore()
         
         let preferences = UserDefaults.standard
-
+        
         eventStore.requestAccess(to: .event, completion: { (granted, error) in
             if (granted) && (error == nil) {
                 preferences.set(true, forKey: "saveCalendar")
@@ -528,12 +543,35 @@ class RiderViewController: UIViewController,
         case .authorizedAlways, .authorizedWhenInUse:
             //Log action
             firebaseLog(userID: patientId, logToSave: ["Action": "grant location"])
-
+            
         }
         
         locationManager.startUpdatingLocation()
         
         return
+    }
+    
+    func forwardGeocoding (address: String, completion: @escaping (Bool, CLLocationCoordinate2D) -> () ) {
+        
+        if (address == "Current Location") {
+            completion(true, CLLocationCoordinate2D(latitude: (self.locationManager.location?.coordinate.latitude)!, longitude: (self.locationManager.location?.coordinate.longitude)!))
+        }
+        
+        let Geocoder = CLGeocoder()
+        Geocoder.geocodeAddressString(address) { placemarks, error in
+            
+            if error != nil {
+                print(error?.localizedDescription as Any)
+                completion(false, CLLocationCoordinate2D(latitude: 0, longitude: 0))
+
+            } else {
+                if placemarks!.count > 0 {
+                    let placemark = placemarks![0] as CLPlacemark
+                    let location = placemark.location
+                    completion(true, (location?.coordinate)!)
+                }
+            }
+        }
     }
     
 }
