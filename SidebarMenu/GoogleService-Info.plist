@@ -7,21 +7,21 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>891755266314-dbbjdd9vpofsbk9622021olpqhc07e40.apps.googleusercontent.com</string>
+	<string>1079014687121-k2ki5bg6ooe7agd44kfhf6331mmnmb26.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.891755266314-dbbjdd9vpofsbk9622021olpqhc07e40</string>
+	<string>com.googleusercontent.apps.1079014687121-k2ki5bg6ooe7agd44kfhf6331mmnmb26</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCCU7QQVahsrWl565gYl--nWyDL3FO6SbY</string>
+	<string>AIzaSyDVByKOA1UPjSnSnnHuGgloP04EJ1iqH-o</string>
 	<key>GCM_SENDER_ID</key>
-	<string>891755266314</string>
+	<string>1079014687121</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.GamyMalasarte.pushmynotifs</string>
+	<string>com.GamyMalasarte.Zundo</string>
 	<key>PROJECT_ID</key>
-	<string>pushmynotifs-ffac4</string>
+	<string>zundo-ebd9f</string>
 	<key>STORAGE_BUCKET</key>
-	<string>pushmynotifs-ffac4.appspot.com</string>
+	<string>zundo-ebd9f.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<true/>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -33,8 +33,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true/>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:891755266314:ios:78c9132ead2e2419</string>
+	<string>1:1079014687121:ios:61bdccb962331606</string>
 	<key>DATABASE_URL</key>
-	<string>https://pushmynotifs-ffac4.firebaseio.com</string>
+	<string>https://zundo-ebd9f.firebaseio.com</string>
 </dict>
 </plist>

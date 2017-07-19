@@ -58,7 +58,6 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
                 for snap in result {
                     self.pickerData.append(snap.value! as! String)
-                    print(snap.key)
                 }
                 self.phcpPickerView.reloadAllComponents()
             }
