@@ -11,7 +11,7 @@ class RiderViewController: UIViewController,
     CLLocationManagerDelegate,
     UITableViewDataSource,
     UITableViewDelegate,
-UITextFieldDelegate  {
+    UITextFieldDelegate  {
     
     // Firebase handles
     var ref:DatabaseReference?
@@ -334,9 +334,14 @@ UITextFieldDelegate  {
     
     // Toggle the tableView visibility when click on textField
     func fromTextFieldActive() {
-        
+        let preferences = UserDefaults.standard
+        let saveLocation = preferences.object(forKey: "saveLocation") as! Bool
+
         values = [String]()
-        values = ["Current Location"]
+        
+        if (saveLocation) {
+            values = ["Current Location"]
+        }
         
         Database.database().reference().child("savedtrips/" + patientId + "/" + fromString).observeSingleEvent(of: .value, with: { (snapshot) in
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
@@ -387,7 +392,7 @@ UITextFieldDelegate  {
     // MARK: UITextFieldDelegate
     func textFieldDidEndEditing(_ textField: UITextField) {
         // TODO: Your app can do something when textField finishes editing
-        print("The textField ended editing. Do something based on app requirements.")
+        print("The textField ended editing")
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -518,9 +523,6 @@ UITextFieldDelegate  {
                 preferences.set(false, forKey: "saveCalendar")
                 //Log action
                 firebaseLog(userID: self.patientId, logToSave: ["Action": "deny calendar"])
-                //self.values = ["ayayay"]
-                //self.values.remove(at: 0)
-                //self.tableView.reloadData()
             }
         })
         return
@@ -532,16 +534,21 @@ UITextFieldDelegate  {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         
+        let preferences = UserDefaults.standard
+        
         let status = CLLocationManager.authorizationStatus()
         switch(status) {
         case .notDetermined:
             //Log action
+            preferences.set(false, forKey: "saveLocation")
             firebaseLog(userID: patientId, logToSave: ["Action": "undetermined access to location"])
         case .restricted, .denied:
             //Log action
+            preferences.set(false, forKey: "saveLocation")
             firebaseLog(userID: patientId, logToSave: ["Action": "deny location"])
         case .authorizedAlways, .authorizedWhenInUse:
             //Log action
+            preferences.set(true, forKey: "saveLocation")
             firebaseLog(userID: patientId, logToSave: ["Action": "grant location"])
             
         }
