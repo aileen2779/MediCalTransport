@@ -44,8 +44,8 @@ class RiderViewController: UIViewController,
         patientId = preferences.object(forKey: "userid") as! String
         ipAddress = preferences.object(forKey: "ipAddress") as! String
         
-        requestAccessToCalendar()
         requestAccessToLocation()
+        requestAccessToCalendar()
         
         // add shadow
         dropShadow(thisObject: requestARide)
@@ -198,7 +198,7 @@ class RiderViewController: UIViewController,
                                     myDateFormatter.timeZone = TimeZone(secondsFromGMT: TimeZone.current.secondsFromGMT())
                                     
                                     let dateString = myDateFormatter.date(from: myDate)
-                                    self.addEventToCalendar(title: "Ride Schedule to \(toLocation)", description: "\(scheduledTripUpdates)", startDate: dateString!, endDate: dateString!)
+                                    self.addEventToCalendar(title: "Ride Schedule to \(toLocation)", description: "\(scheduledTrips)", startDate: dateString!, endDate: dateString!)
                                     
                                 } else {
                                     calendarMessage = "Calendar access not granted. The event will NOT be added to your calendar"

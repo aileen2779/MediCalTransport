@@ -9,7 +9,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     @IBOutlet var menuButton:UIBarButtonItem!
     @IBOutlet var extraButton:UIBarButtonItem!
     
-    var myBGColor = CONST_BG_COLOR
+    var myBGColor = CONST_BGCOLOR
     
     @IBOutlet weak var tableView: UITableView!
     

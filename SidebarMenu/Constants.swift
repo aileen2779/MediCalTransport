@@ -8,7 +8,7 @@ import FirebaseDatabase
 
 
 
-var CONST_BG_COLOR:UIColor = UIColor(red:0.49, green:0.73, blue:0.71, alpha:1.0)
+let CONST_BGCOLOR:UIColor = UIColor(red:0.49, green:0.73, blue:0.71, alpha:1.0)
 var CONST_DOMAIN = "@zundo.com"
 let CONST_IP_URL = "https://api.ipify.org?format=json"
 

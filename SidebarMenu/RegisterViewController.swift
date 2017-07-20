@@ -31,6 +31,8 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = CONST_BGCOLOR
 
         // Store ip address
         let preferences = UserDefaults.standard

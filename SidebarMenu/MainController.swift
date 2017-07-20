@@ -24,13 +24,15 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
     
     var ipAddress:String = ""
     var login_session:String = ""
-    
+
     // Firebase handles
     var ref:DatabaseReference?
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        view.backgroundColor = CONST_BGCOLOR
         
         // hide the login stack view initially
         loginStackView.isHidden = true
