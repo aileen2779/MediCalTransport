@@ -1,11 +1,3 @@
-//
-//  ScheduledTripsDetailViewController.swift
-//  SidebarMenu
-//
-//  Created by Gamy Malasarte on 7/3/17.
-//
-//
-
 import UIKit
 import MapKit
 import CoreLocation
@@ -33,13 +25,13 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("From Address:\(location.fromAddress)")
-        print("To Address: \(location.toAddress)")
         
         fromLongitude = location.fromLongitude
         fromLatitude = location.fromLatitude
         toLongitude = location.toLongitude
         toLatitude = location.toLatitude
+        
+        print("\(fromLongitude),\(fromLatitude),\(toLongitude),\(toLatitude)")
         
         
         self.displayMap()
@@ -110,7 +102,7 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate {
          }
          
          let route = response.routes[0]
-         print("test:\(route)")
+
          self.mapView.add((route.polyline), level: MKOverlayLevel.aboveRoads)
          
          let rect = route.polyline.boundingMapRect
