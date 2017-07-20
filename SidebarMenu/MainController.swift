@@ -22,10 +22,9 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
     // Fetch constants
     var myDomain = CONST_DOMAIN
     
-    var ipAddress = ""
+    var ipAddress:String = ""
     var login_session:String = ""
-    var errorMessage = ""
-
+    
     // Firebase handles
     var ref:DatabaseReference?
     
@@ -330,31 +329,6 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         })
     }
     
-    func activityIndicatorStartAsync() {
-        var activityIndicator = UIActivityIndicatorView()
-        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
-        activityIndicator.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-        let transform: CGAffineTransform = CGAffineTransform(scaleX: 2, y: 2)
-        activityIndicator.transform = transform
-        activityIndicator.center = self.view.center
-        activityIndicator.startAnimating()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            activityIndicator.stopAnimating()
-        }
-        
-        self.view.addSubview(activityIndicator)
-    }
-    
-    func activityIndicatorStartNoAsync() {
-        var activityIndicator = UIActivityIndicatorView()
-        activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
-        activityIndicator.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-        let transform: CGAffineTransform = CGAffineTransform(scaleX: 2, y: 2)
-        activityIndicator.transform = transform
-        activityIndicator.center = self.view.center
-        activityIndicator.startAnimating()
-        self.view.addSubview(activityIndicator)
-    }
 
     func displayAlert(title: String, message: String, userid: String) {
         
