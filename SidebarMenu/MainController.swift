@@ -371,7 +371,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         
         let preferences = UserDefaults.standard
         
-        let url = "https://api.ipify.org?format=json"
+        let url = CONST_IP_URL
         
         if let url = NSURL(string: url) {
             if let data = try? Data(contentsOf: url as URL) {
