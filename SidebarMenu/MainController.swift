@@ -103,20 +103,20 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
 
         // show activity activityIndicator
         let randomNum:UInt32 = arc4random_uniform(30) + 1 // generates random number between (0 and 30) + 1 each representing an animation
-        startAnimating(CGSize(width: 40, height: 40), message: "Loading...", type: NVActivityIndicatorType(rawValue: Int(randomNum))!)
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
-            NVActivityIndicatorPresenter.sharedInstance.setMessage("Authenticating...")
+        startAnimating(CGSize(width: 40, height: 40), message: "Authenticating...", type: NVActivityIndicatorType(rawValue: Int(randomNum))!)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {
+            NVActivityIndicatorPresenter.sharedInstance.setMessage("Loading...")
         }
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) {
             self.stopAnimating()
         }
         
-        delayWithSeconds(1) {
+        delayWithSeconds(0.5) {
             self.login_now(userid:self.loginTextField.text!, password: self.passwordTextField.text!)
         }
         
     }
-    
+
     
     @IBAction func touchIdButtonTapped(_ sender: Any) {
         touchAuthenticateUser()
@@ -160,10 +160,12 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         
         loginTextField.endEditing(true)
         passwordTextField.endEditing(true)
+        let loginID = userid+myDomain
         
         // Authenticate Firebase
-        Auth.auth().signIn(withEmail: userid+myDomain, password: password) { (user, error) in
+        Auth.auth().signIn(withEmail: loginID, password: password) { (user, error) in
             
+            print(Auth.auth().currentUser?.email as Any)
             // Authenticate database
             if error == nil {
                 let uid = user!.uid
@@ -190,13 +192,14 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                                     
                                 let preferences = UserDefaults.standard
                                 preferences.set(self.login_session, forKey: "session")
-                                preferences.set(userid, forKey: "userid")
+                                preferences.set(userid, forKey: "userID")
+                                preferences.set(loginID, forKey: "loginID")
                                 preferences.set(password, forKey: "password")
                                 preferences.set(true, forKey: "touchIdEnrolled")
                                 preferences.set(false, forKey: "saveLocation")
                                 preferences.set(false, forKey: "saveCalendar")
                                 preferences.set(self.ipAddress, forKey: "ipAddress")
-                                preferences.set(uid, forKey: "uid")
+                                preferences.set(uid, forKey: "uID")
                                 
                                 //Log action
                                 firebaseLog(userID: uid, logToSave: ["Action" : "login", "IPAddress" : self.ipAddress])
@@ -215,7 +218,6 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
             } else {
                 
                 if let errCode = AuthErrorCode(rawValue: (error!._code)) {
-                    print("test:\(errCode.rawValue)")
                 
                     let preferences = UserDefaults.standard
 
@@ -233,7 +235,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                         
                         //self.loginTextField.text = ""
                         self.loginTextField.becomeFirstResponder()
-                        preferences.set("", forKey: "userid")
+                        preferences.set("", forKey: "userID")
                         preferences.set("", forKey: "password")
 
                     default:
@@ -258,8 +260,8 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
     func loginToDo() {
         let preferences = UserDefaults.standard
         
-        if preferences.object(forKey: "userid") != nil {
-            loginTextField.text = (preferences.object(forKey: "userid") as! String)
+        if preferences.object(forKey: "userID") != nil {
+            loginTextField.text = (preferences.object(forKey: "userID") as! String)
             passwordTextField.text = (preferences.object(forKey: "password") as! String)
         }
         
@@ -277,7 +279,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         //login_button.isEnabled = true
 
         loginTextField.leftViewMode = UITextFieldViewMode.always
-        loginTextField.leftView = UIImageView(image: UIImage(named: "userid"))
+        loginTextField.leftView = UIImageView(image: UIImage(named: "userID"))
 
         passwordTextField.leftViewMode = UITextFieldViewMode.always
         passwordTextField.leftView = UIImageView(image: UIImage(named: "password"))
@@ -286,17 +288,63 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
     
     func check_session() {
         
+        //This function is used to bypass the login screen if the user has been previously logged in
+        
+        //Start activity window
+        startAnimating(CGSize(width: 40, height: 40), message: "Authenticating...", type: NVActivityIndicatorType(rawValue: 6)!)
+        
         let post_data: NSDictionary = NSMutableDictionary()
         post_data.setValue(login_session, forKey: "session")
         
         let preferences = UserDefaults.standard
         preferences.set(true, forKey: "touchIdEnrolled")
-        let uid = preferences.object(forKey: "uid") as! String
+        let uid = preferences.object(forKey: "uID") as! String
+        let userid = preferences.object(forKey: "userID") as! String
+        let password = preferences.object(forKey: "password") as! String
+        let loginID = preferences.object(forKey: "loginID") as! String
         
+        Auth.auth().signIn(withEmail: loginID, password: password) { (user, error) in
+            if error == nil {
+                print("Logged In")
+                firebaseLog(userID: uid, logToSave: ["Action" : "redirect session", "IPAddress" : self.ipAddress])
+            
+                DispatchQueue.main.async(execute: self.loginDone)
+            } else {
+                
+                if let errCode = AuthErrorCode(rawValue: (error!._code)) {
+                   let preferences = UserDefaults.standard
+                    switch (errCode.rawValue) {
+                    case 17009:
+                        print("The password is invalid or the user does not have a password.")
+                        self.passwordTextField.text = ""
+                        self.passwordTextField.becomeFirstResponder()
+                        preferences.set("", forKey: "password")
+                    case 17011:
+                        print("There is no user record corresponding to this identifier. The user may have been deleted.")
+                    default:
+                        print("\(errCode.rawValue): Handle default situation")
+                    }
+                    
+                    preferences.removeObject(forKey: "touchIdEnrolled")
+                    preferences.removeObject(forKey: "session")
+                    
+                }
+            
+                self.stopAnimating()
+                
+                //Tells the user that there is an error and then gets firebase to tell them the error
+                self.displayAlert(title: "Alert!", message: "\(userid):\((error?.localizedDescription)!)",  uid: uid)
+
+                DispatchQueue.main.async(execute: self.loginToDo)
+            }
+        }
+
+        // clear activity window
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+            self.stopAnimating()
+        }
+
         //Log action
-        firebaseLog(userID: uid, logToSave: ["Action" : "redirect session", "IPAddress" : ipAddress])
-        
-        DispatchQueue.main.async(execute: loginDone)
     }
     
     func touchAuthenticateUser() {
@@ -308,10 +356,9 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                     
                 //logging
                 let preferences = UserDefaults.standard
-    
-                firebaseLog(userID: preferences.object(forKey: "uid") as! String, logToSave: ["Message": "Touch ID login", "IPAddress": self.ipAddress])
+                firebaseLog(userID: preferences.object(forKey: "uID") as! String, logToSave: ["Message": "Touch ID login", "IPAddress": self.ipAddress])
+                self.login_now(userid: preferences.object(forKey: "userID") as! String, password: preferences.object(forKey: "password") as! String)
                     
-                self.loginDone()
             })
         }, failure: { (evaluationError: NSError) -> () in
             switch evaluationError.code {

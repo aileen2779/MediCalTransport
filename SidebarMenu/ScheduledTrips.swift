@@ -23,7 +23,7 @@ class ScheduledTrips: NSObject {
     
     init?(snapshot: DataSnapshot) {
         guard let dict = snapshot.value as? [String: String] else { return nil }
-        guard let uid  = dict["uid"]  else { return nil }
+        guard let uid  = dict["uID"]  else { return nil }
         guard let patientid = dict["patientid"] else { return nil }
         guard let fromlocation = dict["from"] else { return nil }
         guard let tolocation = dict["to"] else { return nil }

@@ -243,8 +243,6 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         //End confirm
         
         //createAnAccountButton.isEnabled = true
-
-
     }
     
     
@@ -288,16 +286,14 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         super.touchesBegan(touches, with: event)
     }
 
-    
     func displayAlert(title: String, message: String) {
         
         let preferences = UserDefaults.standard
-        firebaseLog(userID: preferences.object(forKey: "uid") as! String, logToSave: ["UserID": preferences.object(forKey: "userid"), "Message": message])
+        firebaseLog(userID: preferences.object(forKey: "uID") as! String, logToSave: ["UserID": preferences.object(forKey: "userID"), "Message": message])
         
         let alertcontroller = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertcontroller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alertcontroller, animated: true, completion: nil)
-        
     }
 
     
