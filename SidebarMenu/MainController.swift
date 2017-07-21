@@ -216,12 +216,20 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                 //End database
 
             } else {
-                
+
+                //Get a new uID to use in the log file.
+                let preferences = UserDefaults.standard
+                var myLoginID:String = ""
+                if preferences.object(forKey: "loginID") == nil {
+                    // this means i have started the app from scratch and i don't have a uid stored
+                    myLoginID = "0000000000"
+                } else {
+                    // use the stored uID in the log file
+                    myLoginID = (preferences.object(forKey: "uID") as! String)
+                }
+
                 if let errCode = AuthErrorCode(rawValue: (error!._code)) {
                 
-                    let preferences = UserDefaults.standard
-
-                    
                     switch (errCode.rawValue) {
                     case 17009:
                         print("The password is invalid or the user does not have a password.")
@@ -238,6 +246,10 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                         preferences.set("", forKey: "userID")
                         preferences.set("", forKey: "password")
 
+                    case 17005:
+                        print("User account has been disabled by an administrator")
+                        
+
                     default:
                         print("\(errCode.rawValue): Handle default situation")
                     }
@@ -245,9 +257,9 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                     preferences.removeObject(forKey: "touchIdEnrolled")
                     
                 }
-            
+                
                 //Tells the user that there is an error and then gets firebase to tell them the error
-                self.displayAlert(title: "Alert!", message: "\(userid):\((error?.localizedDescription)!)",  uid: "0000000000")
+                self.displayAlert(title: "Alert!", message: "\(userid):\((error?.localizedDescription)!)",  uid: myLoginID)
             }
         }
     }
@@ -356,7 +368,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                     
                 //logging
                 let preferences = UserDefaults.standard
-                firebaseLog(userID: preferences.object(forKey: "uID") as! String, logToSave: ["Message": "Touch ID login", "IPAddress": self.ipAddress])
+                firebaseLog(userID: preferences.object(forKey: "uID") as! String, logToSave: ["Message": "Touch ID activated", "IPAddress": self.ipAddress])
                 self.login_now(userid: preferences.object(forKey: "userID") as! String, password: preferences.object(forKey: "password") as! String)
                     
             })
@@ -375,6 +387,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
             default:
                 print("Authentication failed")
             }
+            
             self.loginToDo()
         })
     }
