@@ -16,10 +16,11 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     var deletePostDataIndexPath: IndexPath? = nil
     
     var ref:DatabaseReference?
-    var databaseHandle:DatabaseHandle?
+    //var databaseHandle:DatabaseHandle?
     
     var patientId:String = ""
     var ipAddress:String = ""
+    var uid:String = ""
     
     var root:String = "scheduledtrips"
     
@@ -39,6 +40,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         let preferences = UserDefaults.standard
         patientId = preferences.object(forKey: "userid") as! String
         ipAddress = preferences.object(forKey: "ipAddress") as! String
+        uid       = preferences.object(forKey: "uid") as! String
         
         self.title = "Scheduled Rides"
 
@@ -57,7 +59,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         }
         
         // Retrieve the posts and listen for changes
-        Database.database().reference().child( "\(root)/\(patientId)" ).observe(.childAdded, with: { (snapshot) in
+        Database.database().reference().child( "\(root)/\(uid)" ).observe(.childAdded, with: { (snapshot) in
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
                 
                 let keyString:String = snapshot.key
@@ -70,6 +72,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 var toLatitude:Double = 0.0
                 var pickUpDate:String = ""
                 var dateAdded:String = ""
+                var rideCompleted:Bool = false
 
                 for snap in result {
                     if (snap.key == "PatientID") {
@@ -102,9 +105,13 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                     if (snap.key == "DateAdded") {
                         dateAdded = snap.value as! String
                     }
+                    if (snap.key == "Completed") {
+                        rideCompleted = snap.value as! Bool
+                    }
                 }
 
-                let location = LocationClass(key: keyString,
+                if !(rideCompleted) {
+                    let location = LocationClass(key: keyString,
                                              patientID: patientID,
                                              fromAddress: fromAddress,
                                              fromLongitude: fromLongitude,
@@ -115,8 +122,8 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                                              pickUpDate: pickUpDate,
                                              dateAdded: dateAdded)
 
-                self.objectArray.append(location)
-                
+                    self.objectArray.append(location)
+                }
             } else {
                 print("Error retrieving Firebase data") // snapshot value is nil
             }
@@ -124,7 +131,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         })
 
         // Retrieve the posts and listen for changes
-        Database.database().reference().child( "\(root)/\(patientId)" ).observe(.childRemoved, with: { (snapshot) in
+        Database.database().reference().child( "\(root)/\(uid)" ).observe(.childRemoved, with: { (snapshot) in
             if snapshot.children.allObjects is [DataSnapshot] {
                 let removedID = snapshot.key // "01012011 11:59 PM"
                 var x = 0
@@ -261,7 +268,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
 
             
             //delete from firebase
-            firebaseDelete(childIWantToRemove: "scheduledtrips/\(patientId)/\(id)")
+            firebaseDelete(childIWantToRemove: "scheduledtrips/\(uid)/\(id)")
             
             // Log to firebase
             firebaseLog(userID: patientId, logToSave: ["Action" : "delete",

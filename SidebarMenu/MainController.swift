@@ -166,14 +166,15 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
             
             // Authenticate database
             if error == nil {
+                let uid = user!.uid
                 //Start database check
-                Database.database().reference().child("users/\(userid)/").observeSingleEvent(of: .value, with: { (snapshot) in
+                Database.database().reference().child("users/\(uid)/").observeSingleEvent(of: .value, with: { (snapshot) in
                     
                     var isActive:Bool = false
                     
                     if let result = snapshot.children.allObjects as? [DataSnapshot] {
                         if (result.isEmpty) {
-                            self.displayAlert(title: "Alert!", message: "Patient ID \(userid) does not exist", userid: "0000000000")
+                            self.displayAlert(title: "Alert!", message: "Patient ID \(userid) does not exist", uid: "0000000000")
                         } else {
                             for snap in result {
                                 if (snap.key == "IsActive") {
@@ -195,14 +196,15 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                                 preferences.set(false, forKey: "saveLocation")
                                 preferences.set(false, forKey: "saveCalendar")
                                 preferences.set(self.ipAddress, forKey: "ipAddress")
+                                preferences.set(uid, forKey: "uid")
                                 
                                 //Log action
-                                firebaseLog(userID: userid, logToSave: ["Action" : "login", "IPAddress" : self.ipAddress])
+                                firebaseLog(userID: uid, logToSave: ["Action" : "login", "IPAddress" : self.ipAddress])
                                 
                                 DispatchQueue.main.async(execute: self.loginDone)
                                 
                             } else {
-                                self.displayAlert(title: "Alert!", message: "Patient ID \(userid) is disabled or has not been activated",  userid: userid)
+                                self.displayAlert(title: "Alert!", message: "Patient ID \(userid) is disabled or has not been activated",  uid: uid)
                             }
                         }
                     }
@@ -243,7 +245,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                 }
             
                 //Tells the user that there is an error and then gets firebase to tell them the error
-                self.displayAlert(title: "Alert!", message: "\(userid):\((error?.localizedDescription)!)",  userid: "0000000000")
+                self.displayAlert(title: "Alert!", message: "\(userid):\((error?.localizedDescription)!)",  uid: "0000000000")
             }
         }
     }
@@ -289,11 +291,10 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         
         let preferences = UserDefaults.standard
         preferences.set(true, forKey: "touchIdEnrolled")
-        
-        let patientID = preferences.object(forKey: "userid") as! String
+        let uid = preferences.object(forKey: "uid") as! String
         
         //Log action
-        firebaseLog(userID: patientID, logToSave: ["Action" : "redirect session", "IPAddress" : ipAddress])
+        firebaseLog(userID: uid, logToSave: ["Action" : "redirect session", "IPAddress" : ipAddress])
         
         DispatchQueue.main.async(execute: loginDone)
     }
@@ -308,7 +309,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                 //logging
                 let preferences = UserDefaults.standard
     
-                firebaseLog(userID: preferences.object(forKey: "userid") as! String, logToSave: ["Message": "Touch ID login", "IPAddress": self.ipAddress])
+                firebaseLog(userID: preferences.object(forKey: "uid") as! String, logToSave: ["Message": "Touch ID login", "IPAddress": self.ipAddress])
                     
                 self.loginDone()
             })
@@ -332,10 +333,10 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
     }
     
 
-    func displayAlert(title: String, message: String, userid: String) {
+    func displayAlert(title: String, message: String, uid: String) {
         
         // log to firebase
-        firebaseLog(userID: userid, logToSave: ["Message": message, "IPAddress": self.ipAddress])
+        firebaseLog(userID: uid, logToSave: ["Message": message, "IPAddress": self.ipAddress])
         
         let alertcontroller = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertcontroller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -356,7 +357,6 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                     let dict = parsedData as? NSDictionary
                     let _ipAddress = "\(dict!["ip"]!)"
                     preferences.set(_ipAddress, forKey: "ipAddress")
-                    print(_ipAddress)
                     completion(true)
                     
                 }

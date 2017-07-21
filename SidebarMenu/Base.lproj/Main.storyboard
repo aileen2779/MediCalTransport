@@ -347,13 +347,13 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ZCG-fi-FT1" userLabel="Submit Stack View">
-                                <rect key="frame" x="42" y="525" width="330" height="50"/>
+                                <rect key="frame" x="42" y="525" width="330" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gLA-gx-4bq">
-                                        <rect key="frame" x="0.0" y="0.0" width="330" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="330" height="60"/>
                                         <color key="backgroundColor" red="0.27058823529999998" green="0.2666666667" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="06m-bt-6cz"/>
+                                            <constraint firstAttribute="height" constant="60" id="06m-bt-6cz"/>
                                             <constraint firstAttribute="width" constant="330" id="z0b-vk-pR0"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
@@ -749,7 +749,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c91-0o-dn7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3428" y="-426"/>
+            <point key="canvasLocation" x="3375" y="-452"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="bo0-6l-wU0">
@@ -1240,14 +1240,14 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="sT1-Vk-Q96" userLabel="Submit Stack View">
-                                <rect key="frame" x="42" y="230" width="330" height="50"/>
+                                <rect key="frame" x="42" y="230" width="330" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yQ2-t2-jsK">
-                                        <rect key="frame" x="0.0" y="0.0" width="330" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="330" height="60"/>
                                         <color key="backgroundColor" red="0.27058823529999998" green="0.2666666667" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="330" id="ACd-uQ-Kht"/>
-                                            <constraint firstAttribute="height" constant="50" id="SmV-Ot-SA4"/>
+                                            <constraint firstAttribute="height" constant="60" id="SmV-Ot-SA4"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                         <state key="normal" title="Reset Password">

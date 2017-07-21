@@ -29,6 +29,7 @@ class RiderViewController: UIViewController,
     
     var patientId:String = ""
     var ipAddress:String = ""
+    var uid:String = ""
     
     let fromString = "FromAddress"
     let toString = "ToAddress"
@@ -43,6 +44,7 @@ class RiderViewController: UIViewController,
         let preferences = UserDefaults.standard
         patientId = preferences.object(forKey: "userid") as! String
         ipAddress = preferences.object(forKey: "ipAddress") as! String
+        uid = preferences.object(forKey: "uid") as! String
         
         requestAccessToLocation()
         requestAccessToCalendar()
@@ -122,7 +124,7 @@ class RiderViewController: UIViewController,
             let fromLocation = self.fromTextField.text!
             let toLocation = self.toTextField.text!
             let whenPickup = self.whenTextField.text!
-            let patientId = self.patientId
+            //let patientId = self.patientId
             
             let datetimekey =  whenPickup.replacingOccurrences(of: "/", with: "")
             
@@ -156,9 +158,10 @@ class RiderViewController: UIViewController,
                                               "ToLongitude" : toLongitude,
                                               "ToLatitude":  toLatitude,
                                               "\(self.whenString)": whenPickup,
-                                              "DateAdded" : todaysDate]
+                                              "DateAdded" : todaysDate,
+                                              "Completed" : false]
                             
-                            let scheduledTripUpdates = ["/scheduledtrips/\(patientId)/\(datetimekey)/": scheduledTrips]
+                            let scheduledTripUpdates = ["/scheduledtrips/\(self.uid)/\(datetimekey)/": scheduledTrips]
                             
                             self.ref?.updateChildValues(scheduledTripUpdates)
                             // [END write_fan_out]
@@ -167,14 +170,14 @@ class RiderViewController: UIViewController,
                             if self.fromTextField.text != "Current Location" {
                                 let savedFromTripsKey = fromLocation.hash
                                 let savedFromTrips = ["\(self.fromString)": fromLocation]
-                                let savedFromTripUpdates = ["/savedtrips/\(patientId)/\(self.fromString)/\(savedFromTripsKey)": savedFromTrips]
+                                let savedFromTripUpdates = ["/savedtrips/\(self.uid)/\(self.fromString)/\(savedFromTripsKey)": savedFromTrips]
                                 self.ref?.updateChildValues(savedFromTripUpdates)
                             }
                             
                             // save to trips to firebase
                             let savedToTripsKey = toLocation.hash
                             let savedToTrips = ["\(self.toString)": toLocation]
-                            let savedToTripUpdates = ["/savedtrips/\(patientId)/\(self.toString)/\(savedToTripsKey)": savedToTrips]
+                            let savedToTripUpdates = ["/savedtrips/\(self.uid)/\(self.toString)/\(savedToTripsKey)": savedToTrips]
                             self.ref?.updateChildValues(savedToTripUpdates)
                             /* end confirm */
                             
@@ -209,10 +212,10 @@ class RiderViewController: UIViewController,
                             
                             // Log to firebase
                             scheduledTrips["Acton"] = "insert"
-                            firebaseLog(userID: patientId, logToSave: scheduledTrips)
+                            firebaseLog(userID: self.uid, logToSave: scheduledTrips)
                             
                             // Display confirmation
-                            self.displayAlert(title: "Ride Confirmation", message: "A ride request has been submitted for \(whenPickup) from \(fromLocation) to \(toLocation).\n\n\(calendarMessage)", userid: patientId)
+                            self.displayAlert(title: "Ride Confirmation", message: "A ride request has been submitted for \(whenPickup) from \(fromLocation) to \(toLocation).\n\n\(calendarMessage)", userid: self.uid)
                             
                             // clear textfields
                             self.fromTextField.text = ""
@@ -224,7 +227,7 @@ class RiderViewController: UIViewController,
                         } else {
                             print("to coordinates is incorrect")
                             // Display confirmation
-                            self.displayAlert(title: "Error!", message: "The destination address returned invalid coordimates. Please enter a valid address.", userid: patientId)
+                            self.displayAlert(title: "Error!", message: "The destination address returned invalid coordimates. Please enter a valid address.", userid: self.uid)
                             
                         }
                         
@@ -233,7 +236,7 @@ class RiderViewController: UIViewController,
                 } else {
                     print("from coordinates is incorrect")
                     // Display confirmation
-                    self.displayAlert(title: "Error!", message: "The pickup address returned invalid coordimates. Please enter a valid address.", userid: patientId)
+                    self.displayAlert(title: "Error!", message: "The pickup address returned invalid coordimates. Please enter a valid address.", userid: self.uid)
                 }
                 
             })
@@ -345,7 +348,7 @@ class RiderViewController: UIViewController,
             values = ["Current Location"]
         }
         
-        Database.database().reference().child("savedtrips/" + patientId + "/" + fromString).observeSingleEvent(of: .value, with: { (snapshot) in
+        Database.database().reference().child("savedtrips/" + uid + "/" + fromString).observeSingleEvent(of: .value, with: { (snapshot) in
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
                 for snap in result {
                     if let postDict = snap.value as? Dictionary<String, AnyObject> {
@@ -368,7 +371,7 @@ class RiderViewController: UIViewController,
         
         self.values.removeAll()
         
-        Database.database().reference().child("savedtrips/" + patientId + "/" + toString).observeSingleEvent(of: .value, with: { (snapshot) in
+        Database.database().reference().child("savedtrips/" + uid + "/" + toString).observeSingleEvent(of: .value, with: { (snapshot) in
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
                 for snap in result {
                     if let postDict = snap.value as? Dictionary<String, AnyObject> {

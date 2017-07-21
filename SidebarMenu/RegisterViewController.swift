@@ -145,7 +145,9 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             
             // Start auth
             Auth.auth().createUser(withEmail: userPhoneNumber + self.myDomain, password: userPin, completion: { (user, error) in
-
+            
+                let uid = user!.uid
+                
                 // Date time
                 let date : Date = Date()
                 let dateFormatter = DateFormatter()
@@ -175,7 +177,7 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                     
                     
                     // save to firebase
-                    Database.database().reference().child("users/\(userPhoneNumber)/").observeSingleEvent(of: .value, with: { (snapshot) in
+                    Database.database().reference().child("users/\(uid)/").observeSingleEvent(of: .value, with: { (snapshot) in
                         
                         if let result = snapshot.children.allObjects as? [DataSnapshot] {
                             
@@ -185,27 +187,28 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                                 
                                 // save patient information
                                 var patientRegistration = [:] as [String : Any]
-                                patientRegistration = ["FirstName" : userFirstName.lowercased(),
+                                patientRegistration = ["UserID" : userPhoneNumber,
+                                                       "FirstName" : userFirstName.lowercased(),
                                                        "LastName":  userLastName.lowercased(),
                                                        "PCP":  self.userPCP,
                                                        "DateAdded" : todaysDate,
-                                                       "isActive" : false,
+                                                       "IsActive" : false,
                                                        "DateActivated" : "01/01/1900",
                                                        "Pin" : userPin.hashValue,
                                 ]
                                 
-                                let patientRegistrationUpdates = ["/users/\(userPhoneNumber)/": patientRegistration]
+                                let patientRegistrationUpdates = ["/users/\(uid)/": patientRegistration]
                                 self.ref?.updateChildValues(patientRegistrationUpdates)
                                 //End: Save Trips to Firebase
                                 
-                                firebaseLog(userID: userPhoneNumber, logToSave: ["Action" : "register",
+                                firebaseLog(userID: uid, logToSave: ["Action" : "register",
                                                                                  "FirstName": userFirstName.lowercased(),
                                                                                  "LastName": userLastName.lowercased(),
                                                                                  "PCP" : self.userPCP,
                                                                                  "DateRegistered": todaysDate,
                                                                                  "IPAddress" : self.ipAddress])
                                 
-                                delayWithSeconds(2) {
+                                delayWithSeconds(0.5) {
                                     self.dismiss(animated: true, completion: nil)
                                 }
                                 
@@ -289,7 +292,7 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     func displayAlert(title: String, message: String) {
         
         let preferences = UserDefaults.standard
-        firebaseLog(userID: preferences.object(forKey: "userid") as! String, logToSave: ["UserID": preferences.object(forKey: "userid"), "Message": message])
+        firebaseLog(userID: preferences.object(forKey: "uid") as! String, logToSave: ["UserID": preferences.object(forKey: "userid"), "Message": message])
         
         let alertcontroller = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alertcontroller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
