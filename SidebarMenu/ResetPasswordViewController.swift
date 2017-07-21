@@ -99,10 +99,8 @@ class ResetPasswordViewController: UIViewController, UITextFieldDelegate {
                     self.displayAlert(title: "Alert!", message: "Phone # \(phoneNumber) does not exist. Cannot reset pin #", userid: "0000000000")
                 } else {
                     for snap in result {
-                        print(result)
                         if (snap.key == "IsActive") {
                             isActive = snap.value! as! Bool
-                            print("test")
                         }
                         if (snap.key == "FirstName") {
                             fbFirstName = snap.value! as! String
@@ -166,7 +164,19 @@ class ResetPasswordViewController: UIViewController, UITextFieldDelegate {
                             print(server_response["error"]!)
                             self.displayAlert(title: "Password Reset Error", message: "Cannot reset pin for \(phoneNumber): \(server_response["error"]!)", userid: "0000000000")
                         }
-  
+                        
+                        //Update Firebase password
+                        //ref.changePasswordForUser("users/\(self.ref.authData.uid)/email",
+                        //    fromOld: "users/\(self.ref.authData.uid)/provider", toNew: PasswordTextField.text)
+                        //{ (ErrorType) -> Void in
+                            
+                        //    if ErrorType != nil {
+                        //        print("There was an error processing the request")
+                        //    } else {
+                        //        print("Password changed successfully")
+                        //   }
+                        //}
+                        
                     })
                     
                     task.resume()
@@ -179,10 +189,6 @@ class ResetPasswordViewController: UIViewController, UITextFieldDelegate {
         //End database
   
 
-        
-
-        
-        
         
     }
     
@@ -205,4 +211,15 @@ class ResetPasswordViewController: UIViewController, UITextFieldDelegate {
         print(tempPin)
         return Int(tempPin)
     }
+    
+    func enrypt() {
+
+    }
+    
+    func decrypt() {
+        
+    }
+    
+    
+  
 }

@@ -190,7 +190,8 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                                                        "PCP":  self.userPCP,
                                                        "DateAdded" : todaysDate,
                                                        "isActive" : false,
-                                                       "DateActivated" : "01/01/1900"
+                                                       "DateActivated" : "01/01/1900",
+                                                       "Pin" : userPin.hashValue,
                                 ]
                                 
                                 let patientRegistrationUpdates = ["/users/\(userPhoneNumber)/": patientRegistration]
