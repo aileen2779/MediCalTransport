@@ -11,6 +11,8 @@ import FirebaseDatabase
 let CONST_BGCOLOR:UIColor = UIColor(red:0.49, green:0.73, blue:0.71, alpha:1.0)
 var CONST_DOMAIN = "@zundo.com"
 let CONST_IP_URL = "https://api.ipify.org?format=json"
+let CONST_SMS_API = "7aeb4e18f8328b578a5f9a2e7ca6fec8980edb53dzQLAbRJjzd2e7IbrOc1bH8vg"
+let CONST_SMS_URL = "https://textbelt.com/text"
 
 func animateMe(textField: UITextField) {
     let _thisTextField = textField

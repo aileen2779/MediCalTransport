@@ -167,7 +167,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
             // Authenticate database
             if error == nil {
                 //Start database check
-                Database.database().reference().child("user_access/\(userid)/").observeSingleEvent(of: .value, with: { (snapshot) in
+                Database.database().reference().child("users/\(userid)/").observeSingleEvent(of: .value, with: { (snapshot) in
                     
                     var isActive:Bool = false
                     

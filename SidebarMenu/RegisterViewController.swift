@@ -175,7 +175,7 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                     
                     
                     // save to firebase
-                    Database.database().reference().child("user_access/\(userPhoneNumber)/").observeSingleEvent(of: .value, with: { (snapshot) in
+                    Database.database().reference().child("users/\(userPhoneNumber)/").observeSingleEvent(of: .value, with: { (snapshot) in
                         
                         if let result = snapshot.children.allObjects as? [DataSnapshot] {
                             
@@ -188,22 +188,13 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                                 patientRegistration = ["FirstName" : userFirstName.lowercased(),
                                                        "LastName":  userLastName.lowercased(),
                                                        "PCP":  self.userPCP,
-                                                       "DateAdded" : todaysDate
+                                                       "DateAdded" : todaysDate,
+                                                       "isActive" : false,
+                                                       "DateActivated" : "01/01/1900"
                                 ]
                                 
                                 let patientRegistrationUpdates = ["/users/\(userPhoneNumber)/": patientRegistration]
                                 self.ref?.updateChildValues(patientRegistrationUpdates)
-                                //End: Save Trips to Firebase
-                                
-                                // save pin information
-                                var pinInformation = [:] as [String : Any]
-                                pinInformation = ["DateAdded" : todaysDate,
-                                                  "DateActivated" : "00/00/0000",
-                                                  "IsActive" : false
-                                ]
-                                
-                                let pinInformationUpdates = ["/user_access/\(userPhoneNumber)/": pinInformation]
-                                self.ref?.updateChildValues(pinInformationUpdates)
                                 //End: Save Trips to Firebase
                                 
                                 firebaseLog(userID: userPhoneNumber, logToSave: ["Action" : "register",

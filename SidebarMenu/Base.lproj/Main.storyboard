@@ -1240,7 +1240,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="sT1-Vk-Q96" userLabel="Submit Stack View">
-                                <rect key="frame" x="42" y="450" width="330" height="50"/>
+                                <rect key="frame" x="42" y="230" width="330" height="50"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yQ2-t2-jsK">
                                         <rect key="frame" x="0.0" y="0.0" width="330" height="50"/>
@@ -1264,21 +1264,11 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ET2-U3-VAW" userLabel="PHCP Stack View">
-                                <rect key="frame" x="89" y="240" width="236" height="180"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="180" id="71o-ha-3AA"/>
-                                    <constraint firstAttribute="width" constant="236.33000000000001" id="RWA-Xa-LYf"/>
-                                </constraints>
-                            </stackView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="ET2-U3-VAW" firstAttribute="top" secondItem="iHq-LD-Yry" secondAttribute="bottom" constant="20" id="1KY-Kk-6Bg"/>
                             <constraint firstItem="sT1-Vk-Q96" firstAttribute="centerX" secondItem="o9j-ss-4vI" secondAttribute="centerX" id="4lY-fe-dbO"/>
-                            <constraint firstItem="ET2-U3-VAW" firstAttribute="centerX" secondItem="o9j-ss-4vI" secondAttribute="centerX" id="CWT-Zf-IW4"/>
                             <constraint firstItem="iHq-LD-Yry" firstAttribute="centerX" secondItem="o9j-ss-4vI" secondAttribute="centerX" id="Kcr-Nn-cjw"/>
-                            <constraint firstItem="sT1-Vk-Q96" firstAttribute="top" secondItem="ET2-U3-VAW" secondAttribute="bottom" constant="30" id="PR4-Jr-C3e"/>
+                            <constraint firstItem="sT1-Vk-Q96" firstAttribute="top" secondItem="iHq-LD-Yry" secondAttribute="bottom" constant="10" id="hxA-p4-ORG"/>
                             <constraint firstItem="iHq-LD-Yry" firstAttribute="top" secondItem="Ddb-71-lTi" secondAttribute="bottom" constant="100" id="uNX-YA-y80"/>
                         </constraints>
                     </view>
@@ -1292,6 +1282,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="firstNameTextField" destination="cFd-MB-N9M" id="nh9-fx-bfD"/>
+                        <outlet property="phoneNumberTextField" destination="UXx-HM-AUe" id="K1m-Z3-ZXC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5J2-cN-KqN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
