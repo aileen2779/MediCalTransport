@@ -262,13 +262,29 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="BWN-3q-0TK" userLabel="Username Stack View">
-                                <rect key="frame" x="42" y="0.0" width="330" height="300"/>
+                                <rect key="frame" x="42" y="0.0" width="330" height="360"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Phone Number" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="Z5m-w3-Jvr" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email Address" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="Z5m-w3-Jvr" userLabel="Email Text Field" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="330" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="330" id="Itl-tJ-Za3"/>
                                             <constraint firstAttribute="height" constant="60" id="nJx-3T-iuC"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
+                                                <real key="value" value="15"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="envelope"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Phone Number" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="VS2-LA-5cg" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="60" width="330" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="2oS-Xo-bi4"/>
+                                            <constraint firstAttribute="width" constant="330" id="u2s-Za-TIJ"/>
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -281,7 +297,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First Name" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="rmP-21-ImG" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="60" width="330" height="60"/>
+                                        <rect key="frame" x="0.0" y="120" width="330" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="Aru-qm-lb6"/>
                                             <constraint firstAttribute="width" constant="330" id="zeh-qg-GC5"/>
@@ -297,7 +313,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Last Name" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="sC4-e3-OU7" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="120" width="330" height="60"/>
+                                        <rect key="frame" x="0.0" y="180" width="330" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="IxU-Dz-9iX"/>
                                             <constraint firstAttribute="width" constant="330" id="yGQ-8E-5da"/>
@@ -312,15 +328,15 @@
                                             <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="username"/>
                                         </userDefinedRuntimeAttributes>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Pin #" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="N3H-c0-ano" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="180" width="330" height="60"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="N3H-c0-ano" userLabel="Password Field" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="240" width="330" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="330" id="ILw-64-uzd"/>
                                             <constraint firstAttribute="height" constant="60" id="a9k-FE-Lhc"/>
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" secureTextEntry="YES"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done" secureTextEntry="YES"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
                                                 <real key="value" value="15"/>
@@ -328,15 +344,15 @@
                                             <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="password"/>
                                         </userDefinedRuntimeAttributes>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Pin #" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="1db-q0-zhf" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="240" width="330" height="60"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Password #" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="1db-q0-zhf" userLabel="Password Confirm Text Field" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="300" width="330" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="330" id="LFq-yk-gg7"/>
                                             <constraint firstAttribute="height" constant="60" id="mBP-DV-d2t"/>
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" secureTextEntry="YES"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
                                                 <real key="value" value="15"/>
@@ -347,7 +363,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ZCG-fi-FT1" userLabel="Submit Stack View">
-                                <rect key="frame" x="42" y="525" width="330" height="60"/>
+                                <rect key="frame" x="42" y="530" width="330" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gLA-gx-4bq">
                                         <rect key="frame" x="0.0" y="0.0" width="330" height="60"/>
@@ -371,8 +387,8 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="mlN-6r-6Xf" userLabel="PHCP Stack View">
-                                <rect key="frame" x="42" y="320" width="330" height="180"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="mlN-6r-6Xf" userLabel="PHCP Stack View">
+                                <rect key="frame" x="42" y="375" width="330" height="140"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Primary Care Physician:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qih-16-zVE">
                                         <rect key="frame" x="0.0" y="0.0" width="330" height="22"/>
@@ -384,7 +400,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gN2-gl-SVY">
-                                        <rect key="frame" x="0.0" y="27" width="330" height="153"/>
+                                        <rect key="frame" x="0.0" y="22" width="330" height="118"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="330" id="4Cw-9U-4RY"/>
@@ -394,7 +410,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="qih-16-zVE" firstAttribute="centerX" secondItem="mlN-6r-6Xf" secondAttribute="centerX" id="6mf-sq-P5h"/>
-                                    <constraint firstAttribute="height" constant="180" id="Eyj-Rv-gBw"/>
+                                    <constraint firstAttribute="height" constant="140" id="Eyj-Rv-gBw"/>
                                 </constraints>
                             </stackView>
                         </subviews>
@@ -402,8 +418,8 @@
                             <constraint firstItem="ZCG-fi-FT1" firstAttribute="centerX" secondItem="GLq-nB-aAy" secondAttribute="centerX" id="1bi-Qs-SVn"/>
                             <constraint firstItem="mlN-6r-6Xf" firstAttribute="centerX" secondItem="GLq-nB-aAy" secondAttribute="centerX" id="8PM-q4-xIQ"/>
                             <constraint firstItem="BWN-3q-0TK" firstAttribute="top" secondItem="qDh-kD-FZZ" secondAttribute="bottom" id="GAl-uH-Tc0"/>
-                            <constraint firstItem="ZCG-fi-FT1" firstAttribute="top" secondItem="mlN-6r-6Xf" secondAttribute="bottom" constant="25" id="HIF-Of-HEM"/>
-                            <constraint firstItem="mlN-6r-6Xf" firstAttribute="top" secondItem="BWN-3q-0TK" secondAttribute="bottom" constant="20" id="p0T-9j-BrI"/>
+                            <constraint firstItem="ZCG-fi-FT1" firstAttribute="top" secondItem="mlN-6r-6Xf" secondAttribute="bottom" constant="15" id="HIF-Of-HEM"/>
+                            <constraint firstItem="mlN-6r-6Xf" firstAttribute="top" secondItem="BWN-3q-0TK" secondAttribute="bottom" constant="15" id="p0T-9j-BrI"/>
                             <constraint firstItem="BWN-3q-0TK" firstAttribute="centerX" secondItem="GLq-nB-aAy" secondAttribute="centerX" id="vDx-sE-e84"/>
                         </constraints>
                     </view>
@@ -419,12 +435,13 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="createAnAccountButton" destination="gLA-gx-4bq" id="wLb-MW-slD"/>
+                        <outlet property="emailAddressTextField" destination="Z5m-w3-Jvr" id="3XI-ZX-Y3N"/>
                         <outlet property="firstNameTextField" destination="rmP-21-ImG" id="5qp-dk-juE"/>
                         <outlet property="lastNameTextField" destination="sC4-e3-OU7" id="fZk-kY-zJp"/>
+                        <outlet property="passwordConfirmTextField" destination="1db-q0-zhf" id="lW7-xo-zmh"/>
+                        <outlet property="passwordTextField" destination="N3H-c0-ano" id="0kp-jC-N69"/>
                         <outlet property="phcpPickerView" destination="gN2-gl-SVY" id="SCu-bd-1YX"/>
-                        <outlet property="phoneNumberTextField" destination="Z5m-w3-Jvr" id="PIw-cH-ieL"/>
-                        <outlet property="pinConfirmTextField" destination="1db-q0-zhf" id="8Qh-HF-64L"/>
-                        <outlet property="pinTextField" destination="N3H-c0-ano" id="HAb-rp-VRU"/>
+                        <outlet property="phoneNumberTextField" destination="VS2-LA-5cg" id="nN5-ox-Ji5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vgu-U4-Ndg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -601,7 +618,7 @@
         <scene sceneID="Sdh-bc-z2T">
             <objects>
                 <tableViewController id="hkM-JG-q4a" customClass="NewsTableViewController" customModule="MediCalTransport" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="243" sectionHeaderHeight="22" sectionFooterHeight="22" id="9fw-f0-MSe">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="243" sectionHeaderHeight="22" sectionFooterHeight="22" id="9fw-f0-MSe">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -806,7 +823,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="nRR-wp-d3Y" userLabel="LoginStackView">
                                 <rect key="frame" x="57" y="275" width="300" height="186"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Phone Number" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="PbZ-Qx-Z7Z" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email Address" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="PbZ-Qx-Z7Z" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="300" id="B1q-cV-wZy"/>
@@ -814,15 +831,15 @@
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="phone"/>
+                                            <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="envelope"/>
                                             <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
                                                 <real key="value" value="15"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Pin #" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="swP-59-Epq" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="swP-59-Epq" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="63" width="300" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="300" id="1Au-gX-vpW"/>
@@ -830,7 +847,7 @@
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="numberPad" secureTextEntry="YES"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="password"/>
                                             <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
@@ -1321,6 +1338,7 @@
         <image name="calendar" width="1024" height="1024"/>
         <image name="calendar1" width="256" height="256"/>
         <image name="comments" width="1024" height="1024"/>
+        <image name="envelope" width="128" height="100"/>
         <image name="home" width="256" height="256"/>
         <image name="map" width="1024" height="1024"/>
         <image name="menu" width="22" height="22"/>

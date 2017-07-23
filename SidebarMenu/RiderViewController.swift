@@ -261,7 +261,7 @@ class RiderViewController: UIViewController,
         if let location = manager.location?.coordinate {
             userLocation = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
             //print(userLocation)
-            let region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001))
+            let region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
             self.mapView.setRegion(region, animated: false )
             self.mapView.removeAnnotations(self.mapView.annotations)
             self.mapView.showsUserLocation = true
@@ -421,7 +421,6 @@ class RiderViewController: UIViewController,
         picker.completionHandler = { date in
             let formatter = DateFormatter()
             formatter.dateFormat = "MM/dd/YYYY hh:mm aa"
-            
             self.whenTextField.text = formatter.string(from: date)
             self.whenTextField.isEnabled = true
             return

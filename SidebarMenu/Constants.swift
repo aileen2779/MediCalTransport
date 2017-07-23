@@ -13,6 +13,7 @@ var CONST_DOMAIN = "@zundo.com"
 let CONST_IP_URL = "https://api.ipify.org?format=json"
 let CONST_SMS_API = "7aeb4e18f8328b578a5f9a2e7ca6fec8980edb53dzQLAbRJjzd2e7IbrOc1bH8vg"
 let CONST_SMS_URL = "https://textbelt.com/text"
+let CONST_DUMMY_ID = "0000000000"
 
 func animateMe(textField: UITextField) {
     let _thisTextField = textField

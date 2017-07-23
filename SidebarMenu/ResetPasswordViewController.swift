@@ -32,6 +32,8 @@ class ResetPasswordViewController: UIViewController, UITextFieldDelegate {
         // change navigation title color
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white]
         
+        //changeFirebasePassword()
+        //fetchUserPin(phoneNumber: "7024654557", firstName:  "aileen")
     }
     
     override func didReceiveMemoryWarning() {
@@ -44,7 +46,6 @@ class ResetPasswordViewController: UIViewController, UITextFieldDelegate {
         
         // dismiss the keyboard
         self.view.endEditing(true)
-        
         
         let phoneNumberPassed = phoneNumberTextField.text!
         let firstNamePassed = firstNameTextField.text!
@@ -72,8 +73,6 @@ class ResetPasswordViewController: UIViewController, UITextFieldDelegate {
         reesetPassword(phoneNumber: phoneNumberPassed, firstName: firstNamePassed)
     }
 
-
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return true;
@@ -85,18 +84,69 @@ class ResetPasswordViewController: UIViewController, UITextFieldDelegate {
         super.touchesBegan(touches, with: event)
     }
 
-
     func reesetPassword(phoneNumber:String, firstName:String) {
         
         //Start database check
-        Database.database().reference().child("users/\(phoneNumber)/").observeSingleEvent(of: .value, with: { (snapshot) in
+        Auth.auth().signIn(withEmail: "testuser@zundo.com", password: "Welcome01") { (user, error) in
+            Database.database().reference().child("users").observeSingleEvent(of: .value, with: { (snapshot) in
+                
+                if let result = snapshot.children.allObjects as? [DataSnapshot] {
+                    //print(result)
+                    
+                    if (result.isEmpty) {
+                        print("Tree is empty")
+                        return
+                    }
+                    
+                    for snap in result {
+                        //print(snap)
+                        if (snap.childSnapshot(forPath: "UserID").value!) as! String == phoneNumber &&
+                            (snap.childSnapshot(forPath: "FirstName").value!) as! String == firstName {
+                            let pin = snap.childSnapshot(forPath: "Pin").value!
+                            print(snap.key)
+                            print(pin)
+                           
+                            
+                            Auth.auth().signIn(withEmail: phoneNumber+CONST_DOMAIN, password: pin as! String) { (user, error) in
+                                if let error = error {
+                                    print(error)
+                                } else {
+                                    user?.updatePassword(to: "444444") { error in
+                                        if error != nil {
+                                            // An error occured.
+                                            //print(error.localizedDescription)
+                                            print("password not changed")
+                                        } else {
+                                            // Password changed.
+                                            print("password changed")
+                                        }
+                                    }
+                                    try! Auth.auth().signOut()
+                                }
+                            }
+                            
+                            
+                            
+                        }
+                    }
+                    
+                }
+            })
+            //End database
+        }
+    }
+
+    func reesetPassword1(phoneNumber:String, firstName:String) {
+        
+        //Start database check
+        Database.database().reference().child("users/rxwqtDBWscV6qdrQ606zxweCWXO2/").observeSingleEvent(of: .value, with: { (snapshot) in
             
             var isActive:Bool = false
             var fbFirstName:String = ""
             
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
                 if (result.isEmpty) {
-                    self.displayAlert(title: "Alert!", message: "Phone # \(phoneNumber) does not exist. Cannot reset pin #", userid: "0000000000")
+                    self.displayAlert(title: "Alert!", message: "Phone # \(phoneNumber) does not exist. Cannot reset pin #", userid: CONST_DUMMY_ID)
                 } else {
                     for snap in result {
                         if (snap.key == "IsActive") {
@@ -105,7 +155,7 @@ class ResetPasswordViewController: UIViewController, UITextFieldDelegate {
                         if (snap.key == "FirstName") {
                             fbFirstName = snap.value! as! String
                         }
-
+                        
                     }
                     
                     if !(isActive) {
@@ -123,7 +173,7 @@ class ResetPasswordViewController: UIViewController, UITextFieldDelegate {
                     // Start: Go ahead and proceed with the reset
                     
                     // Generate temp pin
-                    let tempPassword = self.generateTempPin()
+                    let tempPassword:String = "\(self.generateTempPin())"
                     
                     // Initiate REST API
                     let url:URL = URL(string: CONST_SMS_URL)!
@@ -162,20 +212,27 @@ class ResetPasswordViewController: UIViewController, UITextFieldDelegate {
                         
                         if (messageSent == "0") {
                             print(server_response["error"]!)
-                            self.displayAlert(title: "Password Reset Error", message: "Cannot reset pin for \(phoneNumber): \(server_response["error"]!)", userid: "0000000000")
+                            self.displayAlert(title: "Password Reset Error", message: "Cannot reset pin for \(phoneNumber): \(server_response["error"]!)", userid: CONST_DUMMY_ID)
                         }
                         
-                        //Update Firebase password
-                        //ref.changePasswordForUser("users/\(self.ref.authData.uid)/email",
-                        //    fromOld: "users/\(self.ref.authData.uid)/provider", toNew: PasswordTextField.text)
-                        //{ (ErrorType) -> Void in
-                            
-                        //    if ErrorType != nil {
-                        //        print("There was an error processing the request")
-                        //    } else {
-                        //        print("Password changed successfully")
-                        //   }
-                        //}
+                        
+                        Auth.auth().signIn(withEmail: phoneNumber+CONST_DOMAIN, password: "222222") { (user, error) in
+                            if let error = error {
+                                print(error)
+                            } else {
+                                user?.updatePassword(to: tempPassword) { error in
+                                    if let error = error {
+                                        // An error occured.
+                                        print(error)
+                                    } else {
+                                        // Password changed.
+                                        print("password changed")
+                                    }
+                                }
+                                try! Auth.auth().signOut()
+                            }
+                        }
+                        
                         
                     })
                     
@@ -187,9 +244,6 @@ class ResetPasswordViewController: UIViewController, UITextFieldDelegate {
             
         })
         //End database
-  
-
-        
     }
     
     func displayAlert(title: String, message: String, userid: String) {
@@ -212,7 +266,26 @@ class ResetPasswordViewController: UIViewController, UITextFieldDelegate {
         return Int(tempPin)
     }
     
+    func changeFirebasePassword() {
+        //let user = Auth.auth().currentUser
+        let newPassword = "222222"
+        
+        Auth.auth().signIn(withEmail: "7022736420@zundo.com", password: "222222") { (user, error) in
+            print("logged in")
+            user?.updatePassword(to: newPassword) { error in
+                if let error = error {
+                    // An error occured.
+                    print(error)
+                } else {
+                    // Password changed.
+                    print("password changed")
+                }
+            }
+
+        }
+    }
     func enrypt() {
+    
 
     }
     

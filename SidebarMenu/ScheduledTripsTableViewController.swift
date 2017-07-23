@@ -136,9 +136,8 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 let removedID = snapshot.key // "01012011 11:59 PM"
                 var x = 0
                 while (x < self.objectArray.count) {
-                    print("Hey\(x)-\(self.objectArray)")
                     if removedID == self.objectArray[x].key  {
-                        print("searchID\(removedID) has been Deleted")
+                        print("\(removedID) deleted successfuly")
                         self.objectArray.remove(at: x)
                         
                         // exit
@@ -270,8 +269,10 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             //delete from firebase
             firebaseDelete(childIWantToRemove: "scheduledtrips/\(uid)/\(id)")
             
+            print(patientId)
             // Log to firebase
-            firebaseLog(userID: patientId, logToSave: ["Action" : "delete",
+            
+            firebaseLog(userID: uid, logToSave: ["Action" : "delete",
                                                        "PatientID": patientId,
                                                        "FromAddress": locationClassVar.fromAddress,
                                                         "FromLatitude" : locationClassVar.fromLatitude,
@@ -283,6 +284,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                                                         "DateAdded" : locationClassVar.dateAdded,
                                                         "IPAddress" : ipAddress
                                                         ])
+            
             
             // Remove from calendar
             //let myDate = locationClassVar.pickUpDate

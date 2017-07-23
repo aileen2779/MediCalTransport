@@ -20,7 +20,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
     @IBOutlet weak var thumbIdButton: UIButton!
     
     // Fetch constants
-    var myDomain = CONST_DOMAIN
+    //var myDomain = CONST_DOMAIN
     
     var ipAddress:String = ""
     var login_session:String = ""
@@ -160,7 +160,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         
         loginTextField.endEditing(true)
         passwordTextField.endEditing(true)
-        let loginID = userid+myDomain
+        let loginID = userid
         
         // Authenticate Firebase
         Auth.auth().signIn(withEmail: loginID, password: password) { (user, error) in
@@ -176,7 +176,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                     
                     if let result = snapshot.children.allObjects as? [DataSnapshot] {
                         if (result.isEmpty) {
-                            self.displayAlert(title: "Alert!", message: "Patient ID \(userid) does not exist", uid: "0000000000")
+                            self.displayAlert(title: "Alert!", message: "Patient ID \(userid) does not exist", uid: CONST_DUMMY_ID)
                         } else {
                             for snap in result {
                                 if (snap.key == "IsActive") {
@@ -222,7 +222,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                 var myLoginID:String = ""
                 if preferences.object(forKey: "loginID") == nil {
                     // this means i have started the app from scratch and i don't have a uid stored
-                    myLoginID = "0000000000"
+                    myLoginID = CONST_DUMMY_ID
                 } else {
                     // use the stored uID in the log file
                     myLoginID = (preferences.object(forKey: "uID") as! String)

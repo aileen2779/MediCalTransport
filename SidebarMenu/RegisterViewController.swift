@@ -17,11 +17,12 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
 
     @IBOutlet weak var phcpPickerView: UIPickerView!
     
+    @IBOutlet weak var emailAddressTextField: CustomTextField!
     @IBOutlet weak var phoneNumberTextField: CustomTextField!
     @IBOutlet weak var firstNameTextField: CustomTextField!
     @IBOutlet weak var lastNameTextField: CustomTextField!
-    @IBOutlet weak var pinTextField: CustomTextField!
-    @IBOutlet weak var pinConfirmTextField: CustomTextField!
+    @IBOutlet weak var passwordTextField: CustomTextField!
+    @IBOutlet weak var passwordConfirmTextField: CustomTextField!
     
     @IBAction func backButtonTapped(_ sender: Any) {
         dismiss(animated: true, completion: nil)
@@ -56,15 +57,17 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         pickerData = []
         
         // Populate picker data from firebase
-        Database.database().reference().child("pcp/").observeSingleEvent(of: .value, with: { (snapshot) in
-            if let result = snapshot.children.allObjects as? [DataSnapshot] {
-                for snap in result {
-                    self.pickerData.append(snap.value! as! String)
+        Auth.auth().signIn(withEmail: "testuser@zundo.com", password: "Welcome01") { (user, error) in
+            Database.database().reference().child("pcp/").observeSingleEvent(of: .value, with: { (snapshot) in
+                if let result = snapshot.children.allObjects as? [DataSnapshot] {
+                    for snap in result {
+                        self.pickerData.append(snap.value! as! String)
+                    }
+                    self.phcpPickerView.reloadAllComponents()
                 }
-                self.phcpPickerView.reloadAllComponents()
             }
-          }
-        )
+            )
+        }
     }
     
     @IBAction func createAnAccountTapped(_ sender: Any) {
@@ -74,13 +77,19 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         createAnAccountButton.isEnabled = true
         
         // evaluate login and password
+        let userEmailAddress = emailAddressTextField.text!
         let userPhoneNumber = phoneNumberTextField.text!
         let userFirstName = firstNameTextField.text!
         let userLastName = lastNameTextField.text!
-        let userPin = pinTextField.text!
-        let userPinConfirm = pinConfirmTextField.text!
+        let userPassword = passwordTextField.text!
+        let userPasswordConfirm = passwordConfirmTextField.text!
         
         // Check for empty fields
+        if (userEmailAddress.isEmpty) {
+            animateMe(textField: self.emailAddressTextField)
+            return
+        }
+
         if (userPhoneNumber.isEmpty) {
             animateMe(textField: self.phoneNumberTextField)
             return
@@ -94,18 +103,18 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             animateMe(textField: self.lastNameTextField)
             return
         }
-        if (userPin.isEmpty) {
-            animateMe(textField: self.pinTextField)
+        if (userPassword.isEmpty) {
+            animateMe(textField: self.passwordTextField)
             return
         }
-        if (userPinConfirm.isEmpty) {
-            animateMe(textField: self.pinConfirmTextField)
+        if (userPasswordConfirm.isEmpty) {
+            animateMe(textField: self.passwordConfirmTextField)
             return
         }
 
-        if (userPin != userPinConfirm) {
-            animateMe(textField: self.pinTextField)
-            animateMe(textField: self.pinConfirmTextField)
+        if (userPassword != userPasswordConfirm) {
+            animateMe(textField: self.passwordTextField)
+            animateMe(textField: self.passwordConfirmTextField)
             return
         }
 
@@ -144,7 +153,7 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             }
             
             // Start auth
-            Auth.auth().createUser(withEmail: userPhoneNumber + self.myDomain, password: userPin, completion: { (user, error) in
+            Auth.auth().createUser(withEmail: userEmailAddress, password: userPassword, completion: { (user, error) in
             
                 let uid = user!.uid
                 
@@ -159,12 +168,13 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                     let errorCode = error!.localizedDescription.replacingOccurrences(of: "email address", with: "Patient ID")
                     print("error2: \(errorCode)")
 
-                    firebaseLog(userID: "0000000000", logToSave: ["Message": "\(errorCode)",
+                    firebaseLog(userID: CONST_DUMMY_ID, logToSave: ["Message": "\(errorCode)",
+                                                                    "EmailAddress": userEmailAddress,
                                                                   "FirstName": userFirstName.lowercased(),
                                                                   "LastName": userLastName.lowercased(),
                                                                   "PCP" : self.userPCP,
                                                                   "DateRegistered": todaysDate,
-                                                                  "PatientID": userPhoneNumber,
+                                                                  "PhoneNumber": userPhoneNumber,
                                                                   "IPAddress" : self.ipAddress
                                                                     ])
                     
@@ -187,14 +197,14 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                                 
                                 // save patient information
                                 var patientRegistration = [:] as [String : Any]
-                                patientRegistration = ["UserID" : userPhoneNumber,
+                                patientRegistration = ["EmailAddress": userEmailAddress,
+                                                        "PhoneNumber" : userPhoneNumber,
                                                        "FirstName" : userFirstName.lowercased(),
                                                        "LastName":  userLastName.lowercased(),
                                                        "PCP":  self.userPCP,
                                                        "DateAdded" : todaysDate,
                                                        "IsActive" : false,
-                                                       "DateActivated" : "01/01/1900",
-                                                       "Pin" : userPin.hashValue,
+                                                       "DateActivated" : "01/01/1900"
                                 ]
                                 
                                 let patientRegistrationUpdates = ["/users/\(uid)/": patientRegistration]
@@ -202,6 +212,7 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                                 //End: Save Trips to Firebase
                                 
                                 firebaseLog(userID: uid, logToSave: ["Action" : "register",
+                                                                                 "EmailAddress": userEmailAddress,
                                                                                  "FirstName": userFirstName.lowercased(),
                                                                                  "LastName": userLastName.lowercased(),
                                                                                  "PCP" : self.userPCP,
