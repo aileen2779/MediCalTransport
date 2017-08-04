@@ -53,7 +53,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="My Profile" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="F4U-2a-tgt">
-                                                    <rect key="frame" x="15" y="0.0" width="384" height="43.666666666666664"/>
+                                                    <rect key="frame" x="20" y="0.0" width="379" height="43.666666666666664"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                                     <nil key="textColor"/>
@@ -344,7 +344,7 @@
                                             <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="password"/>
                                         </userDefinedRuntimeAttributes>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Password #" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="1db-q0-zhf" userLabel="Password Confirm Text Field" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="1db-q0-zhf" userLabel="Password Confirm Text Field" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="300" width="330" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="330" id="LFq-yk-gg7"/>
@@ -1219,10 +1219,10 @@
                         <rect key="frame" x="0.0" y="64" width="414" height="672"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="iHq-LD-Yry" userLabel="Username Stack View">
-                                <rect key="frame" x="42" y="100" width="330" height="120"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="iHq-LD-Yry" userLabel="Username Stack View">
+                                <rect key="frame" x="42" y="243" width="330" height="186"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Phone Number" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="UXx-HM-AUe" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email Address" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="UXx-HM-AUe" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="330" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="ZaK-p3-znd"/>
@@ -1230,7 +1230,23 @@
                                         </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
+                                                <real key="value" value="15"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="envelope"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Phone Number" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="cFd-MB-N9M" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="63" width="330" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="330" id="Gv5-HL-Rjp"/>
+                                            <constraint firstAttribute="height" constant="60" id="NzY-5r-etf"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
                                                 <real key="value" value="15"/>
@@ -1238,29 +1254,8 @@
                                             <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="phone"/>
                                         </userDefinedRuntimeAttributes>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First Name" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="cFd-MB-N9M" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="60" width="330" height="60"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="330" id="Gv5-HL-Rjp"/>
-                                            <constraint firstAttribute="height" constant="60" id="NzY-5r-etf"/>
-                                        </constraints>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <textInputTraits key="textInputTraits" keyboardType="namePhonePad"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="leftPadding">
-                                                <real key="value" value="15"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="username"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </textField>
-                                </subviews>
-                            </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="sT1-Vk-Q96" userLabel="Submit Stack View">
-                                <rect key="frame" x="42" y="230" width="330" height="60"/>
-                                <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yQ2-t2-jsK">
-                                        <rect key="frame" x="0.0" y="0.0" width="330" height="60"/>
+                                        <rect key="frame" x="0.0" y="126" width="330" height="60"/>
                                         <color key="backgroundColor" red="0.27058823529999998" green="0.2666666667" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="330" id="ACd-uQ-Kht"/>
@@ -1272,7 +1267,7 @@
                                         </state>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="25"/>
+                                                <integer key="value" value="30"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
@@ -1283,14 +1278,12 @@
                             </stackView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="sT1-Vk-Q96" firstAttribute="centerX" secondItem="o9j-ss-4vI" secondAttribute="centerX" id="4lY-fe-dbO"/>
                             <constraint firstItem="iHq-LD-Yry" firstAttribute="centerX" secondItem="o9j-ss-4vI" secondAttribute="centerX" id="Kcr-Nn-cjw"/>
-                            <constraint firstItem="sT1-Vk-Q96" firstAttribute="top" secondItem="iHq-LD-Yry" secondAttribute="bottom" constant="10" id="hxA-p4-ORG"/>
-                            <constraint firstItem="iHq-LD-Yry" firstAttribute="top" secondItem="Ddb-71-lTi" secondAttribute="bottom" constant="100" id="uNX-YA-y80"/>
+                            <constraint firstItem="iHq-LD-Yry" firstAttribute="centerY" secondItem="o9j-ss-4vI" secondAttribute="centerY" id="N6M-ms-qh2"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Reset Pin #" id="mxh-rX-jmN">
+                    <navigationItem key="navigationItem" title="Reset Password" id="mxh-rX-jmN">
                         <barButtonItem key="leftBarButtonItem" image="back" id="YX2-Ij-yoL">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
@@ -1300,8 +1293,8 @@
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="firstNameTextField" destination="cFd-MB-N9M" id="nh9-fx-bfD"/>
-                        <outlet property="phoneNumberTextField" destination="UXx-HM-AUe" id="K1m-Z3-ZXC"/>
+                        <outlet property="emailAddressTextField" destination="UXx-HM-AUe" id="p89-OR-3Lq"/>
+                        <outlet property="phoneNumberTextField" destination="cFd-MB-N9M" id="BTM-3u-GvS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5J2-cN-KqN" userLabel="First Responder" sceneMemberID="firstResponder"/>

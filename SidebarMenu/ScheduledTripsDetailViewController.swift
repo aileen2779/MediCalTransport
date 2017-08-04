@@ -26,12 +26,26 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //let preferences = UserDefaults.standard
+        //let ipAddress = preferences.object(forKey: "ipAddress") as! String
+        //let uid = preferences.object(forKey: "uID") as! String
+        
         fromLongitude = location.fromLongitude
         fromLatitude = location.fromLatitude
         toLongitude = location.toLongitude
         toLatitude = location.toLatitude
         
         print("\(fromLongitude),\(fromLatitude),\(toLongitude),\(toLatitude)")
+
+        
+        // log to firebase
+        //firebaseLog(userID: uid, logToSave: ["Action": "trip details",
+        //                                     "IPAddress" : ipAddress,
+        //                                     "FromLongitude" : fromLongitude,
+        //                                     "FromLatitude" : fromLatitude,
+        //                                     "ToLatitude" : toLatitude,
+        //                                     "ToLongitude" : toLongitude
+        //                                    ])
         
         
         self.displayMap()

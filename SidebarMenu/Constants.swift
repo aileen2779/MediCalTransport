@@ -9,11 +9,13 @@ import FirebaseDatabase
 
 
 let CONST_BGCOLOR:UIColor = UIColor(red:0.49, green:0.73, blue:0.71, alpha:1.0)
-var CONST_DOMAIN = "@zundo.com"
-let CONST_IP_URL = "https://api.ipify.org?format=json"
-let CONST_SMS_API = "7aeb4e18f8328b578a5f9a2e7ca6fec8980edb53dzQLAbRJjzd2e7IbrOc1bH8vg"
-let CONST_SMS_URL = "https://textbelt.com/text"
-let CONST_DUMMY_ID = "0000000000"
+var CONST_DOMAIN:String = "@zundo.com"
+let CONST_IP_URL:String = "https://api.ipify.org?format=json"
+let CONST_SMS_API:String = "7aeb4e18f8328b578a5f9a2e7ca6fec8980edb53dzQLAbRJjzd2e7IbrOc1bH8vg"
+let CONST_SMS_URL:String = "https://textbelt.com/text"
+let CONST_DUMMY_ID:String = "0000000000"
+let CONST_GUEST_USER:String = "guest@zundo.com"
+let CONST_GUEST_PW:String = "Welcome01"
 
 func animateMe(textField: UITextField) {
     let _thisTextField = textField
@@ -60,11 +62,11 @@ func firebaseLog(userID: String, logToSave: Any) {
     let yearString = myDateFormatter.string(from: myDate)
 
     // month
-    myDateFormatter.dateFormat = "MM"
+    myDateFormatter.dateFormat = "MM-MMMM"
     let monthString = myDateFormatter.string(from: myDate)
     
     //day
-    myDateFormatter.dateFormat = "dd"
+    myDateFormatter.dateFormat = "dd-EEEE"
     let dayString = myDateFormatter.string(from: myDate)
     
     //timestamp in microseconds

@@ -57,8 +57,8 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         pickerData = []
         
         // Populate picker data from firebase
-        Auth.auth().signIn(withEmail: "testuser@zundo.com", password: "Welcome01") { (user, error) in
-            Database.database().reference().child("pcp/").observeSingleEvent(of: .value, with: { (snapshot) in
+        Auth.auth().signIn(withEmail: CONST_GUEST_USER, password: CONST_GUEST_PW) { (user, error) in
+            Database.database().reference().child("pcp").observeSingleEvent(of: .value, with: { (snapshot) in
                 if let result = snapshot.children.allObjects as? [DataSnapshot] {
                     for snap in result {
                         self.pickerData.append(snap.value! as! String)
@@ -68,6 +68,8 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             }
             )
         }
+        //signout from firebase
+        try! Auth.auth().signOut()
     }
     
     @IBAction func createAnAccountTapped(_ sender: Any) {

@@ -30,6 +30,8 @@ class RiderViewController: UIViewController,
     var patientId:String = ""
     var ipAddress:String = ""
     var uid:String = ""
+    var ridesPerYear:Int = 0
+    var scheduledRides:Int = 0
     
     let fromString = "FromAddress"
     let toString = "ToAddress"
@@ -89,6 +91,27 @@ class RiderViewController: UIViewController,
         fromTextField.addTarget(self, action: #selector(fromTextFieldActive), for: UIControlEvents.touchDown)
         toTextField.addTarget(self, action: #selector(toTextFieldActive), for: UIControlEvents.touchDown)
         whenTextField.addTarget(self, action: #selector(whenTextFieldActive), for: UIControlEvents.touchDown)
+        
+        
+        getFBDefaults(fbString: "RidesPerYear") { (myValue) -> () in
+            if myValue > 0 {
+                self.ridesPerYear = myValue
+                print(self.ridesPerYear)
+            }
+            else {
+                print("Default value not found")
+            }
+        }
+    
+        getScheduledTrips(fbUid: uid) { (myValue) -> () in
+            if myValue > 0 {
+                self.scheduledRides = myValue
+                print(self.scheduledRides)
+            }
+            else {
+                print("Default value not found")
+            }
+        }
     }
     
     @IBAction func callAnUber(_ sender: AnyObject) {
@@ -106,6 +129,12 @@ class RiderViewController: UIViewController,
         } else {
             //
         }
+        
+        if self.scheduledRides+1 > self.ridesPerYear {
+            self.displayAlert(title: "Violation", message: "You have exceeded the maximum allowed rides of \(self.ridesPerYear)", userid: self.uid)
+            return
+        }
+        
         
         //Begin confirm
         let optionMenu = UIAlertController(title: nil, message: "Are you sure?", preferredStyle: .actionSheet)
@@ -224,6 +253,17 @@ class RiderViewController: UIViewController,
                             
                             //segue into Scheduled Trips VC
                             //self.present( UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ScheduledTripsVC") as UIViewController, animated: true, completion: nil)
+                            
+                            // count scheduled trips
+                            self.getScheduledTrips(fbUid: self.uid) { (myValue) -> () in
+                                if myValue > 0 {
+                                    self.scheduledRides = myValue
+                                    print(self.scheduledRides)
+                                }
+                                else {
+                                    print("Default value not found")
+                                }
+                            }
                         } else {
                             print("to coordinates is incorrect")
                             // Display confirmation
@@ -576,6 +616,37 @@ class RiderViewController: UIViewController,
             }
         }
 
+    }
+    
+    func getFBDefaults(fbString:String , completion: @escaping (Int) -> ()) {
+        
+        Database.database().reference().child("defaults").observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            if let result = snapshot.children.allObjects as? [DataSnapshot] {
+                
+                for snap in result {
+                    if (snap.key == fbString) {
+                        //print(snap.value! as! Int)
+                        completion(snap.value! as! Int)
+                    }
+                    
+                }
+            }
+            
+            
+        })
+    }
+    
+    func getScheduledTrips(fbUid:String , completion: @escaping (Int) -> ()) {
+        
+        Database.database().reference().child("scheduledtrips/\(fbUid)").observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            if let result = snapshot.children.allObjects as? [DataSnapshot] {
+                completion(result.count)
+            }
+            
+            
+        })
     }
     
 }

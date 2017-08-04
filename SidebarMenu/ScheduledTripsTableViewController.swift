@@ -242,7 +242,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     
     // Delete Confirmation and Handling
     func confirmDelete(_ dataToDelete: Any) {
-        let alert = UIAlertController(title: "Cancel Ride", message: "Are you sure you want to Cancel \(dataToDelete)?", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "Cancel Ride", message: "Are you sure you want to Cancel this ride?", preferredStyle: .actionSheet)
         
         let DeleteAction = UIAlertAction(title: "Yes, I want to cancel this ride", style: .destructive, handler: handleDeletePostData)
         let CancelAction = UIAlertAction(title: "Go Back", style: .cancel, handler: cancelDeletePostData)
@@ -272,7 +272,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             print(patientId)
             // Log to firebase
             
-            firebaseLog(userID: uid, logToSave: ["Action" : "delete",
+            firebaseLog(userID: uid, logToSave: ["Action" : "cancel ride",
                                                        "PatientID": patientId,
                                                        "FromAddress": locationClassVar.fromAddress,
                                                         "FromLatitude" : locationClassVar.fromLatitude,

@@ -9,13 +9,14 @@ class ResetPasswordViewController: UIViewController, UITextFieldDelegate {
         dismiss(animated: true, completion: nil)
     }
     
+    @IBOutlet weak var emailAddressTextField: CustomTextField!
     @IBOutlet weak var phoneNumberTextField: CustomTextField!
-    @IBOutlet weak var firstNameTextField: CustomTextField!
     
     // Firebase handles
     var ref:DatabaseReference?
     
     var ipAddress:String = ""
+    var uid:String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,15 +26,13 @@ class ResetPasswordViewController: UIViewController, UITextFieldDelegate {
         // firebase reference
         ref = Database.database().reference()
 
-        
         let preferences = UserDefaults.standard
         ipAddress = preferences.object(forKey: "ipAddress") as! String
+        uid = preferences.object(forKey: "uID") as! String
         
         // change navigation title color
         navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white]
         
-        //changeFirebasePassword()
-        //fetchUserPin(phoneNumber: "7024654557", firstName:  "aileen")
     }
     
     override func didReceiveMemoryWarning() {
@@ -47,19 +46,20 @@ class ResetPasswordViewController: UIViewController, UITextFieldDelegate {
         // dismiss the keyboard
         self.view.endEditing(true)
         
+        let emailAddressPassed = emailAddressTextField.text!
         let phoneNumberPassed = phoneNumberTextField.text!
-        let firstNamePassed = firstNameTextField.text!
         
+        
+        if (emailAddressPassed.isEmpty) {
+            animateMe(textField: emailAddressTextField)
+            return
+        }
+
         if (phoneNumberPassed.isEmpty) {
             animateMe(textField: phoneNumberTextField)
             return
         }
-        
-        if (firstNamePassed.isEmpty) {
-            animateMe(textField: firstNameTextField)
-            return
-        }
-        
+
         //check if telephone number has 10 characters
         if (phoneNumberPassed.characters.count != 10) {
             animateMe(textField: self.phoneNumberTextField)
@@ -70,7 +70,41 @@ class ResetPasswordViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        reesetPassword(phoneNumber: phoneNumberPassed, firstName: firstNamePassed)
+        
+        //Display confirmation
+        let optionMenu = UIAlertController(title: nil, message: "Are you sure?", preferredStyle: .actionSheet)
+        let logoutAction = UIAlertAction(title: "Reset my password", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+
+            
+            
+            
+            
+            
+            
+            
+            
+            Auth.auth().sendPasswordReset(withEmail: emailAddressPassed) { error in
+                // Your code here
+                
+            }
+            self.displayAlert(title: "Alert!", message: "A password reset link has been sent to \(emailAddressPassed)",  userid: self.uid)
+            
+            
+            
+            //self.dismiss(animated: true, completion: nil)
+            
+        })
+        //
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            print("Cancelled")
+        })
+        
+        optionMenu.addAction(logoutAction)
+        optionMenu.addAction(cancelAction)
+        
+        self.present(optionMenu, animated: true, completion: nil)
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -87,7 +121,7 @@ class ResetPasswordViewController: UIViewController, UITextFieldDelegate {
     func reesetPassword(phoneNumber:String, firstName:String) {
         
         //Start database check
-        Auth.auth().signIn(withEmail: "testuser@zundo.com", password: "Welcome01") { (user, error) in
+        Auth.auth().signIn(withEmail: CONST_GUEST_USER, password: CONST_GUEST_PW) { (user, error) in
             Database.database().reference().child("users").observeSingleEvent(of: .value, with: { (snapshot) in
                 
                 if let result = snapshot.children.allObjects as? [DataSnapshot] {
@@ -135,7 +169,7 @@ class ResetPasswordViewController: UIViewController, UITextFieldDelegate {
             //End database
         }
     }
-
+/*
     func reesetPassword1(phoneNumber:String, firstName:String) {
         
         //Start database check
@@ -245,7 +279,7 @@ class ResetPasswordViewController: UIViewController, UITextFieldDelegate {
         })
         //End database
     }
-    
+*/
     func displayAlert(title: String, message: String, userid: String) {
         
         // log to firebase
@@ -284,15 +318,6 @@ class ResetPasswordViewController: UIViewController, UITextFieldDelegate {
 
         }
     }
-    func enrypt() {
-    
-
-    }
-    
-    func decrypt() {
-        
-    }
     
     
-  
 }
