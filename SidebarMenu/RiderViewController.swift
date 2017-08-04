@@ -131,7 +131,7 @@ class RiderViewController: UIViewController,
         }
         
         if self.scheduledRides+1 > self.ridesPerYear {
-            self.displayAlert(title: "Violation", message: "You have exceeded the maximum allowed rides of \(self.ridesPerYear)", userid: self.uid)
+            self.displayAlert(title: "Cannot Schedule Ride", message: "You have exceeded the maximum allowed rides of \(self.ridesPerYear)", userid: self.uid)
             return
         }
         
