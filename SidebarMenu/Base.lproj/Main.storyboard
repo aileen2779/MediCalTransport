@@ -182,7 +182,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </mapView>
             </objects>
-            <point key="canvasLocation" x="-30" y="-408"/>
+            <point key="canvasLocation" x="-199" y="-423"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="a23-LC-1XJ">
@@ -204,7 +204,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vkz-3n-E2z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="387" y="-1079"/>
+            <point key="canvasLocation" x="625" y="-1104"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="O4a-aL-NR9">
@@ -685,7 +685,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="shO-si-507" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1332" y="-1763"/>
+            <point key="canvasLocation" x="1500" y="-1744"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="tLO-9P-kEq">
@@ -703,7 +703,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="irV-nJ-iFr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="404" y="-1763"/>
+            <point key="canvasLocation" x="625" y="-1763"/>
         </scene>
         <!--Main Controller-->
         <scene sceneID="BPG-Qj-RI4">
@@ -754,6 +754,7 @@
                                             <segment title="Passenger"/>
                                             <segment title="Driver"/>
                                         </segments>
+                                        <color key="tintColor" red="0.1003899276" green="0.55048123149999995" blue="0.77375525239999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </segmentedControl>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email Address" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="PbZ-Qx-Z7Z" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="53.000000000000028" width="300" height="60"/>
@@ -1008,7 +1009,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5oi-pB-tuE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1332" y="-1092"/>
+            <point key="canvasLocation" x="1483" y="-1092"/>
         </scene>
         <!--Scheduled Trips View Controller-->
         <scene sceneID="4qL-DH-f8s">
@@ -1278,6 +1279,6 @@
         <image name="wishlist" width="1024" height="1024"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="LZw-ve-Bvd"/>
+        <segue reference="zes-9v-hhD"/>
     </inferredMetricsTieBreakers>
 </document>
