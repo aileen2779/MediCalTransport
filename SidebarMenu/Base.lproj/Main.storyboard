@@ -718,14 +718,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="touch-id-icon" translatesAutoresizingMaskIntoConstraints="NO" id="aIM-WC-zRC">
-                                <rect key="frame" x="172" y="481" width="70" height="70"/>
+                                <rect key="frame" x="172" y="507.66666666666663" width="70" height="69.999999999999886"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="RSk-qa-QTc"/>
                                     <constraint firstAttribute="width" constant="70" id="tBh-Yo-84y"/>
                                 </constraints>
                             </imageView>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jF5-Gx-B4j">
-                                <rect key="frame" x="167" y="475" width="80" height="80"/>
+                                <rect key="frame" x="167" y="501.66666666666663" width="80" height="79.999999999999886"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="NIv-oZ-S5B"/>
                                     <constraint firstAttribute="width" constant="80" id="Q3V-tW-97b"/>
@@ -742,10 +742,21 @@
                                 </constraints>
                             </activityIndicatorView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="nRR-wp-d3Y" userLabel="LoginStackView">
-                                <rect key="frame" x="57" y="275" width="300" height="186"/>
+                                <rect key="frame" x="57" y="248.66666666666669" width="300" height="239.00000000000006"/>
                                 <subviews>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ITV-Be-oRW">
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="51.000000000000028"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="UrP-PG-UIW"/>
+                                            <constraint firstAttribute="width" constant="300" id="zLU-I7-uMc"/>
+                                        </constraints>
+                                        <segments>
+                                            <segment title="Passenger"/>
+                                            <segment title="Driver"/>
+                                        </segments>
+                                    </segmentedControl>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email Address" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="PbZ-Qx-Z7Z" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="300" height="60"/>
+                                        <rect key="frame" x="0.0" y="53.000000000000028" width="300" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="300" id="B1q-cV-wZy"/>
                                             <constraint firstAttribute="height" constant="60" id="Nj1-Dj-Jh3"/>
@@ -761,7 +772,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="swP-59-Epq" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="63" width="300" height="60"/>
+                                        <rect key="frame" x="0.0" y="116.00000000000003" width="300" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="300" id="1Au-gX-vpW"/>
                                             <constraint firstAttribute="height" constant="60" id="J5Y-De-Twx"/>
@@ -777,7 +788,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xkb-aP-xLy">
-                                        <rect key="frame" x="0.0" y="126" width="300" height="60"/>
+                                        <rect key="frame" x="0.0" y="179.00000000000003" width="300" height="60"/>
                                         <color key="backgroundColor" red="0.27058823529999998" green="0.2666666667" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="W0r-D6-GDx"/>
@@ -850,6 +861,7 @@
                         <outlet property="loginTextField" destination="PbZ-Qx-Z7Z" id="0cP-8Q-Qvd"/>
                         <outlet property="login_button" destination="xkb-aP-xLy" id="7bQ-xS-gMy"/>
                         <outlet property="passwordTextField" destination="swP-59-Epq" id="Fv9-Fc-1s9"/>
+                        <outlet property="segmentControl" destination="ITV-Be-oRW" id="xiN-Pb-5nE"/>
                         <outlet property="thumbIdButton" destination="jF5-Gx-B4j" id="yyj-8L-XUS"/>
                         <outlet property="thumbIdImage" destination="aIM-WC-zRC" id="bVM-ag-Uq9"/>
                         <segue destination="vXZ-lx-hvc" kind="show" identifier="MainControllerVC" id="hox-mK-kFW"/>
@@ -1266,6 +1278,6 @@
         <image name="wishlist" width="1024" height="1024"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="IsB-La-WLS"/>
+        <segue reference="0jY-V3-zoc"/>
     </inferredMetricsTieBreakers>
 </document>

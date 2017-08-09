@@ -19,6 +19,9 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
     @IBOutlet weak var thumbIdImage: UIImageView!
     @IBOutlet weak var thumbIdButton: UIButton!
     
+    
+    @IBOutlet weak var segmentControl: UISegmentedControl!
+    
     // Fetch constants
     //var myDomain = CONST_DOMAIN
     
@@ -43,6 +46,12 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         //Init routine to hide keyboard
         self.loginTextField.delegate = self
         self.passwordTextField.delegate = self
+        
+        // Init SEgment Control
+        let attributes = NSDictionary(object: UIFont(name: "HelveticaNeue", size: 20.0)!, forKey: NSFontAttributeName as NSCopying)
+        let titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        UISegmentedControl.appearance().setTitleTextAttributes(titleTextAttributes, for: .selected)
+        segmentControl.setTitleTextAttributes(attributes as? [AnyHashable : Any], for: .normal)
         
         
         self.getIpAddress(completion: { success in
