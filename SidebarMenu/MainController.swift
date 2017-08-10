@@ -182,6 +182,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                 Database.database().reference().child("users/\(uid)/").observeSingleEvent(of: .value, with: { (snapshot) in
                     
                     var isActive:Bool = false
+                    var userType:String = ""
                     
                     if let result = snapshot.children.allObjects as? [DataSnapshot] {
                         if (result.isEmpty) {
@@ -190,6 +191,9 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                             for snap in result {
                                 if (snap.key == "IsActive") {
                                     isActive = snap.value! as! Bool
+                                }
+                                if (snap.key == "UserType") {
+                                    userType = snap.value! as! String
                                 }
                             }
                             
@@ -209,6 +213,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                                 preferences.set(false, forKey: "saveCalendar")
                                 preferences.set(self.ipAddress, forKey: "ipAddress")
                                 preferences.set(uid, forKey: "uID")
+                                preferences.set(userType, forKey: "userType")
                                 
                                 //Log action
                                 firebaseLog(userID: uid, logToSave: ["Action" : "login", "IPAddress" : self.ipAddress])

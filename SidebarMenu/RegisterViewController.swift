@@ -206,7 +206,8 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                                                        "PCP":  self.userPCP,
                                                        "DateAdded" : todaysDate,
                                                        "IsActive" : false,
-                                                       "DateActivated" : "01/01/1900"
+                                                       "DateActivated" : "01/01/1900",
+                                                       "UserType" : "patient"
                                 ]
                                 
                                 let patientRegistrationUpdates = ["/users/\(uid)/": patientRegistration]
@@ -219,7 +220,9 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                                                                                  "LastName": userLastName.lowercased(),
                                                                                  "PCP" : self.userPCP,
                                                                                  "DateRegistered": todaysDate,
-                                                                                 "IPAddress" : self.ipAddress])
+                                                                                 "IPAddress" : self.ipAddress,
+                                                                                 "UserType" : "patient"
+                                                                ])
                                 
                                 delayWithSeconds(0.5) {
                                     self.dismiss(animated: true, completion: nil)
