@@ -174,7 +174,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         // Authenticate Firebase
         Auth.auth().signIn(withEmail: loginID, password: password) { (user, error) in
             
-            print(Auth.auth().currentUser?.email as Any)
+            //print(Auth.auth().currentUser?.email! as Any)
             // Authenticate database
             if error == nil {
                 let uid = user!.uid
@@ -214,6 +214,8 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                                 preferences.set(self.ipAddress, forKey: "ipAddress")
                                 preferences.set(uid, forKey: "uID")
                                 preferences.set(userType, forKey: "userType")
+                                
+                                print("UserType:\(userType)")
                                 
                                 //Log action
                                 firebaseLog(userID: uid, logToSave: ["Action" : "login", "IPAddress" : self.ipAddress])
@@ -328,7 +330,10 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         let userid = preferences.object(forKey: "userID") as! String
         let password = preferences.object(forKey: "password") as! String
         let loginID = preferences.object(forKey: "loginID") as! String
+        let userType = preferences.object(forKey: "userType") as! String
         
+        print("UserType: \(userType)")
+       
         Auth.auth().signIn(withEmail: loginID, password: password) { (user, error) in
             if error == nil {
                 print("Logged In")

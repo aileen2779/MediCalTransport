@@ -29,6 +29,7 @@ class RiderViewController: UIViewController,
     
     var patientId:String = ""
     var ipAddress:String = ""
+    var userType:String = ""
     var uid:String = ""
     var ridesPerYear:Int = 0
     var scheduledRides:Int = 0
@@ -44,10 +45,16 @@ class RiderViewController: UIViewController,
         super.viewDidLoad()
         
         let preferences = UserDefaults.standard
-        patientId = preferences.object(forKey: "userID") as! String
-        ipAddress = preferences.object(forKey: "ipAddress") as! String
-        uid = preferences.object(forKey: "uID") as! String
+        patientId   = preferences.object(forKey: "userID") as! String
+        ipAddress   = preferences.object(forKey: "ipAddress") as! String
+        uid         = preferences.object(forKey: "uID") as! String
+        userType    = preferences.object(forKey: "userType") as! String
+        print(userType)
         
+        if userType == "driver" {
+            //dismiss(animated: true, completion: nil)
+            //return
+        }
         requestAccessToLocation()
         requestAccessToCalendar()
         
