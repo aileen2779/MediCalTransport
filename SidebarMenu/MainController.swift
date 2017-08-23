@@ -265,7 +265,6 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                     case 17005:
                         print("User account has been disabled by an administrator")
                         
-
                     default:
                         print("\(errCode.rawValue): Handle default situation")
                     }
@@ -308,7 +307,6 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
 
         loginTextField.leftViewMode = UITextFieldViewMode.always
         loginTextField.leftView = UIImageView(image: UIImage(named: "userID"))
-
         passwordTextField.leftViewMode = UITextFieldViewMode.always
         passwordTextField.leftView = UIImageView(image: UIImage(named: "password"))
 
