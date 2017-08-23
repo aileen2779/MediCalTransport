@@ -17,6 +17,9 @@ let CONST_DUMMY_ID:String = "0000000000"
 let CONST_GUEST_USER:String = "guest@zundo.com"
 let CONST_GUEST_PW:String = "Welcome01"
 
+let CONST_PASSENGER:String = "passenger"
+let CONST_DRIVER:String = "driver"
+
 func animateMe(textField: UITextField) {
     let _thisTextField = textField
     UIView.animate(withDuration: 0.1, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: .curveEaseIn, animations: {_thisTextField.center.x += 10 }, completion: nil)

@@ -19,14 +19,15 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
     @IBOutlet weak var thumbIdImage: UIImageView!
     @IBOutlet weak var thumbIdButton: UIButton!
     
-    
     @IBOutlet weak var segmentControl: UISegmentedControl!
+    
     
     // Fetch constants
     //var myDomain = CONST_DOMAIN
     
     var ipAddress:String = ""
     var login_session:String = ""
+    var userType = ""
 
     // Firebase handles
     var ref:DatabaseReference?
@@ -47,13 +48,18 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         self.loginTextField.delegate = self
         self.passwordTextField.delegate = self
         
-        // Init SEgment Control
+        // Init Segment Control
         let attributes = NSDictionary(object: UIFont(name: "HelveticaNeue", size: 20.0)!, forKey: NSFontAttributeName as NSCopying)
         let titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
         UISegmentedControl.appearance().setTitleTextAttributes(titleTextAttributes, for: .selected)
         segmentControl.setTitleTextAttributes(attributes as? [AnyHashable : Any], for: .normal)
+
+        // Set default user type
+        let preferences = UserDefaults.standard
+        preferences.set(CONST_PASSENGER, forKey: "userType")
+        userType = CONST_PASSENGER
         
-        
+        // Get ip address
         self.getIpAddress(completion: { success in
             if success {
                 let preferences = UserDefaults.standard
@@ -148,8 +154,8 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
     
     
     // function without arguments that are run from async
-    func displayMyAlertMessage() {
-        let myAlert =  UIAlertController(title:"Invalid Patient ID or password", message: "Please try again", preferredStyle: UIAlertControllerStyle.alert)
+    func displayInvalidUserTypeMessage() {
+        let myAlert =  UIAlertController(title:"Invalid User Type", message: "Please confirm if passenger or driver", preferredStyle: UIAlertControllerStyle.alert)
         
         let okAction = UIAlertAction(title:"Ok", style: UIAlertActionStyle.default, handler: nil)
         myAlert.addAction(okAction)
@@ -157,7 +163,6 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         self.present(myAlert, animated: true, completion: nil)
         vibrate(howMany: 1)
     }
-    
     // Dismiss the keyboard when not editing
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)
@@ -182,7 +187,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                 Database.database().reference().child("users/\(uid)/").observeSingleEvent(of: .value, with: { (snapshot) in
                     
                     var isActive:Bool = false
-                    var userType:String = ""
+                    var myUserType:String = ""
                     
                     if let result = snapshot.children.allObjects as? [DataSnapshot] {
                         if (result.isEmpty) {
@@ -193,7 +198,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                                     isActive = snap.value! as! Bool
                                 }
                                 if (snap.key == "UserType") {
-                                    userType = snap.value! as! String
+                                    myUserType = snap.value! as! String
                                 }
                             }
                             
@@ -213,14 +218,24 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                                 preferences.set(false, forKey: "saveCalendar")
                                 preferences.set(self.ipAddress, forKey: "ipAddress")
                                 preferences.set(uid, forKey: "uID")
-                                preferences.set(userType, forKey: "userType")
+                                //preferences.set(userType, forKey: "userType")
                                 
-                                print("UserType:\(userType)")
-                                
+                                //print("MyUserType:\(myUserType)")
+                                //print("SelectecUserType:\(self.userType)")
+
                                 //Log action
                                 firebaseLog(userID: uid, logToSave: ["Action" : "login", "IPAddress" : self.ipAddress])
                                 
-                                DispatchQueue.main.async(execute: self.loginDone)
+                                if myUserType == self.userType {
+                                    print("User type is correct")
+                                    DispatchQueue.main.async(execute: self.loginDone)
+                                } else  {
+                                    print("User type is incorrect")
+                                    //displayInvalidUserTypeMessage
+                                    DispatchQueue.main.async(execute: self.displayInvalidUserTypeMessage)
+                                }
+                                
+                                
                                 
                             } else {
                                 self.displayAlert(title: "Alert!", message: "Patient ID \(userid) is disabled or has not been activated",  uid: uid)
@@ -448,6 +463,22 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         }
     }
     
+
+    @IBAction func indexChanged(_ sender: Any) {
+        switch segmentControl.selectedSegmentIndex
+        {
+        case 0:
+            let preferences = UserDefaults.standard
+            preferences.set(CONST_PASSENGER, forKey: "userType")
+            userType = CONST_PASSENGER
+        case 1:
+            let preferences = UserDefaults.standard
+            preferences.set(CONST_DRIVER, forKey: "userType")
+            userType = CONST_DRIVER
+        default:
+            break; 
+        }
+    }
 
     
 }
