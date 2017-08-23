@@ -41,6 +41,7 @@ class RiderViewController: UIViewController,
     @IBOutlet var callAnUberButton: UIButton!
     @IBOutlet var mapView: MKMapView!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,6 +55,10 @@ class RiderViewController: UIViewController,
         if userType == "driver" {
             //dismiss(animated: true, completion: nil)
             //return
+            callAnUberButton.isHidden = true
+            fromTextField.isHidden = true
+            toTextField.isHidden = true
+            whenTextField.isHidden = true
         }
         requestAccessToLocation()
         requestAccessToCalendar()

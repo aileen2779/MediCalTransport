@@ -54,10 +54,6 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         UISegmentedControl.appearance().setTitleTextAttributes(titleTextAttributes, for: .selected)
         segmentControl.setTitleTextAttributes(attributes as? [AnyHashable : Any], for: .normal)
 
-        // Set default user type
-        let preferences = UserDefaults.standard
-        preferences.set(CONST_PASSENGER, forKey: "userType")
-        userType = CONST_PASSENGER
         
         // Get ip address
         self.getIpAddress(completion: { success in
@@ -218,7 +214,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                                 preferences.set(false, forKey: "saveCalendar")
                                 preferences.set(self.ipAddress, forKey: "ipAddress")
                                 preferences.set(uid, forKey: "uID")
-                                //preferences.set(userType, forKey: "userType")
+                                preferences.set(self.userType, forKey: "userType")
                                 
                                 //print("MyUserType:\(myUserType)")
                                 //print("SelectecUserType:\(self.userType)")
