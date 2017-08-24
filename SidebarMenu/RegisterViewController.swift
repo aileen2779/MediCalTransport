@@ -207,7 +207,7 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                                                        "DateAdded" : todaysDate,
                                                        "IsActive" : false,
                                                        "DateActivated" : "01/01/1900",
-                                                       "UserType" : "patient"
+                                                       "UserType" : "passenger"
                                 ]
                                 
                                 let patientRegistrationUpdates = ["/users/\(uid)/": patientRegistration]
@@ -221,7 +221,7 @@ class RegisterViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                                                                                  "PCP" : self.userPCP,
                                                                                  "DateRegistered": todaysDate,
                                                                                  "IPAddress" : self.ipAddress,
-                                                                                 "UserType" : "patient"
+                                                                                 "UserType" : "passenger"
                                                                 ])
                                 
                                 delayWithSeconds(0.5) {

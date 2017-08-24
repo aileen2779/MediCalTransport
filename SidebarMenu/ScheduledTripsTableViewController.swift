@@ -21,11 +21,12 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     var patientId:String = ""
     var ipAddress:String = ""
     var uid:String = ""
+    var userType:String = ""
+
     
     var root:String = "scheduledtrips"
     
     var trips: [String: [String]] = [:]
-
 
     var objectArray = [LocationClass]()
     
@@ -41,6 +42,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         patientId = preferences.object(forKey: "userID") as! String
         ipAddress = preferences.object(forKey: "ipAddress") as! String
         uid       = preferences.object(forKey: "uID") as! String
+        userType  = preferences.object(forKey: "userType") as! String
         
         self.title = "Scheduled Rides"
 
@@ -54,104 +56,20 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             extraButton.action = #selector(SWRevealViewController.rightRevealToggle(_:))
             
             // Disable gesture recognizer so swiping left can be enabled
-            // view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+            //view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
             
         }
         
-        // Retrieve the posts and listen for changes
-        Database.database().reference().child( "\(root)/\(uid)" ).observe(.childAdded, with: { (snapshot) in
-            if let result = snapshot.children.allObjects as? [DataSnapshot] {
-                
-                let keyString:String = snapshot.key
-                var patientID:String = ""
-                var fromAddress:String = ""
-                var fromLongitude:Double = 0.0
-                var fromLatitude:Double = 0.0
-                var toAddress:String = ""
-                var toLongitude:Double = 0.0
-                var toLatitude:Double = 0.0
-                var pickUpDate:String = ""
-                var dateAdded:String = ""
-                var rideCompleted:Bool = false
-
-                for snap in result {
-                    if (snap.key == "PatientID") {
-                        patientID = snap.value as! String
-                    }
-                    if (snap.key == "FromAddress") {
-                        fromAddress = snap.value as! String
-                    }
-                    if (snap.key == "FromLongitude") {
-                        fromLongitude = snap.value as! Double
-                        
-                    }
-                    if (snap.key == "FromLatitude") {
-                        fromLatitude = snap.value as! Double
-                    }
-                
-                    if (snap.key == "ToAddress") {
-                        toAddress = snap.value as! String
-                    }
-                    if (snap.key == "ToLongitude") {
-                        toLongitude = snap.value as! Double
-                        
-                    }
-                    if (snap.key == "ToLatitude") {
-                        toLatitude = snap.value as! Double
-                    }
-                    if (snap.key == "PickUpDate") {
-                        pickUpDate = snap.value as! String
-                    }
-                    if (snap.key == "DateAdded") {
-                        dateAdded = snap.value as! String
-                    }
-                    if (snap.key == "Completed") {
-                        rideCompleted = snap.value as! Bool
-                    }
-                }
-
-                if !(rideCompleted) {
-                    let location = LocationClass(key: keyString,
-                                             patientID: patientID,
-                                             fromAddress: fromAddress,
-                                             fromLongitude: fromLongitude,
-                                             fromLatitude: fromLatitude,
-                                             toAddress: toAddress,
-                                             toLongitude: toLongitude,
-                                             toLatitude: toLatitude,
-                                             pickUpDate: pickUpDate,
-                                             dateAdded: dateAdded)
-
-                    self.objectArray.append(location)
-                }
-            } else {
-                print("Error retrieving Firebase data") // snapshot value is nil
-            }
-            self.tableView.reloadData()
-        })
-
-        // Retrieve the posts and listen for changes
-        Database.database().reference().child( "\(root)/\(uid)" ).observe(.childRemoved, with: { (snapshot) in
-            if snapshot.children.allObjects is [DataSnapshot] {
-                let removedID = snapshot.key // "01012011 11:59 PM"
-                var x = 0
-                while (x < self.objectArray.count) {
-                    if removedID == self.objectArray[x].key  {
-                        print("\(removedID) deleted successfuly")
-                        self.objectArray.remove(at: x)
-                        
-                        // exit
-                        x = self.objectArray.count
-                    }
-                    x += 1
-                }
-                
-            } else {
-                print("Error retrieving Firebase data") // snapshot value is nil
-            }
         
-            self.tableView.reloadData()
-        })
+        if userType == "driver" {
+            
+            displayDriver()
+        
+        } else { // else driver/passenger
+            
+            displayPassenger()
+            
+        } // end if driver/passenger
 
         // Do any additional setup after loading the view, typically from a nib.
         tableView.delegate = self
@@ -190,7 +108,8 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     
     // Header title
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return ("Patient ID: \(patientId)")
+        return ( (userType == "passenger") ? "Patient: \(patientId)" : "Driver: \(patientId)")
+        //return ("Patient ID: \(patientId)")
     }
 
     // Header title formatting
@@ -215,7 +134,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let locationClassVar: LocationClass!
         locationClassVar = objectArray[indexPath.row]
-        print("test:\(locationClassVar!)")
         
         performSegue(withIdentifier: "ScheduledTripsVC", sender: locationClassVar!)
     }
@@ -328,5 +246,183 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         
     }
 
+    
+    func displayDriver() {
+        var keyString:String = ""
+        var fromAddress:String = ""
+        var fromLongitude:Double = 0.0
+        var fromLatitude:Double = 0.0
+        var toAddress:String = ""
+        var toLongitude:Double = 0.0
+        var toLatitude:Double = 0.0
+        var pickUpDate:String = ""
+        var dateAdded:String = ""
+        var rideCompleted:Bool = false
+
+        Database.database().reference().child( "\(root)" ).observe(.childAdded, with: { (snapshot) in
+            
+            if let snapshots = snapshot.children.allObjects as? [DataSnapshot] {
+                keyString = snapshot.key
+                print(keyString)
+                for snap in snapshots {
+                    if let postDict = snap.value as? Dictionary<String, AnyObject> {
+                        pickUpDate = postDict["PickUpDate"]! as! String
+                        fromAddress = postDict["FromAddress"]! as! String
+                        fromLatitude = postDict["FromLatitude"]! as! Double
+                        fromLongitude = postDict["FromLongitude"]! as! Double
+                        toAddress = postDict["ToAddress"]! as! String
+                        toLatitude = postDict["ToLatitude"]! as! Double
+                        toLongitude = postDict["ToLongitude"]! as! Double
+                        rideCompleted = postDict["Completed"]! as! Bool
+                        dateAdded = postDict["DateAdded"]! as! String
+                    }
+                
+                    if !(rideCompleted) {
+                        let location = LocationClass(key: keyString,
+                                                     patientID: self.patientId,
+                                                     fromAddress: fromAddress,
+                                                     fromLongitude: fromLongitude,
+                                                     fromLatitude: fromLatitude,
+                                                     toAddress: toAddress,
+                                                     toLongitude: toLongitude,
+                                                     toLatitude: toLatitude,
+                                                     pickUpDate: pickUpDate,
+                                                     dateAdded: dateAdded)
+                        
+                        self.objectArray.append(location)
+                    }
+
+                }
+                
+            } else {
+                print("Error retrieving Firebase data") // snapshot value is nil
+            }
+            self.tableView.reloadData()
+        })
+        
+        // Retrieve the posts and listen for changes
+        Database.database().reference().child( "\(root)" ).observe(.childRemoved, with: { (snapshot) in
+            if snapshot.children.allObjects is [DataSnapshot] {
+                let removedID = snapshot.key // "01012011 11:59 PM"
+                var x = 0
+                while (x < self.objectArray.count) {
+                    if removedID == self.objectArray[x].key  {
+                        print("\(removedID) deleted successfuly")
+                        self.objectArray.remove(at: x)
+                        
+                        // exit
+                        x = self.objectArray.count
+                    }
+                    x += 1
+                }
+                
+            } else {
+                print("Error retrieving Firebase data") // snapshot value is nil
+            }
+            
+            self.tableView.reloadData()
+        })
+
+    }
+
+    func displayPassenger() {
+        var keyString:String = ""
+        var patientID:String = ""
+        var fromAddress:String = ""
+        var fromLongitude:Double = 0.0
+        var fromLatitude:Double = 0.0
+        var toAddress:String = ""
+        var toLongitude:Double = 0.0
+        var toLatitude:Double = 0.0
+        var pickUpDate:String = ""
+        var dateAdded:String = ""
+        var rideCompleted:Bool = false
+        // Retrieve the posts and listen for changes
+        Database.database().reference().child( "\(root)/\(uid)" ).observe(.childAdded, with: { (snapshot) in
+            if let result = snapshot.children.allObjects as? [DataSnapshot] {
+                
+                keyString = snapshot.key
+                
+                for snap in result {
+                    if (snap.key == "PatientID") {
+                        patientID = snap.value as! String
+                    }
+                    if (snap.key == "FromAddress") {
+                        fromAddress = snap.value as! String
+                    }
+                    if (snap.key == "FromLongitude") {
+                        fromLongitude = snap.value as! Double
+                        
+                    }
+                    if (snap.key == "FromLatitude") {
+                        fromLatitude = snap.value as! Double
+                    }
+                    
+                    if (snap.key == "ToAddress") {
+                        toAddress = snap.value as! String
+                    }
+                    if (snap.key == "ToLongitude") {
+                        toLongitude = snap.value as! Double
+                        
+                    }
+                    if (snap.key == "ToLatitude") {
+                        toLatitude = snap.value as! Double
+                    }
+                    if (snap.key == "PickUpDate") {
+                        pickUpDate = snap.value as! String
+                    }
+                    if (snap.key == "DateAdded") {
+                        dateAdded = snap.value as! String
+                    }
+                    if (snap.key == "Completed") {
+                        rideCompleted = snap.value as! Bool
+                    }
+                }
+                
+                if !(rideCompleted) {
+                    let location = LocationClass(key: keyString,
+                                                 patientID: patientID,
+                                                 fromAddress: fromAddress,
+                                                 fromLongitude: fromLongitude,
+                                                 fromLatitude: fromLatitude,
+                                                 toAddress: toAddress,
+                                                 toLongitude: toLongitude,
+                                                 toLatitude: toLatitude,
+                                                 pickUpDate: pickUpDate,
+                                                 dateAdded: dateAdded)
+                    
+                    self.objectArray.append(location)
+                }
+            } else {
+                print("Error retrieving Firebase data") // snapshot value is nil
+            }
+            self.tableView.reloadData()
+        })
+        
+        
+        // Retrieve the posts and listen for changes
+        Database.database().reference().child( "\(root)/\(uid)" ).observe(.childRemoved, with: { (snapshot) in
+            if snapshot.children.allObjects is [DataSnapshot] {
+                let removedID = snapshot.key // "01012011 11:59 PM"
+                var x = 0
+                while (x < self.objectArray.count) {
+                    if removedID == self.objectArray[x].key  {
+                        print("\(removedID) deleted successfuly")
+                        self.objectArray.remove(at: x)
+                        
+                        // exit
+                        x = self.objectArray.count
+                    }
+                    x += 1
+                }
+                
+            } else {
+                print("Error retrieving Firebase data") // snapshot value is nil
+            }
+            
+            self.tableView.reloadData()
+        })
+
+    }
 }
 
