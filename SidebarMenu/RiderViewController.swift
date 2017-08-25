@@ -200,7 +200,8 @@ class RiderViewController: UIViewController,
                                               "ToLatitude":  toLatitude,
                                               "\(self.whenString)": whenPickup,
                                               "DateAdded" : todaysDate,
-                                              "Completed" : false]
+                                              "Completed" : false,
+                                              "Driver" : "None"]
                             
                             let scheduledTripUpdates = ["/scheduledtrips/\(self.uid)/\(datetimekey)/": scheduledTrips]
                             

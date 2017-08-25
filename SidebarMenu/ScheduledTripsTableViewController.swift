@@ -43,7 +43,11 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         uid       = preferences.object(forKey: "uID") as! String
         userType  = preferences.object(forKey: "userType") as! String
         
-        self.title = "Scheduled Rides"
+        if (userType == "passenger") {
+            self.title = "Passenger Console"
+        } else {
+            self.title = "Driver Console"
+        }
 
         if revealViewController() != nil {
             menuButton.target = revealViewController()
@@ -94,20 +98,65 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         
         // Configure the cell...
         let from    = locationClassVar.fromAddress
-        let fromCoord = ("\(String(format: "%.3f", locationClassVar.fromLatitude)), \(String(format: "%.3f", locationClassVar.fromLongitude))")
+        //let fromCoord = ("\(String(format: "%.3f", locationClassVar.fromLatitude)), \(String(format: "%.3f", locationClassVar.fromLongitude))")
         let to      = locationClassVar.toAddress
-        let toCoord = ("\(String(format: "%.3f", locationClassVar.toLatitude)), \(String(format: "%.3f", locationClassVar.toLongitude))")
+        //let toCoord = ("\(String(format: "%.3f", locationClassVar.toLatitude)), \(String(format: "%.3f", locationClassVar.toLongitude))")
         let when    = locationClassVar.pickUpDate
+        let driver    = locationClassVar.driver
         
         cell.textLabel?.font =  UIFont.systemFont(ofSize: 12.0)
         cell.textLabel?.numberOfLines = 0
-        cell.textLabel?.text = ("From: \(from)\nFrom Coordinates: \(fromCoord)\nTo: \(to)\nTo Coordinates: \(toCoord)\nWhen: \(when)")
+        if (userType == "driver") {
+            cell.textLabel?.text = ("Passenger: \nFrom: \(from)\nTo: \(to)\nDate: \(when)\nDriver: \(driver)")
+        } else {
+            cell.textLabel?.text = ("From: \(from)\nTo: \(to)\nDate: \(when)\nDriver: \(driver)")
+        }
         return cell
     }
     
+     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        if (userType == "driver") {
+            let option1 = UITableViewRowAction(style: .normal, title: "Share") { action, index in
+                print("Option 1 button tapped")
+            }
+            option1.backgroundColor = UIColor.lightGray
+            
+            let option2 = UITableViewRowAction(style: .normal, title: "Pick Up") { action, index in
+                print("Option 2 button tapped")
+                
+                self.ref?.child("\(self.root)/ASZlbugcgab0j3qaMasoK13t86f2/08252017 03:30 PM/").updateChildValues(["Driver":"Gamy Malasarte"])
+            
+            }
+            option2.backgroundColor = UIColor.orange
+            
+            let option3 = UITableViewRowAction(style: .normal, title: "Show Details") { action, index in
+                print("Option 3 button tapped")
+                let locationClassVar: LocationClass!
+                locationClassVar = self.objectArray[indexPath.row]
+                
+                self.performSegue(withIdentifier: "ScheduledTripsVC", sender: locationClassVar!)
+            }
+            option3.backgroundColor = UIColor.blue
+            
+            return [option2, option3]
+        } else {
+            let cancel = UITableViewRowAction(style: .normal, title: "Cancel ride") { action, index in
+                self.deletePostDataIndexPath = indexPath
+                let PostDataToDelete = self.objectArray[indexPath.row]
+                self.confirmDelete(PostDataToDelete)
+            }
+            cancel.backgroundColor = UIColor.red
+            
+            return [cancel]
+
+        }
+    }
+    
+    
     // Header title
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return ( (userType == "passenger") ? "Patient: \(patientId)" : "Driver: \(patientId)" )
+        return ( (userType == "passenger") ? "Passenger: \(patientId)" : "Driver: \(patientId)" )
         //return ("Patient ID: \(patientId)")
     }
 
@@ -150,14 +199,15 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     // MARK: UITableViewDelegate Methods
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            deletePostDataIndexPath = indexPath
-            let PostDataToDelete = objectArray[indexPath.row]
-            confirmDelete(PostDataToDelete)
-        }
-    }
-    
+//    // This is no longer needed
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            deletePostDataIndexPath = indexPath
+//            let PostDataToDelete = objectArray[indexPath.row]
+//            confirmDelete(PostDataToDelete)
+//        }
+//    }
+//    
     // Delete Confirmation and Handling
     func confirmDelete(_ dataToDelete: Any) {
         let alert = UIAlertController(title: "Cancel Ride", message: "Are you sure you want to Cancel this ride?", preferredStyle: .actionSheet)
@@ -200,7 +250,8 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                                                         "ToLongitude" : locationClassVar.toLongitude,
                                                         "PickUpDate" : locationClassVar.pickUpDate,
                                                         "DateAdded" : locationClassVar.dateAdded,
-                                                        "IPAddress" : ipAddress
+                                                        "IPAddress" : ipAddress,
+                                                        "Driver" : ""
                                                         ])
             
             
@@ -262,7 +313,10 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 var pickUpDate:String = ""
                 var dateAdded:String = ""
                 var rideCompleted:Bool = false
+                var driver:String = ""
             
+            
+                // Watch for new records
                 Database.database().reference().child("\(self.root)/\(snapshot.key)").observe(.childAdded, with: { (snapshot) in
                     if let postDict = snapshot.value as? Dictionary<String, AnyObject> {
                         keyString = snapshot.key
@@ -275,6 +329,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                         toLongitude = postDict["ToLongitude"]! as! Double
                         rideCompleted = postDict["Completed"]! as! Bool
                         dateAdded = postDict["DateAdded"]! as! String
+                        driver = postDict["Driver"]! as! String
                         
                         if !(rideCompleted) {
                             let location = LocationClass(key: keyString,
@@ -286,7 +341,8 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                                                          toLongitude: toLongitude,
                                                          toLatitude: toLatitude,
                                                          pickUpDate: pickUpDate,
-                                                         dateAdded: dateAdded)
+                                                         dateAdded: dateAdded,
+                                                         driver: driver )
                             
                             self.objectArray.append(location)
                         }
@@ -294,10 +350,62 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                     }
                     
                 })
-            
+
+                // Watch for updates
+                Database.database().reference().child("\(self.root)/\(snapshot.key)").observe(.childChanged, with: { (snapshot) in
+                    if let postDict = snapshot.value as? Dictionary<String, AnyObject> {
+                        keyString = snapshot.key
+                        pickUpDate = postDict["PickUpDate"]! as! String
+                        fromAddress = postDict["FromAddress"]! as! String
+                        fromLatitude = postDict["FromLatitude"]! as! Double
+                        fromLongitude = postDict["FromLongitude"]! as! Double
+                        toAddress = postDict["ToAddress"]! as! String
+                        toLatitude = postDict["ToLatitude"]! as! Double
+                        toLongitude = postDict["ToLongitude"]! as! Double
+                        rideCompleted = postDict["Completed"]! as! Bool
+                        dateAdded = postDict["DateAdded"]! as! String
+                        driver = postDict["Driver"]! as! String
+                        
+                        
+                        let removedID = snapshot.key
+                        var x = 0
+                        while (x < self.objectArray.count) {
+                            print("\(removedID) == \(self.objectArray[x].key)")
+                            
+                            if removedID == self.objectArray[x].key  {
+                                print("\(removedID) deleted successfuly")
+                                self.objectArray.remove(at: x)
+                                
+                                // exit
+                                x = self.objectArray.count
+                            }
+                            x += 1
+                        }
+                        
+                        if !(rideCompleted) {
+                            let location = LocationClass(key: keyString,
+                                                         patientID: self.patientId,
+                                                         fromAddress: fromAddress,
+                                                         fromLongitude: fromLongitude,
+                                                         fromLatitude: fromLatitude,
+                                                         toAddress: toAddress,
+                                                         toLongitude: toLongitude,
+                                                         toLatitude: toLatitude,
+                                                         pickUpDate: pickUpDate,
+                                                         dateAdded: dateAdded,
+                                                         driver: driver )
+                            
+                            self.objectArray.append(location)
+                        }
+                        self.tableView.reloadData()
+                    }
+                    
+                })
+
+                // Watch for deletes
                 Database.database().reference().child("\(self.root)/\(snapshot.key)").observe(.childRemoved, with: { (snapshot) in
                     let removedID = snapshot.key
-                    print("test \(removedID) - \(self.objectArray[0].pickUpDate)")
+                    
                     var x = 0
                     while (x < self.objectArray.count) {
                         print("\(removedID) == \(self.objectArray[x].key)")
@@ -313,6 +421,9 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                     }
                     self.tableView.reloadData()
                 })
+            
+            
+            
             
             } else {
                 print("Error retrieving Firebase data") // snapshot value is nil
@@ -333,6 +444,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         var pickUpDate:String = ""
         var dateAdded:String = ""
         var rideCompleted:Bool = false
+        var driver:String = ""
         // Retrieve the posts and listen for changes
         Database.database().reference().child( "\(root)/\(uid)" ).observe(.childAdded, with: { (snapshot) in
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
@@ -373,6 +485,9 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                     if (snap.key == "Completed") {
                         rideCompleted = snap.value as! Bool
                     }
+                    if (snap.key == "Driver") {
+                        driver = snap.value as! String
+                    }
                 }
                 
                 if !(rideCompleted) {
@@ -385,7 +500,8 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                                                  toLongitude: toLongitude,
                                                  toLatitude: toLatitude,
                                                  pickUpDate: pickUpDate,
-                                                 dateAdded: dateAdded)
+                                                 dateAdded: dateAdded,
+                                                 driver: driver)
                     
                     self.objectArray.append(location)
                 }
@@ -394,6 +510,58 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             }
             self.tableView.reloadData()
         })
+        
+        // Watch for updates
+        Database.database().reference().child( "\(root)/\(uid)" ).observe(.childChanged, with: { (snapshot) in
+            if let postDict = snapshot.value as? Dictionary<String, AnyObject> {
+                keyString = snapshot.key
+                pickUpDate = postDict["PickUpDate"]! as! String
+                fromAddress = postDict["FromAddress"]! as! String
+                fromLatitude = postDict["FromLatitude"]! as! Double
+                fromLongitude = postDict["FromLongitude"]! as! Double
+                toAddress = postDict["ToAddress"]! as! String
+                toLatitude = postDict["ToLatitude"]! as! Double
+                toLongitude = postDict["ToLongitude"]! as! Double
+                rideCompleted = postDict["Completed"]! as! Bool
+                dateAdded = postDict["DateAdded"]! as! String
+                driver = postDict["Driver"]! as! String
+                
+                
+                let removedID = snapshot.key
+                var x = 0
+                while (x < self.objectArray.count) {
+                    print("\(removedID) == \(self.objectArray[x].key)")
+                    
+                    if removedID == self.objectArray[x].key  {
+                        print("\(removedID) deleted successfuly")
+                        self.objectArray.remove(at: x)
+                        
+                        // exit
+                        x = self.objectArray.count
+                    }
+                    x += 1
+                }
+                
+                if !(rideCompleted) {
+                    let location = LocationClass(key: keyString,
+                                                 patientID: self.patientId,
+                                                 fromAddress: fromAddress,
+                                                 fromLongitude: fromLongitude,
+                                                 fromLatitude: fromLatitude,
+                                                 toAddress: toAddress,
+                                                 toLongitude: toLongitude,
+                                                 toLatitude: toLatitude,
+                                                 pickUpDate: pickUpDate,
+                                                 dateAdded: dateAdded,
+                                                 driver: driver )
+                    
+                    self.objectArray.append(location)
+                }
+                self.tableView.reloadData()
+            }
+            
+        })
+        
         
         
         // Retrieve the posts and listen for changes
