@@ -176,9 +176,9 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         return headerView
     }
     
-    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
-        return "Cancel ride"
-    }
+//    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+//        return "Cancel ride"
+//    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let locationClassVar: LocationClass!
@@ -373,7 +373,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                             print("\(removedID) == \(self.objectArray[x].key)")
                             
                             if removedID == self.objectArray[x].key  {
-                                print("\(removedID) deleted successfuly")
+                                print("\(removedID) updated successfuly")
                                 self.objectArray.remove(at: x)
                                 
                                 // exit
@@ -533,7 +533,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                     print("\(removedID) == \(self.objectArray[x].key)")
                     
                     if removedID == self.objectArray[x].key  {
-                        print("\(removedID) deleted successfuly")
+                        print("\(removedID) updated successfuly")
                         self.objectArray.remove(at: x)
                         
                         // exit
