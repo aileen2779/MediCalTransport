@@ -8,8 +8,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     
     @IBOutlet var menuButton:UIBarButtonItem!
     @IBOutlet var extraButton:UIBarButtonItem!
-    
-    var myBGColor = CONST_BGCOLOR
+
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -108,14 +107,15 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     
     // Header title
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return ( (userType == "passenger") ? "Patient: \(patientId)" : "Driver: \(patientId)")
+        return ( (userType == "passenger") ? "Patient: \(patientId)" : "Driver: \(patientId)" )
         //return ("Patient ID: \(patientId)")
     }
 
     // Header title formatting
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
-        headerView.backgroundColor = myBGColor
+        headerView.backgroundColor = ((userType == "passenger") ? CONST_BGCOLOR : CONST_BGCOLOR_DRIVER )
+        
         
         let headerLabel = UILabel(frame: CGRect(x: 50, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
         headerLabel.font = UIFont(name: "System", size: 17)
@@ -248,24 +248,24 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
 
     
     func displayDriver() {
-        var keyString:String = ""
-        var fromAddress:String = ""
-        var fromLongitude:Double = 0.0
-        var fromLatitude:Double = 0.0
-        var toAddress:String = ""
-        var toLongitude:Double = 0.0
-        var toLatitude:Double = 0.0
-        var pickUpDate:String = ""
-        var dateAdded:String = ""
-        var rideCompleted:Bool = false
 
-        Database.database().reference().child( "\(root)" ).observe(.childAdded, with: { (snapshot) in
+        Database.database().reference().child("\(root)").observe(.childAdded, with: { (snapshot) in
             
-            if let snapshots = snapshot.children.allObjects as? [DataSnapshot] {
-                keyString = snapshot.key
-                print(keyString)
-                for snap in snapshots {
-                    if let postDict = snap.value as? Dictionary<String, AnyObject> {
+           if snapshot.children.allObjects is [DataSnapshot] {
+                var keyString:String = ""
+                var fromAddress:String = ""
+                var fromLongitude:Double = 0.0
+                var fromLatitude:Double = 0.0
+                var toAddress:String = ""
+                var toLongitude:Double = 0.0
+                var toLatitude:Double = 0.0
+                var pickUpDate:String = ""
+                var dateAdded:String = ""
+                var rideCompleted:Bool = false
+            
+                Database.database().reference().child("\(self.root)/\(snapshot.key)").observe(.childAdded, with: { (snapshot) in
+                    if let postDict = snapshot.value as? Dictionary<String, AnyObject> {
+                        keyString = snapshot.key
                         pickUpDate = postDict["PickUpDate"]! as! String
                         fromAddress = postDict["FromAddress"]! as! String
                         fromLatitude = postDict["FromLatitude"]! as! Double
@@ -275,54 +275,50 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                         toLongitude = postDict["ToLongitude"]! as! Double
                         rideCompleted = postDict["Completed"]! as! Bool
                         dateAdded = postDict["DateAdded"]! as! String
-                    }
-                
-                    if !(rideCompleted) {
-                        let location = LocationClass(key: keyString,
-                                                     patientID: self.patientId,
-                                                     fromAddress: fromAddress,
-                                                     fromLongitude: fromLongitude,
-                                                     fromLatitude: fromLatitude,
-                                                     toAddress: toAddress,
-                                                     toLongitude: toLongitude,
-                                                     toLatitude: toLatitude,
-                                                     pickUpDate: pickUpDate,
-                                                     dateAdded: dateAdded)
                         
-                        self.objectArray.append(location)
+                        if !(rideCompleted) {
+                            let location = LocationClass(key: keyString,
+                                                         patientID: self.patientId,
+                                                         fromAddress: fromAddress,
+                                                         fromLongitude: fromLongitude,
+                                                         fromLatitude: fromLatitude,
+                                                         toAddress: toAddress,
+                                                         toLongitude: toLongitude,
+                                                         toLatitude: toLatitude,
+                                                         pickUpDate: pickUpDate,
+                                                         dateAdded: dateAdded)
+                            
+                            self.objectArray.append(location)
+                        }
+                        self.tableView.reloadData()
                     }
-
-                }
-                
+                    
+                })
+            
+                Database.database().reference().child("\(self.root)/\(snapshot.key)").observe(.childRemoved, with: { (snapshot) in
+                    let removedID = snapshot.key
+                    print("test \(removedID) - \(self.objectArray[0].pickUpDate)")
+                    var x = 0
+                    while (x < self.objectArray.count) {
+                        print("\(removedID) == \(self.objectArray[x].key)")
+                        
+                        if removedID == self.objectArray[x].key  {
+                            print("\(removedID) deleted successfuly")
+                            self.objectArray.remove(at: x)
+                        
+                            // exit
+                            x = self.objectArray.count
+                        }
+                        x += 1
+                    }
+                    self.tableView.reloadData()
+                })
+            
             } else {
                 print("Error retrieving Firebase data") // snapshot value is nil
             }
-            self.tableView.reloadData()
         })
         
-        // Retrieve the posts and listen for changes
-        Database.database().reference().child( "\(root)" ).observe(.childRemoved, with: { (snapshot) in
-            if snapshot.children.allObjects is [DataSnapshot] {
-                let removedID = snapshot.key // "01012011 11:59 PM"
-                var x = 0
-                while (x < self.objectArray.count) {
-                    if removedID == self.objectArray[x].key  {
-                        print("\(removedID) deleted successfuly")
-                        self.objectArray.remove(at: x)
-                        
-                        // exit
-                        x = self.objectArray.count
-                    }
-                    x += 1
-                }
-                
-            } else {
-                print("Error retrieving Firebase data") // snapshot value is nil
-            }
-            
-            self.tableView.reloadData()
-        })
-
     }
 
     func displayPassenger() {
@@ -340,7 +336,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         // Retrieve the posts and listen for changes
         Database.database().reference().child( "\(root)/\(uid)" ).observe(.childAdded, with: { (snapshot) in
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
-                
+
                 keyString = snapshot.key
                 
                 for snap in result {
@@ -403,9 +399,11 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         // Retrieve the posts and listen for changes
         Database.database().reference().child( "\(root)/\(uid)" ).observe(.childRemoved, with: { (snapshot) in
             if snapshot.children.allObjects is [DataSnapshot] {
+                print("test")
                 let removedID = snapshot.key // "01012011 11:59 PM"
                 var x = 0
                 while (x < self.objectArray.count) {
+                    print("\(removedID) - \(self.objectArray[x].key)")
                     if removedID == self.objectArray[x].key  {
                         print("\(removedID) deleted successfuly")
                         self.objectArray.remove(at: x)

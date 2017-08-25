@@ -196,6 +196,7 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                                 if (snap.key == "UserType") {
                                     myUserType = snap.value! as! String
                                 }
+                                
                             }
                             
                             if (isActive) {
