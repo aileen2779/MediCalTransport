@@ -12,6 +12,7 @@ class LocationClass {
     private var _pickUpDate: String!
     private var _dateAdded: String!
     private var _driver: String!
+    private var _uid: String!
 
     
     var key: String {
@@ -92,6 +93,14 @@ class LocationClass {
         return _driver
     }
 
+    var uid: String {
+        if _uid == nil {
+            _uid = ""
+        }
+        
+        return _uid
+    }
+
     init(key: String,
          patientID: String,
          fromAddress: String,
@@ -102,8 +111,9 @@ class LocationClass {
          toLatitude: Double,
          pickUpDate: String,
          dateAdded: String,
-         driver: String
-         ) {
+         driver: String,
+         uid: String
+        ) {
 
         self._key = key
         self._patientID = patientID
@@ -116,6 +126,7 @@ class LocationClass {
         self._pickUpDate = pickUpDate
         self._dateAdded = dateAdded
         self._driver = driver
+        self._uid = uid
     }
     
 }

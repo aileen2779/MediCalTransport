@@ -184,6 +184,8 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                     
                     var isActive:Bool = false
                     var myUserType:String = ""
+                    var firstName:String = ""
+                    var lastName:String = ""
                     
                     if let result = snapshot.children.allObjects as? [DataSnapshot] {
                         if (result.isEmpty) {
@@ -195,6 +197,12 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                                 }
                                 if (snap.key == "UserType") {
                                     myUserType = snap.value! as! String
+                                }
+                                if (snap.key == "FirstName") {
+                                    firstName = snap.value! as! String
+                                }
+                                if (snap.key == "LastName") {
+                                    lastName = snap.value! as! String
                                 }
                                 
                             }
@@ -216,6 +224,9 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
                                 preferences.set(self.ipAddress, forKey: "ipAddress")
                                 preferences.set(uid, forKey: "uID")
                                 preferences.set(self.userType, forKey: "userType")
+                                preferences.set(firstName, forKey: "firstName")
+                                preferences.set(lastName, forKey: "lastName")
+                                
                                 
                                 //print("MyUserType:\(myUserType)")
                                 //print("SelectecUserType:\(self.userType)")
