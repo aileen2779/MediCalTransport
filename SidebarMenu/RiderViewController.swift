@@ -29,6 +29,8 @@ class RiderViewController: UIViewController,
     
     var patientId:String = ""
     var ipAddress:String = ""
+    var firstName:String = ""
+    var lastName:String = ""
     var userType:String = ""
     var uid:String = ""
     var ridesPerYear:Int = 0
@@ -50,7 +52,9 @@ class RiderViewController: UIViewController,
         ipAddress   = preferences.object(forKey: "ipAddress") as! String
         uid         = preferences.object(forKey: "uID") as! String
         userType    = preferences.object(forKey: "userType") as! String
-        print(userType)
+        firstName   = preferences.object(forKey: "firstName") as! String
+        lastName    = preferences.object(forKey: "lastName") as! String
+        
         
         if userType == "driver" {
             //dismiss(animated: true, completion: nil)
@@ -201,7 +205,8 @@ class RiderViewController: UIViewController,
                                               "\(self.whenString)": whenPickup,
                                               "DateAdded" : todaysDate,
                                               "Completed" : false,
-                                              "Driver" : "None"]
+                                              "Driver" : "None",
+                                              "Passenger" : "\(self.firstName.capitalized) \(self.lastName.capitalized)"]
                             
                             let scheduledTripUpdates = ["/scheduledtrips/\(self.uid)/\(datetimekey)/": scheduledTrips]
                             

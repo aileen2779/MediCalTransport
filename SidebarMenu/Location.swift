@@ -12,6 +12,7 @@ class LocationClass {
     private var _pickUpDate: String!
     private var _dateAdded: String!
     private var _driver: String!
+    private var _passenger: String!
     private var _uid: String!
 
     
@@ -93,6 +94,14 @@ class LocationClass {
         return _driver
     }
 
+    var passenger: String {
+        if _passenger == nil {
+            _passenger = ""
+        }
+        
+        return _passenger
+    }
+    
     var uid: String {
         if _uid == nil {
             _uid = ""
@@ -112,6 +121,7 @@ class LocationClass {
          pickUpDate: String,
          dateAdded: String,
          driver: String,
+         passenger: String,
          uid: String
         ) {
 
@@ -126,6 +136,7 @@ class LocationClass {
         self._pickUpDate = pickUpDate
         self._dateAdded = dateAdded
         self._driver = driver
+        self._passenger = passenger
         self._uid = uid
     }
     
