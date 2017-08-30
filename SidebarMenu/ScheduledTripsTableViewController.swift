@@ -124,23 +124,28 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         locationClassVar = objectArray[indexPath.row]
         var myPassenger:Bool = false
         
-        if (locationClassVar.driver.lowercased() == "\(firstName.lowercased()) \(lastName.lowercased())") {
-            print("I'm the driver!")
-            myPassenger = true
-        } else {
-            print("I'm not the driver!")
-            myPassenger = false
-        }
-        
-        
         if (userType == "driver") {
-            let option1 = UITableViewRowAction(style: .normal, title: "Share") { action, index in
-                print("Option 1 button tapped")
+
+            // find out of i'm the driver or not
+            if (locationClassVar.driver.lowercased() == "\(firstName.lowercased()) \(lastName.lowercased())") {
+                print("I'm the driver!")
+                myPassenger = true
+            } else {
+                print("I'm not the driver!")
+                myPassenger = false
             }
-            option1.backgroundColor = UIColor.lightGray
+            
+            
+            let option1 = UITableViewRowAction(style: .normal, title: "End\nPickup") { action, index in
+                print("Option 1 button tapped")
+                self.deleteUpdatePostDataIndexPath = indexPath
+                let PostDataToUpdate = self.objectArray[indexPath.row]
+                
+                self.confirmEndPickup(PostDataToUpdate)
+            }
+            option1.backgroundColor = UIColor(red:0.49, green:0.73, blue:0.71, alpha:1.0)
 
-
-            let option2 = UITableViewRowAction(style: .normal, title: (myPassenger ? "Cancel Pickup" : "Pick up")) { action, index in
+            let option2 = UITableViewRowAction(style: .normal, title: (myPassenger ? "Cancel\nPickup" : "Confirm\nPickup")) { action, index in
                 print("Option 2 button tapped")
                 
                 self.deleteUpdatePostDataIndexPath = indexPath
@@ -155,19 +160,19 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             option2.backgroundColor = (myPassenger ? UIColor.red : UIColor(red:0.03, green:0.43, blue:0.21, alpha:1.0))
                 
             
-            let option3 = UITableViewRowAction(style: .normal, title: "Details") { action, index in
-                print("Option 3 button tapped")
-                let locationClassVar: LocationClass!
-                locationClassVar = self.objectArray[indexPath.row]
-                
-                self.performSegue(withIdentifier: "ScheduledTripsVC", sender: locationClassVar!)
-            }
-            option3.backgroundColor = UIColor.blue
+//            let option3 = UITableViewRowAction(style: .normal, title: "View\nDetails") { action, index in
+//                print("Option 3 button tapped")
+//                let locationClassVar: LocationClass!
+//                locationClassVar = self.objectArray[indexPath.row]
+//                
+//                self.performSegue(withIdentifier: "ScheduledTripsVC", sender: locationClassVar!)
+//            }
+//            option3.backgroundColor = UIColor.blue
             
-            return [option2, option3]
+            return [option1, option2]
             
         } else {
-            let cancel = UITableViewRowAction(style: .normal, title: "Cancel ride") { action, index in
+            let cancel = UITableViewRowAction(style: .normal, title: "Cancel\nride") { action, index in
                 self.deleteUpdatePostDataIndexPath = indexPath
                 let PostDataToDelete = self.objectArray[indexPath.row]
                 self.confirmDelete(PostDataToDelete)
@@ -259,7 +264,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     // Cancel Pickup Confirmation and Handling
     func confirmCancelPickup(_ dataToUpdate: Any) {
         
-        let alert = UIAlertController(title: "Confirm Pick up", message: "Are you sure you want to cancel pickup?", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "Cancel Pickup", message: "Are you sure you want to cancel pickup?", preferredStyle: .actionSheet)
         
         let DeleteAction = UIAlertAction(title: "Yes, I want to cancel pickup", style: .destructive, handler: handleCancelPickupPostData)
         let CancelAction = UIAlertAction(title: "Go Back", style: .cancel, handler: cancelDeletePostData)
@@ -274,6 +279,24 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         self.present(alert, animated: true, completion: nil)
     }
 
+    // End Pickup Confirmation and Handling
+    func confirmEndPickup(_ dataToUpdate: Any) {
+        
+        let alert = UIAlertController(title: "End Pickup", message: "Are you sure you want to end pickup?", preferredStyle: .actionSheet)
+        
+        let DeleteAction = UIAlertAction(title: "Yes, I want to end pickup", style: .destructive, handler: handleEndPickupPostData)
+        let CancelAction = UIAlertAction(title: "Go Back", style: .cancel, handler: cancelDeletePostData)
+        
+        alert.addAction(DeleteAction)
+        alert.addAction(CancelAction)
+        
+        // Support presentation in iPad
+        alert.popoverPresentationController?.sourceView = self.view
+        alert.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     func handlePickupPostData(_ alertAction: UIAlertAction!) -> Void {
         if let indexPath = deleteUpdatePostDataIndexPath {
             tableView.beginUpdates()
@@ -339,7 +362,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             
             
             // Display confirmation
-            self.displayAlert(title: "Pickup confirmed", message: "A pickup confirmation has been sent.\nThis event has been removed from your calendar")
+            self.displayAlert(title: "Pickup Cancelled", message: "A pickup cancellation has been sent.\nThis event has been removed from your calendar")
             
             deleteUpdatePostDataIndexPath = nil
             
@@ -348,6 +371,43 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         
     }
 
+    func handleEndPickupPostData(_ alertAction: UIAlertAction!) -> Void {
+        if let indexPath = deleteUpdatePostDataIndexPath {
+            tableView.beginUpdates()
+            
+            let locationClassVar: LocationClass!
+            locationClassVar = objectArray[indexPath.row]
+            let parentId = locationClassVar.uid
+            let childId = locationClassVar.key
+            
+            self.ref?.child("\(self.root)/\(parentId)/\(childId)/").updateChildValues(["Completed":true])
+            
+            // Log to firebase
+            firebaseLog(userID: uid, logToSave: ["Action" : "end pickup",
+                                                 "PatientID": patientId,
+                                                 "FromAddress": locationClassVar.fromAddress,
+                                                 "FromLatitude" : locationClassVar.fromLatitude,
+                                                 "FromLongitude" : locationClassVar.fromLongitude,
+                                                 "ToAddress" : locationClassVar.toAddress,
+                                                 "ToLatitude" : locationClassVar.toLatitude,
+                                                 "ToLongitude" : locationClassVar.toLongitude,
+                                                 "PickUpDate" : locationClassVar.pickUpDate,
+                                                 "DateAdded" : locationClassVar.dateAdded,
+                                                 "IPAddress" : ipAddress,
+                                                 "Driver" : ""
+                ])
+            
+            
+            // Display confirmation
+            self.displayAlert(title: "Pickup Ended", message: "A pickup completion has been sent.\nThis event has been removed from your calendar")
+            
+            deleteUpdatePostDataIndexPath = nil
+            
+            tableView.endUpdates()
+        }
+        
+    }
+    
     func handleDeletePostData(_ alertAction: UIAlertAction!) -> Void {
         if let indexPath = deleteUpdatePostDataIndexPath {
             tableView.beginUpdates()

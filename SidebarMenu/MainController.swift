@@ -54,7 +54,10 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         UISegmentedControl.appearance().setTitleTextAttributes(titleTextAttributes, for: .selected)
         segmentControl.setTitleTextAttributes(attributes as? [AnyHashable : Any], for: .normal)
 
-        
+        // User Type
+        if userType == "" {
+            userType = "passenger"
+        }
         // Get ip address
         self.getIpAddress(completion: { success in
             if success {

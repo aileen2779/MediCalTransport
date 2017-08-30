@@ -205,7 +205,7 @@ class RiderViewController: UIViewController,
                                               "\(self.whenString)": whenPickup,
                                               "DateAdded" : todaysDate,
                                               "Completed" : false,
-                                              "Driver" : "None",
+                                              "Driver" : "",
                                               "Passenger" : "\(self.firstName.capitalized) \(self.lastName.capitalized)"]
                             
                             let scheduledTripUpdates = ["/scheduledtrips/\(self.uid)/\(datetimekey)/": scheduledTrips]
