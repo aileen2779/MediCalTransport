@@ -1,15 +1,44 @@
 import UIKit
 import MapKit
 import CoreLocation
+import FirebaseDatabase
 
 
 class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate {
-        @IBOutlet weak var mapView: MKMapView!
+    var ref:DatabaseReference?
+    
+    
+    var requestUsername = "Passenger Location"
+    var userType:String = ""
+    
+    @IBOutlet weak var mapView: MKMapView!
         
     @IBAction func goBackButtonTapped(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
 
+    
+    @IBOutlet weak var pickUpLabel: UILabel!
+    @IBOutlet weak var pickUpNowButton: UIButton!
+    
+    @IBAction func pickUpNowTapped(_ sender: Any) {
+        
+        let requestLocation = CLLocationCoordinate2D(latitude: fromLatitude, longitude: fromLongitude)
+        
+        let requestCLLocation = CLLocation(latitude: requestLocation.latitude, longitude: requestLocation.longitude)
+        CLGeocoder().reverseGeocodeLocation(requestCLLocation, completionHandler: { (placemarks, error) in
+            if let placemarks = placemarks {
+                if placemarks.count > 0 {
+                    let mKPlacemark = MKPlacemark(placemark: placemarks[0])
+                    let mapItem = MKMapItem(placemark: mKPlacemark)
+                    mapItem.name = self.requestUsername
+                    let launchOptions = [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving]
+                    mapItem.openInMaps(launchOptions: launchOptions)
+                }
+            }
+        })
+    }
+    
     var location: LocationClass!
     
     
@@ -20,12 +49,33 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate {
     var toLatitude:Double = 0
     var toLongitude:Double = 0
     
+    
     override func viewDidAppear(_ animated: Bool) {
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // firebase database init
+        ref = Database.database().reference()
+        
+        // preferences init
+        let preferences = UserDefaults.standard
+        userType  = preferences.object(forKey: "userType") as! String
+        
+        if (userType == "passenger") {
+            pickUpLabel.isHidden = true
+            pickUpNowButton.isHidden = true
+        } else {
+            let driverCLLocation = CLLocation(latitude: 36.15911727805614, longitude: -115.1715026681531)
+            let riderCLLocation = CLLocation(latitude: 36.0749375, longitude: -115.0132424)
+            let distance = driverCLLocation.distance(from: riderCLLocation) / 1000
+            let roundedDistance = round(distance * 100) / 100
+            print("You are \(roundedDistance) miles away")
+            pickUpLabel.text = "You are \(roundedDistance) miles away"
+        }
+
+    
         //let preferences = UserDefaults.standard
         //let ipAddress = preferences.object(forKey: "ipAddress") as! String
         //let uid = preferences.object(forKey: "uID") as! String
