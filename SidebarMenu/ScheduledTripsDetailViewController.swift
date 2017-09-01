@@ -9,6 +9,7 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate, C
     
     var requestUsername = "Passenger Location"
     var userType:String = ""
+    var pickUpInitiated:Bool = false
 
     @IBOutlet weak var mapView: MKMapView!
         
@@ -23,6 +24,8 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate, C
     @IBOutlet weak var totalDistanceLabel: UILabel!
     
     @IBAction func pickUpNowTapped(_ sender: Any) {
+        
+        pickUpInitiated = true
         
         self.ref?.child("/scheduledtrips/\(location.uid)/\(location.key)").updateChildValues(["DriverLongitude": driverLongitude])
         self.ref?.child("/scheduledtrips/\(location.uid)/\(location.key)").updateChildValues(["DriverLatitude": driverLatitude])
@@ -55,40 +58,87 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate, C
     var toLongitude:Double = 0
     var driverLatitude:Double = 0
     var driverLongitude:Double = 0
+    var driverMovingLongitude:Double = 0
+    var driverMovingLatitude:Double = 0
     
     var driverLocation = CLLocation(latitude: 0, longitude: 0)
     var riderLocation = CLLocation(latitude: 0, longitude: 0)
     var toLocation = CLLocation(latitude: 0, longitude: 0)
-
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {
+
         let _location = locations[0]
         
         let span:MKCoordinateSpan = MKCoordinateSpanMake(0.01, 0.01)
         let myLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(_location.coordinate.latitude, _location.coordinate.longitude)
         
         let _:MKCoordinateRegion = MKCoordinateRegionMake(myLocation, span)
-        //mapView.setRegion(region, animated: true)
-        
-        //print("Speed: \(location.speed)")
-        //print("Altitude: \(location.altitude)")
-        //print("Latitude: \(location.coordinate.latitude)")
-        //print("Longitude: \(location.coordinate.longitude)")
-        
-        //self.mapView.showsUserLocation = true
-        
-        driverLocation = CLLocation(latitude: _location.coordinate.latitude, longitude: _location.coordinate.longitude)
-        
-        // store driver longitudes
-        driverLatitude = driverLocation.coordinate.latitude
-        driverLongitude = driverLocation.coordinate.longitude
-        
-        let distance = driverLocation.distance(from: riderLocation) / 1000
-        let roundedDistance = round(distance * 100) / 100
         
         if (userType == "driver") {
+            //mapView.setRegion(region, animated: true)
+            
+            //print("Speed: \(location.speed)")
+            //print("Altitude: \(location.altitude)")
+            print("Latitude: \(_location.coordinate.latitude)")
+            print("Longitude: \(_location.coordinate.longitude)")
+            
+            //self.mapView.showsUserLocation = true
+            
+            driverLocation = CLLocation(latitude: _location.coordinate.latitude, longitude: _location.coordinate.longitude)
+            
+            // store driver longitudes
+            driverLatitude = driverLocation.coordinate.latitude
+            driverLongitude = driverLocation.coordinate.longitude
+        
+            let distance = driverLocation.distance(from: riderLocation) / 1000
+            let roundedDistance = round(distance * 100) / 100
+            
             pickUpLabel.text = "You are \(roundedDistance) miles away"
+        } else {
+            
+            Database.database().reference().child("/scheduledtrips/\(location.uid)/\(location.key)").observeSingleEvent(of: .value, with: { (snapshot) in
+                if let result = snapshot.children.allObjects as? [DataSnapshot] {
+                    for snap in result {
+                        if (snap.key == "DriverLongitude") {
+                            self.driverMovingLongitude = snap.value as! Double
+                        }
+                        if (snap.key == "DriverLatitude") {
+                            self.driverMovingLatitude = snap.value as! Double
+                        }
+                    }
+                }
+            })
+            
+            Database.database().reference().child("/scheduledtrips/\(location.uid)/\(location.key)").observe(.childChanged, with: { (snapshot) in
+               
+                if snapshot.key == "DriverLatitude" {
+                    self.driverMovingLatitude = snapshot.value as! Double
+                    
+                }
+                if snapshot.key == "DriverLongitude" {
+                    self.driverMovingLongitude = snapshot.value as! Double
+                    
+                }
+                
+                print("\(self.driverMovingLongitude), \(self.driverMovingLatitude)")
+                
+            })
+            
+            print(driverMovingLatitude)
+            if (driverMovingLatitude != 0) {
+                driverLocation = CLLocation(latitude: _location.coordinate.latitude, longitude: _location.coordinate.longitude)
+                
+                // store driver longitudes
+                driverLatitude = driverLocation.coordinate.latitude
+                driverLongitude = driverLocation.coordinate.longitude
+                
+                let distance = driverLocation.distance(from: riderLocation) / 1000
+                let roundedDistance = round(distance * 100) / 100
+                pickUpLabel.text = "Your driver is \(roundedDistance) miles away"
+            } else {
+                pickUpLabel.text = ""
+            }
         }
     }
     
@@ -107,7 +157,7 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate, C
         toLongitude = location.toLongitude
         toLatitude = location.toLatitude
         
-        print(location.key)
+        //print(location.key)
         
         riderLocation = CLLocation(latitude: fromLatitude, longitude: fromLongitude)
         toLocation = CLLocation(latitude: toLatitude, longitude: toLongitude)

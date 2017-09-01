@@ -1093,7 +1093,6 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VmQ-9a-0h7">
                                 <rect key="frame" x="20" y="682" width="99" height="34"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="99" id="lVg-XX-rSa"/>
                                 </constraints>
@@ -1105,7 +1104,6 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dUn-RE-11b">
                                 <rect key="frame" x="282" y="686" width="120" height="30"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="tvm-aG-eCe"/>
                                     <constraint firstAttribute="width" constant="120" id="yJU-Bl-VwY"/>
@@ -1116,8 +1114,8 @@
                                     <action selector="pickUpNowTapped:" destination="dVL-gQ-THv" eventType="touchUpInside" id="1PV-iU-NUO"/>
                                 </connections>
                             </button>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Kwn-pZ-oD7">
-                                <rect key="frame" x="20" y="80" width="374" height="576"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kwn-pZ-oD7">
+                                <rect key="frame" x="0.0" y="80" width="414" height="576"/>
                             </mapView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YwT-Ag-xWc">
                                 <rect key="frame" x="20" y="36" width="374" height="30"/>
@@ -1141,19 +1139,19 @@
                                 <color key="shadowColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.86005076310792128" green="0.95225156175191028" blue="0.99482965848806371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="YwT-Ag-xWc" firstAttribute="leading" secondItem="ZhD-CM-wbn" secondAttribute="leadingMargin" id="02A-D6-sqs"/>
                             <constraint firstItem="Kwn-pZ-oD7" firstAttribute="centerX" secondItem="ZhD-CM-wbn" secondAttribute="centerX" id="3b6-zz-7tN"/>
                             <constraint firstItem="YwT-Ag-xWc" firstAttribute="trailing" secondItem="ZhD-CM-wbn" secondAttribute="trailingMargin" id="4Nt-7I-Xl2"/>
                             <constraint firstAttribute="trailing" secondItem="dUn-RE-11b" secondAttribute="trailing" constant="12" id="5X3-Wa-ZC6"/>
                             <constraint firstItem="Kwn-pZ-oD7" firstAttribute="top" secondItem="MeW-YR-s2O" secondAttribute="bottom" constant="60" id="6Ym-FO-Ef2"/>
-                            <constraint firstItem="Kwn-pZ-oD7" firstAttribute="leading" secondItem="ZhD-CM-wbn" secondAttribute="leadingMargin" id="G1v-Bx-fAt"/>
+                            <constraint firstItem="Kwn-pZ-oD7" firstAttribute="leading" secondItem="ZhD-CM-wbn" secondAttribute="leadingMargin" constant="-20" id="G1v-Bx-fAt"/>
                             <constraint firstItem="B5i-iT-kdD" firstAttribute="top" secondItem="VmQ-9a-0h7" secondAttribute="bottom" constant="20" id="HY5-Ky-0Nu"/>
                             <constraint firstItem="VmQ-9a-0h7" firstAttribute="leading" secondItem="ZhD-CM-wbn" secondAttribute="leadingMargin" id="Tum-ox-RXA"/>
                             <constraint firstItem="B5i-iT-kdD" firstAttribute="top" secondItem="dUn-RE-11b" secondAttribute="bottom" constant="20" id="e6h-MW-uGd"/>
                             <constraint firstItem="Kwn-pZ-oD7" firstAttribute="centerY" secondItem="ZhD-CM-wbn" secondAttribute="centerY" id="fQf-26-Vcf"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Kwn-pZ-oD7" secondAttribute="trailing" id="gvg-kY-6na"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Kwn-pZ-oD7" secondAttribute="trailing" constant="-20" id="gvg-kY-6na"/>
                             <constraint firstItem="Th3-7X-0Gf" firstAttribute="centerX" secondItem="ZhD-CM-wbn" secondAttribute="centerX" id="juB-dc-FhJ"/>
                             <constraint firstItem="YwT-Ag-xWc" firstAttribute="top" secondItem="MeW-YR-s2O" secondAttribute="bottom" constant="16" id="s9Z-GS-Der"/>
                             <constraint firstItem="B5i-iT-kdD" firstAttribute="top" secondItem="Th3-7X-0Gf" secondAttribute="bottom" constant="100" id="vPb-Ea-5xN"/>
