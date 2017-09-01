@@ -30,7 +30,6 @@
 		7E9538351EF9DBAB008204AA /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E9538341EF9DBAB008204AA /* CoreLocation.framework */; };
 		7E9538381EF9DBD1008204AA /* BSUAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9538371EF9DBD1008204AA /* BSUAnnotation.swift */; };
 		7EEB3A001EF8E241001A281D /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEB39FF1EF8E241001A281D /* SettingsViewController.swift */; };
-		7EEB3A021EF97E45001A281D /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEB3A011EF97E45001A281D /* TimelineViewController.swift */; };
 		7EEB3A091EF97FBC001A281D /* Timeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEB3A051EF97FBC001A281D /* Timeline.swift */; };
 		7EEB3A0A1EF97FBC001A281D /* TimelinePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEB3A061EF97FBC001A281D /* TimelinePoint.swift */; };
 		7EEB3A0B1EF97FBC001A281D /* TimelineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEB3A071EF97FBC001A281D /* TimelineTableViewCell.swift */; };
@@ -89,7 +88,6 @@
 		7E9538341EF9DBAB008204AA /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		7E9538371EF9DBD1008204AA /* BSUAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSUAnnotation.swift; sourceTree = "<group>"; };
 		7EEB39FF1EF8E241001A281D /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		7EEB3A011EF97E45001A281D /* TimelineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
 		7EEB3A051EF97FBC001A281D /* Timeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timeline.swift; sourceTree = "<group>"; };
 		7EEB3A061EF97FBC001A281D /* TimelinePoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelinePoint.swift; sourceTree = "<group>"; };
 		7EEB3A071EF97FBC001A281D /* TimelineTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineTableViewCell.swift; sourceTree = "<group>"; };
@@ -189,7 +187,6 @@
 				F491E7521A7F7DF20026528E /* MapViewController.swift */,
 				F491E7541A7F7E010026528E /* RegisterViewController.swift */,
 				7E6150FF1EF8B62C0077B4E5 /* MainController.swift */,
-				7EEB3A011EF97E45001A281D /* TimelineViewController.swift */,
 				7E6291AC1EFE1457008A25E1 /* ScheduledTripsTableViewController.swift */,
 				3D1793451F0B411900FC5329 /* ScheduledTripsDetailViewController.swift */,
 				3DF822331F17D4F100882F02 /* ResetPasswordViewController.swift */,
@@ -553,7 +550,6 @@
 				7E6150FB1EF875710077B4E5 /* NewsTableViewCell.swift in Sources */,
 				F4D750181BD38F0C009E1003 /* SWRevealViewController.m in Sources */,
 				3DE281A31F02E043001D841A /* ScheduledTrips.swift in Sources */,
-				7EEB3A021EF97E45001A281D /* TimelineViewController.swift in Sources */,
 				3DF822341F17D4F100882F02 /* ResetPasswordViewController.swift in Sources */,
 				3D0F779D1F196907000B51ED /* Patient.swift in Sources */,
 				F4702A181A7F351C00E30A3C /* MenuController.swift in Sources */,

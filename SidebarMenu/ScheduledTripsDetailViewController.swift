@@ -4,7 +4,7 @@ import CoreLocation
 import FirebaseDatabase
 
 
-class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate {
+class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     var ref:DatabaseReference?
     
     
@@ -17,15 +17,19 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate {
         self.dismiss(animated: true, completion: nil)
     }
 
+    let manager = CLLocationManager()
     
     @IBOutlet weak var pickUpLabel: UILabel!
     @IBOutlet weak var pickUpNowButton: UIButton!
+    
+    @IBOutlet weak var totalDistanceLabel: UILabel!
     
     @IBAction func pickUpNowTapped(_ sender: Any) {
         
         let requestLocation = CLLocationCoordinate2D(latitude: fromLatitude, longitude: fromLongitude)
         
         let requestCLLocation = CLLocation(latitude: requestLocation.latitude, longitude: requestLocation.longitude)
+        
         CLGeocoder().reverseGeocodeLocation(requestCLLocation, completionHandler: { (placemarks, error) in
             if let placemarks = placemarks {
                 if placemarks.count > 0 {
@@ -49,12 +53,55 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate {
     var toLatitude:Double = 0
     var toLongitude:Double = 0
     
+    var driverLocation = CLLocation(latitude: 0, longitude: 0)
+    var riderLocation = CLLocation(latitude: 0, longitude: 0)
+    var toLocation = CLLocation(latitude: 0, longitude: 0)
     
     override func viewDidAppear(_ animated: Bool) {
     }
     
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
+    {
+        let location = locations[0]
+        
+        let span:MKCoordinateSpan = MKCoordinateSpanMake(0.01, 0.01)
+        let myLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
+        
+        let _:MKCoordinateRegion = MKCoordinateRegionMake(myLocation, span)
+        //mapView.setRegion(region, animated: true)
+        
+        //print("Speed: \(location.speed)")
+        //print("Altitude: \(location.altitude)")
+        print("Latitude: \(location.coordinate.latitude)")
+        print("Longitude: \(location.coordinate.longitude)")
+        
+        //self.mapView.showsUserLocation = true
+        
+        driverLocation = CLLocation(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        let distance = driverLocation.distance(from: riderLocation) / 1000
+        let roundedDistance = round(distance * 100) / 100
+        pickUpLabel.text = "You are \(roundedDistance) miles away"
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // Location Manager
+        manager.delegate = self
+        manager.desiredAccuracy = kCLLocationAccuracyBest
+        manager.requestWhenInUseAuthorization()
+        manager.startUpdatingLocation()
+        
+        fromLongitude = location.fromLongitude
+        fromLatitude = location.fromLatitude
+        toLongitude = location.toLongitude
+        toLatitude = location.toLatitude
+        
+        riderLocation = CLLocation(latitude: fromLatitude, longitude: fromLongitude)
+        toLocation = CLLocation(latitude: toLatitude, longitude: toLongitude)
+        
+        // display total distance label
+        displayTotalDistance()
         
         // firebase database init
         ref = Database.database().reference()
@@ -67,40 +114,17 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate {
             pickUpLabel.isHidden = true
             pickUpNowButton.isHidden = true
         } else {
-            let driverCLLocation = CLLocation(latitude: 36.15911727805614, longitude: -115.1715026681531)
-            let riderCLLocation = CLLocation(latitude: 36.0749375, longitude: -115.0132424)
-            let distance = driverCLLocation.distance(from: riderCLLocation) / 1000
-            let roundedDistance = round(distance * 100) / 100
-            print("You are \(roundedDistance) miles away")
-            pickUpLabel.text = "You are \(roundedDistance) miles away"
+
         }
-
-    
-        //let preferences = UserDefaults.standard
-        //let ipAddress = preferences.object(forKey: "ipAddress") as! String
-        //let uid = preferences.object(forKey: "uID") as! String
-        
-        fromLongitude = location.fromLongitude
-        fromLatitude = location.fromLatitude
-        toLongitude = location.toLongitude
-        toLatitude = location.toLatitude
-        
-        print("\(fromLongitude),\(fromLatitude),\(toLongitude),\(toLatitude)")
-
-        
-        // log to firebase
-        //firebaseLog(userID: uid, logToSave: ["Action": "trip details",
-        //                                     "IPAddress" : ipAddress,
-        //                                     "FromLongitude" : fromLongitude,
-        //                                     "FromLatitude" : fromLatitude,
-        //                                     "ToLatitude" : toLatitude,
-        //                                     "ToLongitude" : toLongitude
-        //                                    ])
-        
         
         self.displayMap()
     }
 
+    func displayTotalDistance() {
+        let distance = toLocation.distance(from: riderLocation) / 1000
+        let roundedDistance = round(distance * 100) / 100
+        totalDistanceLabel.text = "Total Distance: \(roundedDistance) miles"
+    }
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(overlay: overlay)
