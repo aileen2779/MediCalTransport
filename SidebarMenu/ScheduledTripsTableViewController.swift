@@ -15,7 +15,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     var deleteUpdatePostDataIndexPath: IndexPath? = nil
     
     var ref:DatabaseReference?
-    //var databaseHandle:DatabaseHandle?
+
     
     var patientId:String = ""
     var ipAddress:String = ""
@@ -322,7 +322,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                                                  "IPAddress" : ipAddress,
                                                  "Driver" : ""
                 ])
-
+            
             
             // Display confirmation
             self.displayAlert(title: "Pickup confirmed", message: "A pickup confirmation has been sent.\nThis event has been added to your calendar")

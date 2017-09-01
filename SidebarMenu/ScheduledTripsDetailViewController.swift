@@ -7,10 +7,9 @@ import FirebaseDatabase
 class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     var ref:DatabaseReference?
     
-    
     var requestUsername = "Passenger Location"
     var userType:String = ""
-    
+
     @IBOutlet weak var mapView: MKMapView!
         
     @IBAction func goBackButtonTapped(_ sender: Any) {
@@ -21,10 +20,13 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate, C
     
     @IBOutlet weak var pickUpLabel: UILabel!
     @IBOutlet weak var pickUpNowButton: UIButton!
-    
     @IBOutlet weak var totalDistanceLabel: UILabel!
     
     @IBAction func pickUpNowTapped(_ sender: Any) {
+        
+        self.ref?.child("/scheduledtrips/\(location.uid)/\(location.key)").updateChildValues(["DriverLongitude": driverLongitude])
+        self.ref?.child("/scheduledtrips/\(location.uid)/\(location.key)").updateChildValues(["DriverLatitude": driverLatitude])
+        
         
         let requestLocation = CLLocationCoordinate2D(latitude: fromLatitude, longitude: fromLongitude)
         
@@ -45,43 +47,51 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate, C
     
     var location: LocationClass!
     
-    
     var passedValue:[Any] = []
     
     var fromLatitude:Double = 0
     var fromLongitude:Double = 0
     var toLatitude:Double = 0
     var toLongitude:Double = 0
+    var driverLatitude:Double = 0
+    var driverLongitude:Double = 0
     
     var driverLocation = CLLocation(latitude: 0, longitude: 0)
     var riderLocation = CLLocation(latitude: 0, longitude: 0)
     var toLocation = CLLocation(latitude: 0, longitude: 0)
-    
-    override func viewDidAppear(_ animated: Bool) {
-    }
+
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
     {
-        let location = locations[0]
+        let _location = locations[0]
         
         let span:MKCoordinateSpan = MKCoordinateSpanMake(0.01, 0.01)
-        let myLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
+        let myLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(_location.coordinate.latitude, _location.coordinate.longitude)
         
         let _:MKCoordinateRegion = MKCoordinateRegionMake(myLocation, span)
         //mapView.setRegion(region, animated: true)
         
         //print("Speed: \(location.speed)")
         //print("Altitude: \(location.altitude)")
-        print("Latitude: \(location.coordinate.latitude)")
-        print("Longitude: \(location.coordinate.longitude)")
+        //print("Latitude: \(location.coordinate.latitude)")
+        //print("Longitude: \(location.coordinate.longitude)")
         
         //self.mapView.showsUserLocation = true
         
-        driverLocation = CLLocation(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        driverLocation = CLLocation(latitude: _location.coordinate.latitude, longitude: _location.coordinate.longitude)
+        
+        // store driver longitudes
+        driverLatitude = driverLocation.coordinate.latitude
+        driverLongitude = driverLocation.coordinate.longitude
+        
         let distance = driverLocation.distance(from: riderLocation) / 1000
         let roundedDistance = round(distance * 100) / 100
-        pickUpLabel.text = "You are \(roundedDistance) miles away"
+        
+        if (userType == "driver") {
+            pickUpLabel.text = "You are \(roundedDistance) miles away"
+        }
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,6 +107,8 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate, C
         toLongitude = location.toLongitude
         toLatitude = location.toLatitude
         
+        print(location.key)
+        
         riderLocation = CLLocation(latitude: fromLatitude, longitude: fromLongitude)
         toLocation = CLLocation(latitude: toLatitude, longitude: toLongitude)
         
@@ -111,7 +123,7 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate, C
         userType  = preferences.object(forKey: "userType") as! String
         
         if (userType == "passenger") {
-            pickUpLabel.isHidden = true
+            //pickUpLabel.isHidden = true
             pickUpNowButton.isHidden = true
         } else {
 
