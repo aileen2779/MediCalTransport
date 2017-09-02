@@ -129,6 +129,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             // find out of i'm the driver or not
             if (locationClassVar.driver.trimmingCharacters(in: .whitespacesAndNewlines)) == "" {
                 rideUnAssigned = true
+                imTheDriver = false
                 print("Ride unassigned!")
             } else {
                 rideUnAssigned = false
@@ -354,23 +355,34 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         // Change font of title and message.
         let titleFont = [NSFontAttributeName: UIFont(name: "Arial", size: 0.0)!] //This eliminates the title by setting to 0
         let messageFont = [NSFontAttributeName: UIFont(name: "Avenir-Roman", size: 20.0)!]
-        
         let titleAttrString = NSMutableAttributedString(string: "", attributes: titleFont)
-        let messageAttrString = NSMutableAttributedString(string: "Are you sure you want to end pickup?", attributes: messageFont)
         
-        alert.setValue(titleAttrString, forKey: "attributedTitle")
-        alert.setValue(messageAttrString, forKey: "attributedMessage")
-        
-        let DeleteAction = UIAlertAction(title: "Yes, I want to end pickup", style: .destructive, handler: handleEndPickupPostData)
-        let CancelAction = UIAlertAction(title: "Go Back", style: .cancel, handler: cancelDeletePostData)
-        
-        alert.addAction(DeleteAction)
-        alert.addAction(CancelAction)
-        
+        if imTheDriver {
+            let messageAttrString = NSMutableAttributedString(string: "Are you sure you want to end pickup?", attributes: messageFont)
+            
+            alert.setValue(titleAttrString, forKey: "attributedTitle")
+            alert.setValue(messageAttrString, forKey: "attributedMessage")
+            
+            let DeleteAction = UIAlertAction(title: "Yes, I want to end pickup", style: .destructive, handler: handleEndPickupPostData)
+            let CancelAction = UIAlertAction(title: "Go Back", style: .cancel, handler: cancelDeletePostData)
+            
+            alert.addAction(DeleteAction)
+            alert.addAction(CancelAction)
+        } else {
+            let messageAttrString = NSMutableAttributedString(string: "Cannot end this ride. You are not the driver", attributes: messageFont)
+            
+            alert.setValue(titleAttrString, forKey: "attributedTitle")
+            alert.setValue(messageAttrString, forKey: "attributedMessage")
+            
+            let CancelAction = UIAlertAction(title: "OK", style: .cancel, handler: cancelDeletePostData)
+            
+            alert.addAction(CancelAction)
+        }
+
         // Support presentation in iPad
         alert.popoverPresentationController?.sourceView = self.view
         alert.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
-        
+
         self.present(alert, animated: true, completion: nil)
     }
     
