@@ -24,10 +24,38 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate, C
     
     @IBAction func pickUpNowTapped(_ sender: Any) {
         
-        self.ref?.child("/scheduledtrips/\(location.uid)/\(location.key)").updateChildValues(["DriverLongitude": driverLongitude])
-        self.ref?.child("/scheduledtrips/\(location.uid)/\(location.key)").updateChildValues(["DriverLatitude": driverLatitude])
+        pickUpLabel.text = "Pick up/Drop off"
         
+        let alert = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
         
+        // Change font of title and message.
+        let titleFont = [NSFontAttributeName: UIFont(name: "Arial", size: 0.0)!] //This eliminates the title by setting to 0
+        let messageFont = [NSFontAttributeName: UIFont(name: "Avenir-Roman", size: 20.0)!]
+        
+        let titleAttrString = NSMutableAttributedString(string: "", attributes: titleFont)
+        let messageAttrString = NSMutableAttributedString(string: "Do you want to Pick up or Drop off passenger?", attributes: messageFont)
+        
+        alert.setValue(titleAttrString, forKey: "attributedTitle")
+        alert.setValue(messageAttrString, forKey: "attributedMessage")
+        
+        let pickupAction = UIAlertAction(title: "Pick Up", style: .destructive, handler: handlePickupPostData)
+        let dropOffAction = UIAlertAction(title: "Drop off", style: .destructive, handler: handleDropOffPostData)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: cancelDeletePostData)
+        
+        alert.addAction(pickupAction)
+        alert.addAction(dropOffAction)
+        alert.addAction(cancelAction)
+        
+        // Support presentation in iPad
+        alert.popoverPresentationController?.sourceView = self.view
+        alert.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
+        
+        present(alert, animated: true, completion: nil)
+        
+    }
+    
+    
+    func handlePickupPostData(_ alertAction: UIAlertAction!) -> Void {
         let requestLocation = CLLocationCoordinate2D(latitude: fromLatitude, longitude: fromLongitude)
         
         let requestCLLocation = CLLocation(latitude: requestLocation.latitude, longitude: requestLocation.longitude)
@@ -43,6 +71,26 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate, C
                 }
             }
         })
+    }
+    
+    func handleDropOffPostData(_ alertAction: UIAlertAction!) -> Void {
+        let requestLocation = CLLocationCoordinate2D(latitude: toLatitude, longitude: toLongitude)
+        
+        let requestCLLocation = CLLocation(latitude: requestLocation.latitude, longitude: requestLocation.longitude)
+        
+        CLGeocoder().reverseGeocodeLocation(requestCLLocation, completionHandler: { (placemarks, error) in
+            if let placemarks = placemarks {
+                if placemarks.count > 0 {
+                    let mKPlacemark = MKPlacemark(placemark: placemarks[0])
+                    let mapItem = MKMapItem(placemark: mKPlacemark)
+                    mapItem.name = self.requestUsername
+                    let launchOptions = [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving]
+                    mapItem.openInMaps(launchOptions: launchOptions)
+                }
+            }
+        })
+    }
+    func cancelDeletePostData(_ alertAction: UIAlertAction!) {
     }
     
     var location: LocationClass!
@@ -99,8 +147,10 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate, C
                 pickUpLabel.text = "You are \(roundedDistance) miles away"
                 
             } else {
-                pickUpLabel.text = "Assigned driver: \(location.driver.capitalized)"
+                pickUpLabel.text = "Assigned driver: \((location.driver.trimmingCharacters(in: .whitespacesAndNewlines) == "" ? "None" : location.driver.capitalized))"
             
+                
+                
             }
             
         } else {

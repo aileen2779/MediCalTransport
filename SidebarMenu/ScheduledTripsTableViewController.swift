@@ -109,7 +109,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         let driver      = locationClassVar.driver
         let passenger   = locationClassVar.passenger
         
-        cell.textLabel?.font =  UIFont.systemFont(ofSize: 12.0)
+        cell.textLabel?.font =  UIFont.systemFont(ofSize: 14.0)
         cell.textLabel?.numberOfLines = 0
         if (userType == "driver") {
             cell.textLabel?.text = ("Passenger: \(passenger)\nFrom: \(from)\nTo: \(to)\nDate: \(when)\nDriver: \(driver)")
@@ -145,7 +145,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             }
         
             let option1 = UITableViewRowAction(style: .normal, title: "End\nPickup") { action, index in
-                print("Option 1 button tapped")
+                
                 self.deleteUpdatePostDataIndexPath = indexPath
                 let PostDataToUpdate = self.objectArray[indexPath.row]
                 
@@ -158,7 +158,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             // If unassigned, Confirm pickup
             // If assgined and I'm not the driver. Replace Driver
             let option2 = UITableViewRowAction(style: .normal, title: (rideUnAssigned ? "Confirm\nPickup" : (imTheDriver ? "Cancel\nPickup" : (rideAssignedButImNotTheDriver ? "Replace\nDriver" : "Cancel\nPickup")))) { action, index in
-                print("Option 2 button tapped")
                 
                 self.deleteUpdatePostDataIndexPath = indexPath
                 let PostDataToUpdate = self.objectArray[indexPath.row]
@@ -166,20 +165,15 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 if self.imTheDriver {
                     self.confirmCancelPickup(PostDataToUpdate)
                 } else {
-                    self.confirmPickup(PostDataToUpdate)
+                    
+                    (self.rideUnAssigned ? self.confirmPickup(PostDataToUpdate) : (self.imTheDriver ? self.confirmCancelPickup(PostDataToUpdate) : (self.rideAssignedButImNotTheDriver ? self.confirmReplaceDriver(PostDataToUpdate) : self.confirmCancelPickup(PostDataToUpdate))))
+                    
+                    //self.confirmReplaceDriver(PostDataToUpdate)
+                    //self.confirmPickup(PostDataToUpdate)
+                    //self.confirmCancelPickup(PostDataToUpdate)
                 }
             }
             option2.backgroundColor = (rideUnAssigned ? UIColor(red:0.03, green:0.38, blue:0.64, alpha:1.0) : (imTheDriver ? UIColor(red:1.00, green:0.00, blue:0.24, alpha:1.0) : (rideAssignedButImNotTheDriver ? UIColor(red:0.03, green:0.43, blue:0.21, alpha:1.0) : UIColor(red:1.00, green:0.00, blue:0.24, alpha:1.0))))
-                
-            
-//            let option3 = UITableViewRowAction(style: .normal, title: "View\nDetails") { action, index in
-//                print("Option 3 button tapped")
-//                let locationClassVar: LocationClass!
-//                locationClassVar = self.objectArray[indexPath.row]
-//                
-//                self.performSegue(withIdentifier: "ScheduledTripsVC", sender: locationClassVar!)
-//            }
-//            option3.backgroundColor = UIColor.blue
             
             return [option1, option2]
             
@@ -208,8 +202,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         let headerView = UIView()
         headerView.backgroundColor = ((userType == "passenger") ? CONST_BGCOLOR : CONST_BGCOLOR_DRIVER )
         
-        
-        let headerLabel = UILabel(frame: CGRect(x: 50, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
+        let headerLabel = UILabel(frame: CGRect(x: 50, y: 7, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
         headerLabel.font = UIFont(name: "System", size: 17)
         headerLabel.textColor = UIColor.white
         headerLabel.text = self.tableView(self.tableView, titleForHeaderInSection: section)
@@ -219,6 +212,13 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         return headerView
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 35
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 120
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let locationClassVar: LocationClass!
@@ -240,9 +240,47 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
  
     // Delete Confirmation and Handling
     func confirmDelete(_ dataToDelete: Any) {
-        let alert = UIAlertController(title: "Cancel Ride", message: "Are you sure you want to Cancel this ride?", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
+        
+        // Change font of title and message.
+        let titleFont = [NSFontAttributeName: UIFont(name: "Arial", size: 0.0)!] //This eliminates the title by setting to 0
+        let messageFont = [NSFontAttributeName: UIFont(name: "Avenir-Roman", size: 20.0)!]
+        
+        let titleAttrString = NSMutableAttributedString(string: "", attributes: titleFont)
+        let messageAttrString = NSMutableAttributedString(string: "Are you sure you want to Cancel this ride?", attributes: messageFont)
+        
+        alert.setValue(titleAttrString, forKey: "attributedTitle")
+        alert.setValue(messageAttrString, forKey: "attributedMessage")
         
         let DeleteAction = UIAlertAction(title: "Yes, I want to cancel this ride", style: .destructive, handler: handleDeletePostData)
+        let CancelAction = UIAlertAction(title: "Go Back", style: .cancel, handler: cancelDeletePostData)
+        
+        alert.addAction(DeleteAction)
+        alert.addAction(CancelAction)
+        
+        // Support presentation in iPad
+        alert.popoverPresentationController?.sourceView = self.view
+        alert.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    // Replace Driver
+    func confirmReplaceDriver(_ dataToUpdate: Any) {
+        
+        let alert = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
+        
+        // Change font of title and message.
+        let titleFont = [NSFontAttributeName: UIFont(name: "Arial", size: 0.0)!] //This eliminates the title by setting to 0
+        let messageFont = [NSFontAttributeName: UIFont(name: "Avenir-Roman", size: 20.0)!]
+        
+        let titleAttrString = NSMutableAttributedString(string: "", attributes: titleFont)
+        let messageAttrString = NSMutableAttributedString(string: "Are you sure you want to replace the driver", attributes: messageFont)
+        
+        alert.setValue(titleAttrString, forKey: "attributedTitle")
+        alert.setValue(messageAttrString, forKey: "attributedMessage")
+        
+        let DeleteAction = UIAlertAction(title: "Yes, I want to replace driver", style: .destructive, handler: handlePickupPostData)
         let CancelAction = UIAlertAction(title: "Go Back", style: .cancel, handler: cancelDeletePostData)
         
         alert.addAction(DeleteAction)
@@ -258,7 +296,17 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     // Pickup Confirmation and Handling
     func confirmPickup(_ dataToUpdate: Any) {
         
-        let alert = UIAlertController(title: "Confirm Pick up", message: "Are you sure you want to pickup passenger?", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
+        
+        // Change font of title and message.
+        let titleFont = [NSFontAttributeName: UIFont(name: "Arial", size: 0.0)!] //This eliminates the title by setting to 0
+        let messageFont = [NSFontAttributeName: UIFont(name: "Avenir-Roman", size: 20.0)!]
+        
+        let titleAttrString = NSMutableAttributedString(string: "", attributes: titleFont)
+        let messageAttrString = NSMutableAttributedString(string: "Are you sure you want to pickup passenger?", attributes: messageFont)
+        
+        alert.setValue(titleAttrString, forKey: "attributedTitle")
+        alert.setValue(messageAttrString, forKey: "attributedMessage")
         
         let DeleteAction = UIAlertAction(title: "Yes, I want to pickup passenger", style: .destructive, handler: handlePickupPostData)
         let CancelAction = UIAlertAction(title: "Go Back", style: .cancel, handler: cancelDeletePostData)
@@ -276,7 +324,17 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     // Cancel Pickup Confirmation and Handling
     func confirmCancelPickup(_ dataToUpdate: Any) {
         
-        let alert = UIAlertController(title: "Cancel Pickup", message: "Are you sure you want to cancel pickup?", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
+        
+        // Change font of title and message.
+        let titleFont = [NSFontAttributeName: UIFont(name: "Arial", size: 0.0)!] //This eliminates the title by setting to 0
+        let messageFont = [NSFontAttributeName: UIFont(name: "Avenir-Roman", size: 20.0)!]
+        
+        let titleAttrString = NSMutableAttributedString(string: "", attributes: titleFont)
+        let messageAttrString = NSMutableAttributedString(string: "Are you sure you want to cancel pickup?", attributes: messageFont)
+        
+        alert.setValue(titleAttrString, forKey: "attributedTitle")
+        alert.setValue(messageAttrString, forKey: "attributedMessage")
         
         let DeleteAction = UIAlertAction(title: "Yes, I want to cancel pickup", style: .destructive, handler: handleCancelPickupPostData)
         let CancelAction = UIAlertAction(title: "Go Back", style: .cancel, handler: cancelDeletePostData)
@@ -294,7 +352,17 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     // End Pickup Confirmation and Handling
     func confirmEndPickup(_ dataToUpdate: Any) {
         
-        let alert = UIAlertController(title: "End Pickup", message: "Are you sure you want to end pickup?", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
+        
+        // Change font of title and message.
+        let titleFont = [NSFontAttributeName: UIFont(name: "Arial", size: 0.0)!] //This eliminates the title by setting to 0
+        let messageFont = [NSFontAttributeName: UIFont(name: "Avenir-Roman", size: 20.0)!]
+        
+        let titleAttrString = NSMutableAttributedString(string: "", attributes: titleFont)
+        let messageAttrString = NSMutableAttributedString(string: "Are you sure you want to end pickup?", attributes: messageFont)
+        
+        alert.setValue(titleAttrString, forKey: "attributedTitle")
+        alert.setValue(messageAttrString, forKey: "attributedMessage")
         
         let DeleteAction = UIAlertAction(title: "Yes, I want to end pickup", style: .destructive, handler: handleEndPickupPostData)
         let CancelAction = UIAlertAction(title: "Go Back", style: .cancel, handler: cancelDeletePostData)
@@ -332,7 +400,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                                                  "PickUpDate" : locationClassVar.pickUpDate,
                                                  "DateAdded" : locationClassVar.dateAdded,
                                                  "IPAddress" : ipAddress,
-                                                 "Driver" : ""
+                                                 "Driver" : "\(firstName.capitalized) \(lastName.capitalized)"
                 ])
             
             
@@ -358,7 +426,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             self.ref?.child("\(self.root)/\(parentId)/\(childId)/").updateChildValues(["Driver":""])
             
             // Log to firebase
-            firebaseLog(userID: uid, logToSave: ["Action" : "pickup ride",
+            firebaseLog(userID: uid, logToSave: ["Action" : "cancel ride",
                                                  "PatientID": patientId,
                                                  "FromAddress": locationClassVar.fromAddress,
                                                  "FromLatitude" : locationClassVar.fromLatitude,
@@ -411,7 +479,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             
             
             // Display confirmation
-            self.displayAlert(title: "Pickup Ended", message: "A pickup completion has been sent.\nThis event has been removed from your calendar")
+            self.displayAlert(title: "Pickup Ended", message: "A pickup completion receipt has been sent")
             
             deleteUpdatePostDataIndexPath = nil
             
@@ -785,7 +853,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         Database.database().reference().child( "\(root)/\(uid)" ).observe(.childRemoved, with: { (snapshot) in
             if snapshot.children.allObjects is [DataSnapshot] {
                 
-                let removedID = snapshot.key // "01012011 11:59 PM"
+                let removedID = snapshot.key 
                 var x = 0
                 while (x < self.objectArray.count) {
                     
