@@ -32,9 +32,11 @@
 		<true/>
 	</dict>
 	<key>NSCalendarsUsageDescription</key>
-	<string></string>
+	<string>Calendar access needed for Zundo to work</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string> </string>
+	<string>Location access needed for Zundo to work</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Location access needed for Zundo to work</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

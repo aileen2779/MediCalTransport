@@ -559,8 +559,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                         let removedID = snapshot.key
                         var x = 0
                         while (x < self.objectArray.count) {
-                            print("\(removedID) == \(self.objectArray[x].key)")
-                            
                             if removedID == self.objectArray[x].key  {
                                 print("\(removedID) updated successfuly")
                                 self.objectArray.remove(at: x)
@@ -599,7 +597,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                     
                     var x = 0
                     while (x < self.objectArray.count) {
-                        print("\(removedID) == \(self.objectArray[x].key)")
                         
                         if removedID == self.objectArray[x].key  {
                             print("\(removedID) deleted successfuly")
@@ -729,7 +726,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 let removedID = snapshot.key
                 var x = 0
                 while (x < self.objectArray.count) {
-                    print("\(removedID) == \(self.objectArray[x].key)")
                     
                     if removedID == self.objectArray[x].key  {
                         print("\(removedID) updated successfuly")
@@ -768,11 +764,11 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         // Retrieve the posts and listen for changes
         Database.database().reference().child( "\(root)/\(uid)" ).observe(.childRemoved, with: { (snapshot) in
             if snapshot.children.allObjects is [DataSnapshot] {
-                print("test")
+                
                 let removedID = snapshot.key // "01012011 11:59 PM"
                 var x = 0
                 while (x < self.objectArray.count) {
-                    print("\(removedID) - \(self.objectArray[x].key)")
+                    
                     if removedID == self.objectArray[x].key  {
                         print("\(removedID) deleted successfuly")
                         self.objectArray.remove(at: x)

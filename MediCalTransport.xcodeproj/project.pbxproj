@@ -30,10 +30,6 @@
 		7E9538351EF9DBAB008204AA /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E9538341EF9DBAB008204AA /* CoreLocation.framework */; };
 		7E9538381EF9DBD1008204AA /* BSUAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9538371EF9DBD1008204AA /* BSUAnnotation.swift */; };
 		7EEB3A001EF8E241001A281D /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEB39FF1EF8E241001A281D /* SettingsViewController.swift */; };
-		7EEB3A091EF97FBC001A281D /* Timeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEB3A051EF97FBC001A281D /* Timeline.swift */; };
-		7EEB3A0A1EF97FBC001A281D /* TimelinePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEB3A061EF97FBC001A281D /* TimelinePoint.swift */; };
-		7EEB3A0B1EF97FBC001A281D /* TimelineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEB3A071EF97FBC001A281D /* TimelineTableViewCell.swift */; };
-		7EEB3A0F1EF98066001A281D /* TimelineTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7EEB3A0E1EF98066001A281D /* TimelineTableViewCell.xib */; };
 		7EFE1D6D1F022BC700DF792D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7EFE1D6C1F022BC700DF792D /* GoogleService-Info.plist */; };
 		856C09943437AD6D2FBCC07E /* Pods_MediCalTransportTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 539D15122796A656A7A142F6 /* Pods_MediCalTransportTests.framework */; };
 		F47029F61A7F27DB00E30A3C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47029F51A7F27DB00E30A3C /* AppDelegate.swift */; };
@@ -88,11 +84,6 @@
 		7E9538341EF9DBAB008204AA /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		7E9538371EF9DBD1008204AA /* BSUAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSUAnnotation.swift; sourceTree = "<group>"; };
 		7EEB39FF1EF8E241001A281D /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		7EEB3A051EF97FBC001A281D /* Timeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timeline.swift; sourceTree = "<group>"; };
-		7EEB3A061EF97FBC001A281D /* TimelinePoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelinePoint.swift; sourceTree = "<group>"; };
-		7EEB3A071EF97FBC001A281D /* TimelineTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineTableViewCell.swift; sourceTree = "<group>"; };
-		7EEB3A0D1EF98054001A281D /* TimelineTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimelineTableViewCell.h; sourceTree = "<group>"; };
-		7EEB3A0E1EF98066001A281D /* TimelineTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimelineTableViewCell.xib; sourceTree = "<group>"; };
 		7EFE1D6C1F022BC700DF792D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C5F82F09CD0DC4E267DF751B /* Pods-MediCalTransportTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MediCalTransportTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MediCalTransportTests/Pods-MediCalTransportTests.release.xcconfig"; sourceTree = "<group>"; };
 		D10A1E46A510E43908C9275D /* Pods-MediCalTransport.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MediCalTransport.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MediCalTransport/Pods-MediCalTransport.debug.xcconfig"; sourceTree = "<group>"; };
@@ -230,18 +221,6 @@
 			name = BSUMaps;
 			sourceTree = "<group>";
 		};
-		7EEB3A031EF97F41001A281D /* TimelineTableCell */ = {
-			isa = PBXGroup;
-			children = (
-				7EEB3A0E1EF98066001A281D /* TimelineTableViewCell.xib */,
-				7EEB3A0D1EF98054001A281D /* TimelineTableViewCell.h */,
-				7EEB3A051EF97FBC001A281D /* Timeline.swift */,
-				7EEB3A061EF97FBC001A281D /* TimelinePoint.swift */,
-				7EEB3A071EF97FBC001A281D /* TimelineTableViewCell.swift */,
-			);
-			name = TimelineTableCell;
-			sourceTree = "<group>";
-		};
 		7EEB3A041EF97F5B001A281D /* TouchID */ = {
 			isa = PBXGroup;
 			children = (
@@ -281,7 +260,6 @@
 				7E1465241EFDD2DA00F1102A /* DateTimePicker */,
 				7E9538361EF9DBC5008204AA /* BSUMaps */,
 				7EEB3A041EF97F5B001A281D /* TouchID */,
-				7EEB3A031EF97F41001A281D /* TimelineTableCell */,
 				7E6151011EF8B67A0077B4E5 /* Resources */,
 				7E55C18A1EF8640D00528AC3 /* Util */,
 				7E55C1891EF8640700528AC3 /* Controller */,
@@ -433,7 +411,6 @@
 				F47029FB1A7F27DB00E30A3C /* Main.storyboard in Resources */,
 				F4702A001A7F27DC00E30A3C /* LaunchScreen.xib in Resources */,
 				3D9479221F11E06B0005947F /* Images.xcassets in Resources */,
-				7EEB3A0F1EF98066001A281D /* TimelineTableViewCell.xib in Resources */,
 				3D593A501F21330A00B5B7A5 /* icon_180.png in Resources */,
 				7EFE1D6D1F022BC700DF792D /* GoogleService-Info.plist in Resources */,
 			);
@@ -553,7 +530,6 @@
 				3DF822341F17D4F100882F02 /* ResetPasswordViewController.swift in Sources */,
 				3D0F779D1F196907000B51ED /* Patient.swift in Sources */,
 				F4702A181A7F351C00E30A3C /* MenuController.swift in Sources */,
-				7EEB3A0B1EF97FBC001A281D /* TimelineTableViewCell.swift in Sources */,
 				7E61510B1EF8B6930077B4E5 /* TouchIDManager.m in Sources */,
 				7E61510A1EF8B6930077B4E5 /* TouchIDManager.swift in Sources */,
 				7E1465291EFDD2EF00F1102A /* DateCollectionViewCell.swift in Sources */,
@@ -563,7 +539,6 @@
 				7E55C18F1EF8642B00528AC3 /* CustomTextField.swift in Sources */,
 				7E6151001EF8B62C0077B4E5 /* MainController.swift in Sources */,
 				7E1465231EFDD25900F1102A /* RiderViewController.swift in Sources */,
-				7EEB3A091EF97FBC001A281D /* Timeline.swift in Sources */,
 				7EEB3A001EF8E241001A281D /* SettingsViewController.swift in Sources */,
 				3D1793461F0B411900FC5329 /* ScheduledTripsDetailViewController.swift in Sources */,
 				3D1793481F0D6EC400FC5329 /* Location.swift in Sources */,
@@ -573,7 +548,6 @@
 				F491E74A1A7F4B300026528E /* DirectoryViewController.swift in Sources */,
 				7E6291AE1EFE1457008A25E1 /* ScheduledTripsTableViewController.swift in Sources */,
 				F491E7551A7F7E010026528E /* RegisterViewController.swift in Sources */,
-				7EEB3A0A1EF97FBC001A281D /* TimelinePoint.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
