@@ -24,6 +24,8 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     var firstName:String = ""
     var lastName:String = ""
     var imTheDriver:Bool = false
+    var rideAssignedButImNotTheDriver:Bool = false
+    var rideUnAssigned:Bool = false
     
     var root:String = "scheduledtrips"
     
@@ -125,14 +127,23 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         if (userType == "driver") {
 
             // find out of i'm the driver or not
-            if (locationClassVar.driver.lowercased() == "\(firstName.lowercased()) \(lastName.lowercased())") {
-                print("I'm the driver!")
-                imTheDriver = true
+            if (locationClassVar.driver.trimmingCharacters(in: .whitespacesAndNewlines)) == "" {
+                rideUnAssigned = true
+                print("Ride unassigned!")
             } else {
-                print("I'm not the driver!")
-                imTheDriver = false
+                rideUnAssigned = false
+                if (locationClassVar.driver.lowercased() == "\(firstName.lowercased()) \(lastName.lowercased())") {
+                    print("I'm the driver!")
+                    rideAssignedButImNotTheDriver = false
+                    imTheDriver = true
+                } else {
+                    rideAssignedButImNotTheDriver = true
+                    imTheDriver = false
+                    print("Ride Assigned but I'm not the driver")
+
+                }
             }
-            
+        
             let option1 = UITableViewRowAction(style: .normal, title: "End\nPickup") { action, index in
                 print("Option 1 button tapped")
                 self.deleteUpdatePostDataIndexPath = indexPath
@@ -142,7 +153,11 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             }
             option1.backgroundColor = UIColor(red:0.49, green:0.73, blue:0.71, alpha:1.0)
 
-            let option2 = UITableViewRowAction(style: .normal, title: (imTheDriver ? "Cancel\nPickup" : "Confirm\nPickup")) { action, index in
+            
+            // If I'm the driver Cancel Pickup
+            // If unassigned, Confirm pickup
+            // If assgined and I'm not the driver. Replace Driver
+            let option2 = UITableViewRowAction(style: .normal, title: (rideUnAssigned ? "Confirm\nPickup" : (imTheDriver ? "Cancel\nPickup" : (rideAssignedButImNotTheDriver ? "Replace\nDriver" : "Cancel\nPickup")))) { action, index in
                 print("Option 2 button tapped")
                 
                 self.deleteUpdatePostDataIndexPath = indexPath
@@ -154,7 +169,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                     self.confirmPickup(PostDataToUpdate)
                 }
             }
-            option2.backgroundColor = (imTheDriver ? UIColor.red : UIColor(red:0.03, green:0.43, blue:0.21, alpha:1.0))
+            option2.backgroundColor = (rideUnAssigned ? UIColor(red:0.03, green:0.38, blue:0.64, alpha:1.0) : (imTheDriver ? UIColor(red:1.00, green:0.00, blue:0.24, alpha:1.0) : (rideAssignedButImNotTheDriver ? UIColor(red:0.03, green:0.43, blue:0.21, alpha:1.0) : UIColor(red:1.00, green:0.00, blue:0.24, alpha:1.0))))
                 
             
 //            let option3 = UITableViewRowAction(style: .normal, title: "View\nDetails") { action, index in
@@ -607,6 +622,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                     self.tableView.reloadData()
                 })
             
+                self.tableView.reloadData()
             
             
             
@@ -697,6 +713,13 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                     
                     self.objectArray.append(location)
                 }
+                
+                var x = 0
+                while (x < self.objectArray.count) {
+                    print(self.objectArray[x].key)
+                    x += 1
+                }
+                
             } else {
                 print("Error retrieving Firebase data") // snapshot value is nil
             }
@@ -780,8 +803,12 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 print("Error retrieving Firebase data") // snapshot value is nil
             }
             
+         
             self.tableView.reloadData()
         })
+        
+
+       
 
     }
 }
