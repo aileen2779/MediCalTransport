@@ -119,7 +119,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         return cell
     }
     
-     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
         let locationClassVar: LocationClass!
         locationClassVar = objectArray[indexPath.row]
@@ -144,7 +144,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 }
             }
         
-            let option1 = UITableViewRowAction(style: .normal, title: "End\nPickup") { action, index in
+            let option1 = UITableViewRowAction(style: .normal, title: "\u{1F44D}\n End\nPickup") { action, index in
                 
                 self.deleteUpdatePostDataIndexPath = indexPath
                 let PostDataToUpdate = self.objectArray[indexPath.row]
@@ -157,7 +157,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             // If I'm the driver Cancel Pickup
             // If unassigned, Confirm pickup
             // If assgined and I'm not the driver. Replace Driver
-            let option2 = UITableViewRowAction(style: .normal, title: (rideUnAssigned ? "Confirm\nPickup" : (imTheDriver ? "Cancel\nPickup" : (rideAssignedButImNotTheDriver ? "Replace\nDriver" : "Cancel\nPickup")))) { action, index in
+            let option2 = UITableViewRowAction(style: .normal, title: (rideUnAssigned ? "\u{1F695}\n Confirm\nPickup" : (imTheDriver ? "\u{274C}\n Reject\nPickup" : (rideAssignedButImNotTheDriver ? "\u{267B}\n Replace\nDriver" : "\u{1F44E}\n Cancel\nPickup")))) { action, index in
                 
                 self.deleteUpdatePostDataIndexPath = indexPath
                 let PostDataToUpdate = self.objectArray[indexPath.row]
@@ -168,17 +168,14 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                     
                     (self.rideUnAssigned ? self.confirmPickup(PostDataToUpdate) : (self.imTheDriver ? self.confirmCancelPickup(PostDataToUpdate) : (self.rideAssignedButImNotTheDriver ? self.confirmReplaceDriver(PostDataToUpdate) : self.confirmCancelPickup(PostDataToUpdate))))
                     
-                    //self.confirmReplaceDriver(PostDataToUpdate)
-                    //self.confirmPickup(PostDataToUpdate)
-                    //self.confirmCancelPickup(PostDataToUpdate)
                 }
             }
-            option2.backgroundColor = (rideUnAssigned ? UIColor(red:0.03, green:0.38, blue:0.64, alpha:1.0) : (imTheDriver ? UIColor(red:1.00, green:0.00, blue:0.24, alpha:1.0) : (rideAssignedButImNotTheDriver ? UIColor(red:0.03, green:0.43, blue:0.21, alpha:1.0) : UIColor(red:1.00, green:0.00, blue:0.24, alpha:1.0))))
+            option2.backgroundColor = (rideUnAssigned ? UIColor(red:0.03, green:0.38, blue:0.64, alpha:1.0) : (imTheDriver ? UIColor(red:0.45, green:0.06, blue:0.32, alpha:1.0) : (rideAssignedButImNotTheDriver ? UIColor(red:0.03, green:0.43, blue:0.21, alpha:1.0) : UIColor(red:1.00, green:0.00, blue:0.24, alpha:1.0))))
             
-            return [option1, option2]
+            return [ option1, option2 ]
             
         } else {
-            let cancel = UITableViewRowAction(style: .normal, title: "Cancel\nride") { action, index in
+            let cancel = UITableViewRowAction(style: .normal, title: "\u{274C}\n Cancel\nride") { action, index in
                 self.deleteUpdatePostDataIndexPath = indexPath
                 let PostDataToDelete = self.objectArray[indexPath.row]
                 self.confirmDelete(PostDataToDelete)
