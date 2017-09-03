@@ -171,12 +171,20 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                     
                 }
             }
-            option2.backgroundColor = (rideUnAssigned ? UIColor(red:0.03, green:0.38, blue:0.64, alpha:1.0) : (imTheDriver ? UIColor(red:0.45, green:0.06, blue:0.32, alpha:1.0) : (rideAssignedButImNotTheDriver ? UIColor(red:0.03, green:0.43, blue:0.21, alpha:1.0) : UIColor(red:1.00, green:0.00, blue:0.24, alpha:1.0))))
-            
-            return [ option1, option2 ]
+            option2.backgroundColor = (rideUnAssigned ? UIColor(red:0.03, green:0.38, blue:0.64, alpha:1.0)
+                                                      : (imTheDriver ? UIColor(red:0.45, green:0.06, blue:0.32, alpha:1.0)
+                                                                    : (rideAssignedButImNotTheDriver ? UIColor(red:0.03, green:0.43, blue:0.21, alpha:1.0)
+                                                                                                    : UIColor(red:1.00, green:0.00, blue:0.24, alpha:1.0))))
+            if imTheDriver {
+                return [ option1, option2 ]
+
+            } else {
+                return [ option2 ]
+
+            }
             
         } else {
-            let cancel = UITableViewRowAction(style: .normal, title: "\u{274C}\n Cancel\nride") { action, index in
+            let cancel = UITableViewRowAction(style: .normal, title: "\u{1F5D1}\n Cancel\nride") { action, index in
                 self.deleteUpdatePostDataIndexPath = indexPath
                 let PostDataToDelete = self.objectArray[indexPath.row]
                 self.confirmDelete(PostDataToDelete)
@@ -215,7 +223,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120
+        return 100
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -357,27 +365,16 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         let messageFont = [NSFontAttributeName: UIFont(name: "Avenir-Roman", size: 20.0)!]
         let titleAttrString = NSMutableAttributedString(string: "", attributes: titleFont)
         
-        if imTheDriver {
-            let messageAttrString = NSMutableAttributedString(string: "Are you sure you want to end pickup?", attributes: messageFont)
-            
-            alert.setValue(titleAttrString, forKey: "attributedTitle")
-            alert.setValue(messageAttrString, forKey: "attributedMessage")
-            
-            let DeleteAction = UIAlertAction(title: "Yes, I want to end pickup", style: .destructive, handler: handleEndPickupPostData)
-            let CancelAction = UIAlertAction(title: "Go Back", style: .cancel, handler: cancelDeletePostData)
-            
-            alert.addAction(DeleteAction)
-            alert.addAction(CancelAction)
-        } else {
-            let messageAttrString = NSMutableAttributedString(string: "Cannot end this ride. You are not the driver", attributes: messageFont)
-            
-            alert.setValue(titleAttrString, forKey: "attributedTitle")
-            alert.setValue(messageAttrString, forKey: "attributedMessage")
-            
-            let CancelAction = UIAlertAction(title: "OK", style: .cancel, handler: cancelDeletePostData)
-            
-            alert.addAction(CancelAction)
-        }
+        let messageAttrString = NSMutableAttributedString(string: "Are you sure you want to end pickup?", attributes: messageFont)
+        
+        alert.setValue(titleAttrString, forKey: "attributedTitle")
+        alert.setValue(messageAttrString, forKey: "attributedMessage")
+        
+        let DeleteAction = UIAlertAction(title: "Yes, I want to end pickup", style: .destructive, handler: handleEndPickupPostData)
+        let CancelAction = UIAlertAction(title: "Go Back", style: .cancel, handler: cancelDeletePostData)
+        
+        alert.addAction(DeleteAction)
+        alert.addAction(CancelAction)
 
         // Support presentation in iPad
         alert.popoverPresentationController?.sourceView = self.view
