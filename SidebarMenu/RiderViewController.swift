@@ -4,14 +4,19 @@ import EventKit
 import FirebaseDatabase
 import Foundation
 import CoreLocation
+import GooglePlaces
 
+enum Location {
+    case startLocation
+    case destinationLocation
+}
 
 class RiderViewController: UIViewController,
     MKMapViewDelegate,
     CLLocationManagerDelegate,
     UITableViewDataSource,
     UITableViewDelegate,
-    UITextFieldDelegate  {
+UITextFieldDelegate  {
     
     // Firebase handles
     var ref:DatabaseReference?
@@ -26,6 +31,11 @@ class RiderViewController: UIViewController,
     //Location manager
     var locationManager = CLLocationManager()
     var userLocation: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0)
+    
+    // Autocomplete
+    var locationSelected = Location.startLocation
+    var locationStart = CLLocation()
+    var locationEnd = CLLocation()
     
     var patientId:String = ""
     var ipAddress:String = ""
@@ -59,10 +69,11 @@ class RiderViewController: UIViewController,
         if userType == "driver" {
             //dismiss(animated: true, completion: nil)
             //return
-            callAnUberButton.isHidden = true
             fromTextField.isHidden = true
             toTextField.isHidden = true
             whenTextField.isHidden = true
+            callAnUberButton.setTitle("This is a Passenger only feature", for: .normal)
+            callAnUberButton.backgroundColor = UIColor.red
         }
         requestAccessToLocation()
         requestAccessToCalendar()
@@ -118,7 +129,7 @@ class RiderViewController: UIViewController,
                 print("Default value not found")
             }
         }
-    
+        
         getScheduledTrips(fbUid: uid) { (myValue) -> () in
             if myValue > 0 {
                 self.scheduledRides = myValue
@@ -129,6 +140,43 @@ class RiderViewController: UIViewController,
             }
         }
     }
+    
+    // MARK: when start location tap, this will open the search location
+    @IBAction func openStartLocation(_ sender: UIButton) {
+        
+        let autoCompleteController = GMSAutocompleteViewController()
+        
+        autoCompleteController.delegate = self as GMSAutocompleteViewControllerDelegate
+        
+        // selected location
+        locationSelected = .startLocation
+        
+        
+        // Change text color
+        UISearchBar.appearance().setTextColor(color: UIColor.black)
+        
+        self.present(autoCompleteController, animated: true, completion: nil)
+    }
+    
+    // MARK: when destination location tap, this will open the search location
+    @IBAction func openDestinationLocation(_ sender: UIButton) {
+        let autoCompleteController = GMSAutocompleteViewController()
+        autoCompleteController.delegate = self
+        
+        let filter = GMSAutocompleteFilter()
+        filter.type = .city
+        filter.country = "usa"
+        
+        
+        // selected location
+        locationSelected = .destinationLocation
+        
+        // Change text color
+        UISearchBar.appearance().setTextColor(color: UIColor.black)
+        
+        self.present(autoCompleteController, animated: true, completion: nil)
+    }
+    
     
     @IBAction func callAnUber(_ sender: AnyObject) {
         
@@ -180,7 +228,7 @@ class RiderViewController: UIViewController,
             var toLongitude = 0.0
             var toLatitude = 0.0
             
-
+            
             //This is a poor structure since this is being called asynchronusly
             self.forwardGeocoding(address: fromLocation, completion: { success, coordinate in
                 if success {
@@ -399,7 +447,7 @@ class RiderViewController: UIViewController,
     func fromTextFieldActive() {
         let preferences = UserDefaults.standard
         let saveLocation = preferences.object(forKey: "saveLocation") as! Bool
-
+        
         values = [String]()
         
         if (saveLocation) {
@@ -633,7 +681,7 @@ class RiderViewController: UIViewController,
                 }
             }
         }
-
+        
     }
     
     func getFBDefaults(fbString:String , completion: @escaping (Int) -> ()) {
@@ -667,5 +715,47 @@ class RiderViewController: UIViewController,
         })
     }
     
+}
+
+
+
+// MARK: - GMS Auto Complete Delegate, for autocomplete search location
+extension RiderViewController: GMSAutocompleteViewControllerDelegate {
+    
+    func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+        print("Error \(error)")
+    }
+    
+    func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+        // set coordinate to text
+        if locationSelected == .startLocation {
+            fromTextField.text = "\(place.formattedAddress!)"
+        } else {
+            toTextField.text = "\(place.formattedAddress!)"
+        }
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func didRequestAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+    }
+    
+    func didUpdateAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    }
+    
+}
+
+public extension UISearchBar {
+    public func setTextColor(color: UIColor) {
+        
+        let svs = subviews.flatMap { $0.subviews }
+        guard let tf = (svs.filter { $0 is UITextField }).first as? UITextField else { return }
+        tf.textColor = color
+    }
 }
 

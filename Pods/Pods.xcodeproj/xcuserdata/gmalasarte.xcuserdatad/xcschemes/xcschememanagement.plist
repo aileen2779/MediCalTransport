@@ -4,7 +4,17 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Alamofire.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>GTMSessionFetcher.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>GooglePlacesAPI.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -15,6 +25,11 @@
 			<false/>
 		</dict>
 		<key>NVActivityIndicatorView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>ObjectMapper.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -52,7 +67,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B63CD89E0286C8E7A4390310F96568FD</key>
+		<key>88ACB4E8E0FCBA6305260D177DE18A26</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B714AD3ED2606AFCF3DF7A8FFFE7394F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -62,7 +87,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>FC3956D68464C1997041710F1F57299B</key>
+		<key>C7F13CE1814B421C06DF3949CDD82443</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D82432A8B6F8DD4EE7EF779662BB6361</key>
 		<dict>
 			<key>primary</key>
 			<true/>
