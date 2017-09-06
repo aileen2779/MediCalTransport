@@ -887,7 +887,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="OZS-Xm-fSG">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="aaB-bW-dJL">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                             </mapView>
                             <textField opaque="NO" clipsSubviews="YES" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Pick up from" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hZM-oD-XxB" userLabel="Pick up" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
@@ -1003,24 +1003,22 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="aaB-bW-dJL" secondAttribute="trailing" id="7Jc-x2-Lu4"/>
                             <constraint firstItem="WTo-zC-G5b" firstAttribute="centerX" secondItem="bge-hM-9M8" secondAttribute="centerX" id="BE6-Gg-zOG" userLabel="Request a ride Button.centerX = centerX"/>
                             <constraint firstItem="vs1-2c-cIf" firstAttribute="centerX" secondItem="bge-hM-9M8" secondAttribute="centerX" constant="-1" id="EeJ-vL-vj8"/>
-                            <constraint firstItem="cUK-AO-Avd" firstAttribute="top" secondItem="OZS-Xm-fSG" secondAttribute="bottom" id="KGt-Sz-KEH"/>
-                            <constraint firstAttribute="trailing" secondItem="OZS-Xm-fSG" secondAttribute="trailing" id="KQf-mQ-nce"/>
+                            <constraint firstItem="aaB-bW-dJL" firstAttribute="top" secondItem="bge-hM-9M8" secondAttribute="top" id="IFX-UQ-YLg"/>
+                            <constraint firstItem="cUK-AO-Avd" firstAttribute="top" secondItem="aaB-bW-dJL" secondAttribute="bottom" id="Kf2-wf-rGk"/>
+                            <constraint firstItem="aaB-bW-dJL" firstAttribute="leading" secondItem="bge-hM-9M8" secondAttribute="leading" id="KiL-tb-Bm8"/>
                             <constraint firstItem="egS-cl-b14" firstAttribute="top" secondItem="hZM-oD-XxB" secondAttribute="bottom" constant="5" id="cee-cq-25G"/>
                             <constraint firstItem="cUK-AO-Avd" firstAttribute="top" secondItem="WTo-zC-G5b" secondAttribute="bottom" constant="20" id="efA-Rq-qAK"/>
                             <constraint firstAttribute="trailingMargin" secondItem="pd3-1O-o6c" secondAttribute="trailing" constant="20" id="fdo-1j-s6C"/>
                             <constraint firstItem="JdU-Rb-9ap" firstAttribute="centerX" secondItem="bge-hM-9M8" secondAttribute="centerX" id="gG8-et-GL7"/>
-                            <constraint firstItem="OZS-Xm-fSG" firstAttribute="leading" secondItem="bge-hM-9M8" secondAttribute="leading" id="hPu-Q5-xhh"/>
                             <constraint firstItem="pd3-1O-o6c" firstAttribute="top" secondItem="A3n-LA-T69" secondAttribute="bottom" constant="20" id="hvD-pI-9ZL"/>
                             <constraint firstItem="hZM-oD-XxB" firstAttribute="top" secondItem="A3n-LA-T69" secondAttribute="bottom" constant="5" id="jgU-33-Mla"/>
                             <constraint firstItem="vs1-2c-cIf" firstAttribute="top" secondItem="hZM-oD-XxB" secondAttribute="bottom" constant="5" id="kQT-7R-xgH"/>
                             <constraint firstItem="egS-cl-b14" firstAttribute="centerX" secondItem="bge-hM-9M8" secondAttribute="centerX" id="oZJ-9a-W4H"/>
-                            <constraint firstItem="OZS-Xm-fSG" firstAttribute="centerY" secondItem="bge-hM-9M8" secondAttribute="centerY" id="opR-Zl-7rA"/>
                             <constraint firstItem="JdU-Rb-9ap" firstAttribute="top" secondItem="vs1-2c-cIf" secondAttribute="bottom" constant="5" id="rAr-as-BhF"/>
                             <constraint firstItem="hZM-oD-XxB" firstAttribute="centerX" secondItem="bge-hM-9M8" secondAttribute="centerX" id="rFL-jc-s5q"/>
-                            <constraint firstItem="OZS-Xm-fSG" firstAttribute="top" secondItem="bge-hM-9M8" secondAttribute="top" id="tZv-qP-J6D"/>
-                            <constraint firstItem="OZS-Xm-fSG" firstAttribute="centerX" secondItem="bge-hM-9M8" secondAttribute="centerX" id="zWV-f1-3Hc"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -1031,12 +1029,14 @@
                     <connections>
                         <outlet property="callAnUberButton" destination="WTo-zC-G5b" id="JVu-lg-YWy"/>
                         <outlet property="extraButton" destination="SGy-YW-JE6" id="Gjp-1Q-2cy"/>
+                        <outlet property="fromAutoCompleteButton" destination="qb3-5P-gSJ" id="hng-Ws-Nlr"/>
                         <outlet property="fromTextField" destination="hZM-oD-XxB" id="pUn-BP-xFz"/>
                         <outlet property="heightConstraint" destination="WvT-Ha-xtH" id="Icz-mK-KRl"/>
-                        <outlet property="mapView" destination="OZS-Xm-fSG" id="gOY-0E-saD"/>
+                        <outlet property="mapView" destination="aaB-bW-dJL" id="yqZ-Qo-QXq"/>
                         <outlet property="menuButton" destination="xtu-b7-umg" id="Pxa-qS-PE3"/>
                         <outlet property="requestARide" destination="WTo-zC-G5b" id="nbJ-0x-phR"/>
                         <outlet property="tableView" destination="egS-cl-b14" id="902-wF-VMX"/>
+                        <outlet property="toAutoCompleteButton" destination="hvB-gN-2oq" id="WCW-vq-Q8C"/>
                         <outlet property="toTextField" destination="vs1-2c-cIf" id="DOu-GS-6CC"/>
                         <outlet property="whenTextField" destination="JdU-Rb-9ap" id="Vqf-NM-7xb"/>
                     </connections>

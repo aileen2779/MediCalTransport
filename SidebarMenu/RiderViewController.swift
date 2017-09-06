@@ -74,6 +74,8 @@ UITextFieldDelegate  {
             whenTextField.isHidden = true
             callAnUberButton.setTitle("This is a Passenger only feature", for: .normal)
             callAnUberButton.backgroundColor = UIColor.red
+            fromAutoCompleteButton.isHidden = true
+            toAutoCompleteButton.isHidden = true
         }
         requestAccessToLocation()
         requestAccessToCalendar()
@@ -140,6 +142,10 @@ UITextFieldDelegate  {
             }
         }
     }
+    
+    
+    @IBOutlet weak var fromAutoCompleteButton: UIButton!
+    @IBOutlet weak var toAutoCompleteButton: UIButton!
     
     // MARK: when start location tap, this will open the search location
     @IBAction func openStartLocation(_ sender: UIButton) {

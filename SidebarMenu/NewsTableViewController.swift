@@ -60,13 +60,13 @@ class NewsTableViewController: UITableViewController {
 
         } else if indexPath.row == 1 {
             cell.postImageView.image = UIImage(named: "custom-segue-featured-1024")
-            cell.postTitleLabel.text = "Building a Chat App in Swift Using Multipeer Connectivity Framework"
+            cell.postTitleLabel.text = "FDA OK's New Drug for Antibiotic-Resistant UTIs"
             cell.authorLabel.text = "Gabriel Theodoropoulos"
             cell.authorImageView.image = UIImage(named: "appcoda-300")
             
         } else {
             cell.postImageView.image = UIImage(named: "webkit-featured")
-            cell.postTitleLabel.text = "A Beginner’s Guide to Animated Custom Segues in iOS 8"
+            cell.postTitleLabel.text = "FDA Recalls Half A Million Pacemakers After Cyber Security Scare"
             cell.authorLabel.text = "Gabriel Theodoropoulos"
             cell.authorImageView.image = UIImage(named: "appcoda-300")
             
