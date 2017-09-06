@@ -110,14 +110,23 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         let passenger   = locationClassVar.passenger
         
         cell.textLabel?.font =  UIFont.systemFont(ofSize: 14.0)
+        
+        cell.textLabel?.textColor = ((driver == "") ? UIColor(red:0.38, green:0.05, blue:0.05, alpha:1.0) : UIColor(red:0.02, green:0.14, blue:0.26, alpha:1.0) )
+        
         cell.textLabel?.numberOfLines = 0
         if (userType == "driver") {
             cell.textLabel?.text = ("Passenger: \(passenger)\nFrom: \(from)\nTo: \(to)\nDate: \(when)\nDriver: \(driver)")
         } else {
             cell.textLabel?.text = ("From: \(from)\nTo: \(to)\nDate: \(when)\nDriver: \(driver)")
         }
+        
+        let myCustomSelectionColorView = UIView()
+        myCustomSelectionColorView.backgroundColor = ((userType == "driver") ? CONST_BGCOLOR : CONST_BGCOLOR_DRIVER )
+        cell.selectedBackgroundView = myCustomSelectionColorView
+        
         return cell
     }
+    
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
@@ -223,7 +232,9 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        tableView.estimatedRowHeight = 400.0
+        tableView.rowHeight = UITableViewAutomaticDimension
+        return UITableViewAutomaticDimension
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
