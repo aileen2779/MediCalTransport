@@ -59,10 +59,11 @@ class RiderViewController: UIViewController,
         if userType == "driver" {
             //dismiss(animated: true, completion: nil)
             //return
-            callAnUberButton.isHidden = true
             fromTextField.isHidden = true
             toTextField.isHidden = true
             whenTextField.isHidden = true
+            callAnUberButton.setTitle("This is a Passenger only feature", for: .normal)
+            callAnUberButton.backgroundColor = UIColor.red
         }
         requestAccessToLocation()
         requestAccessToCalendar()

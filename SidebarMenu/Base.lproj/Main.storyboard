@@ -890,7 +890,7 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="OZS-Xm-fSG">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                             </mapView>
-                            <textField opaque="NO" clipsSubviews="YES" alpha="0.80000001192092896" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Pick up from" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hZM-oD-XxB" userLabel="Pick up" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
+                            <textField opaque="NO" clipsSubviews="YES" alpha="0.80000001192092896" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Pick up from" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="hZM-oD-XxB" userLabel="Pick up" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
                                 <rect key="frame" x="42" y="69" width="330" height="60"/>
                                 <color key="backgroundColor" red="0.91477886730000002" green="0.94991112759999996" blue="0.93750542299999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -943,7 +943,7 @@
                                     <action selector="callAnUber:" destination="3lM-C7-f12" eventType="touchUpInside" id="FcI-7V-T0Z"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" alpha="0.85000002384185791" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Where to?" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vs1-2c-cIf" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
+                            <textField opaque="NO" clipsSubviews="YES" alpha="0.85000002384185791" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Where to?" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="vs1-2c-cIf" customClass="CustomTextField" customModule="MediCalTransport" customModuleProvider="target">
                                 <rect key="frame" x="41" y="134" width="330" height="60"/>
                                 <color key="backgroundColor" red="0.91477886730000002" green="0.94991112759999996" blue="0.93750542299999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -971,37 +971,17 @@
                                 </constraints>
                                 <sections/>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qb3-5P-gSJ" userLabel="FromSearch">
-                                <rect key="frame" x="349" y="84" width="25" height="25"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="25" id="Fa4-xy-Ntd"/>
-                                    <constraint firstAttribute="width" constant="25" id="UOM-54-LYd"/>
-                                </constraints>
-                                <state key="normal" image="search-256"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hvB-gN-2oq" userLabel="ToSearch">
-                                <rect key="frame" x="349" y="84" width="25" height="25"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="25" id="TVL-75-c6K"/>
-                                    <constraint firstAttribute="height" constant="25" id="vjr-CA-uVd"/>
-                                </constraints>
-                                <state key="normal" image="search-256"/>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="qb3-5P-gSJ" firstAttribute="top" secondItem="A3n-LA-T69" secondAttribute="bottom" constant="20" id="0XB-Kq-ttj"/>
-                            <constraint firstItem="hvB-gN-2oq" firstAttribute="top" secondItem="egS-cl-b14" secondAttribute="bottom" constant="-50" id="AM0-gP-njX"/>
                             <constraint firstItem="WTo-zC-G5b" firstAttribute="centerX" secondItem="bge-hM-9M8" secondAttribute="centerX" id="BE6-Gg-zOG" userLabel="Request a ride Button.centerX = centerX"/>
                             <constraint firstItem="vs1-2c-cIf" firstAttribute="centerX" secondItem="bge-hM-9M8" secondAttribute="centerX" constant="-1" id="EeJ-vL-vj8"/>
                             <constraint firstItem="cUK-AO-Avd" firstAttribute="top" secondItem="OZS-Xm-fSG" secondAttribute="bottom" id="KGt-Sz-KEH"/>
                             <constraint firstAttribute="trailing" secondItem="OZS-Xm-fSG" secondAttribute="trailing" id="KQf-mQ-nce"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="qb3-5P-gSJ" secondAttribute="trailing" constant="20" id="Nxl-Lr-EB6"/>
                             <constraint firstItem="egS-cl-b14" firstAttribute="top" secondItem="hZM-oD-XxB" secondAttribute="bottom" constant="5" id="cee-cq-25G"/>
                             <constraint firstItem="cUK-AO-Avd" firstAttribute="top" secondItem="WTo-zC-G5b" secondAttribute="bottom" constant="20" id="efA-Rq-qAK"/>
                             <constraint firstItem="JdU-Rb-9ap" firstAttribute="centerX" secondItem="bge-hM-9M8" secondAttribute="centerX" id="gG8-et-GL7"/>
                             <constraint firstItem="OZS-Xm-fSG" firstAttribute="leading" secondItem="bge-hM-9M8" secondAttribute="leading" id="hPu-Q5-xhh"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="hvB-gN-2oq" secondAttribute="trailing" constant="20" id="hRV-Yn-BYA"/>
                             <constraint firstItem="hZM-oD-XxB" firstAttribute="top" secondItem="A3n-LA-T69" secondAttribute="bottom" constant="5" id="jgU-33-Mla"/>
                             <constraint firstItem="vs1-2c-cIf" firstAttribute="top" secondItem="hZM-oD-XxB" secondAttribute="bottom" constant="5" id="kQT-7R-xgH"/>
                             <constraint firstItem="egS-cl-b14" firstAttribute="centerX" secondItem="bge-hM-9M8" secondAttribute="centerX" id="oZJ-9a-W4H"/>
@@ -1343,7 +1323,6 @@
         <image name="news" width="1024" height="1024"/>
         <image name="password" width="20" height="22"/>
         <image name="phone" width="512" height="512"/>
-        <image name="search-256" width="256" height="256"/>
         <image name="sports-car" width="256" height="256"/>
         <image name="tag" width="1024" height="1024"/>
         <image name="touch-id-icon" width="214" height="214"/>

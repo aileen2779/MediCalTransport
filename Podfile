@@ -9,6 +9,7 @@ target 'MediCalTransport' do
   pod 'Firebase/Messaging'
   pod 'Firebase/Auth'
   pod 'NVActivityIndicatorView'
+  pod "GooglePlacesSearchController"
   
   # Pods for SidebarMenu
 
