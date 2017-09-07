@@ -72,7 +72,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         if userType == "driver" {
             displayDriver(filter: "all")
         } else { // else driver/passenger
-            displayPassenger()
+            displayPassenger(filter: "all")
         } // end if driver/passenger
 
         // Do any additional setup after loading the view, typically from a nib.
@@ -737,6 +737,30 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                             
                             self.objectArray.append(location)
                         }
+                        
+                        // sorting
+                        let sortedObjectArray = self.objectArray.sorted(by: { $0.pickUpDate < $1.pickUpDate })
+                        self.objectArray.removeAll()
+                        
+                        x = 0
+                        while (x < sortedObjectArray.count) {
+                            print(sortedObjectArray[x].pickUpDate)
+                            let location = LocationClass(key: sortedObjectArray[x].key,
+                                                         patientID: self.patientId,
+                                                         fromAddress: sortedObjectArray[x].fromAddress,
+                                                         fromLongitude: sortedObjectArray[x].fromLongitude,
+                                                         fromLatitude: sortedObjectArray[x].fromLatitude,
+                                                         toAddress: sortedObjectArray[x].toAddress,
+                                                         toLongitude: sortedObjectArray[x].toLongitude,
+                                                         toLatitude: sortedObjectArray[x].toLatitude,
+                                                         pickUpDate: sortedObjectArray[x].pickUpDate,
+                                                         dateAdded: sortedObjectArray[x].dateAdded,
+                                                         driver: sortedObjectArray[x].driver,
+                                                         passenger: sortedObjectArray[x].passenger,
+                                                         uid: sortedObjectArray[x].uid  )
+                            self.objectArray.append(location)
+                            x += 1
+                        }
                     }
                     self.tableView.reloadData()
                     
@@ -758,6 +782,29 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                         }
                         x += 1
                     }
+                    
+                    // sorting
+                    let sortedObjectArray = self.objectArray.sorted(by: { $0.pickUpDate < $1.pickUpDate })
+                    self.objectArray.removeAll()
+                    x = 0
+                    while (x < sortedObjectArray.count) {
+                        print(sortedObjectArray[x].pickUpDate)
+                        let location = LocationClass(key: sortedObjectArray[x].key,
+                                                     patientID: self.patientId,
+                                                     fromAddress: sortedObjectArray[x].fromAddress,
+                                                     fromLongitude: sortedObjectArray[x].fromLongitude,
+                                                     fromLatitude: sortedObjectArray[x].fromLatitude,
+                                                     toAddress: sortedObjectArray[x].toAddress,
+                                                     toLongitude: sortedObjectArray[x].toLongitude,
+                                                     toLatitude: sortedObjectArray[x].toLatitude,
+                                                     pickUpDate: sortedObjectArray[x].pickUpDate,
+                                                     dateAdded: sortedObjectArray[x].dateAdded,
+                                                     driver: sortedObjectArray[x].driver,
+                                                     passenger: sortedObjectArray[x].passenger,
+                                                     uid: sortedObjectArray[x].uid  )
+                        self.objectArray.append(location)
+                        x += 1
+                    }
                 })
                 self.tableView.reloadData()
             
@@ -768,9 +815,8 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         
     }
 
-    func displayPassenger() {
+    func displayPassenger(filter: String) {
         var keyString:String = ""
-        var patientID:String = ""
         var fromAddress:String = ""
         var fromLongitude:Double = 0.0
         var fromLatitude:Double = 0.0
@@ -784,56 +830,25 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         var passenger:String = ""
         
         // Retrieve the posts and listen for changes
-        Database.database().reference().child( "\(root)/\(uid)" ).observe(.childAdded, with: { (snapshot) in
-            if let result = snapshot.children.allObjects as? [DataSnapshot] {
-
+        Database.database().reference().child("\(self.root)/\(uid)").observe(.childAdded, with: { (snapshot) in
+            if let postDict = snapshot.value as? Dictionary<String, AnyObject> {
                 keyString = snapshot.key
+                pickUpDate = postDict["PickUpDate"]! as! String
+                fromAddress = postDict["FromAddress"]! as! String
+                fromLatitude = postDict["FromLatitude"]! as! Double
+                fromLongitude = postDict["FromLongitude"]! as! Double
+                toAddress = postDict["ToAddress"]! as! String
+                toLatitude = postDict["ToLatitude"]! as! Double
+                toLongitude = postDict["ToLongitude"]! as! Double
+                rideCompleted = postDict["Completed"]! as! Bool
+                dateAdded = postDict["DateAdded"]! as! String
+                driver = postDict["Driver"]! as! String
+                passenger = postDict["Passenger"]! as! String
                 
-                for snap in result {
-                    if (snap.key == "PatientID") {
-                        patientID = snap.value as! String
-                    }
-                    if (snap.key == "FromAddress") {
-                        fromAddress = snap.value as! String
-                    }
-                    if (snap.key == "FromLongitude") {
-                        fromLongitude = snap.value as! Double
-                        
-                    }
-                    if (snap.key == "FromLatitude") {
-                        fromLatitude = snap.value as! Double
-                    }
-                    
-                    if (snap.key == "ToAddress") {
-                        toAddress = snap.value as! String
-                    }
-                    if (snap.key == "ToLongitude") {
-                        toLongitude = snap.value as! Double
-                        
-                    }
-                    if (snap.key == "ToLatitude") {
-                        toLatitude = snap.value as! Double
-                    }
-                    if (snap.key == "PickUpDate") {
-                        pickUpDate = snap.value as! String
-                    }
-                    if (snap.key == "DateAdded") {
-                        dateAdded = snap.value as! String
-                    }
-                    if (snap.key == "Completed") {
-                        rideCompleted = snap.value as! Bool
-                    }
-                    if (snap.key == "Driver") {
-                        driver = snap.value as! String
-                    }
-                    if (snap.key == "Passenger") {
-                        passenger = snap.value as! String
-                    }
-                }
                 
                 if !(rideCompleted) {
                     let location = LocationClass(key: keyString,
-                                                 patientID: patientID,
+                                                 patientID: self.patientId,
                                                  fromAddress: fromAddress,
                                                  fromLongitude: fromLongitude,
                                                  fromLatitude: fromLatitude,
@@ -845,18 +860,52 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                                                  driver: driver,
                                                  passenger: passenger,
                                                  uid: self.uid)
-                    
-                    self.objectArray.append(location)
+                    if (filter == "all") {
+                        self.objectArray.append(location)
+                    } else if (filter == "assigned") {
+                        if (driver != "") {
+                            
+                            self.objectArray.append(location)
+                        }
+                    }  else if (filter == "unassigned")  {
+                        if (driver == "") {
+                            
+                            self.objectArray.append(location)
+                        }
+                        
+                    } else {
+                        //
+                    }
                 }
-                
-            } else {
-                print("Error retrieving Firebase data") // snapshot value is nil
+            }
+            
+            // sorting
+            let sortedObjectArray = self.objectArray.sorted(by: { $0.pickUpDate < $1.pickUpDate })
+            self.objectArray.removeAll()
+            var x = 0
+            while (x < sortedObjectArray.count) {
+                print(sortedObjectArray[x].pickUpDate)
+                let location = LocationClass(key: sortedObjectArray[x].key,
+                                             patientID: self.patientId,
+                                             fromAddress: sortedObjectArray[x].fromAddress,
+                                             fromLongitude: sortedObjectArray[x].fromLongitude,
+                                             fromLatitude: sortedObjectArray[x].fromLatitude,
+                                             toAddress: sortedObjectArray[x].toAddress,
+                                             toLongitude: sortedObjectArray[x].toLongitude,
+                                             toLatitude: sortedObjectArray[x].toLatitude,
+                                             pickUpDate: sortedObjectArray[x].pickUpDate,
+                                             dateAdded: sortedObjectArray[x].dateAdded,
+                                             driver: sortedObjectArray[x].driver,
+                                             passenger: sortedObjectArray[x].passenger,
+                                             uid: sortedObjectArray[x].self.uid  )
+                self.objectArray.append(location)
+                x += 1
             }
             self.tableView.reloadData()
         })
         
         // Watch for updates
-        Database.database().reference().child( "\(root)/\(uid)" ).observe(.childChanged, with: { (snapshot) in
+        Database.database().reference().child("\(self.root)/\(uid)").observe(.childChanged, with: { (snapshot) in
             if let postDict = snapshot.value as? Dictionary<String, AnyObject> {
                 keyString = snapshot.key
                 pickUpDate = postDict["PickUpDate"]! as! String
@@ -875,7 +924,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 let removedID = snapshot.key
                 var x = 0
                 while (x < self.objectArray.count) {
-                    
                     if removedID == self.objectArray[x].key  {
                         print("\(removedID) updated successfuly")
                         self.objectArray.remove(at: x)
@@ -903,40 +951,81 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                     
                     self.objectArray.append(location)
                 }
-                self.tableView.reloadData()
+                
+                // sorting
+                let sortedObjectArray = self.objectArray.sorted(by: { $0.pickUpDate < $1.pickUpDate })
+                self.objectArray.removeAll()
+                
+                x = 0
+                while (x < sortedObjectArray.count) {
+                    print(sortedObjectArray[x].pickUpDate)
+                    let location = LocationClass(key: sortedObjectArray[x].key,
+                                                 patientID: self.patientId,
+                                                 fromAddress: sortedObjectArray[x].fromAddress,
+                                                 fromLongitude: sortedObjectArray[x].fromLongitude,
+                                                 fromLatitude: sortedObjectArray[x].fromLatitude,
+                                                 toAddress: sortedObjectArray[x].toAddress,
+                                                 toLongitude: sortedObjectArray[x].toLongitude,
+                                                 toLatitude: sortedObjectArray[x].toLatitude,
+                                                 pickUpDate: sortedObjectArray[x].pickUpDate,
+                                                 dateAdded: sortedObjectArray[x].dateAdded,
+                                                 driver: sortedObjectArray[x].driver,
+                                                 passenger: sortedObjectArray[x].passenger,
+                                                 uid: sortedObjectArray[x].self.uid  )
+                    self.objectArray.append(location)
+                    x += 1
+                }
             }
+            self.tableView.reloadData()
             
         })
         
-        // Retrieve the posts and listen for changes
-        Database.database().reference().child( "\(root)/\(uid)" ).observe(.childRemoved, with: { (snapshot) in
-            if snapshot.children.allObjects is [DataSnapshot] {
+        // Watch for deletes
+        Database.database().reference().child("\(self.root)/\(uid)").observe(.childRemoved, with: { (snapshot) in
+            let removedID = snapshot.key
+            
+            var x = 0
+            while (x < self.objectArray.count) {
                 
-                let removedID = snapshot.key 
-                var x = 0
-                while (x < self.objectArray.count) {
+                if removedID == self.objectArray[x].key  {
+                    print("\(removedID) deleted successfuly")
+                    self.objectArray.remove(at: x)
                     
-                    if removedID == self.objectArray[x].key  {
-                        print("\(removedID) deleted successfuly")
-                        self.objectArray.remove(at: x)
-                        
-                        // exit
-                        x = self.objectArray.count
-                    }
-                    x += 1
+                    // exit
+                    x = self.objectArray.count
                 }
-                
-            } else {
-                print("Error retrieving Firebase data") // snapshot value is nil
+                x += 1
             }
             
-         
-            self.tableView.reloadData()
+            // sorting
+            let sortedObjectArray = self.objectArray.sorted(by: { $0.pickUpDate < $1.pickUpDate })
+            self.objectArray.removeAll()
+            x = 0
+            while (x < sortedObjectArray.count) {
+                print(sortedObjectArray[x].pickUpDate)
+                let location = LocationClass(key: sortedObjectArray[x].key,
+                                             patientID: self.patientId,
+                                             fromAddress: sortedObjectArray[x].fromAddress,
+                                             fromLongitude: sortedObjectArray[x].fromLongitude,
+                                             fromLatitude: sortedObjectArray[x].fromLatitude,
+                                             toAddress: sortedObjectArray[x].toAddress,
+                                             toLongitude: sortedObjectArray[x].toLongitude,
+                                             toLatitude: sortedObjectArray[x].toLatitude,
+                                             pickUpDate: sortedObjectArray[x].pickUpDate,
+                                             dateAdded: sortedObjectArray[x].dateAdded,
+                                             driver: sortedObjectArray[x].driver,
+                                             passenger: sortedObjectArray[x].passenger,
+                                             uid: sortedObjectArray[x].self.uid  )
+                self.objectArray.append(location)
+                x += 1
+            }
         })
+        self.tableView.reloadData()
 
 
     }
     
+    // Bottom menu
     @IBOutlet weak var allImage: UIButton!
     @IBOutlet weak var allText: UIButton!
     @IBOutlet weak var assignedImage: UIButton!
@@ -967,7 +1056,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         if userType == "driver" {
             displayDriver(filter: "all")
         } else {
-            displayPassenger()
+            displayPassenger(filter: "all")
         }}
 
     @IBAction func assignedButtonTapped(_ sender: Any) {
@@ -987,7 +1076,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         if userType == "driver" {
             displayDriver(filter: "assigned")
         } else {
-            displayPassenger()
+            displayPassenger(filter: "assigned")
         }
     }
     
@@ -1006,7 +1095,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         if userType == "driver" {
             displayDriver(filter: "unassigned")
         } else {
-            displayPassenger()
+            displayPassenger(filter: "unassigned")
         }
     }
 
