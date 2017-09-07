@@ -70,7 +70,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         
         // if driver/passenger
         if userType == "driver" {
-            displayDriver()
+            displayDriver(filter: "all")
         } else { // else driver/passenger
             displayPassenger()
         } // end if driver/passenger
@@ -594,8 +594,9 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     }
 
     
-    func displayDriver() {
+    func displayDriver(filter: String) {
 
+        print(filter)
         Database.database().reference().child("\(root)").observe(.childAdded, with: { (snapshot) in
             
            if snapshot.children.allObjects is [DataSnapshot] {
@@ -617,7 +618,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 // Watch for new records
                 Database.database().reference().child("\(self.root)/\(passengeruid)").observe(.childAdded, with: { (snapshot) in
                     if let postDict = snapshot.value as? Dictionary<String, AnyObject> {
-
                         keyString = snapshot.key
                         pickUpDate = postDict["PickUpDate"]! as! String
                         fromAddress = postDict["FromAddress"]! as! String
@@ -645,10 +645,23 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                                                          driver: driver,
                                                          passenger: passenger,
                                                          uid: passengeruid)
+                            if (filter == "all") {
+                                self.objectArray.append(location)
+                            } else if (filter == "assigned") {
+                                if (driver != "") {
+                                    self.objectArray.append(location)
+                                }
+                            }  else if (filter == "unassigned")  {
+                                if (driver == "") {
+                                    self.objectArray.append(location)
+                                }
                             
-                            self.objectArray.append(location)
+                            } else {
+                                //
+                            }
+                            
+                            self.tableView.reloadData()
                         }
-                        self.tableView.reloadData()
                     }
                     
                 })
@@ -908,33 +921,74 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
 
     }
     
+    @IBOutlet weak var allImage: UIButton!
+    @IBOutlet weak var allText: UIButton!
+    @IBOutlet weak var assignedImage: UIButton!
+    @IBOutlet weak var assignedText: UIButton!
+    @IBOutlet weak var unAssignedImage: UIButton!
+    @IBOutlet weak var unAssignedText: UIButton!
+    
+    let grayColor = UIColor(red:0.80, green:0.80, blue:0.80, alpha:1.0)
+    
+    let assignedColor = UIColor(red:0.01, green:0.01, blue:0.10, alpha:1.0)
+    let unAssignedColor = UIColor(red:0.85, green:0.00, blue:0.15, alpha:1.0)
+    let allColor = UIColor(red:0.00, green:0.43, blue:0.94, alpha:1.0)
+    
     @IBAction func allItemsButtonTapped(_ sender: Any) {
+
+        allText.setTitleColor(allColor, for: .normal)
+        assignedText.setTitleColor(grayColor, for: .normal)
+        unAssignedText.setTitleColor(grayColor, for: .normal)
+        
+        allImage.setImage(UIImage(named: "layers.png"), for: .normal)
+        assignedImage.setImage(UIImage(named: "unlock_gray.png"), for: .normal)
+        unAssignedImage.setImage(UIImage(named: "padlock_gray.png"), for: .normal)
+        
+        
         objectArray.removeAll()
         tableView.reloadData()
         
         if userType == "driver" {
-            displayDriver()
+            displayDriver(filter: "all")
         } else {
             displayPassenger()
         }}
 
     @IBAction func assignedButtonTapped(_ sender: Any) {
+
+        allText.setTitleColor(grayColor, for: .normal)
+        assignedText.setTitleColor(assignedColor, for: .normal)
+        unAssignedText.setTitleColor(grayColor, for: .normal)
+        
+        allImage.setImage(UIImage(named: "layers_gray.png"), for: .normal)
+        assignedImage.setImage(UIImage(named: "unlock.png"), for: .normal)
+        unAssignedImage.setImage(UIImage(named: "padlock_gray.png"), for: .normal)
+
+        
         objectArray.removeAll()
         tableView.reloadData()
         
         if userType == "driver" {
-            displayDriver()
+            displayDriver(filter: "assigned")
         } else {
             displayPassenger()
         }
     }
     
     @IBAction func unAssignedButtonTapped(_ sender: Any) {
+        allText.setTitleColor(grayColor, for: .normal)
+        assignedText.setTitleColor(grayColor, for: .normal)
+        unAssignedText.setTitleColor(unAssignedColor, for: .normal)
+
+        allImage.setImage(UIImage(named: "layers_gray.png"), for: .normal)
+        assignedImage.setImage(UIImage(named: "unlock_gray.png"), for: .normal)
+        unAssignedImage.setImage(UIImage(named: "padlock.png"), for: .normal)
+
         objectArray.removeAll()
         tableView.reloadData()
         
         if userType == "driver" {
-            displayDriver()
+            displayDriver(filter: "unassigned")
         } else {
             displayPassenger()
         }

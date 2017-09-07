@@ -1095,13 +1095,13 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-3" translatesAutoresizingMaskIntoConstraints="NO" id="gOl-sR-llY" userLabel="All">
                                         <rect key="frame" x="0.0" y="0.0" width="60" height="81"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h50-b4-gP7">
+                                            <button opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h50-b4-gP7">
                                                 <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="60" id="LhW-eb-EX1"/>
                                                     <constraint firstAttribute="height" constant="60" id="Xy5-6c-mUD"/>
                                                 </constraints>
-                                                <state key="normal" title="All" image="layers">
+                                                <state key="normal" title="All" image="layers_gray">
                                                     <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
                                                 <connections>
@@ -1112,7 +1112,7 @@
                                                 <rect key="frame" x="0.0" y="57" width="60" height="24"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                 <state key="normal" title="All">
-                                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="titleColor" red="0.27058823529999998" green="0.2666666667" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <connections>
                                                     <action selector="allItemsButtonTapped:" destination="Uuo-s6-4OZ" eventType="touchUpInside" id="460-AG-6We"/>
@@ -1123,13 +1123,13 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-3" translatesAutoresizingMaskIntoConstraints="NO" id="Rfi-HE-zJs" userLabel="Assigned">
                                         <rect key="frame" x="90" y="0.0" width="60" height="81"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gvy-9c-RTk">
+                                            <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gvy-9c-RTk">
                                                 <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="60" id="1vo-Jp-M4f"/>
                                                     <constraint firstAttribute="width" constant="60" id="dE8-TY-Uc1"/>
                                                 </constraints>
-                                                <state key="normal" title="Assigned" image="unlock">
+                                                <state key="normal" title="Assigned" image="unlock_gray">
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
@@ -1140,7 +1140,7 @@
                                                 <rect key="frame" x="0.0" y="57" width="60" height="24"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                 <state key="normal" title="Assigned">
-                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="titleColor" red="0.27058823529999998" green="0.2666666667" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <connections>
                                                     <action selector="assignedButtonTapped:" destination="Uuo-s6-4OZ" eventType="touchUpInside" id="087-Zt-zUj"/>
@@ -1151,13 +1151,14 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-3" translatesAutoresizingMaskIntoConstraints="NO" id="CW8-Pm-2fc" userLabel="Unassigned">
                                         <rect key="frame" x="180" y="0.0" width="60" height="81"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qFO-J3-y0H">
+                                            <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qFO-J3-y0H">
                                                 <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="60" id="LFi-2t-bjh"/>
                                                     <constraint firstAttribute="width" constant="60" id="Ulg-ft-KLj"/>
                                                 </constraints>
-                                                <state key="normal" title="Unassigned" image="padlock">
+                                                <size key="titleShadowOffset" width="40" height="30"/>
+                                                <state key="normal" title="Unassigned" image="padlock_gray">
                                                     <color key="titleColor" red="0.96862745100000003" green="0.56470588239999997" blue="0.27058823529999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <connections>
@@ -1168,7 +1169,7 @@
                                                 <rect key="frame" x="0.0" y="57" width="60" height="24"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                 <state key="normal" title="Unassigned">
-                                                    <color key="titleColor" red="0.96862745100000003" green="0.56470588239999997" blue="0.27058823529999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleColor" red="0.27058823529999998" green="0.2666666667" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <connections>
                                                     <action selector="unAssignedButtonTapped:" destination="Uuo-s6-4OZ" eventType="touchUpInside" id="82m-Aw-g2G"/>
@@ -1196,9 +1197,15 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="allImage" destination="h50-b4-gP7" id="iLF-at-0cU"/>
+                        <outlet property="allText" destination="67p-q8-1SU" id="Qx5-Zc-tTT"/>
+                        <outlet property="assignedImage" destination="gvy-9c-RTk" id="GvF-hM-wTU"/>
+                        <outlet property="assignedText" destination="gEb-tQ-DRp" id="d1n-Zs-qia"/>
                         <outlet property="extraButton" destination="ezC-KX-FhN" id="iY1-G2-pgJ"/>
                         <outlet property="menuButton" destination="RpP-Nh-DTH" id="uCV-ox-nGh"/>
                         <outlet property="tableView" destination="dRd-N9-5sE" id="Jz9-P1-VmU"/>
+                        <outlet property="unAssignedImage" destination="qFO-J3-y0H" id="XGh-11-iqE"/>
+                        <outlet property="unAssignedText" destination="kUi-SL-B3h" id="8jf-MP-k34"/>
                         <segue destination="dVL-gQ-THv" kind="showDetail" identifier="ScheduledTripsVC" id="ptg-O7-nep"/>
                     </connections>
                 </viewController>
@@ -1445,18 +1452,18 @@
         <image name="comments" width="1024" height="1024"/>
         <image name="envelope" width="128" height="100"/>
         <image name="home" width="256" height="256"/>
-        <image name="layers" width="256" height="256"/>
+        <image name="layers_gray" width="256" height="256"/>
         <image name="map" width="1024" height="1024"/>
         <image name="menu" width="22" height="22"/>
         <image name="news" width="1024" height="1024"/>
-        <image name="padlock" width="256" height="256"/>
+        <image name="padlock_gray" width="256" height="256"/>
         <image name="password" width="20" height="22"/>
         <image name="phone" width="512" height="512"/>
         <image name="search-256" width="256" height="256"/>
         <image name="sports-car" width="256" height="256"/>
         <image name="tag" width="1024" height="1024"/>
         <image name="touch-id-icon" width="214" height="214"/>
-        <image name="unlock" width="256" height="256"/>
+        <image name="unlock_gray" width="256" height="256"/>
         <image name="username" width="20" height="19"/>
         <image name="wishlist" width="1024" height="1024"/>
     </resources>
