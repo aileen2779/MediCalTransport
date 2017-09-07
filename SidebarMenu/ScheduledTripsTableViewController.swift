@@ -68,21 +68,16 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             //view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
         
-        
+        // if driver/passenger
         if userType == "driver" {
-            
             displayDriver()
-        
         } else { // else driver/passenger
-            
             displayPassenger()
-            
         } // end if driver/passenger
 
         // Do any additional setup after loading the view, typically from a nib.
         tableView.delegate = self
         tableView.dataSource = self
-
     }
     
     // MARK: - Table view data source
