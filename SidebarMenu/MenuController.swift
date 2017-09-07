@@ -10,22 +10,21 @@ class MenuController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Dismiss the keyboard
 
-        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
-        let preferences = UserDefaults.standard
-        let firstName:String = preferences.object(forKey: "firstName") as! String
-        let lastName:String = preferences.object(forKey: "lastName") as! String
         
-        self.myProfileTextLabel.text = "\(firstName.capitalized) \(lastName.capitalized)"
-       
+        // Check for the presence of the text label otherwise left swipe will fail
+        if (myProfileTextLabel != nil) {
+            let preferences = UserDefaults.standard
+            let firstName:String = preferences.object(forKey: "firstName") as! String
+            let lastName:String = preferences.object(forKey: "lastName") as! String
+            myProfileTextLabel.text = "\(firstName.capitalized) \(lastName.capitalized)"
+        }
         
     }
 

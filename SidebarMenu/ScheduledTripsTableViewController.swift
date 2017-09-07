@@ -111,7 +111,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         
         cell.textLabel?.font =  UIFont.systemFont(ofSize: 14.0)
         
-        cell.textLabel?.textColor = ((driver == "") ? UIColor(red:0.38, green:0.05, blue:0.05, alpha:1.0) : UIColor(red:0.02, green:0.14, blue:0.26, alpha:1.0) )
+        cell.textLabel?.textColor = ((driver == "") ? UIColor(red:1.00, green:0.42, blue:0.00, alpha:1.0) : UIColor(red:0.02, green:0.14, blue:0.26, alpha:1.0) )
         
         cell.textLabel?.numberOfLines = 0
         if (userType == "driver") {
