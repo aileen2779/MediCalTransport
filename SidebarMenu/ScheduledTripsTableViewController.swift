@@ -596,7 +596,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     
     func displayDriver(filter: String) {
 
-        print(filter)
         Database.database().reference().child("\(root)").observe(.childAdded, with: { (snapshot) in
             
            if snapshot.children.allObjects is [DataSnapshot] {
@@ -615,6 +614,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 var passengeruid:String = ""
                 passengeruid = snapshot.key
             
+                // Loop through UID
                 // Watch for new records
                 Database.database().reference().child("\(self.root)/\(passengeruid)").observe(.childAdded, with: { (snapshot) in
                     if let postDict = snapshot.value as? Dictionary<String, AnyObject> {
@@ -630,6 +630,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                         dateAdded = postDict["DateAdded"]! as! String
                         driver = postDict["Driver"]! as! String
                         passenger = postDict["Passenger"]! as! String
+
                         
                         if !(rideCompleted) {
                             let location = LocationClass(key: keyString,
@@ -649,21 +650,44 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                                 self.objectArray.append(location)
                             } else if (filter == "assigned") {
                                 if (driver != "") {
+                                    
                                     self.objectArray.append(location)
                                 }
                             }  else if (filter == "unassigned")  {
                                 if (driver == "") {
+                                    
                                     self.objectArray.append(location)
                                 }
                             
                             } else {
                                 //
                             }
-                            
-                            self.tableView.reloadData()
                         }
                     }
                     
+                    // sorting
+                    let sortedObjectArray = self.objectArray.sorted(by: { $0.pickUpDate < $1.pickUpDate })
+                    self.objectArray.removeAll()
+                    var x = 0
+                    while (x < sortedObjectArray.count) {
+                        print(sortedObjectArray[x].pickUpDate)
+                        let location = LocationClass(key: sortedObjectArray[x].key,
+                                                     patientID: self.patientId,
+                                                     fromAddress: sortedObjectArray[x].fromAddress,
+                                                     fromLongitude: sortedObjectArray[x].fromLongitude,
+                                                     fromLatitude: sortedObjectArray[x].fromLatitude,
+                                                     toAddress: sortedObjectArray[x].toAddress,
+                                                     toLongitude: sortedObjectArray[x].toLongitude,
+                                                     toLatitude: sortedObjectArray[x].toLatitude,
+                                                     pickUpDate: sortedObjectArray[x].pickUpDate,
+                                                     dateAdded: sortedObjectArray[x].dateAdded,
+                                                     driver: sortedObjectArray[x].driver,
+                                                     passenger: sortedObjectArray[x].passenger,
+                                                     uid: sortedObjectArray[x].uid  )
+                        self.objectArray.append(location)
+                        x += 1
+                    }
+                    self.tableView.reloadData()
                 })
 
                 // Watch for updates
@@ -713,8 +737,8 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                             
                             self.objectArray.append(location)
                         }
-                        self.tableView.reloadData()
                     }
+                    self.tableView.reloadData()
                     
                 })
 
@@ -734,10 +758,8 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                         }
                         x += 1
                     }
-                    self.tableView.reloadData()
                 })
-            
-                //self.tableView.reloadData()
+                self.tableView.reloadData()
             
             } else {
                 print("Error retrieving Firebase data") // snapshot value is nil
@@ -825,12 +847,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                                                  uid: self.uid)
                     
                     self.objectArray.append(location)
-                }
-                
-                var x = 0
-                while (x < self.objectArray.count) {
-                    print(self.objectArray[x].key)
-                    x += 1
                 }
                 
             } else {
