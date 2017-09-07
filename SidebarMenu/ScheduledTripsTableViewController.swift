@@ -111,14 +111,15 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         // Left(1,45)
         var fromSubstring:String = ""
         var toSubstring:String = ""
-        if from.characters.count > 45 {
-            fromSubstring = from[from.startIndex..<from.index(from.startIndex, offsetBy: 45)]
+        let offset = 43
+        if from.characters.count > offset {
+            fromSubstring = "\(from[from.startIndex..<from.index(from.startIndex, offsetBy: offset)])..."
         } else {
             fromSubstring = from[from.startIndex..<from.index(from.startIndex, offsetBy: from.characters.count)]
         }
         
-        if to.characters.count > 45 {
-            toSubstring = to[to.startIndex..<to.index(to.startIndex, offsetBy: 45)]
+        if to.characters.count > offset {
+            toSubstring = "\(to[to.startIndex..<to.index(to.startIndex, offsetBy: offset)])..."
         } else {
             toSubstring = to[to.startIndex..<to.index(to.startIndex, offsetBy: to.characters.count)]
         }
@@ -128,7 +129,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             let myString = ("Passenger: \(passenger)\nFrom: \(fromSubstring)\nTo: \(toSubstring)\nDate: \(when)\nDriver: \(driver)")
             cell.textLabel?.text = myString
         } else {
-            let myString = ("From: \(from)\nTo: \(to)\nDate: \(when)\nDriver: \(driver)")
+            let myString = ("From: \(fromSubstring)\nTo: \(toSubstring)\nDate: \(when)\nDriver: \(driver)")
             cell.textLabel?.text = myString
         }
         

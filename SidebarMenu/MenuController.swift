@@ -19,11 +19,20 @@ class MenuController: UITableViewController {
         
         
         // Check for the presence of the text label otherwise left swipe will fail
+        
+        let preferences = UserDefaults.standard
+        let firstName:String = preferences.object(forKey: "firstName") as! String
+        let lastName:String = preferences.object(forKey: "lastName") as! String
+        let userType    = preferences.object(forKey: "userType") as! String
+
         if (myProfileTextLabel != nil) {
-            let preferences = UserDefaults.standard
-            let firstName:String = preferences.object(forKey: "firstName") as! String
-            let lastName:String = preferences.object(forKey: "lastName") as! String
             myProfileTextLabel.text = "\(firstName.capitalized) \(lastName.capitalized)"
+        }
+        
+        if (scheduledTripsTextLabel != nil && userType == "passenger") {
+            scheduledTripsTextLabel.text = "My Scheduled Rides"
+        } else {
+            scheduledTripsTextLabel.text = "All Scheduled Rides"
         }
         
     }
@@ -34,6 +43,8 @@ class MenuController: UITableViewController {
     }
     
     @IBOutlet weak var myProfileTextLabel: UILabel!
+    @IBOutlet weak var scheduleARideTextLabel: UILabel!
+    @IBOutlet weak var scheduledTripsTextLabel: UILabel!
     
     @IBAction func logoutButtonTapped(_ sender: Any) {
         let optionMenu = UIAlertController(title: nil, message: "Are you sure?", preferredStyle: .actionSheet)
@@ -44,12 +55,6 @@ class MenuController: UITableViewController {
             let preferences = UserDefaults.standard
             preferences.removeObject(forKey: "session")
             let ipAddress = preferences.object(forKey: "ipAddress") as! String
-            let firstName:String = preferences.object(forKey: "firstName") as! String
-            let lastName:String = preferences.object(forKey: "lastName") as! String
-            
-            self.myProfileTextLabel.text = "\(firstName.capitalized) \(lastName.capitalized)"
-            print("test: \(firstName.capitalized) \(lastName.capitalized)")
-            
             
             //log
             firebaseLog(userID: preferences.object(forKey: "uID") as! String, logToSave: ["Action": "logout", "IPAddress" : ipAddress])
