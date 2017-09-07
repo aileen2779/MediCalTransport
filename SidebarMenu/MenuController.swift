@@ -19,6 +19,14 @@ class MenuController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        let preferences = UserDefaults.standard
+        let firstName:String = preferences.object(forKey: "firstName") as! String
+        let lastName:String = preferences.object(forKey: "lastName") as! String
+        
+        self.myProfileTextLabel.text = "\(firstName.capitalized) \(lastName.capitalized)"
+       
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,6 +34,7 @@ class MenuController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBOutlet weak var myProfileTextLabel: UILabel!
     
     @IBAction func logoutButtonTapped(_ sender: Any) {
         let optionMenu = UIAlertController(title: nil, message: "Are you sure?", preferredStyle: .actionSheet)
@@ -36,6 +45,12 @@ class MenuController: UITableViewController {
             let preferences = UserDefaults.standard
             preferences.removeObject(forKey: "session")
             let ipAddress = preferences.object(forKey: "ipAddress") as! String
+            let firstName:String = preferences.object(forKey: "firstName") as! String
+            let lastName:String = preferences.object(forKey: "lastName") as! String
+            
+            self.myProfileTextLabel.text = "\(firstName.capitalized) \(lastName.capitalized)"
+            print("test: \(firstName.capitalized) \(lastName.capitalized)")
+            
             
             //log
             firebaseLog(userID: preferences.object(forKey: "uID") as! String, logToSave: ["Action": "logout", "IPAddress" : ipAddress])
