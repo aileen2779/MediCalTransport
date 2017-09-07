@@ -2,9 +2,10 @@ import UIKit
 import EventKit
 import FirebaseDatabase
 import Foundation
+import CoreLocation
 
 
-class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate  {
     
     @IBOutlet var menuButton:UIBarButtonItem!
     @IBOutlet var extraButton:UIBarButtonItem!
@@ -16,7 +17,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     
     var ref:DatabaseReference?
 
-    
     var patientId:String = ""
     var ipAddress:String = ""
     var uid:String = ""
@@ -33,6 +33,10 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
 
     var objectArray = [LocationClass]()
     
+    // Driver location used for distance measurement
+    var driverLocation = CLLocation(latitude: 0, longitude: 0)
+    var riderLocation = CLLocation(latitude: 0, longitude: 0)
+
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -78,6 +82,8 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         // Do any additional setup after loading the view, typically from a nib.
         tableView.delegate = self
         tableView.dataSource = self
+        
+        determineMyCurrentLocation()
     }
     
     // MARK: - Table view data source
@@ -108,27 +114,33 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         
         cell.textLabel?.textColor = ((driver == "") ? UIColor(red:1.00, green:0.42, blue:0.00, alpha:1.0) : UIColor(red:0.02, green:0.14, blue:0.26, alpha:1.0) )
         
-        // Left(1,43)
+        // Left(1,40)
         var fromSubstring:String = ""
         var toSubstring:String = ""
-        let offset = 43
+        let offset = 40
         
-        // if length is > 43 then trim and add ...
+        // if length is > offset then trim and add ...
         if from.characters.count > offset {
-            fromSubstring = "\(from[from.startIndex..<from.index(from.startIndex, offsetBy: offset)])..."
+            fromSubstring = "\(from[from.startIndex..<from.index(from.startIndex, offsetBy: offset)])"
         } else {
             fromSubstring = from[from.startIndex..<from.index(from.startIndex, offsetBy: from.characters.count)]
         }
         
         if to.characters.count > offset {
-            toSubstring = "\(to[to.startIndex..<to.index(to.startIndex, offsetBy: offset)])..."
+            toSubstring = "\(to[to.startIndex..<to.index(to.startIndex, offsetBy: offset+3)])"
         } else {
             toSubstring = to[to.startIndex..<to.index(to.startIndex, offsetBy: to.characters.count)]
         }
         
+        // Measure distance
+        // store driver longitudes
+        riderLocation = CLLocation(latitude: locationClassVar.fromLatitude, longitude: locationClassVar.fromLongitude)
+        let distance = driverLocation.distance(from: riderLocation) / 1000
+        let roundedDistance = round(distance * 100) / 100
+        
         cell.textLabel?.numberOfLines = 0
         if (userType == "driver") {
-            let myString = ("Passenger: \(passenger)\nFrom: \(fromSubstring)\nTo: \(toSubstring)\nDate: \(when)\nDriver: \(driver)")
+            let myString = ("Passenger: \(passenger)\nFrom: \(fromSubstring)\nTo: \(toSubstring)\nDate: \(when)\nDriver: \(driver)\nDistance: \(roundedDistance) miles away")
             cell.textLabel?.text = myString
         } else {
             let myString = ("From: \(fromSubstring)\nTo: \(toSubstring)\nDate: \(when)\nDriver: \(driver)")
@@ -533,9 +545,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             //delete from firebase
             firebaseDelete(childIWantToRemove: "scheduledtrips/\(uid)/\(id)")
             
-            print(patientId)
             // Log to firebase
-            
             firebaseLog(userID: uid, logToSave: ["Action" : "cancel ride",
                                                        "PatientID": patientId,
                                                        "FromAddress": locationClassVar.fromAddress,
@@ -650,12 +660,10 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                                 self.objectArray.append(location)
                             } else if (filter == "assigned") {
                                 if (driver != "") {
-                                    
                                     self.objectArray.append(location)
                                 }
                             }  else if (filter == "unassigned")  {
                                 if (driver == "") {
-                                    
                                     self.objectArray.append(location)
                                 }
                             
@@ -670,7 +678,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                     self.objectArray.removeAll()
                     var x = 0
                     while (x < sortedObjectArray.count) {
-                        print(sortedObjectArray[x].pickUpDate)
                         let location = LocationClass(key: sortedObjectArray[x].key,
                                                      patientID: self.patientId,
                                                      fromAddress: sortedObjectArray[x].fromAddress,
@@ -744,7 +751,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                         
                         x = 0
                         while (x < sortedObjectArray.count) {
-                            print(sortedObjectArray[x].pickUpDate)
                             let location = LocationClass(key: sortedObjectArray[x].key,
                                                          patientID: self.patientId,
                                                          fromAddress: sortedObjectArray[x].fromAddress,
@@ -788,7 +794,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                     self.objectArray.removeAll()
                     x = 0
                     while (x < sortedObjectArray.count) {
-                        print(sortedObjectArray[x].pickUpDate)
                         let location = LocationClass(key: sortedObjectArray[x].key,
                                                      patientID: self.patientId,
                                                      fromAddress: sortedObjectArray[x].fromAddress,
@@ -805,8 +810,8 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                         self.objectArray.append(location)
                         x += 1
                     }
+                    self.tableView.reloadData()
                 })
-                self.tableView.reloadData()
             
             } else {
                 print("Error retrieving Firebase data") // snapshot value is nil
@@ -884,7 +889,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             self.objectArray.removeAll()
             var x = 0
             while (x < sortedObjectArray.count) {
-                print(sortedObjectArray[x].pickUpDate)
                 let location = LocationClass(key: sortedObjectArray[x].key,
                                              patientID: self.patientId,
                                              fromAddress: sortedObjectArray[x].fromAddress,
@@ -958,7 +962,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 
                 x = 0
                 while (x < sortedObjectArray.count) {
-                    print(sortedObjectArray[x].pickUpDate)
                     let location = LocationClass(key: sortedObjectArray[x].key,
                                                  patientID: self.patientId,
                                                  fromAddress: sortedObjectArray[x].fromAddress,
@@ -988,7 +991,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             while (x < self.objectArray.count) {
                 
                 if removedID == self.objectArray[x].key  {
-                    print("\(removedID) deleted successfuly")
+                    print("\(removedID) deleted successfuly from passenger")
                     self.objectArray.remove(at: x)
                     
                     // exit
@@ -996,13 +999,12 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 }
                 x += 1
             }
-            
+ 
             // sorting
             let sortedObjectArray = self.objectArray.sorted(by: { $0.pickUpDate < $1.pickUpDate })
             self.objectArray.removeAll()
             x = 0
             while (x < sortedObjectArray.count) {
-                print(sortedObjectArray[x].pickUpDate)
                 let location = LocationClass(key: sortedObjectArray[x].key,
                                              patientID: self.patientId,
                                              fromAddress: sortedObjectArray[x].fromAddress,
@@ -1019,8 +1021,10 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 self.objectArray.append(location)
                 x += 1
             }
+ 
+            self.tableView.reloadData()
         })
-        self.tableView.reloadData()
+       
 
 
     }
@@ -1099,5 +1103,37 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         }
     }
 
+    var locationManager:CLLocationManager!
+
+    func determineMyCurrentLocation() {
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.startUpdatingLocation()
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let userLocation:CLLocation = locations[0] as CLLocation
+        
+        // Call stopUpdatingLocation() to stop listening for location updates,
+        // other wise this function will be called every time when user location changes.
+        
+        // manager.stopUpdatingLocation()
+        
+        //print("user latitude = \(userLocation.coordinate.latitude)")
+        //print("user longitude = \(userLocation.coordinate.longitude)")
+        
+        driverLocation = CLLocation(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+        
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error)
+    {
+        print("Error \(error)")
+    }
 }
 

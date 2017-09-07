@@ -127,8 +127,8 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate, C
                 
                 //print("Speed: \(location.speed)")
                 //print("Altitude: \(location.altitude)")
-                print("Latitude: \(_location.coordinate.latitude)")
-                print("Longitude: \(_location.coordinate.longitude)")
+                //print("Latitude: \(_location.coordinate.latitude)")
+                //print("Longitude: \(_location.coordinate.longitude)")
                 self.ref?.child("/scheduledtrips/\(location.uid)/\(location.key)").updateChildValues(["DriverLongitude": _location.coordinate.longitude])
                 self.ref?.child("/scheduledtrips/\(location.uid)/\(location.key)").updateChildValues(["DriverLatitude": _location.coordinate.latitude])
                 
@@ -148,9 +148,7 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate, C
                 
             } else {
                 pickUpLabel.text = "Assigned driver: \((location.driver.trimmingCharacters(in: .whitespacesAndNewlines) == "" ? "None" : location.driver.capitalized))"
-            
-                
-                
+
             }
             
         } else {
@@ -172,14 +170,13 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate, C
                
                 if snapshot.key == "DriverLatitude" {
                     self.driverMovingLatitude = snapshot.value as! Double
-                    
-                }
-                if snapshot.key == "DriverLongitude" {
-                    self.driverMovingLongitude = snapshot.value as! Double
-                    
                 }
                 
-                print("\(self.driverMovingLongitude), \(self.driverMovingLatitude)")
+                if snapshot.key == "DriverLongitude" {
+                    self.driverMovingLongitude = snapshot.value as! Double
+                }
+                
+                //print("\(self.driverMovingLongitude), \(self.driverMovingLatitude)")
                 
             })
             
@@ -213,7 +210,7 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate, C
         toLongitude = location.toLongitude
         toLatitude = location.toLatitude
         
-        print("Driver:\(location.driver)")
+        //print("Driver:\(location.driver)")
         let preferences = UserDefaults.standard
         if (location.driver == ""){
             print("I'm not the driver")
