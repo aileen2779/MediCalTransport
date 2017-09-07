@@ -108,10 +108,12 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         
         cell.textLabel?.textColor = ((driver == "") ? UIColor(red:1.00, green:0.42, blue:0.00, alpha:1.0) : UIColor(red:0.02, green:0.14, blue:0.26, alpha:1.0) )
         
-        // Left(1,45)
+        // Left(1,43)
         var fromSubstring:String = ""
         var toSubstring:String = ""
         let offset = 43
+        
+        // if length is > 43 then trim and add ...
         if from.characters.count > offset {
             fromSubstring = "\(from[from.startIndex..<from.index(from.startIndex, offsetBy: offset)])..."
         } else {
@@ -134,7 +136,9 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         }
         
         let myCustomSelectionColorView = UIView()
-        myCustomSelectionColorView.backgroundColor = ((userType == "driver") ? CONST_BGCOLOR : CONST_BGCOLOR_DRIVER )
+        
+        // Change background of selected cell
+        myCustomSelectionColorView.backgroundColor = UIColor(red:0.88, green:0.88, blue:0.88, alpha:1.0)
         cell.selectedBackgroundView = myCustomSelectionColorView
         
         return cell
@@ -876,8 +880,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             }
             
         })
-        
-        
         
         // Retrieve the posts and listen for changes
         Database.database().reference().child( "\(root)/\(uid)" ).observe(.childRemoved, with: { (snapshot) in

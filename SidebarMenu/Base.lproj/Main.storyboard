@@ -1089,13 +1089,34 @@
                                     <outlet property="delegate" destination="Uuo-s6-4OZ" id="kbr-2q-IMs"/>
                                 </connections>
                             </tableView>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="DZg-LP-Dyu" userLabel="Assigned_Unassigned">
+                                <rect key="frame" x="121" y="664" width="173" height="32"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h50-b4-gP7">
+                                        <rect key="frame" x="0.0" y="0.0" width="67" height="32"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <state key="normal" title="Assigned">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qFO-J3-y0H">
+                                        <rect key="frame" x="87" y="0.0" width="86" height="32"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <state key="normal" title="Unassigned">
+                                            <color key="titleColor" red="0.96862745100000003" green="0.56470588239999997" blue="0.27058823529999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="dRd-N9-5sE" firstAttribute="width" secondItem="2zx-Do-anI" secondAttribute="width" id="3kj-LH-Gu4"/>
                             <constraint firstItem="dRd-N9-5sE" firstAttribute="top" secondItem="rps-Fn-zLu" secondAttribute="bottom" id="CV3-tw-rpf"/>
                             <constraint firstAttribute="centerX" secondItem="dRd-N9-5sE" secondAttribute="centerX" id="Paz-jP-yHJ"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="DZg-LP-Dyu" secondAttribute="bottom" constant="40" id="iBE-dh-Fmd"/>
                             <constraint firstItem="fy6-r5-YBG" firstAttribute="top" secondItem="dRd-N9-5sE" secondAttribute="bottom" id="oZ9-4y-Qbs"/>
+                            <constraint firstItem="DZg-LP-Dyu" firstAttribute="centerX" secondItem="2zx-Do-anI" secondAttribute="centerX" id="szf-0q-9bB"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -1113,7 +1134,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wyu-Mv-6ey" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1333" y="-452"/>
+            <point key="canvasLocation" x="1330.4347826086957" y="-452.44565217391306"/>
         </scene>
         <!--Scheduled Trips Detail View Controller-->
         <scene sceneID="kCi-U6-bj3">
