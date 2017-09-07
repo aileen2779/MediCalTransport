@@ -8,10 +8,10 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     
     @IBOutlet var menuButton:UIBarButtonItem!
     @IBOutlet var extraButton:UIBarButtonItem!
-
     
     @IBOutlet weak var tableView: UITableView!
     
+    // Placeholder for deleted data
     var deleteUpdatePostDataIndexPath: IndexPath? = nil
     
     var ref:DatabaseReference?
@@ -724,9 +724,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                     self.tableView.reloadData()
                 })
             
-                self.tableView.reloadData()
-            
-            
+                //self.tableView.reloadData()
             
             } else {
                 print("Error retrieving Firebase data") // snapshot value is nil
@@ -906,10 +904,41 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
          
             self.tableView.reloadData()
         })
-        
 
-       
 
     }
+    
+    @IBAction func allItemsButtonTapped(_ sender: Any) {
+        objectArray.removeAll()
+        tableView.reloadData()
+        
+        if userType == "driver" {
+            displayDriver()
+        } else {
+            displayPassenger()
+        }}
+
+    @IBAction func assignedButtonTapped(_ sender: Any) {
+        objectArray.removeAll()
+        tableView.reloadData()
+        
+        if userType == "driver" {
+            displayDriver()
+        } else {
+            displayPassenger()
+        }
+    }
+    
+    @IBAction func unAssignedButtonTapped(_ sender: Any) {
+        objectArray.removeAll()
+        tableView.reloadData()
+        
+        if userType == "driver" {
+            displayDriver()
+        } else {
+            displayPassenger()
+        }
+    }
+
 }
 
