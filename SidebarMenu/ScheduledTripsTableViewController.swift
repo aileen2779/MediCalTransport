@@ -108,11 +108,28 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         
         cell.textLabel?.textColor = ((driver == "") ? UIColor(red:1.00, green:0.42, blue:0.00, alpha:1.0) : UIColor(red:0.02, green:0.14, blue:0.26, alpha:1.0) )
         
+        // Left(1,45)
+        var fromSubstring:String = ""
+        var toSubstring:String = ""
+        if from.characters.count > 45 {
+            fromSubstring = from[from.startIndex..<from.index(from.startIndex, offsetBy: 45)]
+        } else {
+            fromSubstring = from[from.startIndex..<from.index(from.startIndex, offsetBy: from.characters.count)]
+        }
+        
+        if to.characters.count > 45 {
+            toSubstring = to[to.startIndex..<to.index(to.startIndex, offsetBy: 45)]
+        } else {
+            toSubstring = to[to.startIndex..<to.index(to.startIndex, offsetBy: to.characters.count)]
+        }
+        
         cell.textLabel?.numberOfLines = 0
         if (userType == "driver") {
-            cell.textLabel?.text = ("Passenger: \(passenger)\nFrom: \(from)\nTo: \(to)\nDate: \(when)\nDriver: \(driver)")
+            let myString = ("Passenger: \(passenger)\nFrom: \(fromSubstring)\nTo: \(toSubstring)\nDate: \(when)\nDriver: \(driver)")
+            cell.textLabel?.text = myString
         } else {
-            cell.textLabel?.text = ("From: \(from)\nTo: \(to)\nDate: \(when)\nDriver: \(driver)")
+            let myString = ("From: \(from)\nTo: \(to)\nDate: \(when)\nDriver: \(driver)")
+            cell.textLabel?.text = myString
         }
         
         let myCustomSelectionColorView = UIView()
