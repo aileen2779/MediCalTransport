@@ -26,7 +26,8 @@ class MenuController: UITableViewController {
         let userType    = preferences.object(forKey: "userType") as! String
 
         if (myProfileTextLabel != nil) {
-            myProfileTextLabel.text = "\(firstName.capitalized) \(lastName.capitalized)"
+            // Reserve a space for profile pic. It's just how it is
+            myProfileTextLabel.text = "          \(firstName.capitalized) \(lastName.capitalized)"
         }
 
         if (scheduledTripsTextLabel != nil && userType == "driver") {
