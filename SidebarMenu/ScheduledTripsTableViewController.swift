@@ -127,7 +127,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         }
         
         if to.characters.count > offset {
-            toSubstring = "\(to[to.startIndex..<to.index(to.startIndex, offsetBy: offset+3)])"
+            toSubstring = "\(to[to.startIndex..<to.index(to.startIndex, offsetBy: offset + 3)])"
         } else {
             toSubstring = to[to.startIndex..<to.index(to.startIndex, offsetBy: to.characters.count)]
         }
@@ -147,11 +147,10 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             cell.textLabel?.text = myString
         }
         
-        let myCustomSelectionColorView = UIView()
-        
-        // Change background of selected cell
-        myCustomSelectionColorView.backgroundColor = UIColor(red:0.88, green:0.88, blue:0.88, alpha:1.0)
-        cell.selectedBackgroundView = myCustomSelectionColorView
+        // set background of selected cell to gray
+        //let myCustomSelectionColorView = UIView()
+        //myCustomSelectionColorView.backgroundColor = UIColor(red:0.88, green:0.88, blue:0.88, alpha:1.0)
+        //cell.selectedBackgroundView = myCustomSelectionColorView
         
         return cell
     }

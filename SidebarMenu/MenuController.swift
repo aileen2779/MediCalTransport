@@ -28,13 +28,10 @@ class MenuController: UITableViewController {
         if (myProfileTextLabel != nil) {
             myProfileTextLabel.text = "\(firstName.capitalized) \(lastName.capitalized)"
         }
-        
-        if (scheduledTripsTextLabel != nil && userType == "passenger") {
-            scheduledTripsTextLabel.text = "My Scheduled Rides"
-        } else {
+
+        if (scheduledTripsTextLabel != nil && userType == "driver") {
             scheduledTripsTextLabel.text = "All Scheduled Rides"
         }
-        
     }
 
     override func didReceiveMemoryWarning() {
