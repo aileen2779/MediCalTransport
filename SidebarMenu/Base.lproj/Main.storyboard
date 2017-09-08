@@ -1094,7 +1094,7 @@
                                 </connections>
                             </tableView>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="ron-cr-J3q">
-                                <rect key="frame" x="87" y="601" width="240" height="81"/>
+                                <rect key="frame" x="42" y="601" width="330" height="81"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-3" translatesAutoresizingMaskIntoConstraints="NO" id="gOl-sR-llY" userLabel="All">
                                         <rect key="frame" x="0.0" y="0.0" width="60" height="81"/>
@@ -1181,6 +1181,32 @@
                                             </button>
                                         </subviews>
                                     </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-3" translatesAutoresizingMaskIntoConstraints="NO" id="aSZ-IE-Omp" userLabel="Unassigned">
+                                        <rect key="frame" x="270" y="0.0" width="60" height="81"/>
+                                        <subviews>
+                                            <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rjj-0p-70L">
+                                                <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="60" id="TTB-QO-Fkj"/>
+                                                    <constraint firstAttribute="width" constant="60" id="YLJ-lf-hNj"/>
+                                                </constraints>
+                                                <size key="titleShadowOffset" width="40" height="30"/>
+                                                <state key="normal" title="Unassigned" image="sort_gray">
+                                                    <color key="titleColor" red="0.96862745100000003" green="0.56470588239999997" blue="0.27058823529999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="sortButtonTapped:" destination="Uuo-s6-4OZ" eventType="touchUpInside" id="eGB-JV-N9I"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gU5-ad-x30">
+                                                <rect key="frame" x="0.0" y="57" width="60" height="24"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                <state key="normal" title="Sort Dates">
+                                                    <color key="titleColor" red="0.27058823529999998" green="0.2666666667" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                             </stackView>
                         </subviews>
@@ -1207,6 +1233,8 @@
                         <outlet property="assignedText" destination="gEb-tQ-DRp" id="d1n-Zs-qia"/>
                         <outlet property="extraButton" destination="ezC-KX-FhN" id="iY1-G2-pgJ"/>
                         <outlet property="menuButton" destination="RpP-Nh-DTH" id="uCV-ox-nGh"/>
+                        <outlet property="sortImage" destination="Rjj-0p-70L" id="TFp-tK-N0t"/>
+                        <outlet property="sortText" destination="gU5-ad-x30" id="NWl-gs-BDi"/>
                         <outlet property="tableView" destination="dRd-N9-5sE" id="Jz9-P1-VmU"/>
                         <outlet property="unAssignedImage" destination="qFO-J3-y0H" id="XGh-11-iqE"/>
                         <outlet property="unAssignedText" destination="kUi-SL-B3h" id="8jf-MP-k34"/>
@@ -1464,6 +1492,7 @@
         <image name="password" width="20" height="22"/>
         <image name="phone" width="512" height="512"/>
         <image name="search-256" width="256" height="256"/>
+        <image name="sort_gray" width="256" height="256"/>
         <image name="sports-car" width="256" height="256"/>
         <image name="tag" width="1024" height="1024"/>
         <image name="touch-id-icon" width="214" height="214"/>

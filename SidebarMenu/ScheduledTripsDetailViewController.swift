@@ -9,6 +9,9 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate, C
     
     var requestUsername = "Passenger Location"
     var userType:String = ""
+    var uid:String = ""
+    var firstName:String = ""
+    var lastName:String = ""
 
     @IBOutlet weak var mapView: MKMapView!
         
@@ -21,6 +24,62 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate, C
     @IBOutlet weak var pickUpLabel: UILabel!
     @IBOutlet weak var pickUpNowButton: UIButton!
     @IBOutlet weak var totalDistanceLabel: UILabel!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Location Manager
+        manager.delegate = self
+        manager.desiredAccuracy = kCLLocationAccuracyBest
+        manager.requestWhenInUseAuthorization()
+        manager.startUpdatingLocation()
+        
+        fromLongitude = location.fromLongitude
+        fromLatitude = location.fromLatitude
+        toLongitude = location.toLongitude
+        toLatitude = location.toLatitude
+        
+        //print("Driver:\(location.driver)")
+        let preferences = UserDefaults.standard
+        if (location.driver == ""){
+            print("I'm not the driver")
+        } else {
+            firstName = preferences.object(forKey: "firstName")  as! String
+            lastName = preferences.object(forKey: "lastName")  as! String
+            if (location.driver.lowercased() == "\(firstName.lowercased()) \(lastName.lowercased())" ) {
+                print("I'm the driver!")
+                imTheDriver = true
+            } else {
+                print("I'm not the driver!")
+            }
+        }
+        
+        if (!imTheDriver) {
+            pickUpNowButton.isHidden = true
+        }
+        
+        riderLocation = CLLocation(latitude: fromLatitude, longitude: fromLongitude)
+        toLocation = CLLocation(latitude: toLatitude, longitude: toLongitude)
+        
+        // display total distance label
+        displayTotalDistance()
+        
+        // firebase database init
+        ref = Database.database().reference()
+        
+        // preferences init
+        userType  = preferences.object(forKey: "userType") as! String
+        uid   = preferences.object(forKey: "uID") as! String
+        
+        if (userType == "passenger") {
+            //pickUpLabel.isHidden = true
+            pickUpNowButton.isHidden = true
+        } else {
+            
+        }
+        
+        self.displayMap()
+    }
     
     @IBAction func pickUpNowTapped(_ sender: Any) {
         
@@ -56,8 +115,10 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate, C
     
     
     func handlePickupPostData(_ alertAction: UIAlertAction!) -> Void {
-        let requestLocation = CLLocationCoordinate2D(latitude: fromLatitude, longitude: fromLongitude)
         
+        firebaseLog(userID: uid, logToSave: ["Action" : "pick up", "Driver" : "\(firstName.capitalized) \(lastName.capitalized)", "ToLocation" : "\(toLocation)"])
+        
+        let requestLocation = CLLocationCoordinate2D(latitude: fromLatitude, longitude: fromLongitude)
         let requestCLLocation = CLLocation(latitude: requestLocation.latitude, longitude: requestLocation.longitude)
         
         CLGeocoder().reverseGeocodeLocation(requestCLLocation, completionHandler: { (placemarks, error) in
@@ -74,6 +135,8 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate, C
     }
     
     func handleDropOffPostData(_ alertAction: UIAlertAction!) -> Void {
+        
+        firebaseLog(userID: uid, logToSave: ["Action" : "drop off", "Driver" : "\(firstName.capitalized) \(lastName.capitalized)", "ToLocation" : "\(toLocation)" ])
         let requestLocation = CLLocationCoordinate2D(latitude: toLatitude, longitude: toLongitude)
         
         let requestCLLocation = CLLocation(latitude: requestLocation.latitude, longitude: requestLocation.longitude)
@@ -176,8 +239,6 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate, C
                     self.driverMovingLongitude = snapshot.value as! Double
                 }
                 
-                //print("\(self.driverMovingLongitude), \(self.driverMovingLatitude)")
-                
             })
             
             if (driverMovingLatitude != 0) {
@@ -196,61 +257,7 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate, C
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
 
-        // Location Manager
-        manager.delegate = self
-        manager.desiredAccuracy = kCLLocationAccuracyBest
-        manager.requestWhenInUseAuthorization()
-        manager.startUpdatingLocation()
-        
-        fromLongitude = location.fromLongitude
-        fromLatitude = location.fromLatitude
-        toLongitude = location.toLongitude
-        toLatitude = location.toLatitude
-        
-        //print("Driver:\(location.driver)")
-        let preferences = UserDefaults.standard
-        if (location.driver == ""){
-            print("I'm not the driver")
-        } else {
-            let firstName = preferences.object(forKey: "firstName")  as! String
-            let lastName = preferences.object(forKey: "lastName")  as! String
-            if (location.driver.lowercased() == "\(firstName.lowercased()) \(lastName.lowercased())" ) {
-                print("I'm the driver!")
-                imTheDriver = true
-            } else {
-                print("I'm not the driver!")
-            }
-        }
-        
-        if (!imTheDriver) {
-            pickUpNowButton.isHidden = true
-        }
-        
-        
-        riderLocation = CLLocation(latitude: fromLatitude, longitude: fromLongitude)
-        toLocation = CLLocation(latitude: toLatitude, longitude: toLongitude)
-        
-        // display total distance label
-        displayTotalDistance()
-        
-        // firebase database init
-        ref = Database.database().reference()
-        
-        // preferences init
-        userType  = preferences.object(forKey: "userType") as! String
-        
-        if (userType == "passenger") {
-            //pickUpLabel.isHidden = true
-            pickUpNowButton.isHidden = true
-        } else {
-
-        }
-        
-        self.displayMap()
-    }
 
     func displayTotalDistance() {
         let distance = toLocation.distance(from: riderLocation) / 1000

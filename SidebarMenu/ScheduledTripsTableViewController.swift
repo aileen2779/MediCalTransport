@@ -655,7 +655,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                                                          driver: driver,
                                                          passenger: passenger,
                                                          uid: passengeruid)
-                            if (filter == "all") {
+                            if (filter == "all" || filter == "sort_asc" || filter == "sort_desc" ) {
                                 self.objectArray.append(location)
                             } else if (filter == "assigned") {
                                 if (driver != "") {
@@ -673,7 +673,15 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                     }
                     
                     // sorting
-                    let sortedObjectArray = self.objectArray.sorted(by: { $0.pickUpDate < $1.pickUpDate })
+                    var  sortedObjectArray = self.objectArray.sorted(by: { $0.pickUpDate < $1.pickUpDate })
+                    if (filter == "sort_asc") {
+                        sortedObjectArray = self.objectArray.sorted(by: { $0.pickUpDate < $1.pickUpDate })
+                    } else if (filter == "sort_desc") {
+                        sortedObjectArray = self.objectArray.sorted(by: { $0.pickUpDate > $1.pickUpDate })
+                    } else {
+                        //
+                    }
+                    
                     self.objectArray.removeAll()
                     var x = 0
                     while (x < sortedObjectArray.count) {
@@ -745,7 +753,8 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                         }
                         
                         // sorting
-                        let sortedObjectArray = self.objectArray.sorted(by: { $0.pickUpDate < $1.pickUpDate })
+                        var sortedObjectArray = self.objectArray.sorted(by: { $0.pickUpDate < $1.pickUpDate })
+                        
                         self.objectArray.removeAll()
                         
                         x = 0
@@ -1035,22 +1044,28 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     @IBOutlet weak var assignedText: UIButton!
     @IBOutlet weak var unAssignedImage: UIButton!
     @IBOutlet weak var unAssignedText: UIButton!
+    @IBOutlet weak var sortImage: UIButton!
+    @IBOutlet weak var sortText: UIButton!
+
     
     let grayColor = UIColor(red:0.80, green:0.80, blue:0.80, alpha:1.0)
     
     let assignedColor = UIColor(red:0.01, green:0.01, blue:0.10, alpha:1.0)
     let unAssignedColor = UIColor(red:0.85, green:0.00, blue:0.15, alpha:1.0)
     let allColor = UIColor(red:0.00, green:0.43, blue:0.94, alpha:1.0)
+    let sortColor = UIColor(red:0.78, green:0.71, blue:0.20, alpha:1.0)
     
     @IBAction func allItemsButtonTapped(_ sender: Any) {
 
         allText.setTitleColor(allColor, for: .normal)
         assignedText.setTitleColor(grayColor, for: .normal)
         unAssignedText.setTitleColor(grayColor, for: .normal)
+        sortText.setTitleColor(grayColor, for: .normal)
         
         allImage.setImage(UIImage(named: "layers.png"), for: .normal)
         assignedImage.setImage(UIImage(named: "unlock_gray.png"), for: .normal)
         unAssignedImage.setImage(UIImage(named: "padlock_gray.png"), for: .normal)
+        sortImage.setImage(UIImage(named: "sort_gray.png"), for: .normal)
         
         
         objectArray.removeAll()
@@ -1067,10 +1082,12 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         allText.setTitleColor(grayColor, for: .normal)
         assignedText.setTitleColor(assignedColor, for: .normal)
         unAssignedText.setTitleColor(grayColor, for: .normal)
+        sortText.setTitleColor(grayColor, for: .normal)
         
         allImage.setImage(UIImage(named: "layers_gray.png"), for: .normal)
         assignedImage.setImage(UIImage(named: "unlock.png"), for: .normal)
         unAssignedImage.setImage(UIImage(named: "padlock_gray.png"), for: .normal)
+        sortImage.setImage(UIImage(named: "sort_gray.png"), for: .normal)
 
         
         objectArray.removeAll()
@@ -1087,10 +1104,12 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         allText.setTitleColor(grayColor, for: .normal)
         assignedText.setTitleColor(grayColor, for: .normal)
         unAssignedText.setTitleColor(unAssignedColor, for: .normal)
+        sortText.setTitleColor(grayColor, for: .normal)
 
         allImage.setImage(UIImage(named: "layers_gray.png"), for: .normal)
         assignedImage.setImage(UIImage(named: "unlock_gray.png"), for: .normal)
         unAssignedImage.setImage(UIImage(named: "padlock.png"), for: .normal)
+        sortImage.setImage(UIImage(named: "sort_gray.png"), for: .normal)
 
         objectArray.removeAll()
         tableView.reloadData()
@@ -1101,6 +1120,45 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             displayPassenger(filter: "unassigned")
         }
     }
+    
+    @IBAction func sortButtonTapped(_ sender: Any) {
+        allText.setTitleColor(grayColor, for: .normal)
+        assignedText.setTitleColor(grayColor, for: .normal)
+        unAssignedText.setTitleColor(grayColor, for: .normal)
+        sortText.setTitleColor(sortColor, for: .normal)
+        
+        allImage.setImage(UIImage(named: "layers_gray.png"), for: .normal)
+        assignedImage.setImage(UIImage(named: "unlock_gray.png"), for: .normal)
+        unAssignedImage.setImage(UIImage(named: "padlock_gray.png"), for: .normal)
+        
+        
+        objectArray.removeAll()
+        tableView.reloadData()
+        
+        if userType == "driver" {
+            if (sortText.titleLabel!.text != "Latest") {
+                sortText.setTitle("Latest", for: .normal)
+                sortImage.setImage(UIImage(named: "sort_dn.png"), for: .normal)
+                displayDriver(filter: "sort_desc")
+            } else {
+                sortText.setTitle("Earliest", for: .normal)
+                sortImage.setImage(UIImage(named: "sort_up.png"), for: .normal)
+                displayDriver(filter: "sort_asc")
+            }
+            
+        } else {
+            if (sortText.titleLabel!.text != "Latest") {
+                sortText.setTitle("Latest", for: .normal)
+                sortImage.setImage(UIImage(named: "sort_dn.png"), for: .normal)
+                displayPassenger(filter: "sort_desc")
+            } else {
+                sortText.setTitle("Earliest", for: .normal)
+                sortImage.setImage(UIImage(named: "sort_up.png"), for: .normal)
+                displayPassenger(filter: "sort_asc")
+            }
+        }
+    }
+    
 
     var locationManager:CLLocationManager!
 
