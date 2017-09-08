@@ -1094,7 +1094,7 @@
                                 </connections>
                             </tableView>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="ron-cr-J3q">
-                                <rect key="frame" x="42" y="601" width="330" height="81"/>
+                                <rect key="frame" x="42" y="616" width="330" height="81"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-3" translatesAutoresizingMaskIntoConstraints="NO" id="gOl-sR-llY" userLabel="All">
                                         <rect key="frame" x="0.0" y="0.0" width="60" height="81"/>
@@ -1217,7 +1217,7 @@
                             <constraint firstAttribute="centerX" secondItem="dRd-N9-5sE" secondAttribute="centerX" id="Paz-jP-yHJ"/>
                             <constraint firstItem="ron-cr-J3q" firstAttribute="centerX" secondItem="2zx-Do-anI" secondAttribute="centerX" id="epW-0i-FkD"/>
                             <constraint firstItem="fy6-r5-YBG" firstAttribute="top" secondItem="dRd-N9-5sE" secondAttribute="bottom" id="oZ9-4y-Qbs"/>
-                            <constraint firstItem="fy6-r5-YBG" firstAttribute="top" secondItem="ron-cr-J3q" secondAttribute="bottom" constant="10" id="z3A-rl-E06"/>
+                            <constraint firstItem="fy6-r5-YBG" firstAttribute="top" secondItem="ron-cr-J3q" secondAttribute="bottom" constant="-5" id="z3A-rl-E06"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
