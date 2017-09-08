@@ -1094,10 +1094,10 @@
                                 </connections>
                             </tableView>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="ron-cr-J3q">
-                                <rect key="frame" x="42" y="616" width="330" height="81"/>
+                                <rect key="frame" x="42" y="618" width="330" height="79"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-3" translatesAutoresizingMaskIntoConstraints="NO" id="gOl-sR-llY" userLabel="All">
-                                        <rect key="frame" x="0.0" y="0.0" width="60" height="81"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-5" translatesAutoresizingMaskIntoConstraints="NO" id="gOl-sR-llY" userLabel="All">
+                                        <rect key="frame" x="0.0" y="0.0" width="60" height="79"/>
                                         <subviews>
                                             <button opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h50-b4-gP7">
                                                 <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
@@ -1113,7 +1113,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="67p-q8-1SU">
-                                                <rect key="frame" x="0.0" y="57" width="60" height="24"/>
+                                                <rect key="frame" x="0.0" y="55" width="60" height="24"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                 <state key="normal" title="All">
                                                     <color key="titleColor" red="0.27058823529999998" green="0.2666666667" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -1124,8 +1124,8 @@
                                             </button>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-3" translatesAutoresizingMaskIntoConstraints="NO" id="Rfi-HE-zJs" userLabel="Assigned">
-                                        <rect key="frame" x="90" y="0.0" width="60" height="81"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-5" translatesAutoresizingMaskIntoConstraints="NO" id="Rfi-HE-zJs" userLabel="Assigned">
+                                        <rect key="frame" x="90" y="0.0" width="60" height="79"/>
                                         <subviews>
                                             <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gvy-9c-RTk">
                                                 <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
@@ -1141,7 +1141,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gEb-tQ-DRp">
-                                                <rect key="frame" x="0.0" y="57" width="60" height="24"/>
+                                                <rect key="frame" x="0.0" y="55" width="60" height="24"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                 <state key="normal" title="Assigned">
                                                     <color key="titleColor" red="0.27058823529999998" green="0.2666666667" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -1152,8 +1152,8 @@
                                             </button>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-3" translatesAutoresizingMaskIntoConstraints="NO" id="CW8-Pm-2fc" userLabel="Unassigned">
-                                        <rect key="frame" x="180" y="0.0" width="60" height="81"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-5" translatesAutoresizingMaskIntoConstraints="NO" id="CW8-Pm-2fc" userLabel="Unassigned">
+                                        <rect key="frame" x="180" y="0.0" width="60" height="79"/>
                                         <subviews>
                                             <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qFO-J3-y0H">
                                                 <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
@@ -1170,7 +1170,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kUi-SL-B3h">
-                                                <rect key="frame" x="0.0" y="57" width="60" height="24"/>
+                                                <rect key="frame" x="0.0" y="55" width="60" height="24"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                 <state key="normal" title="Unassigned">
                                                     <color key="titleColor" red="0.27058823529999998" green="0.2666666667" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -1181,8 +1181,8 @@
                                             </button>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-3" translatesAutoresizingMaskIntoConstraints="NO" id="aSZ-IE-Omp" userLabel="Unassigned">
-                                        <rect key="frame" x="270" y="0.0" width="60" height="81"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-5" translatesAutoresizingMaskIntoConstraints="NO" id="aSZ-IE-Omp" userLabel="Sort">
+                                        <rect key="frame" x="270" y="0.0" width="60" height="79"/>
                                         <subviews>
                                             <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rjj-0p-70L">
                                                 <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
@@ -1199,7 +1199,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gU5-ad-x30">
-                                                <rect key="frame" x="0.0" y="57" width="60" height="24"/>
+                                                <rect key="frame" x="0.0" y="55" width="60" height="24"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                 <state key="normal" title="Sort Dates">
                                                     <color key="titleColor" red="0.27058823529999998" green="0.2666666667" blue="0.33725490200000002" alpha="1" colorSpace="calibratedRGB"/>
