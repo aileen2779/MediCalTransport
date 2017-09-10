@@ -873,7 +873,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                                                  driver: driver,
                                                  passenger: passenger,
                                                  uid: self.uid)
-                    if (filter == "all") {
+                    if (filter == "all" || filter == "sort_asc" || filter == "sort_desc" ) {
                         self.objectArray.append(location)
                     } else if (filter == "assigned") {
                         if (driver != "") {
@@ -893,7 +893,16 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             }
             
             // sorting
-            let sortedObjectArray = self.objectArray.sorted(by: { $0.pickUpDate < $1.pickUpDate })
+            // sorting
+            var  sortedObjectArray = self.objectArray.sorted(by: { $0.pickUpDate < $1.pickUpDate })
+            if (filter == "sort_asc") {
+                sortedObjectArray = self.objectArray.sorted(by: { $0.pickUpDate < $1.pickUpDate })
+            } else if (filter == "sort_desc") {
+                sortedObjectArray = self.objectArray.sorted(by: { $0.pickUpDate > $1.pickUpDate })
+            } else {
+                //
+            }
+            
             self.objectArray.removeAll()
             var x = 0
             while (x < sortedObjectArray.count) {
@@ -933,11 +942,11 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 passenger = postDict["Passenger"]! as! String
                 
                 
-                let removedID = snapshot.key
+                let updatedID = snapshot.key
                 var x = 0
                 while (x < self.objectArray.count) {
-                    if removedID == self.objectArray[x].key  {
-                        print("\(removedID) updated successfuly")
+                    if updatedID == self.objectArray[x].key  {
+                        print("\(updatedID) updated successfuly")
                         self.objectArray.remove(at: x)
                         
                         // exit
@@ -1056,7 +1065,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     let sortColor = UIColor(red:0.78, green:0.71, blue:0.20, alpha:1.0)
     
     @IBAction func allItemsButtonTapped(_ sender: Any) {
-
+        sortText.setTitle("Sort Dates", for: .normal)
         allText.setTitleColor(allColor, for: .normal)
         assignedText.setTitleColor(grayColor, for: .normal)
         unAssignedText.setTitleColor(grayColor, for: .normal)
@@ -1078,7 +1087,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         }}
 
     @IBAction func assignedButtonTapped(_ sender: Any) {
-
+        sortText.setTitle("Sort Dates", for: .normal)
         allText.setTitleColor(grayColor, for: .normal)
         assignedText.setTitleColor(assignedColor, for: .normal)
         unAssignedText.setTitleColor(grayColor, for: .normal)
@@ -1101,6 +1110,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     @IBAction func unAssignedButtonTapped(_ sender: Any) {
+        sortText.setTitle("Sort Dates", for: .normal)
         allText.setTitleColor(grayColor, for: .normal)
         assignedText.setTitleColor(grayColor, for: .normal)
         unAssignedText.setTitleColor(unAssignedColor, for: .normal)

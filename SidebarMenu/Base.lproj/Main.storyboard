@@ -53,13 +53,20 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="user" translatesAutoresizingMaskIntoConstraints="NO" id="bFc-2U-ft2">
-                                                    <rect key="frame" x="8" y="0.0" width="65" height="66"/>
+                                                    <rect key="frame" x="11" y="8" width="62" height="66"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="          &lt;My Profile&gt;" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="F4U-2a-tgt">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Home" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bq5-wY-gbU" userLabel="MenuTitle">
+                                                    <rect key="frame" x="81" y="23" width="318" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="DiwanMishafi" family="Mishafi" pointSize="23"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text=" " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="F4U-2a-tgt">
                                                     <rect key="frame" x="15" y="0.0" width="384" height="73.666666666666671"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="25"/>
+                                                    <fontDescription key="fontDescription" name="DiwanMishafi" family="Mishafi" pointSize="24"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -180,7 +187,7 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <outlet property="myProfileTextLabel" destination="F4U-2a-tgt" id="3N8-28-RtB"/>
+                        <outlet property="myProfileTextLabel" destination="bq5-wY-gbU" id="jKu-xp-5kK"/>
                         <outlet property="scheduleARideTextLabel" destination="efz-Bb-kny" id="9Wd-br-TVN"/>
                         <outlet property="scheduledTripsTextLabel" destination="it0-69-JpN" id="cPD-xe-cRj"/>
                     </connections>
@@ -191,7 +198,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </mapView>
             </objects>
-            <point key="canvasLocation" x="-200.00000000000003" y="-423.09782608695656"/>
+            <point key="canvasLocation" x="-194.20289855072465" y="-452.44565217391306"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="a23-LC-1XJ">
@@ -1094,7 +1101,7 @@
                                 </connections>
                             </tableView>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="ron-cr-J3q">
-                                <rect key="frame" x="42" y="618" width="330" height="79"/>
+                                <rect key="frame" x="42" y="608" width="330" height="79"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-5" translatesAutoresizingMaskIntoConstraints="NO" id="gOl-sR-llY" userLabel="All">
                                         <rect key="frame" x="0.0" y="0.0" width="60" height="79"/>
@@ -1217,7 +1224,7 @@
                             <constraint firstAttribute="centerX" secondItem="dRd-N9-5sE" secondAttribute="centerX" id="Paz-jP-yHJ"/>
                             <constraint firstItem="ron-cr-J3q" firstAttribute="centerX" secondItem="2zx-Do-anI" secondAttribute="centerX" id="epW-0i-FkD"/>
                             <constraint firstItem="fy6-r5-YBG" firstAttribute="top" secondItem="dRd-N9-5sE" secondAttribute="bottom" id="oZ9-4y-Qbs"/>
-                            <constraint firstItem="fy6-r5-YBG" firstAttribute="top" secondItem="ron-cr-J3q" secondAttribute="bottom" constant="-5" id="z3A-rl-E06"/>
+                            <constraint firstItem="fy6-r5-YBG" firstAttribute="top" secondItem="ron-cr-J3q" secondAttribute="bottom" constant="5" id="z3A-rl-E06"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
