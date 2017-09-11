@@ -7,6 +7,8 @@ import LocalAuthentication
 import FirebaseDatabase
 import FirebaseAuth
 import NVActivityIndicatorView
+import UserNotifications
+
 
 class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicatorViewable {
 
@@ -37,6 +39,10 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
         super.viewDidLoad()
         
         view.backgroundColor = CONST_BGCOLOR
+        
+        //Ask for notification permission
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge], completionHandler: {didAllow, error in
+        })
         
         // hide the login stack view initially
         loginStackView.isHidden = true

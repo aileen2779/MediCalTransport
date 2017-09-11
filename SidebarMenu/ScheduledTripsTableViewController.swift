@@ -3,6 +3,7 @@ import EventKit
 import FirebaseDatabase
 import Foundation
 import CoreLocation
+import UserNotifications
 
 
 class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate  {
@@ -40,7 +41,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     override func viewDidLoad() {
         
         super.viewDidLoad()
-
+        
         // firebase database init
         ref = Database.database().reference()
 
@@ -841,6 +842,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         var rideCompleted:Bool = false
         var driver:String = ""
         var passenger:String = ""
+        var completed:Bool = false
         
         // Retrieve the posts and listen for changes
         Database.database().reference().child("\(self.root)/\(uid)").observe(.childAdded, with: { (snapshot) in
@@ -940,14 +942,37 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 dateAdded = postDict["DateAdded"]! as! String
                 driver = postDict["Driver"]! as! String
                 passenger = postDict["Passenger"]! as! String
+                completed = postDict["Completed"]! as! Bool
                 
                 
                 let updatedID = snapshot.key
                 var x = 0
                 while (x < self.objectArray.count) {
                     if updatedID == self.objectArray[x].key  {
-                        print("\(updatedID) updated successfuly")
+                        // notification
+                        let content = UNMutableNotificationContent()
+                        content.subtitle = ""
+                        print("test\(completed)")
+                        
+                        if completed == true {
+                            content.title = "Pickup completion notification"
+                            content.body = "Pick Up Date: \(pickUpDate)\nAssigned Driver: \(driver)"
+                        } else {
+                            content.title = "Driver change notification"
+                            content.body = "Pick Up Date: \(pickUpDate)\nAssigned Driver: \(driver)"
+                        }
+                        
+                        content.badge = 0
+                        
+                        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+                        let request = UNNotificationRequest(identifier: "timerDone", content: content, trigger: trigger)
+                        
+                        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+                        
+                        print("\(updatedID) updated successfuly with notification")
                         self.objectArray.remove(at: x)
+                        
+   
                         
                         // exit
                         x = self.objectArray.count
