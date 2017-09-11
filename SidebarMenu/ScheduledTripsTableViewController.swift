@@ -542,6 +542,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             locationClassVar = objectArray[indexPath.row]
             let id = locationClassVar.key
 
+            
             //delete from firebase
             firebaseDelete(childIWantToRemove: "scheduledtrips/\(uid)/\(id)")
             
@@ -562,15 +563,37 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             
             
             // Remove from calendar
-            //let myDate = locationClassVar.pickUpDate
-            //let myDateFormatter = DateFormatter()
-            //myDateFormatter.dateFormat = "MM/dd/yy h:mm a"
-            //myDateFormatter.timeZone = TimeZone(secondsFromGMT: TimeZone.current.secondsFromGMT())
+            var calendarMessage:String = ""
+            var calendarBody:String = ""
+            print(calendarMessage)
+            var saveCalendar:Bool = false
             
-            /* Remove from calendar */
-            //let dateString = myDateFormatter.date(from: myDate)
-            //print("\(dateString!)-\(event)")
-            //self.addEventToCalendar(title: "", description: "", startDate: dateString!, endDate: dateString!)
+            //Retreive preferences
+            let preferences = UserDefaults.standard
+            if preferences.object(forKey: "saveCalendar") != nil {
+                saveCalendar = preferences.object(forKey: "saveCalendar") as! Bool
+                if (saveCalendar) {
+                    calendarMessage = "The event has been added to your calendar"
+                    
+                    let fromLocation = locationClassVar.fromAddress
+                    let toLocation = locationClassVar.toAddress
+                    let whenPickup = locationClassVar.pickUpDate
+                    
+                    calendarBody = "From: \(fromLocation)\n\nTo: \(toLocation) \n\nPickup Date: \(whenPickup) \n\nPassenger: \(self.firstName.capitalized) \(self.lastName.capitalized)"
+                    
+                    let myDate = locationClassVar.pickUpDate
+                    let myDateFormatter = DateFormatter()
+                    myDateFormatter.dateFormat = "MM/dd/yy h:mm a"
+                    myDateFormatter.timeZone = TimeZone(secondsFromGMT: TimeZone.current.secondsFromGMT())
+                    
+                    let dateString = myDateFormatter.date(from: myDate)
+                    self.addEventToCalendar(title: "Canceled: Ride Schedule to \(locationClassVar.toAddress)", description: "\(calendarBody)", startDate: dateString!, endDate: dateString!)
+                    
+                } else {
+                    calendarMessage = "Calendar access not granted. The event will NOT be added to your calendar"
+                }
+            }
+            // Remove from calendar
 
             
             // Display confirmation
@@ -1227,5 +1250,36 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     {
         print("Error \(error)")
     }
+    
+    func addEventToCalendar(title: String, description: String?, startDate: Date, endDate: Date, completion: ((_ success: Bool, _ error: NSError?) -> Void)? = nil) {
+        let eventStore = EKEventStore()
+        
+        eventStore.requestAccess(to: .event, completion: { (granted, error) in
+            if (granted) && (error == nil) {
+                let event = EKEvent(eventStore: eventStore)
+                event.title = title
+                event.startDate = startDate
+                event.endDate = endDate
+                event.notes = description
+                event.calendar = eventStore.defaultCalendarForNewEvents
+                
+                let alarm1hour = EKAlarm(relativeOffset: -3600) //1 hour
+                let alarm1day = EKAlarm(relativeOffset: -86400) //1 day
+                event.addAlarm(alarm1day)
+                event.addAlarm(alarm1hour)
+                
+                do {
+                    try eventStore.save(event, span: .thisEvent)
+                } catch let e as NSError {
+                    completion?(false, e)
+                    return
+                }
+                completion?(true, nil)
+            } else {
+                completion?(false, error as NSError?)
+            }
+        })
+    }
+    
 }
 

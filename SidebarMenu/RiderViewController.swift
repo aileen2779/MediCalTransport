@@ -287,6 +287,7 @@ UITextFieldDelegate  {
                             
                             // Add to calendar
                             var calendarMessage:String = ""
+                            var calendarBody:String = ""
                             var saveCalendar:Bool = false
                             
                             //Retreive preferences
@@ -294,7 +295,9 @@ UITextFieldDelegate  {
                             if preferences.object(forKey: "saveCalendar") != nil {
                                 saveCalendar = preferences.object(forKey: "saveCalendar") as! Bool
                                 if (saveCalendar) {
-                                    calendarMessage = "The event has been added to your calendar"
+                                    calendarMessage = "Calendar access granted. The event will be added to your calendar"
+                                    
+                                    calendarBody = "From: \(fromLocation)\n\nTo: \(toLocation) \n\nPickup Date: \(whenPickup) \n\nPassenger: \(self.firstName.capitalized) \(self.lastName.capitalized)"
                                     
                                     let myDate = whenPickup
                                     let myDateFormatter = DateFormatter()
@@ -302,7 +305,7 @@ UITextFieldDelegate  {
                                     myDateFormatter.timeZone = TimeZone(secondsFromGMT: TimeZone.current.secondsFromGMT())
                                     
                                     let dateString = myDateFormatter.date(from: myDate)
-                                    self.addEventToCalendar(title: "Ride Schedule to \(toLocation)", description: "\(scheduledTrips)", startDate: dateString!, endDate: dateString!)
+                                    self.addEventToCalendar(title: "Ride Schedule to \(toLocation)", description: "\(calendarBody)", startDate: dateString!, endDate: dateString!)
                                     
                                 } else {
                                     calendarMessage = "Calendar access not granted. The event will NOT be added to your calendar"
@@ -611,6 +614,11 @@ UITextFieldDelegate  {
                 event.endDate = endDate
                 event.notes = description
                 event.calendar = eventStore.defaultCalendarForNewEvents
+                
+                let alarm1hour = EKAlarm(relativeOffset: -3600) //1 hour
+                let alarm1day = EKAlarm(relativeOffset: -86400) //1 day
+                event.addAlarm(alarm1day)
+                event.addAlarm(alarm1hour)
                 
                 do {
                     try eventStore.save(event, span: .thisEvent)
