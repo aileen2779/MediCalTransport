@@ -16,7 +16,7 @@ class RiderViewController: UIViewController,
     CLLocationManagerDelegate,
     UITableViewDataSource,
     UITableViewDelegate,
-UITextFieldDelegate  {
+    UITextFieldDelegate  {
     
     // Firebase handles
     var ref:DatabaseReference?
@@ -154,9 +154,15 @@ UITextFieldDelegate  {
         
         autoCompleteController.delegate = self as GMSAutocompleteViewControllerDelegate
         
+        // filter
+        let filter = GMSAutocompleteFilter()
+        filter.type = .address
+        filter.country = "usa"
+        autoCompleteController.autocompleteFilter = filter
+        
+        
         // selected location
         locationSelected = .startLocation
-        
         
         // Change text color
         UISearchBar.appearance().setTextColor(color: UIColor.black)
@@ -170,8 +176,9 @@ UITextFieldDelegate  {
         autoCompleteController.delegate = self
         
         let filter = GMSAutocompleteFilter()
-        filter.type = .city
+        filter.type = .address
         filter.country = "usa"
+        autoCompleteController.autocompleteFilter = filter
         
         
         // selected location
@@ -342,7 +349,7 @@ UITextFieldDelegate  {
                         } else {
                             print("to coordinates is incorrect")
                             // Display confirmation
-                            self.displayAlert(title: "Error!", message: "The destination address returned invalid coordimates. Please enter a valid address.", userid: self.uid)
+                            self.displayAlert(title: "Error!", message: "The destination address returned invalid coordinates. Please enter a valid address.", userid: self.uid)
                             
                         }
                         
@@ -351,7 +358,7 @@ UITextFieldDelegate  {
                 } else {
                     print("from coordinates is incorrect")
                     // Display confirmation
-                    self.displayAlert(title: "Error!", message: "The pickup address returned invalid coordimates. Please enter a valid address.", userid: self.uid)
+                    self.displayAlert(title: "Error!", message: "The pickup address returned invalid coordinates. Please enter a valid address.", userid: self.uid)
                 }
                 
             })
@@ -615,6 +622,7 @@ UITextFieldDelegate  {
                 event.notes = description
                 event.calendar = eventStore.defaultCalendarForNewEvents
                 
+                // Add alarm/reminder
                 let alarm1hour = EKAlarm(relativeOffset: -3600) //1 hour
                 let alarm1day = EKAlarm(relativeOffset: -86400) //1 day
                 event.addAlarm(alarm1day)

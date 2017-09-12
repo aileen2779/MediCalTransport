@@ -918,7 +918,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             }
             
             // sorting
-            // sorting
             var  sortedObjectArray = self.objectArray.sorted(by: { $0.pickUpDate < $1.pickUpDate })
             if (filter == "sort_asc") {
                 sortedObjectArray = self.objectArray.sorted(by: { $0.pickUpDate < $1.pickUpDate })
@@ -975,7 +974,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                         // notification
                         let content = UNMutableNotificationContent()
                         content.subtitle = ""
-                        print("test\(completed)")
                         
                         if completed == true {
                             content.title = "Pickup completion notification"

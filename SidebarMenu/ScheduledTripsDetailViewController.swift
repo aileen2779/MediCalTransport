@@ -216,19 +216,6 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate, C
             
         } else {
             
-            Database.database().reference().child("/scheduledtrips/\(location.uid)/\(location.key)").observeSingleEvent(of: .value, with: { (snapshot) in
-                if let result = snapshot.children.allObjects as? [DataSnapshot] {
-                    for snap in result {
-                        if (snap.key == "DriverLongitude") {
-                            self.driverMovingLongitude = snap.value as! Double
-                        }
-                        if (snap.key == "DriverLatitude") {
-                            self.driverMovingLatitude = snap.value as! Double
-                        }
-                    }
-                }
-            })
-            
             Database.database().reference().child("/scheduledtrips/\(location.uid)/\(location.key)").observe(.childChanged, with: { (snapshot) in
                
                 if snapshot.key == "DriverLatitude" {
@@ -239,21 +226,26 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate, C
                     self.driverMovingLongitude = snapshot.value as! Double
                 }
                 
+                print("\(self.driverMovingLatitude), \(self.driverMovingLongitude)")
+
+                if (self.driverMovingLatitude != 0) {
+                    
+                    // store driver longitudes
+                    self.driverLatitude = self.driverMovingLatitude
+                    self.driverLongitude = self.driverMovingLongitude
+                    
+                    let distance = self.driverLocation.distance(from: self.riderLocation) / 1000
+                    let roundedDistance = round(distance * 100) / 100
+                    self.pickUpLabel.text = "Your driver is \(roundedDistance) miles away"
+                    
+                } else {
+                    self.pickUpLabel.text = ""
+                }
+
             })
             
-            if (driverMovingLatitude != 0) {
-                driverLocation = CLLocation(latitude: _location.coordinate.latitude, longitude: _location.coordinate.longitude)
-                
-                // store driver longitudes
-                driverLatitude = driverLocation.coordinate.latitude
-                driverLongitude = driverLocation.coordinate.longitude
-                
-                let distance = driverLocation.distance(from: riderLocation) / 1000
-                let roundedDistance = round(distance * 100) / 100
-                pickUpLabel.text = "Your driver is \(roundedDistance) miles away"
-            } else {
-                pickUpLabel.text = ""
-            }
+            
+            
         }
     }
     
