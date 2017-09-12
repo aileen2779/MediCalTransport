@@ -4,6 +4,7 @@ import FirebaseDatabase
 import Foundation
 import CoreLocation
 import UserNotifications
+import BRYXBanner
 
 
 class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate  {
@@ -85,6 +86,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         tableView.dataSource = self
         
         determineMyCurrentLocation()
+        
     }
     
     // MARK: - Table view data source
@@ -947,6 +949,9 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 x += 1
             }
             self.tableView.reloadData()
+            
+            self.showBanner(title: "Legend:", subTitle: "Orange represents unassigned trips\nBlack represents assigned trips", bgColor: CONST_BGCOLOR_CELESTE)
+
         })
         
         // Watch for updates
@@ -989,6 +994,13 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                         let request = UNNotificationRequest(identifier: "timerDone", content: content, trigger: trigger)
                         
                         UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+                        
+                        if (driver == "") {
+                            self.showBanner(title: "Driver Cancelation:", subTitle: "Driver canceled \(pickUpDate)", bgColor: CONST_BGCOLOR_RED)
+                        } else {
+                            self.showBanner(title: "Driver Assignment:", subTitle: "Driver assigned \(pickUpDate)", bgColor: CONST_BGCOLOR_PURPLE)
+                        }
+
                         
                         print("\(updatedID) updated successfuly with notification")
                         self.objectArray.remove(at: x)
@@ -1277,6 +1289,13 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 completion?(false, error as NSError?)
             }
         })
+    }
+    
+    func showBanner(title:String, subTitle:String, bgColor: UIColor) {
+        let banner = Banner(title: title, subtitle: subTitle, image: #imageLiteral(resourceName: "Icon"), backgroundColor: bgColor)
+        banner.springiness = .heavy
+        banner.position = .bottom
+        banner.show(view, duration: 3.0)
     }
     
 }

@@ -11,6 +11,7 @@ target 'MediCalTransport' do
   pod 'NVActivityIndicatorView'
   pod 'GooglePlaces'
   pod 'GooglePlacesAPI'
+  pod 'BRYXBanner'
   
   # Pods for SidebarMenu
 

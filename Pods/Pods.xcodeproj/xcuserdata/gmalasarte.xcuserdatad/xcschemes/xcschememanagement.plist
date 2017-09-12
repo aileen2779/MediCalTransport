@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>BRYXBanner.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>GTMSessionFetcher.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -52,7 +57,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>0F3B36547C3C2CC3060475E614BCBF32</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>3EDFE4052B5DE7D509935AC0774CB135</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4848B303A527266B7BBDF78DD1B07C7C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -77,22 +92,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B714AD3ED2606AFCF3DF7A8FFFE7394F</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>C052BEBFBD0AB5218CC64BA3450F6547</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C7F13CE1814B421C06DF3949CDD82443</key>
+		<key>D82432A8B6F8DD4EE7EF779662BB6361</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D82432A8B6F8DD4EE7EF779662BB6361</key>
+		<key>F1BFA17D11B3CEB3BA02F9AD0FAE34C7</key>
 		<dict>
 			<key>primary</key>
 			<true/>

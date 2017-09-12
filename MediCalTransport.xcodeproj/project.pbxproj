@@ -10,6 +10,7 @@
 		3D0F779D1F196907000B51ED /* Patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0F779C1F196907000B51ED /* Patient.swift */; };
 		3D1793461F0B411900FC5329 /* ScheduledTripsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1793451F0B411900FC5329 /* ScheduledTripsDetailViewController.swift */; };
 		3D1793481F0D6EC400FC5329 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1793471F0D6EC400FC5329 /* Location.swift */; };
+		3D1D60E71F687D8400943631 /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1D60E61F687D8400943631 /* BorderedButton.swift */; };
 		3D593A501F21330A00B5B7A5 /* icon_180.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D593A4F1F21330A00B5B7A5 /* icon_180.png */; };
 		3D9479221F11E06B0005947F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D9479211F11E06B0005947F /* Images.xcassets */; };
 		3DE281A31F02E043001D841A /* ScheduledTrips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE281A21F02E043001D841A /* ScheduledTrips.swift */; };
@@ -59,6 +60,7 @@
 		3D0F779C1F196907000B51ED /* Patient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Patient.swift; sourceTree = "<group>"; };
 		3D1793451F0B411900FC5329 /* ScheduledTripsDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduledTripsDetailViewController.swift; sourceTree = "<group>"; };
 		3D1793471F0D6EC400FC5329 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		3D1D60E61F687D8400943631 /* BorderedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderedButton.swift; sourceTree = "<group>"; };
 		3D58F4991F1DCFC3000AFDAD /* MediCalTransport.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MediCalTransport.entitlements; sourceTree = SOURCE_ROOT; };
 		3D593A4F1F21330A00B5B7A5 /* icon_180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_180.png; sourceTree = "<group>"; };
 		3D9479211F11E06B0005947F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -134,6 +136,14 @@
 				C5F82F09CD0DC4E267DF751B /* Pods-MediCalTransportTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		3D1D60E51F687D7300943631 /* Banner */ = {
+			isa = PBXGroup;
+			children = (
+				3D1D60E61F687D8400943631 /* BorderedButton.swift */,
+			);
+			name = Banner;
 			sourceTree = "<group>";
 		};
 		7E1465241EFDD2DA00F1102A /* DateTimePicker */ = {
@@ -252,6 +262,7 @@
 		F47029F21A7F27DB00E30A3C /* MediCalTransport */ = {
 			isa = PBXGroup;
 			children = (
+				3D1D60E51F687D7300943631 /* Banner */,
 				3D58F4991F1DCFC3000AFDAD /* MediCalTransport.entitlements */,
 				3D9479211F11E06B0005947F /* Images.xcassets */,
 				7E1465241EFDD2DA00F1102A /* DateTimePicker */,
@@ -464,6 +475,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-MediCalTransport/Pods-MediCalTransport-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/BRYXBanner/BRYXBanner.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GooglePlacesAPI/GooglePlacesAPI.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
@@ -474,6 +486,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BRYXBanner.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GooglePlacesAPI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
@@ -554,6 +567,7 @@
 				7E61510B1EF8B6930077B4E5 /* TouchIDManager.m in Sources */,
 				7E61510A1EF8B6930077B4E5 /* TouchIDManager.swift in Sources */,
 				7E1465291EFDD2EF00F1102A /* DateCollectionViewCell.swift in Sources */,
+				3D1D60E71F687D8400943631 /* BorderedButton.swift in Sources */,
 				7E9538381EF9DBD1008204AA /* BSUAnnotation.swift in Sources */,
 				F47029F61A7F27DB00E30A3C /* AppDelegate.swift in Sources */,
 				7E14652A1EFDD2EF00F1102A /* StepCollectionViewFlowLayout.swift in Sources */,
