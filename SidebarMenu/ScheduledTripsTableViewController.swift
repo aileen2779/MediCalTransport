@@ -4,8 +4,6 @@ import FirebaseDatabase
 import Foundation
 import CoreLocation
 import UserNotifications
-import BRYXBanner
-
 
 class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate  {
     
@@ -28,6 +26,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     var imTheDriver:Bool = false
     var rideAssignedButImNotTheDriver:Bool = false
     var rideUnAssigned:Bool = false
+    var showBannerIndicator:Bool = true
     
     var root:String = "scheduledtrips"
     
@@ -52,7 +51,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         ipAddress = preferences.object(forKey: "ipAddress") as! String
         uid       = preferences.object(forKey: "uID") as! String
         userType  = preferences.object(forKey: "userType") as! String
-        firstName  = preferences.object(forKey: "firstName") as! String
+        firstName = preferences.object(forKey: "firstName") as! String
         lastName  = preferences.object(forKey: "lastName") as! String
         
         if (userType == "passenger") {
@@ -950,7 +949,10 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             }
             self.tableView.reloadData()
             
-            self.showBanner(title: "Legend:", subTitle: "Orange represents unassigned trips\nBlack represents assigned trips", bgColor: CONST_BGCOLOR_CELESTE)
+            if self.showBannerIndicator {
+                self.showBannerIndicator = false
+                showBanner(title: "Legend:", subTitle: "Orange represents unassigned trips\nBlack represents assigned trips", bgColor: CONST_BGCOLOR_CELESTE)
+            }
 
         })
         
@@ -996,9 +998,9 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                         UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
                         
                         if (driver == "") {
-                            self.showBanner(title: "Driver Cancelation:", subTitle: "Driver canceled \(pickUpDate)", bgColor: CONST_BGCOLOR_RED)
+                            showBanner(title: "Driver cancelation for", subTitle: "Driver canceled \(pickUpDate)", bgColor: CONST_BGCOLOR_RED)
                         } else {
-                            self.showBanner(title: "Driver Assignment:", subTitle: "Driver assigned \(pickUpDate)", bgColor: CONST_BGCOLOR_PURPLE)
+                            showBanner(title: "Driver assignment for", subTitle: "Driver assigned \(pickUpDate)", bgColor: CONST_BGCOLOR_PURPLE)
                         }
 
                         
@@ -1289,13 +1291,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 completion?(false, error as NSError?)
             }
         })
-    }
-    
-    func showBanner(title:String, subTitle:String, bgColor: UIColor) {
-        let banner = Banner(title: title, subtitle: subTitle, image: #imageLiteral(resourceName: "Icon"), backgroundColor: bgColor)
-        banner.springiness = .heavy
-        banner.position = .bottom
-        banner.show(view, duration: 3.0)
     }
     
 }
