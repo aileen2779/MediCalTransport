@@ -29,7 +29,6 @@
 		7E6291AE1EFE1457008A25E1 /* ScheduledTripsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E6291AC1EFE1457008A25E1 /* ScheduledTripsTableViewController.swift */; };
 		7E9538351EF9DBAB008204AA /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E9538341EF9DBAB008204AA /* CoreLocation.framework */; };
 		7E9538381EF9DBD1008204AA /* BSUAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9538371EF9DBD1008204AA /* BSUAnnotation.swift */; };
-		7EEB3A001EF8E241001A281D /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EEB39FF1EF8E241001A281D /* SettingsViewController.swift */; };
 		7EFE1D6D1F022BC700DF792D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7EFE1D6C1F022BC700DF792D /* GoogleService-Info.plist */; };
 		856C09943437AD6D2FBCC07E /* Pods_MediCalTransportTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 539D15122796A656A7A142F6 /* Pods_MediCalTransportTests.framework */; };
 		F47029F61A7F27DB00E30A3C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47029F51A7F27DB00E30A3C /* AppDelegate.swift */; };
@@ -82,7 +81,6 @@
 		7E6291AC1EFE1457008A25E1 /* ScheduledTripsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduledTripsTableViewController.swift; sourceTree = "<group>"; };
 		7E9538341EF9DBAB008204AA /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		7E9538371EF9DBD1008204AA /* BSUAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BSUAnnotation.swift; sourceTree = "<group>"; };
-		7EEB39FF1EF8E241001A281D /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		7EFE1D6C1F022BC700DF792D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C5F82F09CD0DC4E267DF751B /* Pods-MediCalTransportTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MediCalTransportTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MediCalTransportTests/Pods-MediCalTransportTests.release.xcconfig"; sourceTree = "<group>"; };
 		D10A1E46A510E43908C9275D /* Pods-MediCalTransport.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MediCalTransport.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MediCalTransport/Pods-MediCalTransport.debug.xcconfig"; sourceTree = "<group>"; };
@@ -170,7 +168,6 @@
 				7E6150F91EF875710077B4E5 /* NewsTableViewCell.swift */,
 				7E6150FA1EF875710077B4E5 /* NewsTableViewController.swift */,
 				7E1465221EFDD25900F1102A /* RiderViewController.swift */,
-				7EEB39FF1EF8E241001A281D /* SettingsViewController.swift */,
 				F4702A171A7F351C00E30A3C /* MenuController.swift */,
 				F491E7521A7F7DF20026528E /* MapViewController.swift */,
 				F491E7541A7F7E010026528E /* RegisterViewController.swift */,
@@ -185,7 +182,6 @@
 		7E55C18A1EF8640D00528AC3 /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				3D593A4F1F21330A00B5B7A5 /* icon_180.png */,
 				7EFE1D6C1F022BC700DF792D /* GoogleService-Info.plist */,
 				7E55C1931EF8645200528AC3 /* Constants.swift */,
 			);
@@ -195,6 +191,7 @@
 		7E6151011EF8B67A0077B4E5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				3D593A4F1F21330A00B5B7A5 /* icon_180.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -562,7 +559,6 @@
 				7E55C18F1EF8642B00528AC3 /* CustomTextField.swift in Sources */,
 				7E6151001EF8B62C0077B4E5 /* MainController.swift in Sources */,
 				7E1465231EFDD25900F1102A /* RiderViewController.swift in Sources */,
-				7EEB3A001EF8E241001A281D /* SettingsViewController.swift in Sources */,
 				3D1793461F0B411900FC5329 /* ScheduledTripsDetailViewController.swift in Sources */,
 				3D1793481F0D6EC400FC5329 /* Location.swift in Sources */,
 				7E1465281EFDD2EF00F1102A /* DateTimePicker.swift in Sources */,

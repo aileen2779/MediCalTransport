@@ -87,7 +87,7 @@ func firebaseLog(userID: String, logToSave: Any) {
 }
 
 func showBanner(title:String, subTitle:String, bgColor: UIColor) {
-    let banner = Banner(title: title, subtitle: subTitle, image: #imageLiteral(resourceName: "Icon"), backgroundColor: bgColor)
+    let banner = Banner(title: title, subtitle: subTitle, image: #imageLiteral(resourceName: "icon_thumbsup"), backgroundColor: bgColor)
     banner.springiness = .heavy
     banner.position = .bottom
     //banner.show(view, duration: 3.0)
