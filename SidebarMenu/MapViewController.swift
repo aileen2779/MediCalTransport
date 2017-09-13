@@ -9,7 +9,7 @@ import CoreLocation
 class MapViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var menuButton:UIBarButtonItem!
-    @IBOutlet weak var extraButton: UIBarButtonItem!
+    //@IBOutlet weak var extraButton: UIBarButtonItem!
     
     @IBOutlet weak var mapView: MKMapView!
     
@@ -45,8 +45,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
             menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
             
             revealViewController().rightViewRevealWidth = 200
-            extraButton.target = revealViewController()
-            extraButton.action = #selector(SWRevealViewController.rightRevealToggle(_:))
+            //extraButton.target = revealViewController()
+            //extraButton.action = #selector(SWRevealViewController.rightRevealToggle(_:))
             
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }

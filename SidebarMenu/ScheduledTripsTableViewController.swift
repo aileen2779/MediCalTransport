@@ -8,7 +8,7 @@ import UserNotifications
 class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate  {
     
     @IBOutlet var menuButton:UIBarButtonItem!
-    @IBOutlet var extraButton:UIBarButtonItem!
+    //@IBOutlet var extraButton:UIBarButtonItem!
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -66,8 +66,8 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             
             
             revealViewController().rightViewRevealWidth = 200
-            extraButton.target = revealViewController()
-            extraButton.action = #selector(SWRevealViewController.rightRevealToggle(_:))
+            //extraButton.target = revealViewController()
+            //extraButton.action = #selector(SWRevealViewController.rightRevealToggle(_:))
             
             // Disable gesture recognizer so swiping left can be enabled
             //view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())

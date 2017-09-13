@@ -23,7 +23,7 @@ class RiderViewController: UIViewController,
     
     // Navigation bars
     @IBOutlet weak var menuButton:UIBarButtonItem!
-    @IBOutlet weak var extraButton: UIBarButtonItem!
+    //@IBOutlet weak var extraButton: UIBarButtonItem!
     
     // UIButton
     @IBOutlet weak var requestARide: UIButton!
@@ -98,8 +98,8 @@ class RiderViewController: UIViewController,
             menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
             
             revealViewController().rightViewRevealWidth = 200
-            extraButton.target = revealViewController()
-            extraButton.action = #selector(SWRevealViewController.rightRevealToggle(_:))
+            //extraButton.target = revealViewController()
+            //extraButton.action = #selector(SWRevealViewController.rightRevealToggle(_:))
             
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
