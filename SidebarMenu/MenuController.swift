@@ -12,11 +12,8 @@ class MenuController: UITableViewController {
         super.viewDidLoad()
 
         // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        self.clearsSelectionOnViewWillAppear = false
 
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        
         
         // Check for the presence of the text label otherwise left swipe will fail
         
@@ -45,11 +42,21 @@ class MenuController: UITableViewController {
     @IBOutlet weak var scheduledTripsTextLabel: UILabel!
     
     @IBAction func logoutButtonTapped(_ sender: Any) {
-        let optionMenu = UIAlertController(title: nil, message: "Are you sure?", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
+        
+        // Change font of title and message.
+        let titleFont = [NSFontAttributeName: UIFont(name: "Arial", size: 0.0)!] //This eliminates the title by setting to 0
+        let messageFont = [NSFontAttributeName: UIFont(name: "Avenir-Roman", size: 20.0)!]
+        
+        let titleAttrString = NSMutableAttributedString(string: "", attributes: titleFont)
+        let messageAttrString = NSMutableAttributedString(string: "Do you wish to logout?", attributes: messageFont)
+        
+        alert.setValue(titleAttrString, forKey: "attributedTitle")
+        alert.setValue(messageAttrString, forKey: "attributedMessage")
+        
         let logoutAction = UIAlertAction(title: "Logout", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
   
-            
             let preferences = UserDefaults.standard
             preferences.removeObject(forKey: "session")
             let ipAddress = preferences.object(forKey: "ipAddress") as! String
@@ -70,10 +77,10 @@ class MenuController: UITableViewController {
             print("Cancelled")
         })
         
-        optionMenu.addAction(logoutAction)
-        optionMenu.addAction(cancelAction)
+        alert.addAction(logoutAction)
+        alert.addAction(cancelAction)
         
-        self.present(optionMenu, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
 
 
