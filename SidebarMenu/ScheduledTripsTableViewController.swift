@@ -434,6 +434,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             let childId = locationClassVar.key
             
             self.ref?.child("\(self.root)/\(parentId)/\(childId)/").updateChildValues(["Driver":"\(firstName.capitalized) \(lastName.capitalized)"])
+            self.ref?.child("\(self.root)/\(parentId)/\(childId)/").updateChildValues(["DriverConfirmDate":getDateAsString()])
             
             // Log to firebase
             firebaseLog(userID: uid, logToSave: ["Action" : "pickup ride",
@@ -471,6 +472,8 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             let childId = locationClassVar.key
             
             self.ref?.child("\(self.root)/\(parentId)/\(childId)/").updateChildValues(["Driver":""])
+            self.ref?.child("\(self.root)/\(parentId)/\(childId)/").updateChildValues(["DriverConfirmDate":""])
+            self.ref?.child("\(self.root)/\(parentId)/\(childId)/").updateChildValues(["DriverPrevious":locationClassVar.driver])
             
             // Log to firebase
             firebaseLog(userID: uid, logToSave: ["Action" : "cancel ride",
@@ -507,8 +510,9 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             let parentId = locationClassVar.uid
             let childId = locationClassVar.key
             
+
             self.ref?.child("\(self.root)/\(parentId)/\(childId)/").updateChildValues(["Completed":true])
-            self.ref?.child("\(self.root)/\(parentId)/\(childId)/").updateChildValues(["CompletedDate":Date()])
+            self.ref?.child("\(self.root)/\(parentId)/\(childId)/").updateChildValues(["CompletedDate":getDateAsString()])
             
             // Log to firebase
             firebaseLog(userID: uid, logToSave: ["Action" : "end pickup",
@@ -868,6 +872,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         var driver:String = ""
         var passenger:String = ""
         var completed:Bool = false
+        var previousDriver:String = ""
         
         // Retrieve the posts and listen for changes
         Database.database().reference().child("\(self.root)/\(uid)").observe(.childAdded, with: { (snapshot) in
@@ -973,7 +978,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 driver = postDict["Driver"]! as! String
                 passenger = postDict["Passenger"]! as! String
                 completed = postDict["Completed"]! as! Bool
-                
+                previousDriver = postDict["DriverPrevious"]! as! String
                 
                 let updatedID = snapshot.key
                 var x = 0
@@ -1001,7 +1006,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                         UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
                         
                         // change of driver
-                        if (content.title == "Driver change notification" && driver != "") {
+                        if (content.title == "Driver change notification" && driver != "" && previousDriver != "") {
                             showBanner(title: "Driver replacement", subTitle: "Driver replaced: \(pickUpDate)", bgColor: CONST_BGCOLOR_BLUE)
                         } else if (content.title == "Pickup completion notification") {
                             // completion of ride

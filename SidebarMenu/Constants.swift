@@ -97,4 +97,11 @@ func showBanner(title:String, subTitle:String, bgColor: UIColor) {
     banner.show(duration: 3.0)
 }
 
-
+func getDateAsString() -> String {
+    // date routine
+    let date = Date()
+    let formatter = DateFormatter()
+    formatter.dateFormat = "MM/dd/YYYY hh:mm aa"
+    let result = formatter.string(from: date)
+    return result
+}
