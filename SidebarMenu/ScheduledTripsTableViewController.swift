@@ -489,7 +489,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             
             
             // Display confirmation
-            self.displayAlert(title: "Pickup Cancelled", message: "A pickup cancellation has been sent.\nThis event has been removed from your calendar")
+            self.displayAlert(title: "Pickup Canceled", message: "A pickup cancelation has been sent.\nThis event has been removed from your calendar")
             
             deleteUpdatePostDataIndexPath = nil
             
@@ -508,6 +508,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             let childId = locationClassVar.key
             
             self.ref?.child("\(self.root)/\(parentId)/\(childId)/").updateChildValues(["Completed":true])
+            self.ref?.child("\(self.root)/\(parentId)/\(childId)/").updateChildValues(["CompletedDate":Date()])
             
             // Log to firebase
             firebaseLog(userID: uid, logToSave: ["Action" : "end pickup",
@@ -981,7 +982,10 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                         // notification
                         let content = UNMutableNotificationContent()
                         content.subtitle = ""
+                        content.title = ""
+                        content.badge = 0
                         
+                        // locked screen notification
                         if completed == true {
                             content.title = "Pickup completion notification"
                             content.body = "Pick Up Date: \(pickUpDate)\nAssigned Driver: \(driver)"
@@ -990,18 +994,28 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                             content.body = "Pick Up Date: \(pickUpDate)\nAssigned Driver: \(driver)"
                         }
                         
-                        content.badge = 0
                         
                         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
                         let request = UNNotificationRequest(identifier: "timerDone", content: content, trigger: trigger)
                         
                         UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
                         
-                        if (driver == "") {
-                            showBanner(title: "Driver cancelation for", subTitle: "Driver canceled \(pickUpDate)", bgColor: CONST_BGCOLOR_RED)
+                        // change of driver
+                        if (content.title == "Driver change notification" && driver != "") {
+                            showBanner(title: "Driver replacement", subTitle: "Driver replaced: \(pickUpDate)", bgColor: CONST_BGCOLOR_BLUE)
+                        } else if (content.title == "Pickup completion notification") {
+                            // completion of ride
+                            showBanner(title: "Ride completed", subTitle: "Ride Completed: \(pickUpDate)", bgColor: CONST_BGCOLOR_GREEN)
                         } else {
-                            showBanner(title: "Driver assignment for", subTitle: "Driver assigned \(pickUpDate)", bgColor: CONST_BGCOLOR_PURPLE)
+                            if (driver == "") {
+                                // cancelation of driver
+                                showBanner(title: "Driver cancelation", subTitle: "Driver canceled: \(pickUpDate)", bgColor: CONST_BGCOLOR_RED)
+                            } else {
+                                // assignment of driver
+                                showBanner(title: "Driver assignment", subTitle: "Driver assigned: \(pickUpDate)", bgColor: CONST_BGCOLOR_PURPLE)
+                            }
                         }
+                        
 
                         
                         print("\(updatedID) updated successfuly with notification")

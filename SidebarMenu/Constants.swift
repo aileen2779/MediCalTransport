@@ -13,6 +13,9 @@ let CONST_BGCOLOR_CELESTE:UIColor = UIColor(red:0.49, green:0.73, blue:0.71, alp
 let CONST_BGCOLOR_PURPLE:UIColor = UIColor(red:0.51, green:0.22, blue:0.88, alpha:1.0)
 let CONST_BGCOLOR_DRIVER:UIColor = UIColor(red:1.00, green:0.60, blue:0.00, alpha:1.0)
 let CONST_BGCOLOR_RED:UIColor = UIColor(red:0.94, green:0.11, blue:0.11, alpha:1.0)
+let CONST_BGCOLOR_BLUE:UIColor = UIColor(red:0.00, green:0.70, blue:1.00, alpha:1.0)
+let CONST_BGCOLOR_GREEN:UIColor = UIColor(red:0.00, green:0.80, blue:0.18, alpha:1.0)
+
 var CONST_DOMAIN:String = "@zundo.com"
 let CONST_IP_URL:String = "https://api.ipify.org?format=json"
 let CONST_SMS_API:String = "7aeb4e18f8328b578a5f9a2e7ca6fec8980edb53dzQLAbRJjzd2e7IbrOc1bH8vg"
