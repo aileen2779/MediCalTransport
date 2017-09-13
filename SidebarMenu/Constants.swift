@@ -5,7 +5,7 @@
 import Foundation
 import AudioToolbox
 import FirebaseDatabase
-
+import BRYXBanner
 
 
 let CONST_BGCOLOR:UIColor = UIColor(red:0.49, green:0.73, blue:0.71, alpha:1.0)
@@ -83,7 +83,15 @@ func firebaseLog(userID: String, logToSave: Any) {
     let logToSaveDetail = ["/logs/\(yearString)/\(monthString)/\(dayString)/\(_userID)/\(hourString)": logToSave]
     
     ref.updateChildValues(logToSaveDetail)
+    
 }
 
+func showBanner(title:String, subTitle:String, bgColor: UIColor) {
+    let banner = Banner(title: title, subtitle: subTitle, image: #imageLiteral(resourceName: "Icon"), backgroundColor: bgColor)
+    banner.springiness = .heavy
+    banner.position = .bottom
+    //banner.show(view, duration: 3.0)
+    banner.show(duration: 3.0)
+}
 
 

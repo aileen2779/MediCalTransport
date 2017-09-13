@@ -1,11 +1,3 @@
-//
-//  SettingsViewController.swift
-//  SidebarMenu
-//
-//  Created by Gamy Malasarte on 6/19/17.
-//  Copyright © 2017 AppCoda. All rights reserved.
-//
-
 import UIKit
 
 class SettingsViewController: UITableViewController {

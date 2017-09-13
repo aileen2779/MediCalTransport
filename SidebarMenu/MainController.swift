@@ -24,9 +24,6 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
     @IBOutlet weak var segmentControl: UISegmentedControl!
     
     
-    // Fetch constants
-    //var myDomain = CONST_DOMAIN
-    
     var ipAddress:String = ""
     var login_session:String = ""
     var userType = ""
@@ -335,7 +332,6 @@ class MainController: UIViewController, UITextFieldDelegate, NVActivityIndicator
             }
         }
         loginStackView.isHidden = false
-        //login_button.isEnabled = true
 
         loginTextField.leftViewMode = UITextFieldViewMode.always
         loginTextField.leftView = UIImageView(image: UIImage(named: "userID"))

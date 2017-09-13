@@ -1,11 +1,3 @@
-//
-//  NewsTableViewController.swift
-//  SidebarMenu
-//
-//  Created by Simon Ng on 2/2/15.
-//  Copyright (c) 2015 AppCoda. All rights reserved.
-//
-
 import UIKit
 
 
@@ -17,7 +9,6 @@ class NewsTableViewController: UITableViewController {
         super.viewDidLoad()
 
         if revealViewController() != nil {
-//            revealViewController().rearViewRevealWidth = 62
             menuButton.target = revealViewController()
             menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
 
@@ -26,8 +17,7 @@ class NewsTableViewController: UITableViewController {
             extraButton.action = #selector(SWRevealViewController.rightRevealToggle(_:))
 
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-            
-        
+
         }
     }
 

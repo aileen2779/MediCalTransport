@@ -86,14 +86,12 @@ class RiderViewController: UIViewController,
         dropShadow(thisObject: toTextField)
         dropShadow(thisObject: whenTextField)
         
-        
         // firebase reference
         ref = Database.database().reference()
         
         // reveal controller
         if revealViewController() != nil {
             
-            //revealViewController().rearViewRevealWidth = 150
             menuButton.target = revealViewController()
             menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
             
