@@ -194,6 +194,7 @@ class ScheduledTripsDetailViewController: UIViewController, MKMapViewDelegate, C
                 //print("Longitude: \(_location.coordinate.longitude)")
                 self.ref?.child("/scheduledtrips/\(location.uid)/\(location.key)").updateChildValues(["DriverLongitude": _location.coordinate.longitude])
                 self.ref?.child("/scheduledtrips/\(location.uid)/\(location.key)").updateChildValues(["DriverLatitude": _location.coordinate.latitude])
+                self.ref?.child("/scheduledtrips/\(location.uid)/\(location.key)").updateChildValues(["LastAction": "mobile"])
                 
                 
                 //self.mapView.showsUserLocation = true

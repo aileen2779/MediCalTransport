@@ -327,7 +327,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         alert.setValue(titleAttrString, forKey: "attributedTitle")
         alert.setValue(messageAttrString, forKey: "attributedMessage")
         
-        let DeleteAction = UIAlertAction(title: "Yes, I want to replace driver", style: .destructive, handler: handlePickupPostData)
+        let DeleteAction = UIAlertAction(title: "Yes, I want to replace driver", style: .destructive, handler: handleReplaceDriverPostData)
         let CancelAction = UIAlertAction(title: "Go Back", style: .cancel, handler: cancelDeletePostData)
         
         alert.addAction(DeleteAction)
@@ -435,6 +435,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             
             self.ref?.child("\(self.root)/\(parentId)/\(childId)/").updateChildValues(["Driver":"\(firstName.capitalized) \(lastName.capitalized)"])
             self.ref?.child("\(self.root)/\(parentId)/\(childId)/").updateChildValues(["DriverConfirmDate":getDateAsString()])
+            self.ref?.child("\(self.root)/\(parentId)/\(childId)/").updateChildValues(["LastAction":"pickup"])
             
             // Log to firebase
             firebaseLog(userID: uid, logToSave: ["Action" : "pickup ride",
@@ -459,9 +460,46 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             
             tableView.endUpdates()
         }
-   
     }
 
+    func handleReplaceDriverPostData(_ alertAction: UIAlertAction!) -> Void {
+        if let indexPath = deleteUpdatePostDataIndexPath {
+            tableView.beginUpdates()
+            
+            let locationClassVar: LocationClass!
+            locationClassVar = objectArray[indexPath.row]
+            let parentId = locationClassVar.uid
+            let childId = locationClassVar.key
+            
+            self.ref?.child("\(self.root)/\(parentId)/\(childId)/").updateChildValues(["Driver":"\(firstName.capitalized) \(lastName.capitalized)"])
+            self.ref?.child("\(self.root)/\(parentId)/\(childId)/").updateChildValues(["DriverConfirmDate":getDateAsString()])
+            self.ref?.child("\(self.root)/\(parentId)/\(childId)/").updateChildValues(["LastAction":"replace"])
+            
+            // Log to firebase
+            firebaseLog(userID: uid, logToSave: ["Action" : "replace driver",
+                                                 "PatientID": patientId,
+                                                 "FromAddress": locationClassVar.fromAddress,
+                                                 "FromLatitude" : locationClassVar.fromLatitude,
+                                                 "FromLongitude" : locationClassVar.fromLongitude,
+                                                 "ToAddress" : locationClassVar.toAddress,
+                                                 "ToLatitude" : locationClassVar.toLatitude,
+                                                 "ToLongitude" : locationClassVar.toLongitude,
+                                                 "PickUpDate" : locationClassVar.pickUpDate,
+                                                 "DateAdded" : locationClassVar.dateAdded,
+                                                 "IPAddress" : ipAddress,
+                                                 "Driver" : "\(firstName.capitalized) \(lastName.capitalized)"
+                ])
+            
+            // Display confirmation
+            self.displayAlert(title: "Driver replacement confirmed", message: "A pickup confirmation has been sent.\nThis event has been added to your calendar")
+            
+            deleteUpdatePostDataIndexPath = nil
+            
+            tableView.endUpdates()
+        }
+    }
+
+    
     func handleCancelPickupPostData(_ alertAction: UIAlertAction!) -> Void {
         if let indexPath = deleteUpdatePostDataIndexPath {
             tableView.beginUpdates()
@@ -474,7 +512,8 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             self.ref?.child("\(self.root)/\(parentId)/\(childId)/").updateChildValues(["Driver":""])
             self.ref?.child("\(self.root)/\(parentId)/\(childId)/").updateChildValues(["DriverConfirmDate":""])
             self.ref?.child("\(self.root)/\(parentId)/\(childId)/").updateChildValues(["DriverPrevious":locationClassVar.driver])
-            
+            self.ref?.child("\(self.root)/\(parentId)/\(childId)/").updateChildValues(["LastAction":"cancel"])
+
             // Log to firebase
             firebaseLog(userID: uid, logToSave: ["Action" : "cancel ride",
                                                  "PatientID": patientId,
@@ -513,6 +552,8 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
 
             self.ref?.child("\(self.root)/\(parentId)/\(childId)/").updateChildValues(["Completed":true])
             self.ref?.child("\(self.root)/\(parentId)/\(childId)/").updateChildValues(["CompletedDate":getDateAsString()])
+            self.ref?.child("\(self.root)/\(parentId)/\(childId)/").updateChildValues(["LastAction":"complete"])
+
             
             // Log to firebase
             firebaseLog(userID: uid, logToSave: ["Action" : "end pickup",
@@ -548,12 +589,12 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             locationClassVar = objectArray[indexPath.row]
             let id = locationClassVar.key
 
-            
+
             //delete from firebase
             firebaseDelete(childIWantToRemove: "scheduledtrips/\(uid)/\(id)")
             
             // Log to firebase
-            firebaseLog(userID: uid, logToSave: ["Action" : "cancel ride",
+            firebaseLog(userID: uid, logToSave: ["Action" : "cancel ride by passenger",
                                                        "PatientID": patientId,
                                                        "FromAddress": locationClassVar.fromAddress,
                                                         "FromLatitude" : locationClassVar.fromLatitude,
@@ -599,8 +640,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                     calendarMessage = "Calendar access not granted. The event will NOT be added to your calendar"
                 }
             }
-            // Remove from calendar
-
             
             // Display confirmation
             self.displayAlert(title: "Ride canceled", message: "A ride cancelation has been sent.\nThis event has been removed from your calendar")
@@ -872,7 +911,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         var driver:String = ""
         var passenger:String = ""
         var completed:Bool = false
-        var previousDriver:String = ""
+        var lastAction:String = ""
         
         // Retrieve the posts and listen for changes
         Database.database().reference().child("\(self.root)/\(uid)").observe(.childAdded, with: { (snapshot) in
@@ -889,7 +928,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 dateAdded = postDict["DateAdded"]! as! String
                 driver = postDict["Driver"]! as! String
                 passenger = postDict["Passenger"]! as! String
-                
+                lastAction = postDict["LastAction"]! as! String
                 
                 if !(rideCompleted) {
                     let location = LocationClass(key: keyString,
@@ -978,61 +1017,55 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 driver = postDict["Driver"]! as! String
                 passenger = postDict["Passenger"]! as! String
                 completed = postDict["Completed"]! as! Bool
-                previousDriver = postDict["DriverPrevious"]! as! String
+                lastAction = postDict["LastAction"]! as! String
                 
                 let updatedID = snapshot.key
                 var x = 0
                 while (x < self.objectArray.count) {
                     if updatedID == self.objectArray[x].key  {
-                        // notification
-                        let content = UNMutableNotificationContent()
-                        content.subtitle = ""
-                        content.title = ""
-                        content.badge = 0
-                        
-                        // locked screen notification
-                        if completed == true {
-                            content.title = "Pickup completion notification"
-                            content.body = "Pick Up Date: \(pickUpDate)\nAssigned Driver: \(driver)"
-                        } else {
-                            content.title = "Driver change notification"
-                            content.body = "Pick Up Date: \(pickUpDate)\nAssigned Driver: \(driver)"
-                        }
-                        
-                        
-                        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
-                        let request = UNNotificationRequest(identifier: "timerDone", content: content, trigger: trigger)
-                        
-                        UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
-                        
-                        // change of driver
-                        if (content.title == "Driver change notification" && driver != "" && previousDriver != "") {
-                            showBanner(title: "Driver replacement", subTitle: "Driver replaced: \(pickUpDate)", bgColor: CONST_BGCOLOR_BLUE)
-                        } else if (content.title == "Pickup completion notification") {
-                            // completion of ride
-                            showBanner(title: "Ride completed", subTitle: "Ride Completed: \(pickUpDate)", bgColor: CONST_BGCOLOR_GREEN)
-                        } else {
-                            if (driver == "") {
-                                // cancelation of driver
-                                showBanner(title: "Driver cancelation", subTitle: "Driver canceled: \(pickUpDate)", bgColor: CONST_BGCOLOR_RED)
-                            } else {
-                                // assignment of driver
-                                showBanner(title: "Driver assignment", subTitle: "Driver assigned: \(pickUpDate)", bgColor: CONST_BGCOLOR_PURPLE)
-                            }
-                        }
-                        
-
-                        
                         print("\(updatedID) updated successfuly with notification")
                         self.objectArray.remove(at: x)
-                        
-   
                         
                         // exit
                         x = self.objectArray.count
                     }
                     x += 1
                 }
+
+                // notification
+                let content = UNMutableNotificationContent()
+                content.subtitle = ""
+                content.title = ""
+                content.badge = 0
+                
+                // locked screen notification
+                if completed == true {
+                    content.title = "Pickup completion notification"
+                    content.body = "Pick Up Date: \(pickUpDate)\nAssigned Driver: \(driver)"
+                } else {
+                    content.title = "Driver change notification"
+                    content.body = "Pick Up Date: \(pickUpDate)\nAssigned Driver: \(driver)"
+                }
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+                let request = UNNotificationRequest(identifier: "timerDone", content: content, trigger: trigger)
+                UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+                
+                print(lastAction)
+                /*
+                if (lastAction == "replace") {
+                    showBanner(title: "Driver replacement", subTitle: "Driver replaced: \(pickUpDate)", bgColor: CONST_BGCOLOR_BLUE)
+                } else if (lastAction == "pickup") {
+                    showBanner(title: "Driver assignment", subTitle: "Driver assigned: \(pickUpDate)", bgColor: CONST_BGCOLOR_PURPLE)
+                } else if (lastAction == "cancel") {
+                    // cancelation of driver
+                    showBanner(title: "Driver cancelation", subTitle: "Driver canceled: \(pickUpDate)", bgColor: CONST_BGCOLOR_RED)
+                } else if (lastAction == "complete") {
+                    // completion of ride
+                    showBanner(title: "Ride completed", subTitle: "Ride Completed: \(pickUpDate)", bgColor: CONST_BGCOLOR_GREEN)
+                } else {
+                    // assignment driver
+                }
+                */
                 
                 if !(rideCompleted) {
                     let location = LocationClass(key: keyString,
@@ -1120,9 +1153,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
  
             self.tableView.reloadData()
         })
-       
-
-
     }
     
     // Bottom menu

@@ -185,7 +185,6 @@
 		7E55C18A1EF8640D00528AC3 /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				3D593A4F1F21330A00B5B7A5 /* icon_180.png */,
 				7EFE1D6C1F022BC700DF792D /* GoogleService-Info.plist */,
 				7E55C1931EF8645200528AC3 /* Constants.swift */,
 			);
@@ -254,6 +253,7 @@
 			children = (
 				3D58F4991F1DCFC3000AFDAD /* MediCalTransport.entitlements */,
 				3D9479211F11E06B0005947F /* Images.xcassets */,
+				3D593A4F1F21330A00B5B7A5 /* icon_180.png */,
 				7E1465241EFDD2DA00F1102A /* DateTimePicker */,
 				7E9538361EF9DBC5008204AA /* BSUMaps */,
 				7EEB3A041EF97F5B001A281D /* TouchID */,

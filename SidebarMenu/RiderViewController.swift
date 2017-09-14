@@ -266,7 +266,8 @@ class RiderViewController: UIViewController,
                                               "Completed" : false,
                                               "Driver" : "",
                                               "Passenger" : "\(self.firstName.capitalized) \(self.lastName.capitalized)",
-                                              "DriverPrevious" : ""]
+                                              "DriverPrevious" : "",
+                                              "LastAction" : "create"]
                             
                             let scheduledTripUpdates = ["/scheduledtrips/\(self.uid)/\(datetimekey)/": scheduledTrips]
                             
