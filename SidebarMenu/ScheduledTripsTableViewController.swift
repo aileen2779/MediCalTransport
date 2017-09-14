@@ -34,6 +34,8 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
 
     var objectArray = [LocationClass]()
     
+    var counter = 0
+    
     // Driver location used for distance measurement
     var driverLocation = CLLocation(latitude: 0, longitude: 0)
     var riderLocation = CLLocation(latitude: 0, longitude: 0)
@@ -1002,6 +1004,8 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         })
         
         // Watch for updates
+
+        
         Database.database().reference().child("\(self.root)/\(uid)").observe(.childChanged, with: { (snapshot) in
             if let postDict = snapshot.value as? Dictionary<String, AnyObject> {
                 keyString = snapshot.key
@@ -1050,22 +1054,29 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 let request = UNNotificationRequest(identifier: "timerDone", content: content, trigger: trigger)
                 UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
                 
-                print(lastAction)
-                /*
-                if (lastAction == "replace") {
-                    showBanner(title: "Driver replacement", subTitle: "Driver replaced: \(pickUpDate)", bgColor: CONST_BGCOLOR_BLUE)
-                } else if (lastAction == "pickup") {
-                    showBanner(title: "Driver assignment", subTitle: "Driver assigned: \(pickUpDate)", bgColor: CONST_BGCOLOR_PURPLE)
-                } else if (lastAction == "cancel") {
-                    // cancelation of driver
-                    showBanner(title: "Driver cancelation", subTitle: "Driver canceled: \(pickUpDate)", bgColor: CONST_BGCOLOR_RED)
-                } else if (lastAction == "complete") {
-                    // completion of ride
-                    showBanner(title: "Ride completed", subTitle: "Ride Completed: \(pickUpDate)", bgColor: CONST_BGCOLOR_GREEN)
-                } else {
-                    // assignment driver
+                self.counter = self.counter + 1
+                
+                if self.counter == 3 {
+                    print("test \(lastAction) \(self.counter)")
+                    if (lastAction == "replace") {
+                        showBanner(title: "Driver replacement", subTitle: "Driver replaced: \(pickUpDate)", bgColor: CONST_BGCOLOR_BLUE)
+                    } else if (lastAction == "pickup") {
+                        showBanner(title: "Driver assignment", subTitle: "Driver assigned: \(pickUpDate)", bgColor: CONST_BGCOLOR_PURPLE)
+                    } else if (lastAction == "cancel") {
+                        // cancelation of driver
+                        showBanner(title: "Driver cancelation", subTitle: "Driver canceled: \(pickUpDate)", bgColor: CONST_BGCOLOR_RED)
+                    } else if (lastAction == "complete") {
+                        // completion of ride
+                        showBanner(title: "Ride completed", subTitle: "Ride Completed: \(pickUpDate)", bgColor: CONST_BGCOLOR_GREEN)
+                    } else {
+                        // assignment driver
+                    }
+                    self.counter = 0
                 }
-                */
+                
+
+                
+                //self.ref?.child("\(self.root)/\(self.uid)/\(updatedID)/").updateChildValues(["LastAction":""])
                 
                 if !(rideCompleted) {
                     let location = LocationClass(key: keyString,
