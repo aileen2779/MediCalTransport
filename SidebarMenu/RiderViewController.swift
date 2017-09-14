@@ -142,13 +142,15 @@ class RiderViewController: UIViewController,
             }
         }
     }
-    
+
     
     @IBOutlet weak var fromAutoCompleteButton: UIButton!
     @IBOutlet weak var toAutoCompleteButton: UIButton!
     
     // MARK: when start location tap, this will open the search location
     @IBAction func openStartLocation(_ sender: UIButton) {
+        // hide the drop down window
+        tableView.isHidden = true
         
         let autoCompleteController = GMSAutocompleteViewController()
         
@@ -172,6 +174,9 @@ class RiderViewController: UIViewController,
     
     // MARK: when destination location tap, this will open the search location
     @IBAction func openDestinationLocation(_ sender: UIButton) {
+        // hide the drop down window
+        tableView.isHidden = true
+
         let autoCompleteController = GMSAutocompleteViewController()
         autoCompleteController.delegate = self
         
@@ -220,13 +225,6 @@ class RiderViewController: UIViewController,
             
             
             /* start confirm */
-            
-            // Date time
-            let date : Date = Date()
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MM/dd/YYYY HH:mm:ss"
-            let todaysDate = dateFormatter.string(from: date)
-            
             let fromLocation = self.fromTextField.text!
             let toLocation = self.toTextField.text!
             let whenPickup = self.whenTextField.text!
@@ -264,7 +262,7 @@ class RiderViewController: UIViewController,
                                               "ToLongitude" : toLongitude,
                                               "ToLatitude":  toLatitude,
                                               "\(self.whenString)": whenPickup,
-                                              "DateAdded" : todaysDate,
+                                              "DateAdded" : getDateAsString(),
                                               "Completed" : false,
                                               "Driver" : "",
                                               "Passenger" : "\(self.firstName.capitalized) \(self.lastName.capitalized)",
@@ -446,8 +444,7 @@ class RiderViewController: UIViewController,
         {
             return;
         }
-        if touch.view != tableView
-        {
+        if (touch.view != tableView) {
             fromTextField.endEditing(true)
             toTextField.endEditing(true)
             whenTextField.endEditing(true)
@@ -480,10 +477,9 @@ class RiderViewController: UIViewController,
                 }
             }
             
-            
             //self.values.sort()
             self.tableView.reloadData()
-            self.tableView.frame = CGRect(x: self.tableView.frame.origin.x, y: self.tableView.frame.origin.y, width: self.tableView.frame.size.width, height: self.tableView.contentSize.height + 100)
+            self.tableView.frame = CGRect(x: self.tableView.frame.origin.x, y: 136, width: self.tableView.frame.size.width, height: self.tableView.contentSize.height + 100)
             self.tableView.isHidden = !self.tableView.isHidden
         })
         
@@ -503,6 +499,7 @@ class RiderViewController: UIViewController,
                 }
             }
             
+            //self.values.sort()
             self.tableView.reloadData()
             self.tableView.frame = CGRect(x: self.tableView.frame.origin.x, y: 200, width: self.tableView.frame.size.width, height: self.tableView.contentSize.height + 100)
             self.tableView.isHidden = !self.tableView.isHidden
@@ -528,6 +525,10 @@ class RiderViewController: UIViewController,
         toTextField.resignFirstResponder()
         whenTextField.resignFirstResponder()
         return true
+    }
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        return false
     }
     
     func showDatePicker() {
@@ -599,6 +600,9 @@ class RiderViewController: UIViewController,
         return 0.0
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = UIColor(red:1.00, green:0.97, blue:0.97, alpha:1.0)
+    }
     
     func displayAlert(title: String, message: String, userid: String) {
         
