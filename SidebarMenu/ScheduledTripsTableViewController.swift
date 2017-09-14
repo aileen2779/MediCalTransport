@@ -1029,6 +1029,46 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                     if updatedID == self.objectArray[x].key  {
                         print("\(updatedID) updated successfuly with notification")
                         self.objectArray.remove(at: x)
+
+                        self.counter = self.counter + 1
+                        
+                        // only send banner notifications on the 3rd update
+                        if self.counter == 3 {
+                            print("test \(lastAction) \(self.counter)")
+                            
+                            // notification
+                            let content = UNMutableNotificationContent()
+                            content.subtitle = ""
+                            content.title = ""
+                            content.badge = 0
+                            
+                            // locked screen notification
+                            if completed == true {
+                                content.title = "Pickup completion notification"
+                                content.body = "Pick Up Date: \(pickUpDate)\nAssigned Driver: \(driver)"
+                            } else {
+                                content.title = "Driver change notification"
+                                content.body = "Pick Up Date: \(pickUpDate)\nAssigned Driver: \(driver)"
+                            }
+                            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+                            let request = UNNotificationRequest(identifier: "timerDone", content: content, trigger: trigger)
+                            UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+                            
+                            if (lastAction == "replace") {
+                                showBanner(title: "Driver replacement", subTitle: "Driver replaced: \(pickUpDate)", bgColor: CONST_BGCOLOR_BLUE)
+                            } else if (lastAction == "pickup") {
+                                showBanner(title: "Driver assignment", subTitle: "Driver assigned: \(pickUpDate)", bgColor: CONST_BGCOLOR_PURPLE)
+                            } else if (lastAction == "cancel") {
+                                // cancelation of driver
+                                showBanner(title: "Driver cancelation", subTitle: "Driver canceled: \(pickUpDate)", bgColor: CONST_BGCOLOR_RED)
+                            } else if (lastAction == "complete") {
+                                // completion of ride
+                                showBanner(title: "Ride completed", subTitle: "Ride Completed: \(pickUpDate)", bgColor: CONST_BGCOLOR_GREEN)
+                            } else {
+                                // assignment driver
+                            }
+                            self.counter = 0
+                        }
                         
                         // exit
                         x = self.objectArray.count
@@ -1036,48 +1076,6 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                     x += 1
                 }
 
-                // notification
-                let content = UNMutableNotificationContent()
-                content.subtitle = ""
-                content.title = ""
-                content.badge = 0
-                
-                // locked screen notification
-                if completed == true {
-                    content.title = "Pickup completion notification"
-                    content.body = "Pick Up Date: \(pickUpDate)\nAssigned Driver: \(driver)"
-                } else {
-                    content.title = "Driver change notification"
-                    content.body = "Pick Up Date: \(pickUpDate)\nAssigned Driver: \(driver)"
-                }
-                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
-                let request = UNNotificationRequest(identifier: "timerDone", content: content, trigger: trigger)
-                UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
-                
-                self.counter = self.counter + 1
-                
-                if self.counter == 3 {
-                    print("test \(lastAction) \(self.counter)")
-                    if (lastAction == "replace") {
-                        showBanner(title: "Driver replacement", subTitle: "Driver replaced: \(pickUpDate)", bgColor: CONST_BGCOLOR_BLUE)
-                    } else if (lastAction == "pickup") {
-                        showBanner(title: "Driver assignment", subTitle: "Driver assigned: \(pickUpDate)", bgColor: CONST_BGCOLOR_PURPLE)
-                    } else if (lastAction == "cancel") {
-                        // cancelation of driver
-                        showBanner(title: "Driver cancelation", subTitle: "Driver canceled: \(pickUpDate)", bgColor: CONST_BGCOLOR_RED)
-                    } else if (lastAction == "complete") {
-                        // completion of ride
-                        showBanner(title: "Ride completed", subTitle: "Ride Completed: \(pickUpDate)", bgColor: CONST_BGCOLOR_GREEN)
-                    } else {
-                        // assignment driver
-                    }
-                    self.counter = 0
-                }
-                
-
-                
-                //self.ref?.child("\(self.root)/\(self.uid)/\(updatedID)/").updateChildValues(["LastAction":""])
-                
                 if !(rideCompleted) {
                     let location = LocationClass(key: keyString,
                                                  patientID: self.patientId,
