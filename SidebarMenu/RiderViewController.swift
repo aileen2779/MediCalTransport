@@ -139,10 +139,7 @@ class RiderViewController: UIViewController,
             
             //view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
-        
 
-
-        
         getFBDefaults(fbString: "RidesPerYear") { (myValue) -> () in
             if myValue > 0 {
                 self.ridesPerYear = myValue
@@ -806,7 +803,7 @@ class RiderViewController: UIViewController,
                             let longitude = fromLongitude
                             point.coordinate = CLLocationCoordinate2DMake(latitude,longitude);
                             point.title =  passenger
-                            point.subtitle = "\(pickUpDate)"
+                            point.subtitle = pickUpDate
                             
                             self.mapView.addAnnotation(point)
                         }
@@ -814,28 +811,39 @@ class RiderViewController: UIViewController,
                     }
  
                 })
-                
-                
-                /*
-                // Watch for updates
-                Database.database().reference().child("\(snapshot.key)").observe(.childChanged, with: { (snapshot) in
-                    if let postDict = snapshot.value as? Dictionary<String, AnyObject> {
-                        keyString = snapshot.key
-   
-                    }
-                })
+
                 
                 // Watch for deletes
-                Database.database().reference().child("").observe(.childRemoved, with: { (snapshot) in
-                    //let removedID = snapshot.key
-                    
-                    
+                Database.database().reference().child("\(self.root)/\(snapshot.key)").observe(.childRemoved, with: { (snapshot) in
+                    if let postDict = snapshot.value as? Dictionary<String, AnyObject> {
+                        passenger = postDict["Passenger"]! as! String
+                        fromLatitude = postDict["FromLatitude"]! as! Double
+                        fromLongitude = postDict["FromLongitude"]! as! Double
+                        pickUpDate = postDict["PickUpDate"]! as! String
+                        
+                        let allAnnotations = self.mapView.annotations
+                        for eachAnnot in allAnnotations{
+                            if ((eachAnnot.coordinate.latitude == fromLatitude &&
+                                eachAnnot.coordinate.longitude == fromLongitude) &&
+                                eachAnnot.subtitle!! == pickUpDate) {
+                                print("Removed: \(eachAnnot.coordinate)")
+                                self.mapView.removeAnnotation(eachAnnot)
+                                showBanner(title: "Trip cancelation", subTitle: "Trip canceled: \(pickUpDate)", bgColor: CONST_BGCOLOR_RED)
+                            }
+                        }
+                        
+                    }
+
                 })
-                */
+                
+                
+                
+                
             } else {
                 print("Error retrieving Firebase data") // snapshot value is nil
             }
         })
+
     }
     
 }
