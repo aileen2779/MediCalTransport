@@ -38,7 +38,6 @@
 		F4702A0C1A7F27DC00E30A3C /* SidebarMenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4702A0B1A7F27DC00E30A3C /* SidebarMenuTests.swift */; };
 		F4702A161A7F342F00E30A3C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4702A151A7F342F00E30A3C /* MapKit.framework */; };
 		F4702A181A7F351C00E30A3C /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4702A171A7F351C00E30A3C /* MenuController.swift */; };
-		F491E7531A7F7DF20026528E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E7521A7F7DF20026528E /* MapViewController.swift */; };
 		F491E7551A7F7E010026528E /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F491E7541A7F7E010026528E /* RegisterViewController.swift */; };
 		F4D750181BD38F0C009E1003 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4D750171BD38F0C009E1003 /* SWRevealViewController.m */; };
 /* End PBXBuildFile section */
@@ -96,7 +95,6 @@
 		F4702A0B1A7F27DC00E30A3C /* SidebarMenuTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarMenuTests.swift; sourceTree = "<group>"; };
 		F4702A151A7F342F00E30A3C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		F4702A171A7F351C00E30A3C /* MenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
-		F491E7521A7F7DF20026528E /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		F491E7541A7F7E010026528E /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		F4D750151BD38F0C009E1003 /* SidebarMenu-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SidebarMenu-Bridging-Header.h"; sourceTree = "<group>"; };
 		F4D750161BD38F0C009E1003 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
@@ -172,7 +170,6 @@
 				7E6150FA1EF875710077B4E5 /* NewsTableViewController.swift */,
 				7E1465221EFDD25900F1102A /* RiderViewController.swift */,
 				F4702A171A7F351C00E30A3C /* MenuController.swift */,
-				F491E7521A7F7DF20026528E /* MapViewController.swift */,
 				F491E7541A7F7E010026528E /* RegisterViewController.swift */,
 				7E6150FF1EF8B62C0077B4E5 /* MainController.swift */,
 				7E6291AC1EFE1457008A25E1 /* ScheduledTripsTableViewController.swift */,
@@ -567,7 +564,6 @@
 				3D1793481F0D6EC400FC5329 /* Location.swift in Sources */,
 				7E1465281EFDD2EF00F1102A /* DateTimePicker.swift in Sources */,
 				7E6150FC1EF875710077B4E5 /* NewsTableViewController.swift in Sources */,
-				F491E7531A7F7DF20026528E /* MapViewController.swift in Sources */,
 				7E6291AE1EFE1457008A25E1 /* ScheduledTripsTableViewController.swift in Sources */,
 				F491E7551A7F7E010026528E /* RegisterViewController.swift in Sources */,
 			);
