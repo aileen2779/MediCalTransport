@@ -54,6 +54,8 @@ class RiderViewController: UIViewController,
     let toString = "ToAddress"
     let whenString = "PickUpDate"
     
+    var root:String = "scheduledtrips"
+    
     @IBOutlet var callAnUberButton: UIButton!
     @IBOutlet var mapView: MKMapView!
     
@@ -77,22 +79,50 @@ class RiderViewController: UIViewController,
             fromTextField.isHidden = true
             toTextField.isHidden = true
             whenTextField.isHidden = true
+            
             fromAutoCompleteButton.isHidden = true
             toAutoCompleteButton.isHidden = true
             callAnUberButton.isHidden = true
             mapType.isHidden = false
             
-            displayDriverMap()
+            displayLocations()
+            
+            let latitude:CLLocationDegrees = 36.1699412
+            let longitude:CLLocationDegrees = -115.13982959999998
+            
+            let span:MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
+            let location:CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude, longitude)
+            let region:MKCoordinateRegion = MKCoordinateRegionMake(location, span)
+            mapView.showsUserLocation = true
+            mapView.setRegion(region, animated: true)
+        } else {
+            // add shadow
+            dropShadow(thisObject: requestARide)
+            dropShadow(thisObject: fromTextField)
+            dropShadow(thisObject: toTextField)
+            dropShadow(thisObject: whenTextField)
+            
+            // Textfield
+            self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+            
+            tableView.delegate = self
+            tableView.dataSource = self
+            
+            fromTextField.delegate = self
+            toTextField.delegate = self
+            whenTextField.delegate = self
+            
+            tableView.isHidden = true
+            
+            // Manage tableView visibility via TouchDown in textField
+            fromTextField.addTarget(self, action: #selector(fromTextFieldActive), for: UIControlEvents.touchDown)
+            toTextField.addTarget(self, action: #selector(toTextFieldActive), for: UIControlEvents.touchDown)
+            whenTextField.addTarget(self, action: #selector(whenTextFieldActive), for: UIControlEvents.touchDown)
         }
+ 
         requestAccessToLocation()
         requestAccessToCalendar()
-        
-        // add shadow
-        dropShadow(thisObject: requestARide)
-        dropShadow(thisObject: fromTextField)
-        dropShadow(thisObject: toTextField)
-        dropShadow(thisObject: whenTextField)
-        
+
         // firebase reference
         ref = Database.database().reference()
         
@@ -110,39 +140,24 @@ class RiderViewController: UIViewController,
             //view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
         
-        // Textfield
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-        fromTextField.delegate = self
-        toTextField.delegate = self
-        whenTextField.delegate = self
-        
-        tableView.isHidden = true
-        
-        // Manage tableView visibility via TouchDown in textField
-        fromTextField.addTarget(self, action: #selector(fromTextFieldActive), for: UIControlEvents.touchDown)
-        toTextField.addTarget(self, action: #selector(toTextFieldActive), for: UIControlEvents.touchDown)
-        whenTextField.addTarget(self, action: #selector(whenTextFieldActive), for: UIControlEvents.touchDown)
+
 
         
         getFBDefaults(fbString: "RidesPerYear") { (myValue) -> () in
             if myValue > 0 {
                 self.ridesPerYear = myValue
-                print(self.ridesPerYear)
+                //print(self.ridesPerYear)
             } else {
-                print("Default value not found")
+                print("Rides per year default value not found")
             }
         }
         
         getScheduledTrips(fbUid: uid) { (myValue) -> () in
             if myValue > 0 {
                 self.scheduledRides = myValue
-                print(self.scheduledRides)
+                //print(self.scheduledRides)
             } else {
-                print("Default value not found")
+                print("Scheduled rides default value not found")
             }
         }
     }
@@ -264,14 +279,11 @@ class RiderViewController: UIViewController,
                 if success {
                     fromLatitude = coordinate.latitude
                     fromLongitude = coordinate.longitude
-                    print("From:\(fromLatitude),\(fromLongitude)")
                     
                     self.forwardGeocoding(address: toLocation, completion: { success, coordinate in
                         if success {
                             toLatitude = coordinate.latitude
                             toLongitude = coordinate.longitude
-                            
-                            print("To:\(toLatitude),\(toLongitude)")
                             
                             // if current location, then use coordinates, else use from address
                             scheduledTrips = ["\(self.fromString)": fromLocation,
@@ -336,7 +348,6 @@ class RiderViewController: UIViewController,
                                 } else {
                                     calendarMessage = "Calendar access not granted. The event will NOT be added to your calendar"
                                 }
-                                //print("test:\(calendarMessage)")
                             }
                             // End add to calendar
                             
@@ -359,7 +370,6 @@ class RiderViewController: UIViewController,
                             self.getScheduledTrips(fbUid: self.uid) { (myValue) -> () in
                                 if myValue > 0 {
                                     self.scheduledRides = myValue
-                                    print(self.scheduledRides)
                                 }
                                 else {
                                     print("Default value not found")
@@ -379,9 +389,7 @@ class RiderViewController: UIViewController,
                     // Display confirmation
                     self.displayAlert(title: "Error!", message: "The pickup address returned invalid coordinates. Please enter a valid address.", userid: self.uid)
                 }
-                
             })
-            
         })
         //
         
@@ -400,15 +408,21 @@ class RiderViewController: UIViewController,
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         if userType == "driver" {
-            let userLocation:CLLocation = locations[0]
-            let latitude:CLLocationDegrees = userLocation.coordinate.latitude
-            let longitude:CLLocationDegrees = userLocation.coordinate.longitude
+            //let userLocation:CLLocation = locations[0]
+            //let latitude:CLLocationDegrees = userLocation.coordinate.latitude
+            //let longitude:CLLocationDegrees = userLocation.coordinate.longitude
             
-            let span:MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
-            let location:CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude, longitude)
-            let region:MKCoordinateRegion = MKCoordinateRegionMake(location, span)
+            /*
+            let latitude:CLLocationDegrees = 36.1699412
+            let longitude:CLLocationDegrees = -115.13982959999998
+            */
+            //let span:MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
+            //let location:CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude, longitude)
+            //let region:MKCoordinateRegion = MKCoordinateRegionMake(location, span)
             mapView.showsUserLocation = true
-            mapView.setRegion(region, animated: true)
+            //mapView.setRegion(region, animated: true)
+            
+            
         } else {
             if let location = manager.location?.coordinate {
                 userLocation = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
@@ -762,43 +776,69 @@ class RiderViewController: UIViewController,
         })
     }
     
-    func displayDriverMap() {
-        //
-        manager = CLLocationManager()
-        manager.delegate = self
-        manager.desiredAccuracy = kCLLocationAccuracyBest
-        manager.requestWhenInUseAuthorization()
-        manager.startUpdatingLocation()
-        
-        let v1 = Venue(aIdent:"1", aName: "Whole Foods Market", aAddress: "20955 Stevens Creek Blvd", aCity: "Summerlin", aCategory: "Grocery Store", aLat: 36.1871005, aLng: -115.29561180000002)
-        let v2 = Venue(aIdent:"2", aName: "Buffalo Wild Wings Grill & Bar", aAddress: "1620 Saratoga Ave", aCity: "Las Vegas", aCategory: "American Restaurant", aLat: 36.2085091, aLng: -115.31339079999998)
-        let v3 = Venue(aIdent:"3", aName: "Bierhaus", aAddress: "383 Castro St", aCity: "Mountain View", aCategory: "Gastropub", aLat: 36.0219727, aLng: -115.14833269999997)
-        let v4 = Venue(aIdent:"4", aName: "Singularity University", aAddress: "Building 20 S. Akron Rd.", aCity: "Moffett Field", aCategory: "University", aLat: 36.0749404, aLng:-115.01323589999998)
-        
-        let v5 = Venue(aIdent:"5", aName: "Menlo Country Club", aAddress: "", aCity: "Woodside", aCategory: "Country Club", aLat: 36.045151, aLng: -115.109531)
-        let v6 = Venue(aIdent:"6", aName: "Denny's", aAddress: "1015 Blossom Hill Rd", aCity: "San Jose", aCategory: "American Restaurant", aLat: 36.1021195, aLng: -115.26094280000001)
-        
-        let venuesArr = [v1, v2, v3, v4 , v5, v6]
-        
-        mapView.removeAnnotations(mapView.annotations)
-        for i in 0 ..< venuesArr.count {
+    func displayLocations() {
+
+        Database.database().reference().child("\(root)").observe(.childAdded, with: { (snapshot) in
+            var passengeruid:String = ""
+            var passenger:String = ""
+            //var fromAddress:String = ""
+            var pickUpDate:String = ""
+            var fromLongitude:Double = 0.0
+            var fromLatitude:Double = 0.0
+            var rideCompleted:Bool = false
             
-            let point:MapPointAnnotation = MapPointAnnotation()
-            let v = venuesArr[i] as Venue
-            point.venue = v
-            let latitude = v.lat
-            let longitude = v.lng
-            point.coordinate = CLLocationCoordinate2DMake(latitude,longitude);
-            point.title =  v.name
-            point.subtitle = v.category
-            venuePoints[v.ident] = point
-            
-            mapView.addAnnotation(point)
-        }
+            if snapshot.children.allObjects is [DataSnapshot] {
+                passengeruid = snapshot.key
+                
+                // Watch for new records
+                Database.database().reference().child("\(self.root)/\(passengeruid)").observe(.childAdded, with: { (snapshot) in
+                    if let postDict = snapshot.value as? Dictionary<String, AnyObject> {
+                        fromLatitude = postDict["FromLatitude"]! as! Double
+                        fromLongitude = postDict["FromLongitude"]! as! Double
+                        passenger = postDict["Passenger"]! as! String
+                        //fromAddress = postDict["FromAddress"]! as! String
+                        pickUpDate = postDict["PickUpDate"]! as! String
+                        rideCompleted = postDict["Completed"]! as! Bool
+                        
+                        if !(rideCompleted) {
+                            let point:MapPointAnnotation = MapPointAnnotation()
+                            let latitude = fromLatitude
+                            let longitude = fromLongitude
+                            point.coordinate = CLLocationCoordinate2DMake(latitude,longitude);
+                            point.title =  passenger
+                            point.subtitle = "\(pickUpDate)"
+                            
+                            self.mapView.addAnnotation(point)
+                        }
+ 
+                    }
+ 
+                })
+                
+                
+                /*
+                // Watch for updates
+                Database.database().reference().child("\(snapshot.key)").observe(.childChanged, with: { (snapshot) in
+                    if let postDict = snapshot.value as? Dictionary<String, AnyObject> {
+                        keyString = snapshot.key
+   
+                    }
+                })
+                
+                // Watch for deletes
+                Database.database().reference().child("").observe(.childRemoved, with: { (snapshot) in
+                    //let removedID = snapshot.key
+                    
+                    
+                })
+                */
+            } else {
+                print("Error retrieving Firebase data") // snapshot value is nil
+            }
+        })
     }
     
 }
-
 
 
 // MARK: - GMS Auto Complete Delegate, for autocomplete search location

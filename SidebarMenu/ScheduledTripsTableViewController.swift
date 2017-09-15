@@ -16,7 +16,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     var deleteUpdatePostDataIndexPath: IndexPath? = nil
     
     var ref:DatabaseReference?
-
+    
     var patientId:String = ""
     var ipAddress:String = ""
     var uid:String = ""
@@ -31,7 +31,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     var root:String = "scheduledtrips"
     
     var trips: [String: [String]] = [:]
-
+    
     var objectArray = [LocationClass]()
     
     var counter = 0
@@ -39,14 +39,14 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     // Driver location used for distance measurement
     var driverLocation = CLLocation(latitude: 0, longitude: 0)
     var riderLocation = CLLocation(latitude: 0, longitude: 0)
-
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
         // firebase database init
         ref = Database.database().reference()
-
+        
         // preferences init
         let preferences = UserDefaults.standard
         patientId = preferences.object(forKey: "userID") as! String
@@ -61,7 +61,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         } else {
             self.title = "Driver Console"
         }
-
+        
         if revealViewController() != nil {
             menuButton.target = revealViewController()
             menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
@@ -81,7 +81,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         } else { // else driver/passenger
             displayPassenger(filter: "all")
         } // end if driver/passenger
-
+        
         // Do any additional setup after loading the view, typically from a nib.
         tableView.delegate = self
         tableView.dataSource = self
@@ -166,7 +166,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         locationClassVar = objectArray[indexPath.row]
         
         if (userType == "driver") {
-
+            
             // find out of i'm the driver or not
             if (locationClassVar.driver.trimmingCharacters(in: .whitespacesAndNewlines)) == "" {
                 rideUnAssigned = true
@@ -182,10 +182,10 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                     rideAssignedButImNotTheDriver = true
                     imTheDriver = false
                     print("Ride Assigned but I'm not the driver")
-
+                    
                 }
             }
-        
+            
             let option1 = UITableViewRowAction(style: .normal, title: "\u{1F44D}\n End\nPickup") { action, index in
                 
                 self.deleteUpdatePostDataIndexPath = indexPath
@@ -194,7 +194,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 self.confirmEndPickup(PostDataToUpdate)
             }
             option1.backgroundColor = UIColor(red:0.49, green:0.73, blue:0.71, alpha:1.0)
-
+            
             
             // If I'm the driver Cancel Pickup
             // If unassigned, Confirm pickup
@@ -213,15 +213,15 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 }
             }
             option2.backgroundColor = (rideUnAssigned ? UIColor(red:0.03, green:0.38, blue:0.64, alpha:1.0)
-                                                      : (imTheDriver ? UIColor(red:0.45, green:0.06, blue:0.32, alpha:1.0)
-                                                                    : (rideAssignedButImNotTheDriver ? UIColor(red:0.03, green:0.43, blue:0.21, alpha:1.0)
-                                                                                                    : UIColor(red:1.00, green:0.00, blue:0.24, alpha:1.0))))
+                : (imTheDriver ? UIColor(red:0.45, green:0.06, blue:0.32, alpha:1.0)
+                    : (rideAssignedButImNotTheDriver ? UIColor(red:0.03, green:0.43, blue:0.21, alpha:1.0)
+                        : UIColor(red:1.00, green:0.00, blue:0.24, alpha:1.0))))
             if imTheDriver {
                 return [ option1, option2 ]
-
+                
             } else {
                 return [ option2 ]
-
+                
             }
             
         } else {
@@ -233,7 +233,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             cancel.backgroundColor = UIColor.red
             
             return [cancel]
-
+            
         }
     }
     
@@ -243,7 +243,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         return ( (userType == "passenger") ? "Passenger: \(firstName.capitalized) \(lastName.capitalized)" : "Driver: \(firstName.capitalized) \(lastName.capitalized)" )
         //return ("Patient ID: \(patientId)")
     }
-
+    
     // Header title formatting
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
@@ -286,7 +286,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             
         }
     }
- 
+    
     // Delete Confirmation and Handling
     func confirmDelete(_ dataToDelete: Any) {
         let alert = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
@@ -341,7 +341,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         
         self.present(alert, animated: true, completion: nil)
     }
-
+    
     // Pickup Confirmation and Handling
     func confirmPickup(_ dataToUpdate: Any) {
         
@@ -369,7 +369,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         
         self.present(alert, animated: true, completion: nil)
     }
-
+    
     // Cancel Pickup Confirmation and Handling
     func confirmCancelPickup(_ dataToUpdate: Any) {
         
@@ -397,7 +397,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         
         self.present(alert, animated: true, completion: nil)
     }
-
+    
     // End Pickup Confirmation and Handling
     func confirmEndPickup(_ dataToUpdate: Any) {
         
@@ -418,11 +418,11 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         
         alert.addAction(DeleteAction)
         alert.addAction(CancelAction)
-
+        
         // Support presentation in iPad
         alert.popoverPresentationController?.sourceView = self.view
         alert.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
-
+        
         self.present(alert, animated: true, completion: nil)
     }
     
@@ -463,7 +463,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             tableView.endUpdates()
         }
     }
-
+    
     func handleReplaceDriverPostData(_ alertAction: UIAlertAction!) -> Void {
         if let indexPath = deleteUpdatePostDataIndexPath {
             tableView.beginUpdates()
@@ -500,7 +500,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             tableView.endUpdates()
         }
     }
-
+    
     
     func handleCancelPickupPostData(_ alertAction: UIAlertAction!) -> Void {
         if let indexPath = deleteUpdatePostDataIndexPath {
@@ -515,7 +515,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             self.ref?.child("\(self.root)/\(parentId)/\(childId)/").updateChildValues(["DriverConfirmDate":""])
             self.ref?.child("\(self.root)/\(parentId)/\(childId)/").updateChildValues(["DriverPrevious":locationClassVar.driver])
             self.ref?.child("\(self.root)/\(parentId)/\(childId)/").updateChildValues(["LastAction":"cancel"])
-
+            
             // Log to firebase
             firebaseLog(userID: uid, logToSave: ["Action" : "cancel ride",
                                                  "PatientID": patientId,
@@ -541,7 +541,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         }
         
     }
-
+    
     func handleEndPickupPostData(_ alertAction: UIAlertAction!) -> Void {
         if let indexPath = deleteUpdatePostDataIndexPath {
             tableView.beginUpdates()
@@ -551,11 +551,11 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             let parentId = locationClassVar.uid
             let childId = locationClassVar.key
             
-
+            
             self.ref?.child("\(self.root)/\(parentId)/\(childId)/").updateChildValues(["Completed":true])
             self.ref?.child("\(self.root)/\(parentId)/\(childId)/").updateChildValues(["CompletedDate":getDateAsString()])
             self.ref?.child("\(self.root)/\(parentId)/\(childId)/").updateChildValues(["LastAction":"complete"])
-
+            
             
             // Log to firebase
             firebaseLog(userID: uid, logToSave: ["Action" : "end pickup",
@@ -590,25 +590,25 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
             let locationClassVar: LocationClass!
             locationClassVar = objectArray[indexPath.row]
             let id = locationClassVar.key
-
-
+            
+            
             //delete from firebase
             firebaseDelete(childIWantToRemove: "scheduledtrips/\(uid)/\(id)")
             
             // Log to firebase
             firebaseLog(userID: uid, logToSave: ["Action" : "cancel ride by passenger",
-                                                       "PatientID": patientId,
-                                                       "FromAddress": locationClassVar.fromAddress,
-                                                        "FromLatitude" : locationClassVar.fromLatitude,
-                                                        "FromLongitude" : locationClassVar.fromLongitude,
-                                                        "ToAddress" : locationClassVar.toAddress,
-                                                        "ToLatitude" : locationClassVar.toLatitude,
-                                                        "ToLongitude" : locationClassVar.toLongitude,
-                                                        "PickUpDate" : locationClassVar.pickUpDate,
-                                                        "DateAdded" : locationClassVar.dateAdded,
-                                                        "IPAddress" : ipAddress,
-                                                        "Driver" : ""
-                                                        ])
+                                                 "PatientID": patientId,
+                                                 "FromAddress": locationClassVar.fromAddress,
+                                                 "FromLatitude" : locationClassVar.fromLatitude,
+                                                 "FromLongitude" : locationClassVar.fromLongitude,
+                                                 "ToAddress" : locationClassVar.toAddress,
+                                                 "ToLatitude" : locationClassVar.toLatitude,
+                                                 "ToLongitude" : locationClassVar.toLongitude,
+                                                 "PickUpDate" : locationClassVar.pickUpDate,
+                                                 "DateAdded" : locationClassVar.dateAdded,
+                                                 "IPAddress" : ipAddress,
+                                                 "Driver" : ""
+                ])
             
             
             // Remove from calendar
@@ -672,13 +672,13 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         self.present(alertcontroller, animated: true, completion: nil)
         
     }
-
+    
     
     func displayDriver(filter: String) {
-
+        
         Database.database().reference().child("\(root)").observe(.childAdded, with: { (snapshot) in
             
-           if snapshot.children.allObjects is [DataSnapshot] {
+            if snapshot.children.allObjects is [DataSnapshot] {
                 var keyString:String = ""
                 var fromAddress:String = ""
                 var fromLongitude:Double = 0.0
@@ -693,7 +693,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 var passenger:String = ""
                 var passengeruid:String = ""
                 passengeruid = snapshot.key
-            
+                
                 // Loop through UID
                 // Watch for new records
                 Database.database().reference().child("\(self.root)/\(passengeruid)").observe(.childAdded, with: { (snapshot) in
@@ -710,7 +710,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                         dateAdded = postDict["DateAdded"]! as! String
                         driver = postDict["Driver"]! as! String
                         passenger = postDict["Passenger"]! as! String
-
+                        
                         
                         if !(rideCompleted) {
                             let location = LocationClass(key: keyString,
@@ -736,7 +736,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                                 if (driver == "") {
                                     self.objectArray.append(location)
                                 }
-                            
+                                
                             } else {
                                 //
                             }
@@ -774,7 +774,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                     }
                     self.tableView.reloadData()
                 })
-
+                
                 // Watch for updates
                 Database.database().reference().child("\(self.root)/\(snapshot.key)").observe(.childChanged, with: { (snapshot) in
                     if let postDict = snapshot.value as? Dictionary<String, AnyObject> {
@@ -850,7 +850,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                     self.tableView.reloadData()
                     
                 })
-
+                
                 // Watch for deletes
                 Database.database().reference().child("\(self.root)/\(snapshot.key)").observe(.childRemoved, with: { (snapshot) in
                     let removedID = snapshot.key
@@ -861,7 +861,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                         if removedID == self.objectArray[x].key  {
                             print("\(removedID) deleted successfuly")
                             self.objectArray.remove(at: x)
-                        
+                            
                             // exit
                             x = self.objectArray.count
                         }
@@ -891,14 +891,14 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                     }
                     self.tableView.reloadData()
                 })
-            
+                
             } else {
                 print("Error retrieving Firebase data") // snapshot value is nil
             }
         })
         
     }
-
+    
     func displayPassenger(filter: String) {
         var keyString:String = ""
         var fromAddress:String = ""
@@ -1000,11 +1000,11 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 self.showBannerIndicator = false
                 showBanner(title: "Legend:", subTitle: "Orange represents unassigned trips\nBlack represents assigned trips", bgColor: CONST_BGCOLOR_CELESTE)
             }
-
+            
         })
         
         // Watch for updates
-
+        
         
         Database.database().reference().child("\(self.root)/\(uid)").observe(.childChanged, with: { (snapshot) in
             if let postDict = snapshot.value as? Dictionary<String, AnyObject> {
@@ -1029,7 +1029,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                     if updatedID == self.objectArray[x].key  {
                         print("\(updatedID) updated successfuly with notification")
                         self.objectArray.remove(at: x)
-
+                        
                         self.counter = self.counter + 1
                         
                         // only send banner notifications on the 3rd update
@@ -1075,7 +1075,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                     }
                     x += 1
                 }
-
+                
                 if !(rideCompleted) {
                     let location = LocationClass(key: keyString,
                                                  patientID: self.patientId,
@@ -1137,7 +1137,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 }
                 x += 1
             }
- 
+            
             // sorting
             let sortedObjectArray = self.objectArray.sorted(by: { $0.pickUpDate < $1.pickUpDate })
             self.objectArray.removeAll()
@@ -1159,7 +1159,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                 self.objectArray.append(location)
                 x += 1
             }
- 
+            
             self.tableView.reloadData()
         })
     }
@@ -1173,7 +1173,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
     @IBOutlet weak var unAssignedText: UIButton!
     @IBOutlet weak var sortImage: UIButton!
     @IBOutlet weak var sortText: UIButton!
-
+    
     
     let grayColor = UIColor(red:0.80, green:0.80, blue:0.80, alpha:1.0)
     
@@ -1203,7 +1203,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         } else {
             displayPassenger(filter: "all")
         }}
-
+    
     @IBAction func assignedButtonTapped(_ sender: Any) {
         sortText.setTitle("Sort Dates", for: .normal)
         allText.setTitleColor(grayColor, for: .normal)
@@ -1215,7 +1215,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         assignedImage.setImage(UIImage(named: "unlock.png"), for: .normal)
         unAssignedImage.setImage(UIImage(named: "padlock_gray.png"), for: .normal)
         sortImage.setImage(UIImage(named: "sort_gray.png"), for: .normal)
-
+        
         
         objectArray.removeAll()
         tableView.reloadData()
@@ -1233,12 +1233,12 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         assignedText.setTitleColor(grayColor, for: .normal)
         unAssignedText.setTitleColor(unAssignedColor, for: .normal)
         sortText.setTitleColor(grayColor, for: .normal)
-
+        
         allImage.setImage(UIImage(named: "layers_gray.png"), for: .normal)
         assignedImage.setImage(UIImage(named: "unlock_gray.png"), for: .normal)
         unAssignedImage.setImage(UIImage(named: "padlock.png"), for: .normal)
         sortImage.setImage(UIImage(named: "sort_gray.png"), for: .normal)
-
+        
         objectArray.removeAll()
         tableView.reloadData()
         
@@ -1287,9 +1287,9 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
         }
     }
     
-
+    
     var locationManager:CLLocationManager!
-
+    
     func determineMyCurrentLocation() {
         locationManager = CLLocationManager()
         locationManager.delegate = self

@@ -31,6 +31,7 @@ class MenuController: UITableViewController {
         }
 
         if (scheduledTripsTextLabel != nil && userType == "driver") {
+            scheduleARideTextLabel.text = "Map view of rides"
             scheduledTripsTextLabel.text = "All Scheduled Rides"
         }
     }
