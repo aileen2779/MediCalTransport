@@ -49,6 +49,7 @@ class RiderViewController: UIViewController,
     var uid:String = ""
     var ridesPerYear:Int = 0
     var scheduledRides:Int = 0
+    var initialLoad:Bool = true
     
     let fromString = "FromAddress"
     let toString = "ToAddress"
@@ -778,7 +779,6 @@ class RiderViewController: UIViewController,
         Database.database().reference().child("\(root)").observe(.childAdded, with: { (snapshot) in
             var passengeruid:String = ""
             var passenger:String = ""
-            //var fromAddress:String = ""
             var pickUpDate:String = ""
             var fromLongitude:Double = 0.0
             var fromLatitude:Double = 0.0
@@ -807,9 +807,7 @@ class RiderViewController: UIViewController,
                             
                             self.mapView.addAnnotation(point)
                         }
- 
-                    }
- 
+                     }
                 })
 
                 
@@ -825,18 +823,40 @@ class RiderViewController: UIViewController,
                         for eachAnnot in allAnnotations{
                             if ((eachAnnot.coordinate.latitude == fromLatitude &&
                                 eachAnnot.coordinate.longitude == fromLongitude) &&
+                                eachAnnot.title!! == passenger &&
                                 eachAnnot.subtitle!! == pickUpDate) {
-                                print("Removed: \(eachAnnot.coordinate)")
+                                
                                 self.mapView.removeAnnotation(eachAnnot)
                                 showBanner(title: "Trip cancelation", subTitle: "Trip canceled: \(pickUpDate)", bgColor: CONST_BGCOLOR_RED)
                             }
                         }
-                        
                     }
-
                 })
                 
-                
+                // Watch for changes
+                Database.database().reference().child("\(self.root)/\(snapshot.key)").observe(.childChanged, with: { (snapshot) in
+                    if let postDict = snapshot.value as? Dictionary<String, AnyObject> {
+                        passenger = postDict["Passenger"]! as! String
+                        fromLatitude = postDict["FromLatitude"]! as! Double
+                        fromLongitude = postDict["FromLongitude"]! as! Double
+                        pickUpDate = postDict["PickUpDate"]! as! String
+                        rideCompleted = postDict["Completed"]! as! Bool
+                        
+                        if (rideCompleted) {
+                            let allAnnotations = self.mapView.annotations
+                            for eachAnnot in allAnnotations{
+                                if ((eachAnnot.coordinate.latitude == fromLatitude &&
+                                    eachAnnot.coordinate.longitude == fromLongitude) &&
+                                    eachAnnot.title!! == passenger &&
+                                    eachAnnot.subtitle!! == pickUpDate) {
+                                    
+                                    self.mapView.removeAnnotation(eachAnnot)
+                                    showBanner(title: "Trip completion", subTitle: "Trip completed: \(pickUpDate)", bgColor: CONST_BGCOLOR_GREEN)
+                                }
+                            }
+                        }
+                    }
+                })
                 
                 
             } else {
