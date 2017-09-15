@@ -25,11 +25,15 @@ class RiderViewController: UIViewController,
     @IBOutlet weak var menuButton:UIBarButtonItem!
     //@IBOutlet weak var extraButton: UIBarButtonItem!
     
+    
+    @IBOutlet weak var mapType: UISegmentedControl!
+    
     // UIButton
     @IBOutlet weak var requestARide: UIButton!
     
     //Location manager
     var locationManager = CLLocationManager()
+    var manager = CLLocationManager()
     var userLocation: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0)
     
     // Autocomplete
@@ -53,6 +57,10 @@ class RiderViewController: UIViewController,
     @IBOutlet var callAnUberButton: UIButton!
     @IBOutlet var mapView: MKMapView!
     
+    //
+    let latDelta:CLLocationDegrees = 0.5
+    let lonDelta:CLLocationDegrees = 0.5
+    var venuePoints = [String:MapPointAnnotation]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,17 +73,16 @@ class RiderViewController: UIViewController,
         firstName   = preferences.object(forKey: "firstName") as! String
         lastName    = preferences.object(forKey: "lastName") as! String
         
-        
         if userType == "driver" {
-            //dismiss(animated: true, completion: nil)
-            //return
             fromTextField.isHidden = true
             toTextField.isHidden = true
             whenTextField.isHidden = true
-            callAnUberButton.setTitle("This is a Passenger only feature", for: .normal)
-            callAnUberButton.backgroundColor = UIColor.red
             fromAutoCompleteButton.isHidden = true
             toAutoCompleteButton.isHidden = true
+            callAnUberButton.isHidden = true
+            mapType.isHidden = false
+            
+            displayDriverMap()
         }
         requestAccessToLocation()
         requestAccessToCalendar()
@@ -85,7 +92,6 @@ class RiderViewController: UIViewController,
         dropShadow(thisObject: fromTextField)
         dropShadow(thisObject: toTextField)
         dropShadow(thisObject: whenTextField)
-        
         
         // firebase reference
         ref = Database.database().reference()
@@ -97,11 +103,11 @@ class RiderViewController: UIViewController,
             menuButton.target = revealViewController()
             menuButton.action = #selector(SWRevealViewController.revealToggle(_:))
             
-            revealViewController().rightViewRevealWidth = 200
+            //revealViewController().rightViewRevealWidth = 200
             //extraButton.target = revealViewController()
             //extraButton.action = #selector(SWRevealViewController.rightRevealToggle(_:))
             
-            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+            //view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
         
         // Textfield
@@ -120,14 +126,13 @@ class RiderViewController: UIViewController,
         fromTextField.addTarget(self, action: #selector(fromTextFieldActive), for: UIControlEvents.touchDown)
         toTextField.addTarget(self, action: #selector(toTextFieldActive), for: UIControlEvents.touchDown)
         whenTextField.addTarget(self, action: #selector(whenTextFieldActive), for: UIControlEvents.touchDown)
-        
+
         
         getFBDefaults(fbString: "RidesPerYear") { (myValue) -> () in
             if myValue > 0 {
                 self.ridesPerYear = myValue
                 print(self.ridesPerYear)
-            }
-            else {
+            } else {
                 print("Default value not found")
             }
         }
@@ -136,13 +141,11 @@ class RiderViewController: UIViewController,
             if myValue > 0 {
                 self.scheduledRides = myValue
                 print(self.scheduledRides)
-            }
-            else {
+            } else {
                 print("Default value not found")
             }
         }
     }
-
     
     @IBOutlet weak var fromAutoCompleteButton: UIButton!
     @IBOutlet weak var toAutoCompleteButton: UIButton!
@@ -195,6 +198,22 @@ class RiderViewController: UIViewController,
         self.present(autoCompleteController, animated: true, completion: nil)
     }
     
+    
+    @IBAction func segmentedChanged(_ sender: Any) {
+        switch mapType.selectedSegmentIndex {
+        case 0:
+            mapView.mapType = MKMapType.standard
+            break
+        case 1:
+            mapView.mapType = MKMapType.satellite
+            break
+        case 2:
+            mapView.mapType = MKMapType.hybrid
+            break
+        default:
+            break
+        }
+    }
     
     @IBAction func callAnUber(_ sender: AnyObject) {
         
@@ -380,14 +399,26 @@ class RiderViewController: UIViewController,
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        if let location = manager.location?.coordinate {
-            userLocation = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
-            //print(userLocation)
-            let region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-            self.mapView.setRegion(region, animated: false )
-            self.mapView.removeAnnotations(self.mapView.annotations)
-            self.mapView.showsUserLocation = true
+        if userType == "driver" {
+            let userLocation:CLLocation = locations[0]
+            let latitude:CLLocationDegrees = userLocation.coordinate.latitude
+            let longitude:CLLocationDegrees = userLocation.coordinate.longitude
+            
+            let span:MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
+            let location:CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude, longitude)
+            let region:MKCoordinateRegion = MKCoordinateRegionMake(location, span)
+            mapView.showsUserLocation = true
+            mapView.setRegion(region, animated: true)
+        } else {
+            if let location = manager.location?.coordinate {
+                userLocation = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+                let region = MKCoordinateRegion(center: userLocation, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+                self.mapView.setRegion(region, animated: false )
+                self.mapView.removeAnnotations(self.mapView.annotations)
+                self.mapView.showsUserLocation = true
+            }
         }
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -488,9 +519,7 @@ class RiderViewController: UIViewController,
     }
     
     func toTextFieldActive() {
-        
         self.values.removeAll()
-        
         Database.database().reference().child("savedtrips/" + uid + "/" + toString).observeSingleEvent(of: .value, with: { (snapshot) in
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
                 for snap in result {
@@ -713,34 +742,59 @@ class RiderViewController: UIViewController,
     }
     
     func getFBDefaults(fbString:String , completion: @escaping (Int) -> ()) {
-        
         Database.database().reference().child("defaults").observeSingleEvent(of: .value, with: { (snapshot) in
-            
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
-                
                 for snap in result {
                     if (snap.key == fbString) {
                         //print(snap.value! as! Int)
                         completion(snap.value! as! Int)
                     }
-                    
                 }
             }
-            
-            
         })
     }
     
     func getScheduledTrips(fbUid:String , completion: @escaping (Int) -> ()) {
-        
         Database.database().reference().child("scheduledtrips/\(fbUid)").observeSingleEvent(of: .value, with: { (snapshot) in
-            
             if let result = snapshot.children.allObjects as? [DataSnapshot] {
                 completion(result.count)
             }
-            
-            
         })
+    }
+    
+    func displayDriverMap() {
+        //
+        manager = CLLocationManager()
+        manager.delegate = self
+        manager.desiredAccuracy = kCLLocationAccuracyBest
+        manager.requestWhenInUseAuthorization()
+        manager.startUpdatingLocation()
+        
+        let v1 = Venue(aIdent:"1", aName: "Whole Foods Market", aAddress: "20955 Stevens Creek Blvd", aCity: "Summerlin", aCategory: "Grocery Store", aLat: 36.1871005, aLng: -115.29561180000002)
+        let v2 = Venue(aIdent:"2", aName: "Buffalo Wild Wings Grill & Bar", aAddress: "1620 Saratoga Ave", aCity: "Las Vegas", aCategory: "American Restaurant", aLat: 36.2085091, aLng: -115.31339079999998)
+        let v3 = Venue(aIdent:"3", aName: "Bierhaus", aAddress: "383 Castro St", aCity: "Mountain View", aCategory: "Gastropub", aLat: 36.0219727, aLng: -115.14833269999997)
+        let v4 = Venue(aIdent:"4", aName: "Singularity University", aAddress: "Building 20 S. Akron Rd.", aCity: "Moffett Field", aCategory: "University", aLat: 36.0749404, aLng:-115.01323589999998)
+        
+        let v5 = Venue(aIdent:"5", aName: "Menlo Country Club", aAddress: "", aCity: "Woodside", aCategory: "Country Club", aLat: 36.045151, aLng: -115.109531)
+        let v6 = Venue(aIdent:"6", aName: "Denny's", aAddress: "1015 Blossom Hill Rd", aCity: "San Jose", aCategory: "American Restaurant", aLat: 36.1021195, aLng: -115.26094280000001)
+        
+        let venuesArr = [v1, v2, v3, v4 , v5, v6]
+        
+        mapView.removeAnnotations(mapView.annotations)
+        for i in 0 ..< venuesArr.count {
+            
+            let point:MapPointAnnotation = MapPointAnnotation()
+            let v = venuesArr[i] as Venue
+            point.venue = v
+            let latitude = v.lat
+            let longitude = v.lng
+            point.coordinate = CLLocationCoordinate2DMake(latitude,longitude);
+            point.title =  v.name
+            point.subtitle = v.category
+            venuePoints[v.ident] = point
+            
+            mapView.addAnnotation(point)
+        }
     }
     
 }
