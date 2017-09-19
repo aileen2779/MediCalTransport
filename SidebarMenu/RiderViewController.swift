@@ -333,7 +333,7 @@ class RiderViewController: UIViewController,
                                 if (saveCalendar) {
                                     calendarMessage = "Calendar access granted. The event will be added to your calendar"
                                     
-                                    calendarBody = "From: \(fromLocation)\n\nTo: \(toLocation) \n\nPickup Date: \(whenPickup) \n\nPassenger: \(self.firstName.capitalized) \(self.lastName.capitalized)"
+                                    calendarBody = "From: \(fromLocation)\nTo: \(toLocation) \nPickup Date: \(whenPickup) \nPassenger: \(self.firstName.capitalized) \(self.lastName.capitalized)\nDriver: (to be assigned)"
                                     
                                     let myDate = whenPickup
                                     let myDateFormatter = DateFormatter()
@@ -341,7 +341,7 @@ class RiderViewController: UIViewController,
                                     myDateFormatter.timeZone = TimeZone(secondsFromGMT: TimeZone.current.secondsFromGMT())
                                     
                                     let dateString = myDateFormatter.date(from: myDate)
-                                    self.addEventToCalendar(title: "Ride Schedule to \(toLocation)", description: "\(calendarBody)", startDate: dateString!, endDate: dateString!)
+                                    self.addEventToCalendar(title: "Ride to \(toLocation)", description: "\(calendarBody)", startDate: dateString!, endDate: dateString!)
                                     
                                 } else {
                                     calendarMessage = "Calendar access not granted. The event will NOT be added to your calendar"

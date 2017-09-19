@@ -454,6 +454,39 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                                                  "Driver" : "\(firstName.capitalized) \(lastName.capitalized)"
                 ])
             
+            // Add to calendar
+            let fromLocation:String = locationClassVar.fromAddress
+            let toLocation:String = locationClassVar.toAddress
+            let whenPickup:String = locationClassVar.pickUpDate
+            var calendarMessage:String = ""
+            print(calendarMessage)
+            //Retrieve preferences
+            let preferences = UserDefaults.standard
+            if preferences.object(forKey: "saveCalendar") != nil {
+                var saveCalendar:Bool = false
+                var calendarBody:String = ""
+                saveCalendar = preferences.object(forKey: "saveCalendar") as! Bool
+                print("test\(saveCalendar)")
+                if (saveCalendar) {
+                    calendarMessage = "Calendar access granted. The event will be added to your calendar"
+                    
+                    calendarBody = "From: \(fromLocation)\nTo: \(toLocation) \nPickup Date: \(whenPickup)\nPassenger: \(locationClassVar.passenger)\nDriver: \(self.firstName.capitalized) \(self.lastName.capitalized)"
+                    
+                    let myDate = whenPickup
+                    let myDateFormatter = DateFormatter()
+                    myDateFormatter.dateFormat = "MM/dd/yy h:mm a"
+                    myDateFormatter.timeZone = TimeZone(secondsFromGMT: TimeZone.current.secondsFromGMT())
+                    
+                    let dateString = myDateFormatter.date(from: myDate)
+                    self.addEventToCalendar(title: "Pickup from \(fromLocation)", description: "\(calendarBody)", startDate: dateString!, endDate: dateString!)
+                    
+                } else {
+                    calendarMessage = "Calendar access not granted. The event will NOT be added to your calendar"
+                }
+            }
+            // End add to calendar
+
+            
             
             // Display confirmation
             self.displayAlert(title: "Pickup confirmed", message: "A pickup confirmation has been sent.\nThis event has been added to your calendar")
@@ -491,6 +524,39 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                                                  "IPAddress" : ipAddress,
                                                  "Driver" : "\(firstName.capitalized) \(lastName.capitalized)"
                 ])
+            
+            // Add to calendar
+            let fromLocation:String = locationClassVar.fromAddress
+            let toLocation:String = locationClassVar.toAddress
+            let whenPickup:String = locationClassVar.pickUpDate
+            var calendarMessage:String = ""
+            print(calendarMessage)
+            //Retrieve preferences
+            let preferences = UserDefaults.standard
+            if preferences.object(forKey: "saveCalendar") != nil {
+                var saveCalendar:Bool = false
+                var calendarBody:String = ""
+                saveCalendar = preferences.object(forKey: "saveCalendar") as! Bool
+                print("test\(saveCalendar)")
+                if (saveCalendar) {
+                    calendarMessage = "Calendar access granted. The event will be added to your calendar"
+                    
+                    calendarBody = "From: \(fromLocation)\nTo: \(toLocation) \nPickup Date: \(whenPickup)\nPassenger: \(locationClassVar.passenger)\nDriver: \(self.firstName.capitalized) \(self.lastName.capitalized)"
+                    
+                    let myDate = whenPickup
+                    let myDateFormatter = DateFormatter()
+                    myDateFormatter.dateFormat = "MM/dd/yy h:mm a"
+                    myDateFormatter.timeZone = TimeZone(secondsFromGMT: TimeZone.current.secondsFromGMT())
+                    
+                    let dateString = myDateFormatter.date(from: myDate)
+                    self.addEventToCalendar(title: "Pickup from \(fromLocation)", description: "\(calendarBody)", startDate: dateString!, endDate: dateString!)
+                    
+                } else {
+                    calendarMessage = "Calendar access not granted. The event will NOT be added to your calendar"
+                }
+            }
+            // End add to calendar
+
             
             // Display confirmation
             self.displayAlert(title: "Driver replacement confirmed", message: "A pickup confirmation has been sent.\nThis event has been added to your calendar")
@@ -531,6 +597,38 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                                                  "Driver" : ""
                 ])
             
+            // Remove from calendar
+            let fromLocation:String = locationClassVar.fromAddress
+            let toLocation:String = locationClassVar.toAddress
+            let whenPickup:String = locationClassVar.pickUpDate
+            var calendarMessage:String = ""
+            print(calendarMessage)
+            //Retrieve preferences
+            let preferences = UserDefaults.standard
+            if preferences.object(forKey: "saveCalendar") != nil {
+                var saveCalendar:Bool = false
+                var calendarBody:String = ""
+                saveCalendar = preferences.object(forKey: "saveCalendar") as! Bool
+                print("test\(saveCalendar)")
+                if (saveCalendar) {
+                    calendarMessage = "Calendar access granted. The event will be added to your calendar"
+                    
+                    calendarBody = "From: \(fromLocation)\nTo: \(toLocation) \nPickup Date: \(whenPickup)\nPassenger: \(locationClassVar.passenger)\nDriver: \(self.firstName.capitalized) \(self.lastName.capitalized)"
+                    
+                    let myDate = whenPickup
+                    let myDateFormatter = DateFormatter()
+                    myDateFormatter.dateFormat = "MM/dd/yy h:mm a"
+                    myDateFormatter.timeZone = TimeZone(secondsFromGMT: TimeZone.current.secondsFromGMT())
+                    
+                    let dateString = myDateFormatter.date(from: myDate)
+                    self.addEventToCalendar(title: "Canceled: Pickup from \(fromLocation)", description: "\(calendarBody)", startDate: dateString!, endDate: dateString!)
+                    
+                } else {
+                    calendarMessage = "Calendar access not granted. The event will NOT be added to your calendar"
+                }
+            }
+            // End remove calendar
+
             
             // Display confirmation
             self.displayAlert(title: "Pickup Canceled", message: "A pickup cancelation has been sent.\nThis event has been removed from your calendar")
@@ -636,7 +734,7 @@ class ScheduledTripsViewController: UIViewController, UITableViewDataSource, UIT
                     myDateFormatter.timeZone = TimeZone(secondsFromGMT: TimeZone.current.secondsFromGMT())
                     
                     let dateString = myDateFormatter.date(from: myDate)
-                    self.addEventToCalendar(title: "Canceled: Ride Schedule to \(locationClassVar.toAddress)", description: "\(calendarBody)", startDate: dateString!, endDate: dateString!)
+                    self.addEventToCalendar(title: "Canceled: Ride to \(locationClassVar.toAddress)", description: "\(calendarBody)", startDate: dateString!, endDate: dateString!)
                     
                 } else {
                     calendarMessage = "Calendar access not granted. The event will NOT be added to your calendar"
