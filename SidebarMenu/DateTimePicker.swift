@@ -1,7 +1,3 @@
-//
-//  DateTimePicker.swift
-//  DateTimePicker
-//
 import UIKit
 
 

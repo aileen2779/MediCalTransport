@@ -1,11 +1,3 @@
-//
-//  StepCollectionViewFlowLayout.swift
-//  DateTimePicker
-//
-//  Created by Huong Do on 9/27/16.
-//  Copyright © 2016 ichigo. All rights reserved.
-//
-
 import UIKit
 
 class StepCollectionViewFlowLayout: UICollectionViewFlowLayout {
