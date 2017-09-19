@@ -167,9 +167,7 @@ class RiderViewController: UIViewController,
     @IBAction func openStartLocation(_ sender: UIButton) {
         // hide the drop down window
         tableView.isHidden = true
-        
         let autoCompleteController = GMSAutocompleteViewController()
-        
         autoCompleteController.delegate = self as GMSAutocompleteViewControllerDelegate
         
         // filter
@@ -178,13 +176,17 @@ class RiderViewController: UIViewController,
         filter.country = "usa"
         autoCompleteController.autocompleteFilter = filter
         
-        
         // selected location
         locationSelected = .startLocation
+
+
+        // search text attributes
+        let placeholderAttributes: [String : AnyObject] = [NSForegroundColorAttributeName: UIColor.gray, NSFontAttributeName: UIFont.systemFont(ofSize: UIFont.systemFontSize)]
+        let attributedPlaceholder: NSAttributedString = NSAttributedString(string: "Search Pickup Address", attributes: placeholderAttributes)
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = attributedPlaceholder
         
         // Change text color
         UISearchBar.appearance().setTextColor(color: UIColor.black)
-        
         self.present(autoCompleteController, animated: true, completion: nil)
     }
     
@@ -201,13 +203,17 @@ class RiderViewController: UIViewController,
         filter.country = "usa"
         autoCompleteController.autocompleteFilter = filter
         
-        
         // selected location
         locationSelected = .destinationLocation
+
         
+        // search text attributes
+        let placeholderAttributes: [String : AnyObject] = [NSForegroundColorAttributeName: UIColor.gray, NSFontAttributeName: UIFont.systemFont(ofSize: UIFont.systemFontSize)]
+        let attributedPlaceholder: NSAttributedString = NSAttributedString(string: "Search Dropoff Address", attributes: placeholderAttributes)
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).attributedPlaceholder = attributedPlaceholder
+
         // Change text color
         UISearchBar.appearance().setTextColor(color: UIColor.black)
-        
         self.present(autoCompleteController, animated: true, completion: nil)
     }
     
@@ -471,7 +477,6 @@ class RiderViewController: UIViewController,
         tableView.isHidden = true
     }
     
-    
     override func viewDidLayoutSubviews()
     {
         // Assumption is we're supporting a small maximum number of entries
@@ -479,7 +484,6 @@ class RiderViewController: UIViewController,
         // Alternatively can set to another size, such as using row heights and setting frame
         heightConstraint.constant = tableView.contentSize.height
     }
-    
     
     // Manage keyboard and tableView visibility
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
@@ -499,7 +503,6 @@ class RiderViewController: UIViewController,
         view.endEditing(true)
         
     }
-    
     
     // Toggle the tableView visibility when click on textField
     func fromTextFieldActive() {

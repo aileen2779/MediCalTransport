@@ -940,7 +940,7 @@
                                     <constraint firstAttribute="height" constant="60" id="FNg-0c-DoO"/>
                                     <constraint firstAttribute="width" constant="330" id="lUZ-fx-7a0"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" keyboardAppearance="alert"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="home"/>
@@ -959,7 +959,7 @@
                                     <constraint firstAttribute="width" constant="330" id="nvh-jR-xfe"/>
                                     <constraint firstAttribute="height" constant="60" id="s2v-Lu-83R"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" keyboardAppearance="alert"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="image" keyPath="leftImage" value="sports-car"/>
